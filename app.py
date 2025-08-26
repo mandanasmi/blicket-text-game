@@ -9,6 +9,7 @@ import firebase_admin
 from firebase_admin import credentials, db
 
 import env.blicket_text as blicket_text
+from visual_blicket_game import visual_blicket_game_page
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
@@ -248,14 +249,29 @@ Please enter your participant ID to begin.
 
 # 2) GAME RUN
 elif st.session_state.phase == "game":
-    st.markdown(f"## Round {st.session_state.current_round + 1} of {len(st.session_state.round_configs)}")
+    # Use visual blicket game interface
+    round_config = st.session_state.round_configs[st.session_state.current_round]
     
-    for entry in st.session_state.log:
-        st.markdown(f"{entry}")
+    # Pass the save_game_data function to avoid circular imports
+    def save_visual_game_data(participant_id, game_data):
+        save_game_data(participant_id, game_data)
+    
+    visual_blicket_game_page(
+        st.session_state.current_participant_id,
+        round_config,
+        st.session_state.current_round,
+        len(st.session_state.round_configs),
+        save_visual_game_data
+    )
 
-    st.text_input("What do you do?", key="cmd", on_change=handle_enter)
+# 3) NEXT ROUND HANDLING
+elif st.session_state.phase == "next_round":
+    # Move to next round
+    st.session_state.current_round += 1
+    st.session_state.phase = "game"
+    st.rerun()
 
-# 3) Q&A
+# 4) Q&A (keeping for compatibility but not used in visual version)
 elif st.session_state.phase == "qa":
     st.markdown(f"## 📝 Round {st.session_state.current_round + 1} Q&A")
     for i, question in enumerate(BINARY_QUESTIONS):
@@ -266,7 +282,7 @@ elif st.session_state.phase == "qa":
     else:
         st.button("Submit & Finish", on_click=submit_qa)
 
-# 4) END-OF-GAME SCREEN
+# 5) END-OF-GAME SCREEN
 elif st.session_state.phase == "end":
     st.markdown("## 🎉 All done!")
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}! All your responses have been saved to the database.")
