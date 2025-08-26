@@ -78,6 +78,13 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.session_state.selected_objects = set()  # Objects currently on machine
         st.session_state.blicket_answers = {}  # User's blicket classifications
         st.session_state.game_start_time = datetime.datetime.now()
+        
+        # Initialize fixed shape images for this round
+        st.session_state.shape_images = []
+        for i in range(round_config['num_objects']):
+            shape_num = random.randint(1, 8)
+            shape_path = f"images/shape{shape_num}.png"
+            st.session_state.shape_images.append(get_image_base64(shape_path))
     
     # Get environment state
     env = st.session_state.env
@@ -87,12 +94,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     blicket_img = get_image_base64("images/blicket.png")
     blicket_lit_img = get_image_base64("images/blicket_lit.png")
     
-    # Randomly select shape images for objects
-    shape_images = []
-    for i in range(round_config['num_objects']):
-        shape_num = random.randint(1, 8)
-        shape_path = f"images/shape{shape_num}.png"
-        shape_images.append(get_image_base64(shape_path))
+    # Use fixed shape images from session state
+    shape_images = st.session_state.shape_images
     
     # Display round info and progress
     st.markdown(f"## Round {current_round + 1} of {total_rounds}")
@@ -125,21 +128,25 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Display objects on machine
     if st.session_state.selected_objects:
         st.markdown("### Objects on Machine:")
-        # Create evenly spaced layout for objects on machine using HTML
-        objects_html = ""
-        for i, obj_idx in enumerate(st.session_state.selected_objects):
-            objects_html += f"""
-            <div style="display: inline-block; margin: 10px; text-align: center;">
-                <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 60px; height: auto;">
-                <br><strong>Object {obj_idx + 1}</strong>
-            </div>
-            """
         
-        st.markdown(f"""
-        <div style="text-align: center; margin: 10px 0;">
-            {objects_html}
-        </div>
-        """, unsafe_allow_html=True)
+        # Create a horizontal layout for objects on machine
+        objects_container = st.container()
+        with objects_container:
+            # Use HTML to create a horizontal layout
+            objects_html = ""
+            for obj_idx in st.session_state.selected_objects:
+                objects_html += f"""
+                <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top;">
+                    <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 60px; height: auto;">
+                    <br><strong>Object {obj_idx + 1}</strong>
+                </div>
+                """
+            
+            st.markdown(f"""
+            <div style="text-align: center; margin: 10px 0;">
+                {objects_html}
+            </div>
+            """, unsafe_allow_html=True)
     
     # Display available objects
     st.markdown("### Available Objects")
@@ -148,40 +155,41 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Apply CSS class to object grid section
     st.markdown('<div class="object-grid">', unsafe_allow_html=True)
     
-    # Create grid of objects using HTML
-    objects_html = ""
-    for i in range(round_config['num_objects']):
-        # Check if object is currently selected
-        is_selected = i in st.session_state.selected_objects
+    # Create grid of objects using Streamlit components
+    for i in range(0, round_config['num_objects'], 4):
+        # Create a row of up to 4 objects
+        row_objects = range(i, min(i + 4, round_config['num_objects']))
         
-        # Create clickable object
-        if st.button(f"Object {i + 1}", key=f"obj_{i}"):
-            if is_selected:
-                st.session_state.selected_objects.remove(i)
-            else:
-                st.session_state.selected_objects.add(i)
-            
-            # Update environment state
-            env._state[i] = (i in st.session_state.selected_objects)
-            env._update_machine_state()
-            game_state = env.step("look")[0]  # Get updated state
-            st.session_state.game_state = game_state
-            st.experimental_rerun()
+        # Create columns for this row
+        cols = st.columns(len(row_objects))
         
-        # Display object image with selection indicator
-        border_color = "2px solid #00ff00" if is_selected else "2px solid #cccccc"
-        objects_html += f"""
-        <div style="display: inline-block; margin: 10px; padding: 10px; border: {border_color}; border-radius: 10px; vertical-align: top;">
-            <img src="data:image/png;base64,{shape_images[i]}" style="width: 80px; height: auto;">
-            <br><strong>Object {i + 1}</strong>
-        </div>
-        """
-    
-    st.markdown(f"""
-    <div style="text-align: center; margin: 10px 0;">
-        {objects_html}
-    </div>
-    """, unsafe_allow_html=True)
+        for j, obj_idx in enumerate(row_objects):
+            with cols[j]:
+                # Check if object is currently selected
+                is_selected = obj_idx in st.session_state.selected_objects
+                
+                # Display object image with selection indicator
+                border_color = "2px solid #00ff00" if is_selected else "2px solid #cccccc"
+                st.markdown(f"""
+                <div style="text-align: center; margin: 10px; padding: 10px; border: {border_color}; border-radius: 10px;">
+                    <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto;">
+                    <br><strong>Object {obj_idx + 1}</strong>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Create clickable object button
+                if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}"):
+                    if is_selected:
+                        st.session_state.selected_objects.remove(obj_idx)
+                    else:
+                        st.session_state.selected_objects.add(obj_idx)
+                    
+                    # Update environment state
+                    env._state[obj_idx] = (obj_idx in st.session_state.selected_objects)
+                    env._update_machine_state()
+                    game_state = env.step("look")[0]  # Get updated state
+                    st.session_state.game_state = game_state
+                    st.experimental_rerun()
     
     # Close object grid div
     st.markdown('</div>', unsafe_allow_html=True)
