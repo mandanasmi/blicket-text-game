@@ -5,12 +5,24 @@ import datetime
 
 import numpy as np
 import streamlit as st
+import firebase_admin
+from firebase_admin import credentials, db
 
 import env.blicket_text as blicket_text
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
+
+# Initialize Firebase
+if not firebase_admin._apps:
+    cred = credentials.Certificate("service-account.json")
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://blicket-text-game-default-rtdb.firebaseio.com/'
+    })
+
+# Get database reference
+db_ref = db.reference()
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
@@ -27,15 +39,27 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     game_state = env.reset()
     return env, game_state["feedback"]
 
-def start_game():
-    """Callback to initialize everything and move to the game phase."""
-    env, first_obs = create_new_game(seed=42)
-    now = datetime.datetime.now()
-    st.session_state.env = env
-    st.session_state.start_time = now
-    st.session_state.log = [first_obs]
-    st.session_state.times = [now]
-    st.session_state.phase = "game"
+def save_participant_config(participant_id, config):
+    """Save participant configuration to Firebase"""
+    participant_ref = db_ref.child(participant_id)
+    participant_ref.set({
+        'config': config,
+        'created_at': datetime.datetime.now().isoformat(),
+        'status': 'configured'
+    })
+
+def save_game_data(participant_id, game_data):
+    """Save game data to Firebase"""
+    participant_ref = db_ref.child(participant_id)
+    games_ref = participant_ref.child('games')
+    
+    # Create a new game entry
+    game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    games_ref.child(game_id).set(game_data)
+
+
+
+
 
 def handle_enter():
     """Callback for processing each command during the game."""
@@ -59,54 +83,75 @@ def handle_enter():
     if done:
         st.session_state.phase = "qa"
 
-
-BINARY_QUESTIONS = [
-    "Did you test each object at least once?",
-    "Did you use the feedback from the last test before making a decision?",
-    "Were you confident in your final hypothesis?"
-]
-
-
-
 def submit_qa():
-    """Callback when the user clicks ‘Submit Q&A’—writes JSON and goes to end screen."""
+    """Callback when the user clicks 'Submit Q&A'—saves to Firebase and continues or ends."""
     qa_time = datetime.datetime.now()
     binary_answers = {
         question: st.session_state.get(f"qa_{i}", "No")
         for i, question in enumerate(BINARY_QUESTIONS)
     }
 
-    payload = {
-        "start_time":     st.session_state.start_time.isoformat(),
+    # Save current round data
+    round_data = {
+        "start_time": st.session_state.start_time.isoformat(),
         "events": [
             {"time": t.isoformat(), "entry": e}
             for t, e in zip(st.session_state.times, st.session_state.log)
         ],
         "binary_answers": binary_answers,
-        "qa_time":        qa_time.isoformat(),
+        "qa_time": qa_time.isoformat(),
+        "round_config": st.session_state.round_configs[st.session_state.current_round],
+        "round_number": st.session_state.current_round + 1
     }
-
-    ts_str   = st.session_state.start_time.strftime("%Y%m%d_%H%M%S")
-    out_path = os.path.join(LOG_DIR, f"game_{ts_str}.json")
-    with open(out_path, "w") as f:
-        json.dump(payload, f, indent=2)
-
-    # don’t clear everything here—just move to the end‐screen phase
-    st.session_state.phase = "end"
-
+    
+    save_game_data(st.session_state.current_participant_id, round_data)
+    
+    # Check if there are more rounds
+    if st.session_state.current_round + 1 < len(st.session_state.round_configs):
+        # Move to next round
+        st.session_state.current_round += 1
+        next_round_config = st.session_state.round_configs[st.session_state.current_round]
+        
+        # Create new game for next round
+        env, first_obs = create_new_game(
+            seed=42 + st.session_state.current_round,  # Different seed for each round
+            num_objects=next_round_config['num_objects'],
+            num_blickets=next_round_config['num_blickets'],
+            rule=next_round_config['rule']
+        )
+        
+        now = datetime.datetime.now()
+        st.session_state.env = env
+        st.session_state.start_time = now
+        st.session_state.log = [first_obs]
+        st.session_state.times = [now]
+        st.session_state.phase = "game"
+        
+        # Clear Q&A state
+        for i in range(len(BINARY_QUESTIONS)):
+            st.session_state.pop(f"qa_{i}", None)
+    else:
+        # All rounds completed
+        st.session_state.phase = "end"
 
 def reset_all():
     """Clears all session_state so we go back to the intro screen cleanly."""
     for i in range(len(BINARY_QUESTIONS)):
         st.session_state.pop(f"qa_{i}", None)
-    st.session_state.phase      = "intro"
-    st.session_state.env        = None
+    st.session_state.phase = "intro"
+    st.session_state.env = None
     st.session_state.start_time = None
-    st.session_state.log        = []
-    st.session_state.times      = []
+    st.session_state.log = []
+    st.session_state.times = []
+    st.session_state.current_participant_id = ""
+    st.session_state.current_round = 0
+    st.session_state.round_configs = []
 
-
-
+BINARY_QUESTIONS = [
+    "Did you test each object at least once?",
+    "Did you use the feedback from the last test before making a decision?",
+    "Were you confident in your final hypothesis?"
+]
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 # SESSION-STATE INITIALIZATION
@@ -121,27 +166,90 @@ if "log" not in st.session_state:
     st.session_state.log = []
 if "times" not in st.session_state:
     st.session_state.times = []
+if "current_participant_id" not in st.session_state:
+    st.session_state.current_participant_id = ""
+if "current_round" not in st.session_state:
+    st.session_state.current_round = 0
+if "round_configs" not in st.session_state:
+    st.session_state.round_configs = []
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-st.title("🧙 Text Adventure")
+st.title("🧙 Blicket Text Adventure")
 
-# 1) INTRO SCREEN
+# 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
     st.markdown(
         """
 **Welcome to the Blicket Text Adventure!**
 
-- Test objects (e.g., “test object 1”), press buttons, or ask questions in plain English.  
-- Your goal: figure out which objects are the “blickets” by experimenting.
-
-When you’re ready, hit **Start Game**.
+Please enter your participant ID to begin.
 """
     )
-    st.button("Start Game", on_click=start_game)
-    st.stop()  # halt here until start_game sets phase → "game"
+    participant_id = st.text_input("Participant ID:", key="participant_id")
+    if st.button("Continue") and participant_id.strip():
+        # Store participant ID in session state using a different key
+        st.session_state.current_participant_id = participant_id.strip()
+        
+        # Create random configuration (3 rounds with random settings)
+        import random
+        
+        # Set random seed based on participant ID for reproducibility
+        random.seed(hash(participant_id.strip()) % 2**32)
+        
+        num_rounds = 3
+        round_configs = []
+        
+        for i in range(num_rounds):
+            # Random number of objects between 3-8
+            num_objects = random.randint(3, 8)
+            # Random number of blickets between 1 and num_objects
+            num_blickets = random.randint(1, num_objects)
+            # Random rule
+            rule = random.choice(['conjunctive', 'disjunctive'])
+            # Random initial probability
+            init_prob = random.uniform(0.1, 0.3)
+            # Random transition noise
+            transition_noise = random.uniform(0.0, 0.1)
+            
+            round_config = {
+                'num_objects': num_objects,
+                'num_blickets': num_blickets,
+                'rule': rule,
+                'init_prob': init_prob,
+                'transition_noise': transition_noise
+            }
+            round_configs.append(round_config)
+        
+        # Save configuration to Firebase
+        config = {
+            'num_rounds': num_rounds,
+            'rounds': round_configs
+        }
+        save_participant_config(st.session_state.current_participant_id, config)
+        
+        # Initialize first round
+        st.session_state.current_round = 0
+        st.session_state.round_configs = round_configs
+        round_config = round_configs[0]
+        env, first_obs = create_new_game(
+            seed=42,
+            num_objects=round_config['num_objects'],
+            num_blickets=round_config['num_blickets'],
+            rule=round_config['rule']
+        )
+        
+        now = datetime.datetime.now()
+        st.session_state.env = env
+        st.session_state.start_time = now
+        st.session_state.log = [first_obs]
+        st.session_state.times = [now]
+        st.session_state.phase = "game"
+    st.stop()
 
 # 2) GAME RUN
 elif st.session_state.phase == "game":
+    st.markdown(f"## Round {st.session_state.current_round + 1} of {len(st.session_state.round_configs)}")
+    
     for entry in st.session_state.log:
         st.markdown(f"{entry}")
 
@@ -149,13 +257,17 @@ elif st.session_state.phase == "game":
 
 # 3) Q&A
 elif st.session_state.phase == "qa":
-    st.markdown("## 📝 Phase 2: Quick Q&A")
+    st.markdown(f"## 📝 Round {st.session_state.current_round + 1} Q&A")
     for i, question in enumerate(BINARY_QUESTIONS):
         st.radio(question, ("Yes", "No"), key=f"qa_{i}")
-    st.button("Submit Q&A", on_click=submit_qa)
+    
+    if st.session_state.current_round + 1 < len(st.session_state.round_configs):
+        st.button("Submit & Continue to Next Round", on_click=submit_qa)
+    else:
+        st.button("Submit & Finish", on_click=submit_qa)
 
 # 4) END-OF-GAME SCREEN
 elif st.session_state.phase == "end":
     st.markdown("## 🎉 All done!")
-    st.markdown("Thanks for playing—your responses have been saved.")
+    st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}! All your responses have been saved to the database.")
     st.button("Start Over", on_click=reset_all)
