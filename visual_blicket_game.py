@@ -178,7 +178,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Show warning if no steps left
     if steps_left <= 0:
         st.markdown("""
-        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; padding: 15px; margin: 10px 0; text-align: center;">
+        <div style="background: rgba(220, 53, 69, 0.8); border: 1px solid rgba(220, 53, 69, 0.9); border-radius: 10px; padding: 15px; margin: 10px 0; text-align: center;">
             <strong>⚠️ No steps remaining! You can only proceed to answer questions.</strong>
         </div>
         """, unsafe_allow_html=True)
@@ -221,34 +221,33 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     border_color = "#00ff00" if is_selected else "#4CAF50"
                 
                 # Create clickable image container
-                st.markdown(f"""
-                <div style="text-align: center; margin: 10px;">
-                    <div style="
-                        display: inline-block; 
-                        padding: 15px; 
-                        border: 3px solid {border_color}; 
-                        border-radius: 15px; 
-                        background: {'rgba(0,255,0,0.1)' if is_selected else 'white'};
-                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                        transition: all 0.3s ease;
-                        cursor: {cursor};
-                        opacity: {opacity};
-                    " onclick="document.getElementById('click_{obj_idx}').click()">
-                        <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
-                        <br>
-                        <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
-                            Object {obj_idx + 1}
-                        </div>
-                        <div style="font-size: 12px; color: #666; margin-top: 5px;">
-                            {'Selected' if is_selected else 'Click to select'}
+                if interaction_disabled:
+                    # Disabled state - just show the image
+                    st.markdown(f"""
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="
+                            display: inline-block; 
+                            padding: 15px; 
+                            border: 3px solid {border_color}; 
+                            border-radius: 15px; 
+                            background: {'rgba(0,255,0,0.1)' if is_selected else 'white'};
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                            opacity: {opacity};
+                        ">
+                            <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
+                            <br>
+                            <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
+                                Object {obj_idx + 1}
+                            </div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                {'Selected' if is_selected else 'Disabled'}
+                            </div>
                         </div>
                     </div>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                # Hidden button for handling clicks
-                if st.button("", key=f"click_{obj_idx}", help=f"Click Object {obj_idx + 1}"):
-                    if not interaction_disabled:
+                    """, unsafe_allow_html=True)
+                else:
+                    # Interactive state - use button with image
+                    if st.button(f"Object {obj_idx + 1}", key=f"obj_{obj_idx}"):
                         if is_selected:
                             st.session_state.selected_objects.remove(obj_idx)
                         else:
@@ -263,6 +262,29 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         # Increment step counter
                         st.session_state.steps_taken += 1
                         st.experimental_rerun()
+                    
+                    # Display the image above the button
+                    st.markdown(f"""
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="
+                            display: inline-block; 
+                            padding: 15px; 
+                            border: 3px solid {border_color}; 
+                            border-radius: 15px; 
+                            background: {'rgba(0,255,0,0.1)' if is_selected else 'white'};
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                        ">
+                            <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
+                            <br>
+                            <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
+                                Object {obj_idx + 1}
+                            </div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                {'Selected' if is_selected else 'Click button below'}
+                            </div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
     
 
     
@@ -275,31 +297,18 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         
         # Allow proceeding to questions if steps are exhausted or user chooses to
         if steps_left <= 0:
-            st.markdown("""
-            <div style="text-align: center; margin: 20px 0;">
-                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; padding: 15px; margin: 10px 0;">
-                    <strong>No steps remaining. You must proceed to answer questions.</strong>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            
             if st.button("Proceed to Answer Questions"):
                 st.session_state.visual_game_state = "questionnaire"
                 st.experimental_rerun()
         else:
-            st.markdown("""
-            <div style="text-align: center; margin: 20px 0;">
-                <div style="background: #e8f5e8; border: 1px solid #4CAF50; border-radius: 10px; padding: 15px; margin: 10px 0;">
-                    <strong>Ready to test your understanding?</strong>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
             if st.button("Ready to Answer Questions"):
                 st.session_state.visual_game_state = "questionnaire"
                 st.experimental_rerun()
     
     elif st.session_state.visual_game_state == "questionnaire":
         st.markdown("""
-        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; color: white; margin: 20px 0;">
+        <div style="padding: 20px; border-radius: 15px; color: white; margin: 20px 0;">
             <h3 style="margin: 0; text-align: center;">🎯 Blicket Classification</h3>
             <p style="margin: 10px 0 0 0; text-align: center; opacity: 0.9;">For each object, indicate whether you think it is a blicket or not:</p>
         </div>
