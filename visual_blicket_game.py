@@ -54,6 +54,24 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         padding: 10px;
         margin: 5px;
     }
+    
+    /* Style the toggle buttons to be more compact */
+    div[data-testid="stButton"] > button {
+        background: rgba(255, 255, 255, 0.1) !important;
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        margin: 5px 0 !important;
+        color: white !important;
+        font-size: 12px !important;
+        transition: all 0.2s ease !important;
+    }
+    
+    div[data-testid="stButton"] > button:hover {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-color: rgba(255, 255, 255, 0.5) !important;
+        transform: translateY(-1px) !important;
+    }
     </style>
     """, unsafe_allow_html=True)
     
@@ -218,7 +236,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 else:
                     opacity = "1.0"
                     cursor = "pointer"
-                    border_color = "#00ff00" if is_selected else "#4CAF50"
+                    border_color = "#00ff00" if is_selected else "#ffffff"
                 
                 # Create clickable image container
                 if interaction_disabled:
@@ -230,7 +248,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                             padding: 15px; 
                             border: 3px solid {border_color}; 
                             border-radius: 15px; 
-                            background: {'rgba(0,255,0,0.1)' if is_selected else 'white'};
+                            background: transparent;
                             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
                             opacity: {opacity};
                         ">
@@ -246,8 +264,37 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     </div>
                     """, unsafe_allow_html=True)
                 else:
-                    # Interactive state - use button with image
-                    if st.button(f"Object {obj_idx + 1}", key=f"obj_{obj_idx}"):
+                    # Interactive state - make the entire image container clickable
+                    # Use a simple approach with a clickable button that contains the image
+                    
+                    # Create the image display
+                    st.markdown(f"""
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="
+                            display: inline-block; 
+                            padding: 15px; 
+                            border: 3px solid {border_color}; 
+                            border-radius: 15px; 
+                            background: transparent;
+                            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                            cursor: {cursor};
+                            transition: all 0.2s ease;
+                            position: relative;
+                        " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+                            <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
+                            <br>
+                            <div style="font-weight: bold; color: {'#00ff00' if is_selected else 'white'}; font-size: 16px;">
+                                Object {obj_idx + 1}
+                            </div>
+                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                                {'Selected' if is_selected else 'Click to place'}
+                            </div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    
+                    # Use a simple button below the image
+                    if st.button(f"Toggle Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
                         if is_selected:
                             st.session_state.selected_objects.remove(obj_idx)
                         else:
@@ -262,29 +309,6 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         # Increment step counter
                         st.session_state.steps_taken += 1
                         st.experimental_rerun()
-                    
-                    # Display the image above the button
-                    st.markdown(f"""
-                    <div style="text-align: center; margin: 10px;">
-                        <div style="
-                            display: inline-block; 
-                            padding: 15px; 
-                            border: 3px solid {border_color}; 
-                            border-radius: 15px; 
-                            background: {'rgba(0,255,0,0.1)' if is_selected else 'white'};
-                            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                        ">
-                            <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
-                            <br>
-                            <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
-                                Object {obj_idx + 1}
-                            </div>
-                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
-                                {'Selected' if is_selected else 'Click button below'}
-                            </div>
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
     
 
     
