@@ -42,25 +42,17 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Add custom CSS for better styling
     st.markdown("""
     <style>
-    .blicket-container {
-        background-color: #f0f2f6;
-        padding: 20px;
+    .object-highlight {
+        border: 2px solid #00ff00;
         border-radius: 10px;
-        margin: 10px 0;
+        padding: 10px;
+        margin: 5px;
     }
-    .machine-display {
-        background-color: white;
-        padding: 20px;
+    .object-normal {
+        border: 2px solid #cccccc;
         border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin: 10px 0;
-    }
-    .object-grid {
-        background-color: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin: 10px 0;
+        padding: 10px;
+        margin: 5px;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -79,10 +71,16 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.session_state.blicket_answers = {}  # User's blicket classifications
         st.session_state.game_start_time = datetime.datetime.now()
         
-        # Initialize fixed shape images for this round
+        # Initialize fixed shape images for this round (ensure different images)
         st.session_state.shape_images = []
+        used_shapes = set()
         for i in range(round_config['num_objects']):
-            shape_num = random.randint(1, 8)
+            # Keep trying until we get a unique shape
+            while True:
+                shape_num = random.randint(1, 8)
+                if shape_num not in used_shapes:
+                    used_shapes.add(shape_num)
+                    break
             shape_path = f"images/shape{shape_num}.png"
             st.session_state.shape_images.append(get_image_base64(shape_path))
     
@@ -95,6 +93,20 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     blicket_lit_img = get_image_base64("images/blicket_lit.png")
     
     # Use fixed shape images from session state
+    if "shape_images" not in st.session_state:
+        # Initialize shape images if not already done (ensure different images)
+        st.session_state.shape_images = []
+        used_shapes = set()
+        for i in range(round_config['num_objects']):
+            # Keep trying until we get a unique shape
+            while True:
+                shape_num = random.randint(1, 8)
+                if shape_num not in used_shapes:
+                    used_shapes.add(shape_num)
+                    break
+            shape_path = f"images/shape{shape_num}.png"
+            st.session_state.shape_images.append(get_image_base64(shape_path))
+    
     shape_images = st.session_state.shape_images
     
     # Display round info and progress
@@ -115,8 +127,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     machine_lit = game_state['true_state'][-1]
     machine_img = blicket_lit_img if machine_lit else blicket_img
     
-    # Apply CSS class to machine section
-    st.markdown('<div class="machine-display">', unsafe_allow_html=True)
+
     
     # Create machine display with objects on top
     st.markdown(f"""
@@ -125,35 +136,13 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     </div>
     """, unsafe_allow_html=True)
     
-    # Display objects on machine
-    if st.session_state.selected_objects:
-        st.markdown("### Objects on Machine:")
-        
-        # Create a horizontal layout for objects on machine
-        objects_container = st.container()
-        with objects_container:
-            # Use HTML to create a horizontal layout
-            objects_html = ""
-            for obj_idx in st.session_state.selected_objects:
-                objects_html += f"""
-                <div style="display: inline-block; margin: 10px; text-align: center; vertical-align: top;">
-                    <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 60px; height: auto;">
-                    <br><strong>Object {obj_idx + 1}</strong>
-                </div>
-                """
-            
-            st.markdown(f"""
-            <div style="text-align: center; margin: 10px 0;">
-                {objects_html}
-            </div>
-            """, unsafe_allow_html=True)
+
     
     # Display available objects
     st.markdown("### Available Objects")
     st.markdown("Click on an object to place it on the machine. Click again to remove it.")
     
-    # Apply CSS class to object grid section
-    st.markdown('<div class="object-grid">', unsafe_allow_html=True)
+
     
     # Create grid of objects using Streamlit components
     for i in range(0, round_config['num_objects'], 4):
@@ -191,8 +180,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     st.session_state.game_state = game_state
                     st.experimental_rerun()
     
-    # Close object grid div
-    st.markdown('</div>', unsafe_allow_html=True)
+
     
     # Phase transition buttons
     st.markdown("---")
@@ -230,68 +218,72 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             st.session_state.visual_game_state = "exploration"
             st.experimental_rerun()
         
+        # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
             if st.button("Next Round"):
-                    # Save current round data
-                    round_data = {
-                        "start_time": st.session_state.game_start_time.isoformat(),
-                        "round_number": current_round + 1,
-                        "round_config": round_config,
-                        "blicket_answers": {
-                            f"object_{i+1}": st.session_state.get(f"blicket_q_{i}", "No")
-                            for i in range(round_config['num_objects'])
-                        },
-                        "true_blicket_indices": game_state['blicket_indices'].tolist(),
-                        "final_machine_state": game_state['true_state'][-1]
-                    }
-                    if save_data_func:
-                        save_data_func(participant_id, round_data)
-                    else:
-                        save_game_data(participant_id, round_data)
-                    
-                    # Clear session state for next round
-                    st.session_state.pop("visual_game_state", None)
-                    st.session_state.pop("env", None)
-                    st.session_state.pop("game_state", None)
-                    st.session_state.pop("object_positions", None)
-                    st.session_state.pop("selected_objects", None)
-                    st.session_state.pop("blicket_answers", None)
-                    st.session_state.pop("game_start_time", None)
-                    
-                    # Return to main app for next round
-                    st.session_state.phase = "next_round"
-                    st.experimental_rerun()
-            else:
-                if st.button("Finish Task"):
-                    # Save final round data
-                    round_data = {
-                        "start_time": st.session_state.game_start_time.isoformat(),
-                        "round_number": current_round + 1,
-                        "round_config": round_config,
-                        "blicket_answers": {
-                            f"object_{i+1}": st.session_state.get(f"blicket_q_{i}", "No")
-                            for i in range(round_config['num_objects'])
-                        },
-                        "true_blicket_indices": game_state['blicket_indices'].tolist(),
-                        "final_machine_state": game_state['true_state'][-1]
-                    }
-                    if save_data_func:
-                        save_data_func(participant_id, round_data)
-                    else:
-                        save_game_data(participant_id, round_data)
-                    
-                    # Clear session state
-                    st.session_state.pop("visual_game_state", None)
-                    st.session_state.pop("env", None)
-                    st.session_state.pop("game_state", None)
-                    st.session_state.pop("object_positions", None)
-                    st.session_state.pop("selected_objects", None)
-                    st.session_state.pop("blicket_answers", None)
-                    st.session_state.pop("game_start_time", None)
-                    
-                    # Return to main app for completion
-                    st.session_state.phase = "end"
-                    st.experimental_rerun()
+                # Save current round data
+                round_data = {
+                    "start_time": st.session_state.game_start_time.isoformat(),
+                    "round_number": current_round + 1,
+                    "round_config": round_config,
+                    "blicket_answers": {
+                        f"object_{i+1}": st.session_state.get(f"blicket_q_{i}", "No")
+                        for i in range(round_config['num_objects'])
+                    },
+                    "true_blicket_indices": game_state['blicket_indices'] if isinstance(game_state['blicket_indices'], list) else game_state['blicket_indices'].tolist(),
+                    "final_machine_state": game_state['true_state'][-1]
+                }
+                if save_data_func:
+                    save_data_func(participant_id, round_data)
+                else:
+                    save_game_data(participant_id, round_data)
+                
+                # Clear session state for next round
+                st.session_state.pop("visual_game_state", None)
+                st.session_state.pop("env", None)
+                st.session_state.pop("game_state", None)
+                st.session_state.pop("object_positions", None)
+                st.session_state.pop("selected_objects", None)
+                st.session_state.pop("blicket_answers", None)
+                st.session_state.pop("game_start_time", None)
+                st.session_state.pop("shape_images", None)
+                
+                # Return to main app for next round
+                st.session_state.phase = "next_round"
+                st.experimental_rerun()
+        else:
+            # Show Finish Task button only on the last round
+            if st.button("Finish Task"):
+                # Save final round data
+                round_data = {
+                    "start_time": st.session_state.game_start_time.isoformat(),
+                    "round_number": current_round + 1,
+                    "round_config": round_config,
+                    "blicket_answers": {
+                        f"object_{i+1}": st.session_state.get(f"blicket_q_{i}", "No")
+                        for i in range(round_config['num_objects'])
+                    },
+                    "true_blicket_indices": game_state['blicket_indices'] if isinstance(game_state['blicket_indices'], list) else game_state['blicket_indices'].tolist(),
+                    "final_machine_state": game_state['true_state'][-1]
+                }
+                if save_data_func:
+                    save_data_func(participant_id, round_data)
+                else:
+                    save_game_data(participant_id, round_data)
+                
+                # Clear session state
+                st.session_state.pop("visual_game_state", None)
+                st.session_state.pop("env", None)
+                st.session_state.pop("game_state", None)
+                st.session_state.pop("object_positions", None)
+                st.session_state.pop("selected_objects", None)
+                st.session_state.pop("blicket_answers", None)
+                st.session_state.pop("game_start_time", None)
+                st.session_state.pop("shape_images", None)
+                
+                # Return to main app for completion
+                st.session_state.phase = "end"
+                st.experimental_rerun()
 
 if __name__ == "__main__":
     # Test the visual game
