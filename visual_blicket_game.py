@@ -116,38 +116,30 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     st.markdown('<div class="machine-display">', unsafe_allow_html=True)
     
     # Create machine display with objects on top
-    col1, col2, col3 = st.columns([1, 2, 1])
-    with col2:
-        # Create a container for machine and objects
+    st.markdown(f"""
+    <div style="text-align: center; margin: 20px 0;">
+        <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Display objects on machine
+    if st.session_state.selected_objects:
+        st.markdown("### Objects on Machine:")
+        # Create evenly spaced layout for objects on machine using HTML
+        objects_html = ""
+        for i, obj_idx in enumerate(st.session_state.selected_objects):
+            objects_html += f"""
+            <div style="display: inline-block; margin: 10px; text-align: center;">
+                <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 60px; height: auto;">
+                <br><strong>Object {obj_idx + 1}</strong>
+            </div>
+            """
+        
         st.markdown(f"""
-        <div style="text-align: center; position: relative; display: inline-block;">
-            <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
+        <div style="text-align: center; margin: 10px 0;">
+            {objects_html}
         </div>
         """, unsafe_allow_html=True)
-        
-        # Display objects on machine
-        if st.session_state.selected_objects:
-            st.markdown("### Objects on Machine:")
-            # Create evenly spaced columns for objects on machine
-            num_selected = len(st.session_state.selected_objects)
-            if num_selected <= 4:
-                cols = st.columns(num_selected)
-            else:
-                # For more than 4 objects, create multiple rows
-                cols = st.columns(4)
-            
-            for i, obj_idx in enumerate(st.session_state.selected_objects):
-                col_idx = i % 4
-                with cols[col_idx]:
-                    st.markdown(f"""
-                    <div style="text-align: center; margin: 5px;">
-                        <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 60px; height: auto;">
-                        <br><strong>Object {obj_idx + 1}</strong>
-                    </div>
-                    """, unsafe_allow_html=True)
-    
-    # Close machine display div
-    st.markdown('</div>', unsafe_allow_html=True)
     
     # Display available objects
     st.markdown("### Available Objects")
@@ -156,38 +148,40 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Apply CSS class to object grid section
     st.markdown('<div class="object-grid">', unsafe_allow_html=True)
     
-    # Create grid of objects
-    num_cols = min(4, round_config['num_objects'])
-    cols = st.columns(num_cols)
-    
+    # Create grid of objects using HTML
+    objects_html = ""
     for i in range(round_config['num_objects']):
-        col_idx = i % num_cols
-        with cols[col_idx]:
-            # Check if object is currently selected
-            is_selected = i in st.session_state.selected_objects
+        # Check if object is currently selected
+        is_selected = i in st.session_state.selected_objects
+        
+        # Create clickable object
+        if st.button(f"Object {i + 1}", key=f"obj_{i}"):
+            if is_selected:
+                st.session_state.selected_objects.remove(i)
+            else:
+                st.session_state.selected_objects.add(i)
             
-            # Create clickable object
-            if st.button(f"Object {i + 1}", key=f"obj_{i}"):
-                if is_selected:
-                    st.session_state.selected_objects.remove(i)
-                else:
-                    st.session_state.selected_objects.add(i)
-                
-                # Update environment state
-                env._state[i] = (i in st.session_state.selected_objects)
-                env._update_machine_state()
-                game_state = env.step("look")[0]  # Get updated state
-                st.session_state.game_state = game_state
-                st.rerun()
-            
-            # Display object image with selection indicator
-            border_color = "2px solid #00ff00" if is_selected else "2px solid #cccccc"
-            st.markdown(f"""
-            <div style="text-align: center; margin: 10px; padding: 10px; border: {border_color}; border-radius: 10px;">
-                <img src="data:image/png;base64,{shape_images[i]}" style="width: 80px; height: auto;">
-                <br><strong>Object {i + 1}</strong>
-            </div>
-            """, unsafe_allow_html=True)
+            # Update environment state
+            env._state[i] = (i in st.session_state.selected_objects)
+            env._update_machine_state()
+            game_state = env.step("look")[0]  # Get updated state
+            st.session_state.game_state = game_state
+            st.experimental_rerun()
+        
+        # Display object image with selection indicator
+        border_color = "2px solid #00ff00" if is_selected else "2px solid #cccccc"
+        objects_html += f"""
+        <div style="display: inline-block; margin: 10px; padding: 10px; border: {border_color}; border-radius: 10px; vertical-align: top;">
+            <img src="data:image/png;base64,{shape_images[i]}" style="width: 80px; height: auto;">
+            <br><strong>Object {i + 1}</strong>
+        </div>
+        """
+    
+    st.markdown(f"""
+    <div style="text-align: center; margin: 10px 0;">
+        {objects_html}
+    </div>
+    """, unsafe_allow_html=True)
     
     # Close object grid div
     st.markdown('</div>', unsafe_allow_html=True)
@@ -198,7 +192,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     if st.session_state.visual_game_state == "exploration":
         if st.button("Ready to Answer Questions"):
             st.session_state.visual_game_state = "questionnaire"
-            st.rerun()
+            st.experimental_rerun()
     
     elif st.session_state.visual_game_state == "questionnaire":
         st.markdown("### Blicket Classification")
@@ -206,31 +200,30 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         
         # Create questionnaire with object images
         for i in range(round_config['num_objects']):
-            col1, col2 = st.columns([1, 3])
-            with col1:
-                st.markdown(f"""
-                <div style="text-align: center;">
+            st.markdown(f"""
+            <div style="display: flex; align-items: center; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                <div style="flex: 0 0 100px; text-align: center;">
                     <img src="data:image/png;base64,{shape_images[i]}" style="width: 60px; height: auto;">
                     <br><strong>Object {i + 1}</strong>
                 </div>
-                """, unsafe_allow_html=True)
-            with col2:
-                st.radio(
-                    f"Is Object {i + 1} a blicket?",
-                    ["Yes", "No"],
-                    key=f"blicket_q_{i}"
-                )
+                <div style="flex: 1; margin-left: 20px;">
+            """, unsafe_allow_html=True)
+            
+            st.radio(
+                f"Is Object {i + 1} a blicket?",
+                ["Yes", "No"],
+                key=f"blicket_q_{i}"
+            )
+            
+            st.markdown("</div></div>", unsafe_allow_html=True)
         
         # Navigation buttons
-        col1, col2 = st.columns(2)
-        with col1:
-            if st.button("Back to Exploration"):
-                st.session_state.visual_game_state = "exploration"
-                st.rerun()
+        if st.button("Back to Exploration"):
+            st.session_state.visual_game_state = "exploration"
+            st.experimental_rerun()
         
-        with col2:
-            if current_round + 1 < total_rounds:
-                if st.button("Next Round"):
+        if current_round + 1 < total_rounds:
+            if st.button("Next Round"):
                     # Save current round data
                     round_data = {
                         "start_time": st.session_state.game_start_time.isoformat(),
@@ -259,7 +252,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     
                     # Return to main app for next round
                     st.session_state.phase = "next_round"
-                    st.rerun()
+                    st.experimental_rerun()
             else:
                 if st.button("Finish Task"):
                     # Save final round data
@@ -290,7 +283,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     
                     # Return to main app for completion
                     st.session_state.phase = "end"
-                    st.rerun()
+                    st.experimental_rerun()
 
 if __name__ == "__main__":
     # Test the visual game

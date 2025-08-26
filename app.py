@@ -245,6 +245,7 @@ Please enter your participant ID to begin.
         st.session_state.log = [first_obs]
         st.session_state.times = [now]
         st.session_state.phase = "game"
+        st.experimental_rerun()
     st.stop()
 
 # 2) GAME RUN
@@ -269,7 +270,7 @@ elif st.session_state.phase == "next_round":
     # Move to next round
     st.session_state.current_round += 1
     st.session_state.phase = "game"
-    st.rerun()
+    st.experimental_rerun()
 
 # 4) Q&A (keeping for compatibility but not used in visual version)
 elif st.session_state.phase == "qa":
