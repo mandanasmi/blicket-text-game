@@ -142,13 +142,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         You will be prompted at each turn to choose actions.
         """)
     
-    # Display steps counter
-    horizon = round_config.get('horizon', 32)
-    steps_left = horizon - st.session_state.steps_taken
-    if steps_left > 0:
-        st.markdown(f"**Steps remaining: {steps_left}**")
-    else:
-        st.markdown("**⚠️ No steps remaining! You can only proceed to answer questions.**")
+
     
     # Display environment description
     st.markdown("### Environment Description")
@@ -163,12 +157,31 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     
 
     
-    # Create machine display with objects on top
+    # Create machine display with steps counter
+    horizon = round_config.get('horizon', 32)
+    steps_left = horizon - st.session_state.steps_taken
+    
     st.markdown(f"""
     <div style="text-align: center; margin: 20px 0;">
-        <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+            <div>
+                <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
+            </div>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                <div style="font-size: 14px; margin-bottom: 5px;">Steps Remaining</div>
+                <div style="font-size: 24px;">{steps_left}</div>
+            </div>
+        </div>
     </div>
     """, unsafe_allow_html=True)
+    
+    # Show warning if no steps left
+    if steps_left <= 0:
+        st.markdown("""
+        <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; padding: 15px; margin: 10px 0; text-align: center;">
+            <strong>⚠️ No steps remaining! You can only proceed to answer questions.</strong>
+        </div>
+        """, unsafe_allow_html=True)
     
 
     
@@ -178,7 +191,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     
 
     
-    # Create grid of objects using Streamlit components
+    # Create grid of objects with clickable images
     for i in range(0, round_config['num_objects'], 4):
         # Create a row of up to 4 objects
         row_objects = range(i, min(i + 4, round_config['num_objects']))
@@ -190,38 +203,66 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             with cols[j]:
                 # Check if object is currently selected
                 is_selected = obj_idx in st.session_state.selected_objects
-                
-                # Display object image with selection indicator
-                border_color = "2px solid #00ff00" if is_selected else "2px solid #cccccc"
-                st.markdown(f"""
-                <div style="text-align: center; margin: 10px; padding: 10px; border: {border_color}; border-radius: 10px;">
-                    <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto;">
-                    <br><strong>Object {obj_idx + 1}</strong>
-                </div>
-                """, unsafe_allow_html=True)
-                
-                # Create clickable object button
                 horizon = round_config.get('horizon', 32)
                 steps_left = horizon - st.session_state.steps_taken
                 
-                # Disable button if no steps left or if in questionnaire phase
-                button_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
+                # Disable interaction if no steps left or if in questionnaire phase
+                interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                 
-                if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", disabled=button_disabled):
-                    if is_selected:
-                        st.session_state.selected_objects.remove(obj_idx)
-                    else:
-                        st.session_state.selected_objects.add(obj_idx)
-                    
-                    # Update environment state
-                    env._state[obj_idx] = (obj_idx in st.session_state.selected_objects)
-                    env._update_machine_state()
-                    game_state = env.step("look")[0]  # Get updated state
-                    st.session_state.game_state = game_state
-                    
-                    # Increment step counter
-                    st.session_state.steps_taken += 1
-                    st.experimental_rerun()
+                # Create clickable image with improved styling
+                if interaction_disabled:
+                    # Disabled state - gray out the image
+                    opacity = "0.5"
+                    cursor = "not-allowed"
+                    border_color = "#cccccc"
+                else:
+                    opacity = "1.0"
+                    cursor = "pointer"
+                    border_color = "#00ff00" if is_selected else "#4CAF50"
+                
+                # Create clickable image container
+                st.markdown(f"""
+                <div style="text-align: center; margin: 10px;">
+                    <div style="
+                        display: inline-block; 
+                        padding: 15px; 
+                        border: 3px solid {border_color}; 
+                        border-radius: 15px; 
+                        background: {'rgba(0,255,0,0.1)' if is_selected else 'white'};
+                        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                        transition: all 0.3s ease;
+                        cursor: {cursor};
+                        opacity: {opacity};
+                    " onclick="document.getElementById('click_{obj_idx}').click()">
+                        <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
+                        <br>
+                        <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
+                            Object {obj_idx + 1}
+                        </div>
+                        <div style="font-size: 12px; color: #666; margin-top: 5px;">
+                            {'Selected' if is_selected else 'Click to select'}
+                        </div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                # Hidden button for handling clicks
+                if st.button("", key=f"click_{obj_idx}", help=f"Click Object {obj_idx + 1}"):
+                    if not interaction_disabled:
+                        if is_selected:
+                            st.session_state.selected_objects.remove(obj_idx)
+                        else:
+                            st.session_state.selected_objects.add(obj_idx)
+                        
+                        # Update environment state
+                        env._state[obj_idx] = (obj_idx in st.session_state.selected_objects)
+                        env._update_machine_state()
+                        game_state = env.step("look")[0]  # Get updated state
+                        st.session_state.game_state = game_state
+                        
+                        # Increment step counter
+                        st.session_state.steps_taken += 1
+                        st.experimental_rerun()
     
 
     
@@ -234,18 +275,35 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         
         # Allow proceeding to questions if steps are exhausted or user chooses to
         if steps_left <= 0:
-            st.markdown("**No steps remaining. You must proceed to answer questions.**")
+            st.markdown("""
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 10px; padding: 15px; margin: 10px 0;">
+                    <strong>No steps remaining. You must proceed to answer questions.</strong>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
             if st.button("Proceed to Answer Questions"):
                 st.session_state.visual_game_state = "questionnaire"
                 st.experimental_rerun()
         else:
+            st.markdown("""
+            <div style="text-align: center; margin: 20px 0;">
+                <div style="background: #e8f5e8; border: 1px solid #4CAF50; border-radius: 10px; padding: 15px; margin: 10px 0;">
+                    <strong>Ready to test your understanding?</strong>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
             if st.button("Ready to Answer Questions"):
                 st.session_state.visual_game_state = "questionnaire"
                 st.experimental_rerun()
     
     elif st.session_state.visual_game_state == "questionnaire":
-        st.markdown("### Blicket Classification")
-        st.markdown("For each object, indicate whether you think it is a blicket or not:")
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 20px; border-radius: 15px; color: white; margin: 20px 0;">
+            <h3 style="margin: 0; text-align: center;">🎯 Blicket Classification</h3>
+            <p style="margin: 10px 0 0 0; text-align: center; opacity: 0.9;">For each object, indicate whether you think it is a blicket or not:</p>
+        </div>
+        """, unsafe_allow_html=True)
         
         # Create questionnaire with object images
         for i in range(round_config['num_objects']):
@@ -267,10 +325,6 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             st.markdown("</div></div>", unsafe_allow_html=True)
         
         # Navigation buttons
-        if st.button("Back to Exploration"):
-            st.session_state.visual_game_state = "exploration"
-            st.experimental_rerun()
-        
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
             if st.button("Next Round"):
@@ -283,8 +337,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         f"object_{i+1}": st.session_state.get(f"blicket_q_{i}", "No")
                         for i in range(round_config['num_objects'])
                     },
-                    "true_blicket_indices": game_state['blicket_indices'] if isinstance(game_state['blicket_indices'], list) else game_state['blicket_indices'].tolist(),
-                    "final_machine_state": game_state['true_state'][-1]
+                    "true_blicket_indices": [int(x) for x in game_state['blicket_indices']] if isinstance(game_state['blicket_indices'], list) else [int(x) for x in game_state['blicket_indices'].tolist()],
+                    "final_machine_state": bool(game_state['true_state'][-1])
                 }
                 if save_data_func:
                     save_data_func(participant_id, round_data)
@@ -317,8 +371,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         f"object_{i+1}": st.session_state.get(f"blicket_q_{i}", "No")
                         for i in range(round_config['num_objects'])
                     },
-                    "true_blicket_indices": game_state['blicket_indices'] if isinstance(game_state['blicket_indices'], list) else game_state['blicket_indices'].tolist(),
-                    "final_machine_state": game_state['true_state'][-1]
+                    "true_blicket_indices": [int(x) for x in game_state['blicket_indices']] if isinstance(game_state['blicket_indices'], list) else [int(x) for x in game_state['blicket_indices'].tolist()],
+                    "final_machine_state": bool(game_state['true_state'][-1])
                 }
                 if save_data_func:
                     save_data_func(participant_id, round_data)
