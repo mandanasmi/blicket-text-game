@@ -217,7 +217,8 @@ Please enter your participant ID to begin.
                 'num_blickets': num_blickets,
                 'rule': rule,
                 'init_prob': init_prob,
-                'transition_noise': transition_noise
+                'transition_noise': transition_noise,
+                'horizon': 32  # Default step limit
             }
             round_configs.append(round_config)
         

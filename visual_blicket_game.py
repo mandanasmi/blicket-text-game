@@ -70,6 +70,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.session_state.selected_objects = set()  # Objects currently on machine
         st.session_state.blicket_answers = {}  # User's blicket classifications
         st.session_state.game_start_time = datetime.datetime.now()
+        st.session_state.steps_taken = 0  # Track number of steps taken
         
         # Initialize fixed shape images for this round (ensure different images)
         st.session_state.shape_images = []
@@ -115,6 +116,39 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Progress bar
     progress = (current_round + 1) / total_rounds
     st.progress(progress)
+    
+    # Collapsible instruction section
+    with st.expander("📋 Game Instructions", expanded=False):
+        horizon = round_config.get('horizon', 32)  # Default to 32 steps
+        st.markdown(f"""
+        You are an intelligent, curious agent. You are playing a game where you are in a room with different objects, and a machine. Some of these objects are blickets. You can't tell which object is a blicket just by looking at it, but they have blicktness inside of them. Blicktness makes the machine turn on, following some hidden rule.
+
+        **Your goals are:**
+        - Identify which objects are blickets.
+        - Infer the underlying rule for how the machine turns on. 
+
+        **Here are the available commands:**
+        - **look:** describe the current room
+        - **put ... on ...:** put an object on the machine or the floor
+        - **take ... off ...:** take an object off the machine
+        - **exit:** exit the game
+
+        **Tips:**
+        - All objects can be either on the machine or on the floor.
+        - You should think about how to efficiently explore the relationship between the objects and the machine.
+
+        You have **{horizon} steps** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
+
+        You will be prompted at each turn to choose actions.
+        """)
+    
+    # Display steps counter
+    horizon = round_config.get('horizon', 32)
+    steps_left = horizon - st.session_state.steps_taken
+    if steps_left > 0:
+        st.markdown(f"**Steps remaining: {steps_left}**")
+    else:
+        st.markdown("**⚠️ No steps remaining! You can only proceed to answer questions.**")
     
     # Display environment description
     st.markdown("### Environment Description")
@@ -167,7 +201,13 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 """, unsafe_allow_html=True)
                 
                 # Create clickable object button
-                if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}"):
+                horizon = round_config.get('horizon', 32)
+                steps_left = horizon - st.session_state.steps_taken
+                
+                # Disable button if no steps left or if in questionnaire phase
+                button_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
+                
+                if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", disabled=button_disabled):
                     if is_selected:
                         st.session_state.selected_objects.remove(obj_idx)
                     else:
@@ -178,6 +218,9 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     env._update_machine_state()
                     game_state = env.step("look")[0]  # Get updated state
                     st.session_state.game_state = game_state
+                    
+                    # Increment step counter
+                    st.session_state.steps_taken += 1
                     st.experimental_rerun()
     
 
@@ -186,9 +229,19 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     st.markdown("---")
     
     if st.session_state.visual_game_state == "exploration":
-        if st.button("Ready to Answer Questions"):
-            st.session_state.visual_game_state = "questionnaire"
-            st.experimental_rerun()
+        horizon = round_config.get('horizon', 32)
+        steps_left = horizon - st.session_state.steps_taken
+        
+        # Allow proceeding to questions if steps are exhausted or user chooses to
+        if steps_left <= 0:
+            st.markdown("**No steps remaining. You must proceed to answer questions.**")
+            if st.button("Proceed to Answer Questions"):
+                st.session_state.visual_game_state = "questionnaire"
+                st.experimental_rerun()
+        else:
+            if st.button("Ready to Answer Questions"):
+                st.session_state.visual_game_state = "questionnaire"
+                st.experimental_rerun()
     
     elif st.session_state.visual_game_state == "questionnaire":
         st.markdown("### Blicket Classification")
@@ -247,6 +300,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.session_state.pop("blicket_answers", None)
                 st.session_state.pop("game_start_time", None)
                 st.session_state.pop("shape_images", None)
+                st.session_state.pop("steps_taken", None)
                 
                 # Return to main app for next round
                 st.session_state.phase = "next_round"
@@ -280,6 +334,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.session_state.pop("blicket_answers", None)
                 st.session_state.pop("game_start_time", None)
                 st.session_state.pop("shape_images", None)
+                st.session_state.pop("steps_taken", None)
                 
                 # Return to main app for completion
                 st.session_state.phase = "end"
