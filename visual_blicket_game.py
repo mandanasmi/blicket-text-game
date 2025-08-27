@@ -165,50 +165,82 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         
         shape_images = st.session_state.shape_images
     
-    # Create two columns: left for state history, right for main content
-    left_col, right_col = st.columns([1, 3])
-    
-    with left_col:
+    # Create sidebar for state history
+    with st.sidebar:
         st.markdown("### State History")
-        if st.session_state.state_history:
-            for i, state in enumerate(st.session_state.state_history):
-                st.markdown(f"**Step {i + 1}:**")
-                if USE_TEXT_VERSION:
-                    # Text version: show object numbers with green highlighting
-                    objects_text = ""
-                    for obj_idx in range(round_config['num_objects']):
-                        if obj_idx in state['objects_on_machine']:
-                            objects_text += f"<span style='background-color: #00ff00; color: black; padding: 2px 6px; margin: 2px; border-radius: 3px;'>{obj_idx + 1}</span>"
-                        else:
-                            objects_text += f"<span style='background-color: #333333; color: white; padding: 2px 6px; margin: 2px; border-radius: 3px;'>{obj_idx + 1}</span>"
-                    st.markdown(f"Objects: {objects_text}", unsafe_allow_html=True)
-                else:
-                    # Visual version: show object images with green highlighting
-                    objects_html = ""
-                    for obj_idx in range(round_config['num_objects']):
-                        bg_color = "rgba(0, 255, 0, 0.3)" if obj_idx in state['objects_on_machine'] else "transparent"
-                        border_color = "#00ff00" if obj_idx in state['objects_on_machine'] else "#cccccc"
-                        objects_html += f"""
-                        <div style="display: inline-block; margin: 2px; padding: 5px; border: 2px solid {border_color}; border-radius: 5px; background-color: {bg_color};">
-                            <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 30px; height: auto;">
-                        </div>
-                        """
-                    st.markdown(objects_html, unsafe_allow_html=True)
-                
-                # Show machine state
-                machine_status = "🟢 LIT" if state['machine_lit'] else "🔴 NOT LIT"
-                st.markdown(f"Machine: {machine_status}")
-                st.markdown("---")
-        else:
-            st.markdown("*No states recorded yet.*")
-    
-    with right_col:
-        # Display round info and progress
-        st.markdown(f"## Round {current_round + 1} of {total_rounds}")
         
-        # Progress bar
-        progress = (current_round + 1) / total_rounds
-        st.progress(progress)
+        # Create a container with fixed height and scrollbar
+        history_container = st.container()
+        
+        with history_container:
+            if st.session_state.state_history:
+                for i, state in enumerate(st.session_state.state_history):
+                    if USE_TEXT_VERSION:
+                        # Text version: show object numbers with green highlighting
+                        objects_text = ""
+                        for obj_idx in range(round_config['num_objects']):
+                            if obj_idx in state['objects_on_machine']:
+                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{obj_idx + 1}</span>"
+                            else:
+                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{obj_idx + 1}</span>"
+                        
+                        # Show machine state on same row
+                        machine_status = "🟢" if state['machine_lit'] else "🔴"
+                        st.markdown(f"<div style='margin: 2px 0; font-size: 12px;'><strong>{i + 1}:</strong> {objects_text} {machine_status}</div>", unsafe_allow_html=True)
+                    else:
+                        # Visual version: show object images with green highlighting
+                        # Create columns for compact display
+                        cols = st.columns(round_config['num_objects'] + 2)  # +2 for step number and machine status
+                        
+                        with cols[0]:
+                            st.markdown(f"<div style='font-size: 12px; margin: 2px 0;'><strong>{i + 1}:</strong></div>", unsafe_allow_html=True)
+                        
+                        # Show each object
+                        for obj_idx in range(round_config['num_objects']):
+                            with cols[obj_idx + 1]:
+                                if obj_idx in state['objects_on_machine']:
+                                    # Selected object - green background
+                                    st.markdown(f"""
+                                    <div style="
+                                        background-color: rgba(0, 255, 0, 0.3); 
+                                        border: 1px solid #00ff00; 
+                                        border-radius: 3px; 
+                                        padding: 2px; 
+                                        margin: 1px; 
+                                        text-align: center;
+                                    ">
+                                        <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 20px; height: auto;">
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                                else:
+                                    # Unselected object - transparent background
+                                    st.markdown(f"""
+                                    <div style="
+                                        background-color: transparent; 
+                                        border: 1px solid #cccccc; 
+                                        border-radius: 3px; 
+                                        padding: 2px; 
+                                        margin: 1px; 
+                                        text-align: center;
+                                    ">
+                                        <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 20px; height: auto;">
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                        
+                        # Show machine status
+                        with cols[-1]:
+                            machine_status = "🟢" if state['machine_lit'] else "🔴"
+                            st.markdown(f"<div style='font-size: 12px; margin: 2px 0;'>{machine_status}</div>", unsafe_allow_html=True)
+            else:
+                st.markdown("*No states recorded yet.*")
+    
+    # Main content area
+    # Display round info and progress
+    st.markdown(f"## Round {current_round + 1} of {total_rounds}")
+    
+    # Progress bar
+    progress = (current_round + 1) / total_rounds
+    st.progress(progress)
     
     # Collapsible instruction section
     with st.expander("📋 Game Instructions", expanded=False):
