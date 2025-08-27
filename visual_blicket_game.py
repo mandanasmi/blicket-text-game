@@ -7,6 +7,8 @@ import numpy as np
 from PIL import Image
 import io
 import base64
+import firebase_admin
+from firebase_admin import db
 
 import env.blicket_text as blicket_text
 
@@ -14,6 +16,23 @@ def get_image_base64(image_path):
     """Convert image to base64 string for display"""
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
+
+def convert_numpy_types(obj):
+    """Convert NumPy types to JSON-serializable Python types"""
+    if isinstance(obj, np.integer):
+        return int(obj)
+    elif isinstance(obj, np.floating):
+        return float(obj)
+    elif isinstance(obj, np.ndarray):
+        return obj.tolist()
+    elif isinstance(obj, np.bool_):
+        return bool(obj)
+    elif isinstance(obj, dict):
+        return {key: convert_numpy_types(value) for key, value in obj.items()}
+    elif isinstance(obj, list):
+        return [convert_numpy_types(item) for item in obj]
+    else:
+        return obj
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
@@ -32,8 +51,18 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
 
 def save_game_data(participant_id, game_data):
     """Save game data to Firebase"""
-    # This would integrate with your existing Firebase setup
-    # For now, we'll just log it
+    # Convert NumPy types to JSON-serializable types
+    game_data = convert_numpy_types(game_data)
+    
+    # Get database reference
+    db_ref = db.reference()
+    participant_ref = db_ref.child(participant_id)
+    games_ref = participant_ref.child('games')
+    
+    # Create a new game entry with timestamp
+    game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+    games_ref.child(game_id).set(game_data)
+    
     print(f"Saving game data for {participant_id}: {game_data}")
 
 def visual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None):
@@ -89,6 +118,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.session_state.blicket_answers = {}  # User's blicket classifications
         st.session_state.game_start_time = datetime.datetime.now()
         st.session_state.steps_taken = 0  # Track number of steps taken
+        st.session_state.user_actions = []  # Track all user actions for Firebase
         
         # Initialize fixed shape images for this round (ensure different images)
         st.session_state.shape_images = []
@@ -287,6 +317,11 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     """, unsafe_allow_html=True)
 
                     if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
+                        # Record the action before making changes
+                        action_time = datetime.datetime.now()
+                        action_type = "remove" if is_selected else "place"
+                        
+                        # Update object selection
                         if is_selected:
                             st.session_state.selected_objects.remove(obj_idx)
                         else:
@@ -297,6 +332,19 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         env._update_machine_state()
                         game_state = env.step("look")[0]  # Get updated state
                         st.session_state.game_state = game_state
+                        
+                        # Record the action for Firebase
+                        action_data = {
+                            "timestamp": action_time.isoformat(),
+                            "action_type": action_type,
+                            "object_index": obj_idx,
+                            "object_id": f"object_{obj_idx + 1}",
+                            "machine_state_before": bool(not machine_lit),  # Previous state
+                            "machine_state_after": bool(game_state['true_state'][-1]),  # New state
+                            "objects_on_machine": list(st.session_state.selected_objects),
+                            "step_number": st.session_state.steps_taken + 1
+                        }
+                        st.session_state.user_actions.append(action_data)
                         
                         # Increment step counter
                         st.session_state.steps_taken += 1
@@ -355,18 +403,27 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
             if st.button("Next Round"):
-                # Save current round data
+                # Collect blicket classifications
+                blicket_classifications = {}
+                for i in range(round_config['num_objects']):
+                    blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                
+                # Save current round data with detailed action tracking
                 round_data = {
                     "start_time": st.session_state.game_start_time.isoformat(),
+                    "end_time": datetime.datetime.now().isoformat(),
                     "round_number": current_round + 1,
                     "round_config": round_config,
-                    "blicket_answers": {
-                        f"object_{i+1}": st.session_state.get(f"blicket_q_{i}", "No")
-                        for i in range(round_config['num_objects'])
-                    },
-                    "true_blicket_indices": [int(x) for x in game_state['blicket_indices']] if isinstance(game_state['blicket_indices'], list) else [int(x) for x in game_state['blicket_indices'].tolist()],
-                    "final_machine_state": bool(game_state['true_state'][-1])
+                    "user_actions": st.session_state.user_actions,  # All place/remove actions
+                    "blicket_classifications": blicket_classifications,  # User's blicket answers
+                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
+                    "final_machine_state": bool(game_state['true_state'][-1]),
+                    "total_steps_taken": st.session_state.steps_taken,
+                    "final_objects_on_machine": list(st.session_state.selected_objects),
+                    "rule": round_config['rule']
                 }
+                
+                # Use the provided save function or default Firebase function
                 if save_data_func:
                     save_data_func(participant_id, round_data)
                 else:
@@ -382,6 +439,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.session_state.pop("game_start_time", None)
                 st.session_state.pop("shape_images", None)
                 st.session_state.pop("steps_taken", None)
+                st.session_state.pop("user_actions", None)
                 
                 # Return to main app for next round
                 st.session_state.phase = "next_round"
@@ -389,18 +447,27 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         else:
             # Show Finish Task button only on the last round
             if st.button("Finish Task"):
-                # Save final round data
+                # Collect blicket classifications
+                blicket_classifications = {}
+                for i in range(round_config['num_objects']):
+                    blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                
+                # Save final round data with detailed action tracking
                 round_data = {
                     "start_time": st.session_state.game_start_time.isoformat(),
+                    "end_time": datetime.datetime.now().isoformat(),
                     "round_number": current_round + 1,
                     "round_config": round_config,
-                    "blicket_answers": {
-                        f"object_{i+1}": st.session_state.get(f"blicket_q_{i}", "No")
-                        for i in range(round_config['num_objects'])
-                    },
-                    "true_blicket_indices": [int(x) for x in game_state['blicket_indices']] if isinstance(game_state['blicket_indices'], list) else [int(x) for x in game_state['blicket_indices'].tolist()],
-                    "final_machine_state": bool(game_state['true_state'][-1])
+                    "user_actions": st.session_state.user_actions,  # All place/remove actions
+                    "blicket_classifications": blicket_classifications,  # User's blicket answers
+                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
+                    "final_machine_state": bool(game_state['true_state'][-1]),
+                    "total_steps_taken": st.session_state.steps_taken,
+                    "final_objects_on_machine": list(st.session_state.selected_objects),
+                    "rule": round_config['rule']
                 }
+                
+                # Use the provided save function or default Firebase function
                 if save_data_func:
                     save_data_func(participant_id, round_data)
                 else:
@@ -416,6 +483,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.session_state.pop("game_start_time", None)
                 st.session_state.pop("shape_images", None)
                 st.session_state.pop("steps_taken", None)
+                st.session_state.pop("user_actions", None)
                 
                 # Return to main app for completion
                 st.session_state.phase = "end"
