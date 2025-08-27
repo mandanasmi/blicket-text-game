@@ -214,6 +214,9 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
             <div>
                 <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
+                <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: {'#00ff00' if machine_lit else '#ff4444'};">
+                    Blicket Detector {'LIT' if machine_lit else 'NOT LIT'}
+                </div>
             </div>
             <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
                 <div style="font-size: 14px; margin-bottom: 5px;">Steps Remaining</div>
@@ -385,12 +388,12 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         # Create questionnaire with object images
         for i in range(round_config['num_objects']):
             st.markdown(f"""
-            <div style="display: flex; align-items: center; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+            <div style="display: inline-flex; align-items: center; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; ">
                 <div style="flex: 0 0 100px; text-align: center;">
                     <img src="data:image/png;base64,{shape_images[i]}" style="width: 60px; height: auto;">
                     <br><strong>Object {i + 1}</strong>
                 </div>
-                <div style="flex: 1; margin-left: 20px;">
+                <div style="flex: 0 0 auto; margin-left: 20px;">
             """, unsafe_allow_html=True)
             
             st.radio(
@@ -401,14 +404,33 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             
             st.markdown("</div></div>", unsafe_allow_html=True)
         
+        # Add rule question
+        st.markdown("---")
+        st.markdown("### Rule Inference")
+        st.markdown("Based on your observations, what do you think is the rule for how the blicket detector works?")
+        rule_hypothesis = st.text_area(
+            "What do you think is the rule?",
+            placeholder="Describe your hypothesis about how the blicket detector determines when to light up...",
+            height=100,
+            key="rule_hypothesis"
+        )
+        
         # Navigation buttons
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
-            if st.button("Next Round"):
+            # Check if rule hypothesis is provided
+            rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            if not rule_hypothesis:
+                st.warning("⚠️ Please provide your hypothesis about the rule before proceeding to the next round.")
+            
+            if st.button("Next Round", disabled=not rule_hypothesis):
                 # Collect blicket classifications
                 blicket_classifications = {}
                 for i in range(round_config['num_objects']):
                     blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                
+                # Get rule hypothesis
+                rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                 
                 # Save current round data with detailed action tracking
                 round_data = {
@@ -418,6 +440,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     "round_config": round_config,
                     "user_actions": st.session_state.user_actions,  # All place/remove actions
                     "blicket_classifications": blicket_classifications,  # User's blicket answers
+                    "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                     "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
                     "final_machine_state": bool(game_state['true_state'][-1]),
                     "total_steps_taken": st.session_state.steps_taken,
@@ -448,11 +471,19 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.experimental_rerun()
         else:
             # Show Finish Task button only on the last round
-            if st.button("Finish Task"):
+            # Check if rule hypothesis is provided
+            rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            if not rule_hypothesis:
+                st.warning("⚠️ Please provide your hypothesis about the rule before finishing the task.")
+            
+            if st.button("Finish Task", disabled=not rule_hypothesis):
                 # Collect blicket classifications
                 blicket_classifications = {}
                 for i in range(round_config['num_objects']):
                     blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                
+                # Get rule hypothesis
+                rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                 
                 # Save final round data with detailed action tracking
                 round_data = {
@@ -462,6 +493,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     "round_config": round_config,
                     "user_actions": st.session_state.user_actions,  # All place/remove actions
                     "blicket_classifications": blicket_classifications,  # User's blicket answers
+                    "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                     "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
                     "final_machine_state": bool(game_state['true_state'][-1]),
                     "total_steps_taken": st.session_state.steps_taken,
