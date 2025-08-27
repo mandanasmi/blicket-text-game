@@ -12,6 +12,9 @@ from firebase_admin import db
 
 import env.blicket_text as blicket_text
 
+# Global variable to control visual vs text-only version
+USE_TEXT_VERSION = True
+
 def get_image_base64(image_path):
     """Convert image to base64 string for display"""
     with open(image_path, "rb") as img_file:
@@ -119,19 +122,21 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.session_state.game_start_time = datetime.datetime.now()
         st.session_state.steps_taken = 0  # Track number of steps taken
         st.session_state.user_actions = []  # Track all user actions for Firebase
+        st.session_state.action_history = []  # Track action history for text version
         
         # Initialize fixed shape images for this round (ensure different images)
-        st.session_state.shape_images = []
-        used_shapes = set()
-        for i in range(round_config['num_objects']):
-            # Keep trying until we get a unique shape
-            while True:
-                shape_num = random.randint(1, 8)
-                if shape_num not in used_shapes:
-                    used_shapes.add(shape_num)
-                    break
-            shape_path = f"images/shape{shape_num}.png"
-            st.session_state.shape_images.append(get_image_base64(shape_path))
+        if not USE_TEXT_VERSION:
+            st.session_state.shape_images = []
+            used_shapes = set()
+            for i in range(round_config['num_objects']):
+                # Keep trying until we get a unique shape
+                while True:
+                    shape_num = random.randint(1, 8)
+                    if shape_num not in used_shapes:
+                        used_shapes.add(shape_num)
+                        break
+                shape_path = f"images/shape{shape_num}.png"
+                st.session_state.shape_images.append(get_image_base64(shape_path))
     
     # Get environment state
     env = st.session_state.env
@@ -141,22 +146,23 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     blicket_img = get_image_base64("images/blicket.png")
     blicket_lit_img = get_image_base64("images/blicket_lit.png")
     
-    # Use fixed shape images from session state
-    if "shape_images" not in st.session_state:
-        # Initialize shape images if not already done (ensure different images)
-        st.session_state.shape_images = []
-        used_shapes = set()
-        for i in range(round_config['num_objects']):
-            # Keep trying until we get a unique shape
-            while True:
-                shape_num = random.randint(1, 8)
-                if shape_num not in used_shapes:
-                    used_shapes.add(shape_num)
-                    break
-            shape_path = f"images/shape{shape_num}.png"
-            st.session_state.shape_images.append(get_image_base64(shape_path))
-    
-    shape_images = st.session_state.shape_images
+    # Use fixed shape images from session state (only for visual version)
+    if not USE_TEXT_VERSION:
+        if "shape_images" not in st.session_state:
+            # Initialize shape images if not already done (ensure different images)
+            st.session_state.shape_images = []
+            used_shapes = set()
+            for i in range(round_config['num_objects']):
+                # Keep trying until we get a unique shape
+                while True:
+                    shape_num = random.randint(1, 8)
+                    if shape_num not in used_shapes:
+                        used_shapes.add(shape_num)
+                        break
+                shape_path = f"images/shape{shape_num}.png"
+                st.session_state.shape_images.append(get_image_base64(shape_path))
+        
+        shape_images = st.session_state.shape_images
     
     # Display round info and progress
     st.markdown(f"## Round {current_round + 1} of {total_rounds}")
@@ -196,35 +202,53 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     st.markdown("### Environment Description")
     st.markdown(game_state['feedback'])
     
-    # Display the blicket machine
-    st.markdown("### The Blicket Machine")
+    # Text-only version: Display action history
+    if USE_TEXT_VERSION:
+        st.markdown("### Action History")
+        if st.session_state.action_history:
+            for action_text in st.session_state.action_history:
+                st.markdown(f"• {action_text}")
+        else:
+            st.markdown("*No actions taken yet.*")
+        st.markdown("---")
+    
+    # Display the blicket machine (only in visual version)
+    if not USE_TEXT_VERSION:
+        st.markdown("### The Blicket Machine")
     
     # Determine if machine should be lit
     machine_lit = game_state['true_state'][-1]
-    machine_img = blicket_lit_img if machine_lit else blicket_img
     
-
-    
-    # Create machine display with steps counter
-    horizon = round_config.get('horizon', 32)
-    steps_left = horizon - st.session_state.steps_taken
-    
-    st.markdown(f"""
-    <div style="text-align: center; margin: 20px 0;">
-        <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
-            <div>
-                <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
-                <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: {'#00ff00' if machine_lit else '#ff4444'};">
-                    Blicket Detector {'LIT' if machine_lit else 'NOT LIT'}
+    if not USE_TEXT_VERSION:
+        machine_img = blicket_lit_img if machine_lit else blicket_img
+        
+        # Create machine display with steps counter
+        horizon = round_config.get('horizon', 32)
+        steps_left = horizon - st.session_state.steps_taken
+        
+        st.markdown(f"""
+        <div style="text-align: center; margin: 20px 0;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
+                <div>
+                    <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
+                    <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: {'#00ff00' if machine_lit else '#ff4444'};">
+                        Blicket Detector {'LIT' if machine_lit else 'NOT LIT'}
+                    </div>
+                </div>
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+                    <div style="font-size: 14px; margin-bottom: 5px;">Steps Remaining</div>
+                    <div style="font-size: 24px;">{steps_left}</div>
                 </div>
             </div>
-            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                <div style="font-size: 14px; margin-bottom: 5px;">Steps Remaining</div>
-                <div style="font-size: 24px;">{steps_left}</div>
-            </div>
         </div>
-    </div>
-    """, unsafe_allow_html=True)
+        """, unsafe_allow_html=True)
+    
+    # Text-only version: Show steps counter
+    if USE_TEXT_VERSION:
+        horizon = round_config.get('horizon', 32)
+        steps_left = horizon - st.session_state.steps_taken
+        st.markdown(f"**Steps Remaining: {steps_left}**")
+        st.markdown("---")
     
     # Show warning if no steps left
     if steps_left <= 0:
@@ -238,26 +262,78 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     
     # Display available objects
     st.markdown("### Available Objects")
-    st.markdown("Click on an object to place it on the machine. Click again to remove it.")
     
-
-    
-    # Create grid of objects with clickable images
-    for i in range(0, round_config['num_objects'], 4):
-        # Create a row of up to 4 objects
-        row_objects = range(i, min(i + 4, round_config['num_objects']))
+    if USE_TEXT_VERSION:
+        st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
-        # Always create 4 columns for consistent layout
+        # Text-only version: Simple button grid
         cols = st.columns(4)
+        for i in range(round_config['num_objects']):
+            with cols[i % 4]:
+                is_selected = i in st.session_state.selected_objects
+                horizon = round_config.get('horizon', 32)
+                steps_left = horizon - st.session_state.steps_taken
+                interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
+                
+                if st.button(f"Object {i + 1} {'(ON)' if is_selected else '(OFF)'}", 
+                           key=f"obj_{i}", 
+                           disabled=interaction_disabled,
+                           help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
+                    # Record the action before making changes
+                    action_time = datetime.datetime.now()
+                    action_type = "remove" if is_selected else "place"
+                    
+                    # Update object selection
+                    if is_selected:
+                        st.session_state.selected_objects.remove(i)
+                    else:
+                        st.session_state.selected_objects.add(i)
+                    
+                    # Update environment state
+                    env._state[i] = (i in st.session_state.selected_objects)
+                    env._update_machine_state()
+                    game_state = env.step("look")[0]  # Get updated state
+                    st.session_state.game_state = game_state
+                    
+                    # Add to action history
+                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {i + 1} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
+                    st.session_state.action_history.append(action_text)
+                    
+                    # Record the action for Firebase
+                    action_data = {
+                        "timestamp": action_time.isoformat(),
+                        "action_type": action_type,
+                        "object_index": i,
+                        "object_id": f"object_{i + 1}",
+                        "machine_state_before": bool(not machine_lit),  # Previous state
+                        "machine_state_after": bool(game_state['true_state'][-1]),  # New state
+                        "objects_on_machine": list(st.session_state.selected_objects),
+                        "step_number": st.session_state.steps_taken + 1
+                    }
+                    st.session_state.user_actions.append(action_data)
+                    
+                    # Increment step counter
+                    st.session_state.steps_taken += 1
+                    st.experimental_rerun()
+    else:
+        st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
-        for j in range(4):
-            with cols[j]:
-                # Check if this column should have an object
-                if j < len(row_objects):
-                    obj_idx = row_objects[j]
-                else:
-                    # Empty column - skip rendering
-                    continue
+        # Visual version: Create grid of objects with clickable images
+        for i in range(0, round_config['num_objects'], 4):
+            # Create a row of up to 4 objects
+            row_objects = range(i, min(i + 4, round_config['num_objects']))
+        
+            # Always create 4 columns for consistent layout
+            cols = st.columns(4)
+            
+            for j in range(4):
+                with cols[j]:
+                    # Check if this column should have an object
+                    if j < len(row_objects):
+                        obj_idx = row_objects[j]
+                    else:
+                        # Empty column - skip rendering
+                        continue
                 # Check if object is currently selected
                 is_selected = obj_idx in st.session_state.selected_objects
                 horizon = round_config.get('horizon', 32)
@@ -387,22 +463,33 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         
         # Create questionnaire with object images
         for i in range(round_config['num_objects']):
-            st.markdown(f"""
-            <div style="display: inline-flex; align-items: center; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px; ">
-                <div style="flex: 0 0 100px; text-align: center;">
-                    <img src="data:image/png;base64,{shape_images[i]}" style="width: 60px; height: auto;">
-                    <br><strong>Object {i + 1}</strong>
-                </div>
-                <div style="flex: 0 0 auto; margin-left: 20px;">
-            """, unsafe_allow_html=True)
-            
-            st.radio(
-                f"Is Object {i + 1} a blicket?",
-                ["Yes", "No"],
-                key=f"blicket_q_{i}"
-            )
-            
-            st.markdown("</div></div>", unsafe_allow_html=True)
+            if USE_TEXT_VERSION:
+                # Text-only version: Simple text-based questionnaire
+                st.markdown(f"**Object {i + 1}**")
+                st.radio(
+                    f"Is Object {i + 1} a blicket?",
+                    ["Yes", "No"],
+                    key=f"blicket_q_{i}"
+                )
+                st.markdown("---")
+            else:
+                # Visual version: Questionnaire with images
+                st.markdown(f"""
+                <div style="display: inline-flex; align-items: center; margin: 10px 0; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                    <div style="flex: 0 0 100px; text-align: center;">
+                        <img src="data:image/png;base64,{shape_images[i]}" style="width: 60px; height: auto;">
+                        <br><strong>Object {i + 1}</strong>
+                    </div>
+                    <div style="flex: 0 0 auto; margin-left: 20px;">
+                """, unsafe_allow_html=True)
+                
+                st.radio(
+                    f"Is Object {i + 1} a blicket?",
+                    ["Yes", "No"],
+                    key=f"blicket_q_{i}"
+                )
+                
+                st.markdown("</div></div>", unsafe_allow_html=True)
         
         # Add rule question
         st.markdown("---")
