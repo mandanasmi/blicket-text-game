@@ -164,6 +164,16 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.session_state.shape_images.append(get_image_base64(shape_path))
         
         shape_images = st.session_state.shape_images
+        
+        # Pre-load all shape images for state history (smaller versions)
+        if "shape_images_small" not in st.session_state:
+            st.session_state.shape_images_small = []
+            for i in range(round_config['num_objects']):
+                shape_num = (i % 8) + 1  # Use consistent mapping
+                shape_path = f"images/shape{shape_num}.png"
+                st.session_state.shape_images_small.append(get_image_base64(shape_path))
+        
+        shape_images_small = st.session_state.shape_images_small
     
     # Create sidebar for state history
     with st.sidebar:
@@ -188,8 +198,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         machine_status = "🟢" if state['machine_lit'] else "🔴"
                         st.markdown(f"<div style='margin: 2px 0; font-size: 12px;'><strong>{i + 1}:</strong> {objects_text} {machine_status}</div>", unsafe_allow_html=True)
                     else:
-                        # Visual version: show object images with green highlighting
-                        # Create columns for compact display
+                        # Visual version: show object numbers with colored backgrounds (much faster than images)
                         cols = st.columns(round_config['num_objects'] + 2)  # +2 for step number and machine status
                         
                         with cols[0]:
@@ -202,28 +211,34 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                                     # Selected object - green background
                                     st.markdown(f"""
                                     <div style="
-                                        background-color: rgba(0, 255, 0, 0.3); 
+                                        background-color: #00ff00; 
                                         border: 1px solid #00ff00; 
                                         border-radius: 3px; 
-                                        padding: 2px; 
+                                        padding: 2px 4px; 
                                         margin: 1px; 
                                         text-align: center;
+                                        color: black;
+                                        font-size: 10px;
+                                        font-weight: bold;
                                     ">
-                                        <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 20px; height: auto;">
+                                        {obj_idx + 1}
                                     </div>
                                     """, unsafe_allow_html=True)
                                 else:
-                                    # Unselected object - transparent background
+                                    # Unselected object - gray background
                                     st.markdown(f"""
                                     <div style="
-                                        background-color: transparent; 
-                                        border: 1px solid #cccccc; 
+                                        background-color: #333333; 
+                                        border: 1px solid #666666; 
                                         border-radius: 3px; 
-                                        padding: 2px; 
+                                        padding: 2px 4px; 
                                         margin: 1px; 
                                         text-align: center;
+                                        color: white;
+                                        font-size: 10px;
+                                        font-weight: bold;
                                     ">
-                                        <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 20px; height: auto;">
+                                        {obj_idx + 1}
                                     </div>
                                     """, unsafe_allow_html=True)
                         
