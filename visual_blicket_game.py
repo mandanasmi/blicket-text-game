@@ -123,6 +123,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.session_state.steps_taken = 0  # Track number of steps taken
         st.session_state.user_actions = []  # Track all user actions for Firebase
         st.session_state.action_history = []  # Track action history for text version
+        st.session_state.state_history = []  # Track complete state history
         
         # Initialize fixed shape images for this round (ensure different images)
         if not USE_TEXT_VERSION:
@@ -164,12 +165,50 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         
         shape_images = st.session_state.shape_images
     
-    # Display round info and progress
-    st.markdown(f"## Round {current_round + 1} of {total_rounds}")
+    # Create two columns: left for state history, right for main content
+    left_col, right_col = st.columns([1, 3])
     
-    # Progress bar
-    progress = (current_round + 1) / total_rounds
-    st.progress(progress)
+    with left_col:
+        st.markdown("### State History")
+        if st.session_state.state_history:
+            for i, state in enumerate(st.session_state.state_history):
+                st.markdown(f"**Step {i + 1}:**")
+                if USE_TEXT_VERSION:
+                    # Text version: show object numbers with green highlighting
+                    objects_text = ""
+                    for obj_idx in range(round_config['num_objects']):
+                        if obj_idx in state['objects_on_machine']:
+                            objects_text += f"<span style='background-color: #00ff00; color: black; padding: 2px 6px; margin: 2px; border-radius: 3px;'>{obj_idx + 1}</span>"
+                        else:
+                            objects_text += f"<span style='background-color: #333333; color: white; padding: 2px 6px; margin: 2px; border-radius: 3px;'>{obj_idx + 1}</span>"
+                    st.markdown(f"Objects: {objects_text}", unsafe_allow_html=True)
+                else:
+                    # Visual version: show object images with green highlighting
+                    objects_html = ""
+                    for obj_idx in range(round_config['num_objects']):
+                        bg_color = "rgba(0, 255, 0, 0.3)" if obj_idx in state['objects_on_machine'] else "transparent"
+                        border_color = "#00ff00" if obj_idx in state['objects_on_machine'] else "#cccccc"
+                        objects_html += f"""
+                        <div style="display: inline-block; margin: 2px; padding: 5px; border: 2px solid {border_color}; border-radius: 5px; background-color: {bg_color};">
+                            <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 30px; height: auto;">
+                        </div>
+                        """
+                    st.markdown(objects_html, unsafe_allow_html=True)
+                
+                # Show machine state
+                machine_status = "🟢 LIT" if state['machine_lit'] else "🔴 NOT LIT"
+                st.markdown(f"Machine: {machine_status}")
+                st.markdown("---")
+        else:
+            st.markdown("*No states recorded yet.*")
+    
+    with right_col:
+        # Display round info and progress
+        st.markdown(f"## Round {current_round + 1} of {total_rounds}")
+        
+        # Progress bar
+        progress = (current_round + 1) / total_rounds
+        st.progress(progress)
     
     # Collapsible instruction section
     with st.expander("📋 Game Instructions", expanded=False):
@@ -288,7 +327,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         margin: 0 auto 5px auto;
                         transition: all 0.2s ease;
                     "></div>
-                </div>
+                    <div style="text-align: center;">
                 """, unsafe_allow_html=True)
                 
                 if st.button(f"Object {i + 1}", 
@@ -315,6 +354,14 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {i + 1} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
                     st.session_state.action_history.append(action_text)
                     
+                    # Add to state history
+                    state_data = {
+                        "objects_on_machine": set(st.session_state.selected_objects),
+                        "machine_lit": bool(game_state['true_state'][-1]),
+                        "step_number": st.session_state.steps_taken + 1
+                    }
+                    st.session_state.state_history.append(state_data)
+                    
                     # Record the action for Firebase
                     action_data = {
                         "timestamp": action_time.isoformat(),
@@ -331,6 +378,9 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     # Increment step counter
                     st.session_state.steps_taken += 1
                     st.experimental_rerun()
+                
+                # Close the centered div for the button
+                st.markdown("</div>", unsafe_allow_html=True)
     else:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
@@ -414,6 +464,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         </div>
                         """, unsafe_allow_html=True)
 
+                        # Center the button
+                        st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
                         if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
                             # Record the action before making changes
                             action_time = datetime.datetime.now()
@@ -430,6 +482,14 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                             env._update_machine_state()
                             game_state = env.step("look")[0]  # Get updated state
                             st.session_state.game_state = game_state
+                            
+                            # Add to state history
+                            state_data = {
+                                "objects_on_machine": set(st.session_state.selected_objects),
+                                "machine_lit": bool(game_state['true_state'][-1]),
+                                "step_number": st.session_state.steps_taken + 1
+                            }
+                            st.session_state.state_history.append(state_data)
                             
                             # Record the action for Firebase
                             action_data = {
