@@ -13,7 +13,7 @@ from firebase_admin import db
 import env.blicket_text as blicket_text
 
 # Global variable to control visual vs text-only version
-USE_TEXT_VERSION = True
+USE_TEXT_VERSION = False
 
 def get_image_base64(image_path):
     """Convert image to base64 string for display"""
@@ -317,17 +317,17 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 # Create selection indicator box above the button
                 box_color = "#00ff00" if is_selected else "#333333"
                 st.markdown(f"""
-                <div style="text-align: center; margin: 5px;">
+                <div style="margin: 5px;">
                     <div style="
                         width: 60px; 
                         height: 20px; 
                         background-color: {box_color}; 
                         border: 2px solid #666666; 
                         border-radius: 5px; 
-                        margin: 0 auto 5px auto;
+                        margin-bottom: 5px;
                         transition: all 0.2s ease;
                     "></div>
-                    <div style="text-align: center;">
+                </div>
                 """, unsafe_allow_html=True)
                 
                 if st.button(f"Object {i + 1}", 
@@ -378,9 +378,6 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     # Increment step counter
                     st.session_state.steps_taken += 1
                     st.experimental_rerun()
-                
-                # Close the centered div for the button
-                st.markdown("</div>", unsafe_allow_html=True)
     else:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
@@ -445,9 +442,9 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     else:
                         # Interactive state - make the entire image container clickable
                         
-                        # Create the image display
+                                                # Create the image display
                         st.markdown(f"""
-                        <div style="text-align: center; margin: 10px;">
+                        <div style="margin: 10px;">
                             <div style="
                                 display: inline-block; 
                                 padding: 15px; 
@@ -463,9 +460,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
-
-                        # Center the button
-                        st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+                        
                         if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
                             # Record the action before making changes
                             action_time = datetime.datetime.now()
