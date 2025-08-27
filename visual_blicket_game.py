@@ -265,7 +265,6 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     """, unsafe_allow_html=True)
                 else:
                     # Interactive state - make the entire image container clickable
-                    # Use a simple approach with a clickable button that contains the image
                     
                     # Create the image display
                     st.markdown(f"""
@@ -283,18 +282,11 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
                             <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
                             <br>
-                            <div style="font-weight: bold; color: {'#00ff00' if is_selected else 'white'}; font-size: 16px;">
-                                Object {obj_idx + 1}
-                            </div>
-                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
-                                {'Selected' if is_selected else 'Click to place'}
-                            </div>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
-                    
-                    # Use a simple button below the image
-                    if st.button(f"Toggle Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
+
+                    if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
                         if is_selected:
                             st.session_state.selected_objects.remove(obj_idx)
                         else:
@@ -309,6 +301,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         # Increment step counter
                         st.session_state.steps_taken += 1
                         st.experimental_rerun()
+                    
+                    
     
 
     
