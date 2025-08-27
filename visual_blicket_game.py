@@ -424,7 +424,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     
                     # Increment step counter
                     st.session_state.steps_taken += 1
-                    st.experimental_rerun()
+                    st.rerun()
     else:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
@@ -548,7 +548,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                             
                             # Increment step counter
                             st.session_state.steps_taken += 1
-                            st.experimental_rerun()
+                            st.rerun()
                     
                     
     
@@ -566,11 +566,11 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             
             if st.button("Proceed to Answer Questions"):
                 st.session_state.visual_game_state = "questionnaire"
-                st.experimental_rerun()
+                st.rerun()
         else:
             if st.button("Ready to Answer Questions"):
                 st.session_state.visual_game_state = "questionnaire"
-                st.experimental_rerun()
+                st.rerun()
     
     elif st.session_state.visual_game_state == "questionnaire":
         st.markdown("""
@@ -674,7 +674,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 
                 # Return to main app for next round
                 st.session_state.phase = "next_round"
-                st.experimental_rerun()
+                st.rerun()
         else:
             # Show Finish Task button only on the last round
             # Check if rule hypothesis is provided
@@ -727,7 +727,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 
                 # Return to main app for completion
                 st.session_state.phase = "end"
-                st.experimental_rerun()
+                st.rerun()
 
 if __name__ == "__main__":
     # Test the visual game
