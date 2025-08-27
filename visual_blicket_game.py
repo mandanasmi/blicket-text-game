@@ -244,11 +244,17 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         # Create a row of up to 4 objects
         row_objects = range(i, min(i + 4, round_config['num_objects']))
         
-        # Create columns for this row
-        cols = st.columns(len(row_objects))
+        # Always create 4 columns for consistent layout
+        cols = st.columns(4)
         
-        for j, obj_idx in enumerate(row_objects):
+        for j in range(4):
             with cols[j]:
+                # Check if this column should have an object
+                if j < len(row_objects):
+                    obj_idx = row_objects[j]
+                else:
+                    # Empty column - skip rendering
+                    continue
                 # Check if object is currently selected
                 is_selected = obj_idx in st.session_state.selected_objects
                 horizon = round_config.get('horizon', 32)
@@ -287,9 +293,6 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                             <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
                                 Object {obj_idx + 1}
                             </div>
-                            <div style="font-size: 12px; color: #666; margin-top: 5px;">
-                                {'Selected' if is_selected else 'Disabled'}
-                            </div>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
@@ -306,7 +309,6 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                             border-radius: 15px; 
                             background: transparent;
                             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                            cursor: {cursor};
                             transition: all 0.2s ease;
                             position: relative;
                         " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
