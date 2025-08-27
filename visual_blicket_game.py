@@ -334,102 +334,103 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     else:
                         # Empty column - skip rendering
                         continue
-                # Check if object is currently selected
-                is_selected = obj_idx in st.session_state.selected_objects
-                horizon = round_config.get('horizon', 32)
-                steps_left = horizon - st.session_state.steps_taken
-                
-                # Disable interaction if no steps left or if in questionnaire phase
-                interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
-                
-                # Create clickable image with improved styling
-                if interaction_disabled:
-                    # Disabled state - gray out the image
-                    opacity = "0.5"
-                    cursor = "not-allowed"
-                    border_color = "#cccccc"
-                else:
-                    opacity = "1.0"
-                    cursor = "pointer"
-                    border_color = "#00ff00" if is_selected else "#ffffff"
-                
-                # Create clickable image container
-                if interaction_disabled:
-                    # Disabled state - just show the image
-                    st.markdown(f"""
-                    <div style="text-align: center; margin: 10px;">
-                        <div style="
-                            display: inline-block; 
-                            padding: 15px; 
-                            border: 3px solid {border_color}; 
-                            border-radius: 15px; 
-                            background: transparent;
-                            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                            opacity: {opacity};
-                        ">
-                            <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
-                            <br>
-                            <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
-                                Object {obj_idx + 1}
+                    
+                    # Check if object is currently selected
+                    is_selected = obj_idx in st.session_state.selected_objects
+                    horizon = round_config.get('horizon', 32)
+                    steps_left = horizon - st.session_state.steps_taken
+                    
+                    # Disable interaction if no steps left or if in questionnaire phase
+                    interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
+                    
+                    # Create clickable image with improved styling
+                    if interaction_disabled:
+                        # Disabled state - gray out the image
+                        opacity = "0.5"
+                        cursor = "not-allowed"
+                        border_color = "#cccccc"
+                    else:
+                        opacity = "1.0"
+                        cursor = "pointer"
+                        border_color = "#00ff00" if is_selected else "#ffffff"
+                    
+                    # Create clickable image container
+                    if interaction_disabled:
+                        # Disabled state - just show the image
+                        st.markdown(f"""
+                        <div style="text-align: center; margin: 10px;">
+                            <div style="
+                                display: inline-block; 
+                                padding: 15px; 
+                                border: 3px solid {border_color}; 
+                                border-radius: 15px; 
+                                background: {'rgba(0, 255, 0, 0.2)' if is_selected else 'transparent'};
+                                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                                opacity: {opacity};
+                            ">
+                                <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
+                                <br>
+                                <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
+                                    Object {obj_idx + 1}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    """, unsafe_allow_html=True)
-                else:
-                    # Interactive state - make the entire image container clickable
-                    
-                    # Create the image display
-                    st.markdown(f"""
-                    <div style="text-align: center; margin: 10px;">
-                        <div style="
-                            display: inline-block; 
-                            padding: 15px; 
-                            border: 3px solid {border_color}; 
-                            border-radius: 15px; 
-                            background: transparent;
-                            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-                            transition: all 0.2s ease;
-                            position: relative;
-                        " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
-                            <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
-                            <br>
+                        """, unsafe_allow_html=True)
+                    else:
+                        # Interactive state - make the entire image container clickable
+                        
+                        # Create the image display
+                        st.markdown(f"""
+                        <div style="text-align: center; margin: 10px;">
+                            <div style="
+                                display: inline-block; 
+                                padding: 15px; 
+                                border: 3px solid {border_color}; 
+                                border-radius: 15px; 
+                                background: {'rgba(0, 255, 0)' if is_selected else 'transparent'};
+                                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                                transition: all 0.2s ease;
+                                position: relative;
+                            " onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)'">
+                                <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
+                                <br>
+                            </div>
                         </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                        """, unsafe_allow_html=True)
 
-                    if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
-                        # Record the action before making changes
-                        action_time = datetime.datetime.now()
-                        action_type = "remove" if is_selected else "place"
-                        
-                        # Update object selection
-                        if is_selected:
-                            st.session_state.selected_objects.remove(obj_idx)
-                        else:
-                            st.session_state.selected_objects.add(obj_idx)
-                        
-                        # Update environment state
-                        env._state[obj_idx] = (obj_idx in st.session_state.selected_objects)
-                        env._update_machine_state()
-                        game_state = env.step("look")[0]  # Get updated state
-                        st.session_state.game_state = game_state
-                        
-                        # Record the action for Firebase
-                        action_data = {
-                            "timestamp": action_time.isoformat(),
-                            "action_type": action_type,
-                            "object_index": obj_idx,
-                            "object_id": f"object_{obj_idx + 1}",
-                            "machine_state_before": bool(not machine_lit),  # Previous state
-                            "machine_state_after": bool(game_state['true_state'][-1]),  # New state
-                            "objects_on_machine": list(st.session_state.selected_objects),
-                            "step_number": st.session_state.steps_taken + 1
-                        }
-                        st.session_state.user_actions.append(action_data)
-                        
-                        # Increment step counter
-                        st.session_state.steps_taken += 1
-                        st.experimental_rerun()
+                        if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
+                            # Record the action before making changes
+                            action_time = datetime.datetime.now()
+                            action_type = "remove" if is_selected else "place"
+                            
+                            # Update object selection
+                            if is_selected:
+                                st.session_state.selected_objects.remove(obj_idx)
+                            else:
+                                st.session_state.selected_objects.add(obj_idx)
+                            
+                            # Update environment state
+                            env._state[obj_idx] = (obj_idx in st.session_state.selected_objects)
+                            env._update_machine_state()
+                            game_state = env.step("look")[0]  # Get updated state
+                            st.session_state.game_state = game_state
+                            
+                            # Record the action for Firebase
+                            action_data = {
+                                "timestamp": action_time.isoformat(),
+                                "action_type": action_type,
+                                "object_index": obj_idx,
+                                "object_id": f"object_{obj_idx + 1}",
+                                "machine_state_before": bool(not machine_lit),  # Previous state
+                                "machine_state_after": bool(game_state['true_state'][-1]),  # New state
+                                "objects_on_machine": list(st.session_state.selected_objects),
+                                "step_number": st.session_state.steps_taken + 1
+                            }
+                            st.session_state.user_actions.append(action_data)
+                            
+                            # Increment step counter
+                            st.session_state.steps_taken += 1
+                            st.experimental_rerun()
                     
                     
     
