@@ -275,7 +275,23 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 steps_left = horizon - st.session_state.steps_taken
                 interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                 
-                if st.button(f"Object {i + 1} {'(ON)' if is_selected else '(OFF)'}", 
+                # Create selection indicator box above the button
+                box_color = "#00ff00" if is_selected else "#333333"
+                st.markdown(f"""
+                <div style="text-align: center; margin: 5px;">
+                    <div style="
+                        width: 60px; 
+                        height: 20px; 
+                        background-color: {box_color}; 
+                        border: 2px solid #666666; 
+                        border-radius: 5px; 
+                        margin: 0 auto 5px auto;
+                        transition: all 0.2s ease;
+                    "></div>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                if st.button(f"Object {i + 1}", 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
                            help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
