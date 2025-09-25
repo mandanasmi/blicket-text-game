@@ -187,6 +187,8 @@ def reset_all():
     st.session_state.round_configs = []
     st.session_state.num_objects_selected = None
     st.session_state.participant_id_entered = False
+    st.session_state.rule_selected = None
+    st.session_state.object_count_entered = False
 
 BINARY_QUESTIONS = [
     "Did you test each object at least once?",
@@ -217,6 +219,10 @@ if "num_objects_selected" not in st.session_state:
     st.session_state.num_objects_selected = None
 if "participant_id_entered" not in st.session_state:
     st.session_state.participant_id_entered = False
+if "rule_selected" not in st.session_state:
+    st.session_state.rule_selected = None
+if "object_count_entered" not in st.session_state:
+    st.session_state.object_count_entered = False
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 st.title("🧙 Blicket Text Adventure")
@@ -237,7 +243,7 @@ Please enter your participant ID to begin.
             st.session_state.current_participant_id = participant_id.strip()
             st.session_state.participant_id_entered = True
             st.rerun()
-    else:
+    elif not st.session_state.object_count_entered:
         # Step 2: Ask for number of objects
         st.markdown(
             f"""
@@ -254,12 +260,40 @@ How many objects would you like to play with in each round?
             key="num_objects_selector"
         )
         
-        st.info(f"🎯 You will play with **{num_objects} objects** in each round. The number of blickets and rules will stay the same between rounds.")
+        st.info(f"🎯 You will play with **{num_objects} objects** in each round.")
+        
+        if st.button("Continue"):
+            st.session_state.num_objects_selected = num_objects
+            st.session_state.object_count_entered = True
+            st.rerun()
+    else:
+        # Step 3: Ask for rule selection
+        st.markdown(
+            f"""
+**Great! You've selected {st.session_state.num_objects_selected} objects per round.**
+
+Now, please choose the rule for how the blicket detector works:
+"""
+        )
+        
+        st.markdown("""
+**Rule Options:**
+- **Conjunctive Rule**: The detector lights up only when ALL placed objects are blickets
+- **Disjunctive Rule**: The detector lights up when ANY of the placed objects is a blicket
+        """)
+        
+        rule_choice = st.radio(
+            "Which rule would you like to play with?",
+            ["Conjunctive", "Disjunctive"],
+            key="rule_selector"
+        )
+        
+        st.info(f"🎯 You will play with the **{rule_choice.lower()} rule** across all rounds.")
         
         if st.button("Start Game"):
-            st.session_state.num_objects_selected = num_objects
+            st.session_state.rule_selected = rule_choice.lower()
             
-            # Create random configuration (3 rounds with user-specified number of objects)
+            # Create random configuration (3 rounds with user-specified number of objects and rule)
             import random
             
             # Set random seed based on participant ID for reproducibility
@@ -273,8 +307,8 @@ How many objects would you like to play with in each round?
                 num_objects = st.session_state.num_objects_selected
                 # Random number of blickets between 1 and num_objects
                 num_blickets = random.randint(1, num_objects)
-                # Random rule
-                rule = random.choice(['conjunctive', 'disjunctive'])
+                # Use user-selected rule
+                rule = st.session_state.rule_selected
                 # Random initial probability
                 init_prob = random.uniform(0.1, 0.3)
                 # Random transition noise
@@ -294,6 +328,7 @@ How many objects would you like to play with in each round?
             config = {
                 'num_rounds': num_rounds,
                 'user_selected_objects': num_objects,
+                'user_selected_rule': rule,
                 'rounds': round_configs
             }
             save_participant_config(st.session_state.current_participant_id, config)
