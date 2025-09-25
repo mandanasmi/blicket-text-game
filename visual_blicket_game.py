@@ -37,6 +37,22 @@ def convert_numpy_types(obj):
     else:
         return obj
 
+def calculate_blicket_accuracy(user_classifications, true_blicket_indices):
+    """Calculate accuracy of user's blicket classifications"""
+    total_objects = len(user_classifications)
+    correct_classifications = 0
+    
+    for i in range(total_objects):
+        object_key = f"object_{i+1}"
+        user_answer = user_classifications.get(object_key, "No")
+        is_true_blicket = i in true_blicket_indices
+        
+        # Check if user's answer matches the truth
+        if (user_answer == "Yes" and is_true_blicket) or (user_answer == "No" and not is_true_blicket):
+            correct_classifications += 1
+    
+    return correct_classifications / total_objects if total_objects > 0 else 0
+
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
     random.seed(seed)
@@ -668,13 +684,32 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     "round_number": current_round + 1,
                     "round_config": round_config,
                     "user_actions": st.session_state.user_actions,  # All place/remove actions
-                    "blicket_classifications": blicket_classifications,  # User's blicket answers
-                    "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
-                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
+                    
+                    # 🎯 User Responses
+                    "user_responses": {
+                        "blicket_classifications": blicket_classifications,  # User's blicket answers (Yes/No for each object)
+                        "rule_hypothesis": rule_hypothesis,  # User's rule selection (Conjunctive/Disjunctive)
+                    },
+                    
+                    # 🎯 True Values (Ground Truth)
+                    "true_values": {
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Indices of actual blickets
+                        "true_rule": round_config['rule'],  # Actual rule used (conjunctive/disjunctive)
+                        "true_blicket_objects": [f"object_{i+1}" for i in game_state['blicket_indices']],  # Object names of true blickets
+                    },
+                    
+                    # Game State
                     "final_machine_state": bool(game_state['true_state'][-1]),
                     "total_steps_taken": st.session_state.steps_taken,
                     "final_objects_on_machine": list(st.session_state.selected_objects),
-                    "rule": round_config['rule']
+                    
+                    # 📊 Analysis Data
+                    "analysis": {
+                        "blicket_accuracy": calculate_blicket_accuracy(blicket_classifications, game_state['blicket_indices']),
+                        "rule_accuracy": rule_hypothesis.lower() == round_config['rule'],
+                        "total_objects": round_config['num_objects'],
+                        "num_true_blickets": len(game_state['blicket_indices']),
+                    }
                 }
                 
                 # Use the provided save function or default Firebase function
@@ -735,13 +770,32 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     "round_number": current_round + 1,
                     "round_config": round_config,
                     "user_actions": st.session_state.user_actions,  # All place/remove actions
-                    "blicket_classifications": blicket_classifications,  # User's blicket answers
-                    "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
-                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
+                    
+                    # 🎯 User Responses
+                    "user_responses": {
+                        "blicket_classifications": blicket_classifications,  # User's blicket answers (Yes/No for each object)
+                        "rule_hypothesis": rule_hypothesis,  # User's rule selection (Conjunctive/Disjunctive)
+                    },
+                    
+                    # 🎯 True Values (Ground Truth)
+                    "true_values": {
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Indices of actual blickets
+                        "true_rule": round_config['rule'],  # Actual rule used (conjunctive/disjunctive)
+                        "true_blicket_objects": [f"object_{i+1}" for i in game_state['blicket_indices']],  # Object names of true blickets
+                    },
+                    
+                    # Game State
                     "final_machine_state": bool(game_state['true_state'][-1]),
                     "total_steps_taken": st.session_state.steps_taken,
                     "final_objects_on_machine": list(st.session_state.selected_objects),
-                    "rule": round_config['rule']
+                    
+                    # 📊 Analysis Data
+                    "analysis": {
+                        "blicket_accuracy": calculate_blicket_accuracy(blicket_classifications, game_state['blicket_indices']),
+                        "rule_accuracy": rule_hypothesis.lower() == round_config['rule'],
+                        "total_objects": round_config['num_objects'],
+                        "num_true_blickets": len(game_state['blicket_indices']),
+                    }
                 }
                 
                 # Use the provided save function or default Firebase function
