@@ -254,7 +254,7 @@ How many objects would you like to play with in each round?
             key="num_objects_selector"
         )
         
-        st.info(f"🎯 You will play with **{num_objects} objects** in each round. The number of blickets and rules will vary randomly between rounds.")
+        st.info(f"🎯 You will play with **{num_objects} objects** in each round. The number of blickets and rules will stay the same between rounds.")
         
         if st.button("Start Game"):
             st.session_state.num_objects_selected = num_objects
