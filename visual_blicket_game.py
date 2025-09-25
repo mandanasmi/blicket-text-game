@@ -588,7 +588,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.radio(
                     f"Is Object {i + 1} a blicket?",
                     ["Yes", "No"],
-                    key=f"blicket_q_{i}"
+                    key=f"blicket_q_{i}",
+                    index=None
                 )
                 st.markdown("---")
             else:
@@ -605,7 +606,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.radio(
                     f"Is Object {i + 1} a blicket?",
                     ["Yes", "No"],
-                    key=f"blicket_q_{i}"
+                    key=f"blicket_q_{i}",
+                    index=None
                 )
                 
                 st.markdown("</div></div>", unsafe_allow_html=True)
@@ -624,16 +626,30 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         # Navigation buttons
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
+            # Check if all blicket questions are answered
+            all_blicket_answered = True
+            for i in range(round_config['num_objects']):
+                if st.session_state.get(f"blicket_q_{i}") is None:
+                    all_blicket_answered = False
+                    break
+            
             # Check if rule hypothesis is provided
             rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            
+            # Show warnings for missing answers
+            if not all_blicket_answered:
+                st.warning("⚠️ Please answer all blicket questions before proceeding to the next round.")
             if not rule_hypothesis:
                 st.warning("⚠️ Please provide your hypothesis about the rule before proceeding to the next round.")
             
-            if st.button("Next Round", disabled=not rule_hypothesis):
+            can_proceed = all_blicket_answered and rule_hypothesis
+            
+            if st.button("Next Round", disabled=not can_proceed):
                 # Collect blicket classifications
                 blicket_classifications = {}
                 for i in range(round_config['num_objects']):
-                    blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                    answer = st.session_state.get(f"blicket_q_{i}")
+                    blicket_classifications[f"object_{i+1}"] = answer if answer is not None else "No"
                 
                 # Get rule hypothesis
                 rule_hypothesis = st.session_state.get("rule_hypothesis", "")
@@ -677,16 +693,30 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.rerun()
         else:
             # Show Finish Task button only on the last round
+            # Check if all blicket questions are answered
+            all_blicket_answered = True
+            for i in range(round_config['num_objects']):
+                if st.session_state.get(f"blicket_q_{i}") is None:
+                    all_blicket_answered = False
+                    break
+            
             # Check if rule hypothesis is provided
             rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            
+            # Show warnings for missing answers
+            if not all_blicket_answered:
+                st.warning("⚠️ Please answer all blicket questions before finishing the task.")
             if not rule_hypothesis:
                 st.warning("⚠️ Please provide your hypothesis about the rule before finishing the task.")
             
-            if st.button("Finish Task", disabled=not rule_hypothesis):
+            can_finish = all_blicket_answered and rule_hypothesis
+            
+            if st.button("Finish Task", disabled=not can_finish):
                 # Collect blicket classifications
                 blicket_classifications = {}
                 for i in range(round_config['num_objects']):
-                    blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                    answer = st.session_state.get(f"blicket_q_{i}")
+                    blicket_classifications[f"object_{i+1}"] = answer if answer is not None else "No"
                 
                 # Get rule hypothesis
                 rule_hypothesis = st.session_state.get("rule_hypothesis", "")
