@@ -616,11 +616,18 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.markdown("---")
         st.markdown("### Rule Inference")
         st.markdown("Based on your observations, what do you think is the rule for how the blicket detector works?")
-        rule_hypothesis = st.text_area(
-            "What do you think is the rule?",
-            placeholder="Describe your hypothesis about how the blicket detector determines when to light up...",
-            height=100,
-            key="rule_hypothesis"
+        
+        st.markdown("""
+**Rule Options:**
+- **Conjunctive Rule**: The detector lights up only when ALL placed objects are blickets
+- **Disjunctive Rule**: The detector lights up when ANY of the placed objects is a blicket
+        """)
+        
+        rule_hypothesis = st.radio(
+            "Which rule do you think the blicket detector follows?",
+            ["Conjunctive", "Disjunctive"],
+            key="rule_hypothesis",
+            index=None
         )
         
         # Navigation buttons
@@ -634,13 +641,13 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     break
             
             # Check if rule hypothesis is provided
-            rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            rule_hypothesis = st.session_state.get("rule_hypothesis")
             
             # Show warnings for missing answers
             if not all_blicket_answered:
                 st.warning("⚠️ Please answer all blicket questions before proceeding to the next round.")
             if not rule_hypothesis:
-                st.warning("⚠️ Please provide your hypothesis about the rule before proceeding to the next round.")
+                st.warning("⚠️ Please select which rule you think the blicket detector follows.")
             
             can_proceed = all_blicket_answered and rule_hypothesis
             
@@ -652,7 +659,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     blicket_classifications[f"object_{i+1}"] = answer if answer is not None else "No"
                 
                 # Get rule hypothesis
-                rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                rule_hypothesis = st.session_state.get("rule_hypothesis")
                 
                 # Save current round data with detailed action tracking
                 round_data = {
@@ -701,13 +708,13 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     break
             
             # Check if rule hypothesis is provided
-            rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            rule_hypothesis = st.session_state.get("rule_hypothesis")
             
             # Show warnings for missing answers
             if not all_blicket_answered:
                 st.warning("⚠️ Please answer all blicket questions before finishing the task.")
             if not rule_hypothesis:
-                st.warning("⚠️ Please provide your hypothesis about the rule before finishing the task.")
+                st.warning("⚠️ Please select which rule you think the blicket detector follows.")
             
             can_finish = all_blicket_answered and rule_hypothesis
             
@@ -719,7 +726,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     blicket_classifications[f"object_{i+1}"] = answer if answer is not None else "No"
                 
                 # Get rule hypothesis
-                rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                rule_hypothesis = st.session_state.get("rule_hypothesis")
                 
                 # Save final round data with detailed action tracking
                 round_data = {
