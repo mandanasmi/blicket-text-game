@@ -21,44 +21,47 @@ os.makedirs(LOG_DIR, exist_ok=True)
 
 # Initialize Firebase using environment variables or Streamlit secrets
 if not firebase_admin._apps:
-    # Try to get credentials from Streamlit secrets first, then fall back to environment variables
     try:
-        # For Streamlit Cloud deployment
-        firebase_credentials = {
-            "type": "service_account",
-            "project_id": st.secrets["firebase"]["project_id"],
-            "private_key_id": st.secrets["firebase"]["private_key_id"],
-            "private_key": st.secrets["firebase"]["private_key"].replace("\\n", "\n"),
-            "client_email": st.secrets["firebase"]["client_email"],
-            "client_id": st.secrets["firebase"]["client_id"],
-            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
-            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"],
-            "universe_domain": "googleapis.com"
-        }
-        database_url = st.secrets["firebase"]["database_url"]
-    except:
-        # For local development with .env file
-        firebase_credentials = {
-            "type": "service_account",
-            "project_id": os.getenv("FIREBASE_PROJECT_ID"),
-            "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
-            "private_key": os.getenv("FIREBASE_PRIVATE_KEY").replace("\\n", "\n"),
-            "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
-            "client_id": os.getenv("FIREBASE_CLIENT_ID"),
-            "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-            "token_uri": "https://oauth2.googleapis.com/token",
-            "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-            "client_x509_cert_url": os.getenv("FIREBASE_CLIENT_X509_CERT_URL"),
-            "universe_domain": "googleapis.com"
-        }
-        database_url = os.getenv("FIREBASE_DATABASE_URL")
-    
-    cred = credentials.Certificate(firebase_credentials)
-    firebase_admin.initialize_app(cred, {
-        'databaseURL': database_url
-    })
+        # Try Streamlit secrets first (for Cloud deployment)
+        if hasattr(st, 'secrets') and 'firebase' in st.secrets:
+            firebase_credentials = {
+                "type": "service_account",
+                "project_id": st.secrets["firebase"]["project_id"],
+                "private_key_id": st.secrets["firebase"]["private_key_id"],
+                "private_key": st.secrets["firebase"]["private_key"].replace("\\n", "\n"),
+                "client_email": st.secrets["firebase"]["client_email"],
+                "client_id": st.secrets["firebase"]["client_id"],
+                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                "token_uri": "https://oauth2.googleapis.com/token",
+                "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+                "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"],
+                "universe_domain": "googleapis.com"
+            }
+            database_url = st.secrets["firebase"]["database_url"]
+        else:
+            # Fall back to environment variables (for local development)
+            firebase_credentials = {
+                "type": "service_account",
+                "project_id": os.getenv("FIREBASE_PROJECT_ID"),
+                "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
+                "private_key": os.getenv("FIREBASE_PRIVATE_KEY", "").replace("\\n", "\n"),
+                "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
+                "client_id": os.getenv("FIREBASE_CLIENT_ID"),
+                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+                "token_uri": "https://oauth2.googleapis.com/token",
+                "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+                "client_x509_cert_url": os.getenv("FIREBASE_CLIENT_X509_CERT_URL"),
+                "universe_domain": "googleapis.com"
+            }
+            database_url = os.getenv("FIREBASE_DATABASE_URL")
+        
+        cred = credentials.Certificate(firebase_credentials)
+        firebase_admin.initialize_app(cred, {
+            'databaseURL': database_url
+        })
+    except Exception as e:
+        st.error(f"Failed to initialize Firebase: {str(e)}")
+        st.stop()
 
 # Get database reference
 db_ref = db.reference()
@@ -187,7 +190,6 @@ def reset_all():
     st.session_state.round_configs = []
     st.session_state.num_objects_selected = None
     st.session_state.participant_id_entered = False
-    st.session_state.object_count_entered = False
 
 BINARY_QUESTIONS = [
     "Did you test each object at least once?",
@@ -218,8 +220,6 @@ if "num_objects_selected" not in st.session_state:
     st.session_state.num_objects_selected = None
 if "participant_id_entered" not in st.session_state:
     st.session_state.participant_id_entered = False
-if "object_count_entered" not in st.session_state:
-    st.session_state.object_count_entered = False
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 st.title("🧙 Blicket Text Adventure")
@@ -257,7 +257,7 @@ How many objects would you like to play with in each round?
             key="num_objects_selector"
         )
         
-        st.info(f"🎯 You will play with **{num_objects} objects** in each round. The number of blickets and rules will vary randomly between rounds.")
+        st.info(f"🎯 You will play with **{num_objects} objects** in each round. The number of blickets and rules will stay the same between rounds.")
         
         if st.button("Start Game"):
             st.session_state.num_objects_selected = num_objects
@@ -281,7 +281,7 @@ How many objects would you like to play with in each round?
                 # Random initial probability
                 init_prob = random.uniform(0.1, 0.3)
                 # Random transition noise
-                transition_noise = random.uniform(0.0, 0.1)
+                transition_noise = 0.0 #random.uniform(0.0, 0.1)
                 
                 round_config = {
                     'num_objects': num_objects,
