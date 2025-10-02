@@ -13,7 +13,7 @@ from firebase_admin import db
 import env.blicket_text as blicket_text
 
 # Global variable to control visual vs text-only version
-USE_TEXT_VERSION = False
+use_text_version = False
 
 def get_image_base64(image_path):
     """Convert image to base64 string for display"""
@@ -71,12 +71,12 @@ def save_game_data(participant_id, game_data):
 def visual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None):
     """Main blicket game page - supports both visual and text modes"""
     
-    # Determine which mode to use
+    # Determine which mode to use - this is the LOCAL variable for this function
     if use_visual_mode is not None:
-        USE_TEXT_VERSION = not use_visual_mode
+        use_text_version = not use_visual_mode
     else:
         # Fall back to global setting or environment variable
-        USE_TEXT_VERSION = os.getenv('BLICKET_VISUAL_MODE', 'False').lower() != 'true'
+        use_text_version = os.getenv('BLICKET_VISUAL_MODE', 'False').lower() != 'true'
     
     # Add custom CSS for better styling
     st.markdown("""
@@ -133,7 +133,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.session_state.state_history = []  # Track complete state history
         
         # Initialize fixed shape images for this round (ensure different images)
-        if not USE_TEXT_VERSION:
+        if not use_text_version:
             st.session_state.shape_images = []
             used_shapes = set()
             for i in range(round_config['num_objects']):
@@ -154,8 +154,9 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     blicket_img = get_image_base64("images/blicket.png")
     blicket_lit_img = get_image_base64("images/blicket_lit.png")
     
-    # Use fixed shape images from session state (only for visual version)
-    if not USE_TEXT_VERSION:
+    # Initialize shape images for visual version
+    shape_images = []
+    if not use_text_version:
         if "shape_images" not in st.session_state:
             # Initialize shape images if not already done (ensure different images)
             st.session_state.shape_images = []
@@ -192,7 +193,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         with history_container:
             if st.session_state.state_history:
                 for i, state in enumerate(st.session_state.state_history):
-                    if USE_TEXT_VERSION:
+                    if use_text_version:
                         # Text version: show object numbers with green highlighting
                         objects_text = ""
                         for obj_idx in range(round_config['num_objects']):
@@ -296,7 +297,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     st.markdown(game_state['feedback'])
     
     # Text-only version: Display action history
-    if USE_TEXT_VERSION:
+    if use_text_version:
         st.markdown("### Action History")
         if st.session_state.action_history:
             for action_text in st.session_state.action_history:
@@ -306,13 +307,13 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.markdown("---")
     
     # Display the blicket machine (only in visual version)
-    if not USE_TEXT_VERSION:
+    if not use_text_version:
         st.markdown("### The Blicket Machine")
     
     # Determine if machine should be lit
     machine_lit = game_state['true_state'][-1]
     
-    if not USE_TEXT_VERSION:
+    if not use_text_version:
         machine_img = blicket_lit_img if machine_lit else blicket_img
         
         # Create machine display with steps counter
@@ -337,7 +338,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         """, unsafe_allow_html=True)
     
     # Text-only version: Show steps counter and machine status
-    if USE_TEXT_VERSION:
+    if use_text_version:
         horizon = round_config.get('horizon', 32)
         steps_left = horizon - st.session_state.steps_taken
         machine_status = "🟢 LIT" if machine_lit else "🔴 NOT LIT"
@@ -361,7 +362,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Display available objects
     st.markdown("### Available Objects")
     
-    if USE_TEXT_VERSION:
+    if use_text_version:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
         # Text-only version: Simple button grid
@@ -570,6 +571,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     st.markdown("---")
     st.markdown("### 🎯 Game Controls")
     
+    
     if st.session_state.visual_game_state == "exploration":
         horizon = round_config.get('horizon', 32)
         steps_left = horizon - st.session_state.steps_taken
@@ -600,7 +602,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         
         # Create questionnaire with object images
         for i in range(round_config['num_objects']):
-            if USE_TEXT_VERSION:
+            if use_text_version:
                 # Text-only version: Simple text-based questionnaire
                 st.markdown(f"**Object {i + 1}**")
                 st.radio(
