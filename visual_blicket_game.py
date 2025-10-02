@@ -13,7 +13,7 @@ from firebase_admin import db
 import env.blicket_text as blicket_text
 
 # Global variable to control visual vs text-only version
-USE_TEXT_VERSION = True
+USE_TEXT_VERSION = False
 
 def get_image_base64(image_path):
     """Convert image to base64 string for display"""
@@ -556,6 +556,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     
     # Phase transition buttons
     st.markdown("---")
+    st.markdown("### 🎯 Game Controls")
     
     if st.session_state.visual_game_state == "exploration":
         horizon = round_config.get('horizon', 32)
@@ -564,18 +565,18 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         # Show different buttons based on steps remaining
         if steps_left <= 0:
             st.warning("⏰ No steps remaining! Please proceed to answer questions.")
-            if st.button("Proceed to Answer Questions", type="primary"):
+            if st.button("Proceed to Answer Questions", type="primary", key="proceed_btn"):
                 st.session_state.visual_game_state = "questionnaire"
                 st.rerun()
         else:
             st.info(f"You have {steps_left} steps remaining. You can continue exploring or proceed to questions.")
-            col1, col2 = st.columns(2)
-            with col1:
-                if st.button("Ready to Answer Questions", type="primary"):
-                    st.session_state.visual_game_state = "questionnaire"
-                    st.rerun()
-            with col2:
-                st.markdown(f"**Steps left: {steps_left}**")
+            
+            # Make the button more prominent and always visible
+            if st.button("🎯 Ready to Answer Questions", type="primary", key="ready_btn"):
+                st.session_state.visual_game_state = "questionnaire"
+                st.rerun()
+            
+            st.markdown(f"**Steps remaining: {steps_left}/{horizon}**")
     
     elif st.session_state.visual_game_state == "questionnaire":
         st.markdown("""
