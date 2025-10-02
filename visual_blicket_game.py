@@ -13,7 +13,7 @@ from firebase_admin import db
 import env.blicket_text as blicket_text
 
 # Global variable to control visual vs text-only version
-USE_TEXT_VERSION = False
+USE_TEXT_VERSION = True
 
 def get_image_base64(image_path):
     """Convert image to base64 string for display"""
@@ -36,22 +36,6 @@ def convert_numpy_types(obj):
         return [convert_numpy_types(item) for item in obj]
     else:
         return obj
-
-def calculate_blicket_accuracy(user_classifications, true_blicket_indices):
-    """Calculate accuracy of user's blicket classifications"""
-    total_objects = len(user_classifications)
-    correct_classifications = 0
-    
-    for i in range(total_objects):
-        object_key = f"object_{i+1}"
-        user_answer = user_classifications.get(object_key, "No")
-        is_true_blicket = i in true_blicket_indices
-        
-        # Check if user's answer matches the truth
-        if (user_answer == "Yes" and is_true_blicket) or (user_answer == "No" and not is_true_blicket):
-            correct_classifications += 1
-    
-    return correct_classifications / total_objects if total_objects > 0 else 0
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
@@ -577,16 +561,21 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         horizon = round_config.get('horizon', 32)
         steps_left = horizon - st.session_state.steps_taken
         
-        # Allow proceeding to questions if steps are exhausted or user chooses to
+        # Show different buttons based on steps remaining
         if steps_left <= 0:
-            
-            if st.button("Proceed to Answer Questions"):
+            st.warning("⏰ No steps remaining! Please proceed to answer questions.")
+            if st.button("Proceed to Answer Questions", type="primary"):
                 st.session_state.visual_game_state = "questionnaire"
                 st.rerun()
         else:
-            if st.button("Ready to Answer Questions"):
-                st.session_state.visual_game_state = "questionnaire"
-                st.rerun()
+            st.info(f"You have {steps_left} steps remaining. You can continue exploring or proceed to questions.")
+            col1, col2 = st.columns(2)
+            with col1:
+                if st.button("Ready to Answer Questions", type="primary"):
+                    st.session_state.visual_game_state = "questionnaire"
+                    st.rerun()
+            with col2:
+                st.markdown(f"**Steps left: {steps_left}**")
     
     elif st.session_state.visual_game_state == "questionnaire":
         st.markdown("""
@@ -604,8 +593,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.radio(
                     f"Is Object {i + 1} a blicket?",
                     ["Yes", "No"],
-                    key=f"blicket_q_{i}",
-                    index=None
+                    key=f"blicket_q_{i}"
                 )
                 st.markdown("---")
             else:
@@ -622,8 +610,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.radio(
                     f"Is Object {i + 1} a blicket?",
                     ["Yes", "No"],
-                    key=f"blicket_q_{i}",
-                    index=None
+                    key=f"blicket_q_{i}"
                 )
                 
                 st.markdown("</div></div>", unsafe_allow_html=True)
@@ -632,50 +619,29 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         st.markdown("---")
         st.markdown("### Rule Inference")
         st.markdown("Based on your observations, what do you think is the rule for how the blicket detector works?")
-        
-        st.markdown("""
-**Rule Options:**
-- **Conjunctive Rule**: The detector lights up only when ALL placed objects are blickets
-- **Disjunctive Rule**: The detector lights up when ANY of the placed objects is a blicket
-        """)
-        
-        rule_hypothesis = st.radio(
-            "Which rule do you think the blicket detector follows?",
-            ["Conjunctive", "Disjunctive"],
-            key="rule_hypothesis",
-            index=None
+        rule_hypothesis = st.text_area(
+            "What do you think is the rule?",
+            placeholder="Describe your hypothesis about how the blicket detector determines when to light up...",
+            height=100,
+            key="rule_hypothesis"
         )
         
         # Navigation buttons
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
-            # Check if all blicket questions are answered
-            all_blicket_answered = True
-            for i in range(round_config['num_objects']):
-                if st.session_state.get(f"blicket_q_{i}") is None:
-                    all_blicket_answered = False
-                    break
-            
             # Check if rule hypothesis is provided
-            rule_hypothesis = st.session_state.get("rule_hypothesis")
-            
-            # Show warnings for missing answers
-            if not all_blicket_answered:
-                st.warning("⚠️ Please answer all blicket questions before proceeding to the next round.")
+            rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
             if not rule_hypothesis:
-                st.warning("⚠️ Please select which rule you think the blicket detector follows.")
+                st.warning("⚠️ Please provide your hypothesis about the rule before proceeding to the next round.")
             
-            can_proceed = all_blicket_answered and rule_hypothesis
-            
-            if st.button("Next Round", disabled=not can_proceed):
+            if st.button("Next Round", disabled=not rule_hypothesis):
                 # Collect blicket classifications
                 blicket_classifications = {}
                 for i in range(round_config['num_objects']):
-                    answer = st.session_state.get(f"blicket_q_{i}")
-                    blicket_classifications[f"object_{i+1}"] = answer if answer is not None else "No"
+                    blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
                 
                 # Get rule hypothesis
-                rule_hypothesis = st.session_state.get("rule_hypothesis")
+                rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                 
                 # Save current round data with detailed action tracking
                 round_data = {
@@ -684,32 +650,13 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     "round_number": current_round + 1,
                     "round_config": round_config,
                     "user_actions": st.session_state.user_actions,  # All place/remove actions
-                    
-                    # 🎯 User Responses
-                    "user_responses": {
-                        "blicket_classifications": blicket_classifications,  # User's blicket answers (Yes/No for each object)
-                        "rule_hypothesis": rule_hypothesis,  # User's rule selection (Conjunctive/Disjunctive)
-                    },
-                    
-                    # 🎯 True Values (Ground Truth)
-                    "true_values": {
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Indices of actual blickets
-                        "true_rule": round_config['rule'],  # Actual rule used (conjunctive/disjunctive)
-                        "true_blicket_objects": [f"object_{i+1}" for i in game_state['blicket_indices']],  # Object names of true blickets
-                    },
-                    
-                    # Game State
+                    "blicket_classifications": blicket_classifications,  # User's blicket answers
+                    "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
+                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
                     "final_machine_state": bool(game_state['true_state'][-1]),
                     "total_steps_taken": st.session_state.steps_taken,
                     "final_objects_on_machine": list(st.session_state.selected_objects),
-                    
-                    # 📊 Analysis Data
-                    "analysis": {
-                        "blicket_accuracy": calculate_blicket_accuracy(blicket_classifications, game_state['blicket_indices']),
-                        "rule_accuracy": rule_hypothesis.lower() == round_config['rule'],
-                        "total_objects": round_config['num_objects'],
-                        "num_true_blickets": len(game_state['blicket_indices']),
-                    }
+                    "rule": round_config['rule']
                 }
                 
                 # Use the provided save function or default Firebase function
@@ -735,33 +682,19 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.rerun()
         else:
             # Show Finish Task button only on the last round
-            # Check if all blicket questions are answered
-            all_blicket_answered = True
-            for i in range(round_config['num_objects']):
-                if st.session_state.get(f"blicket_q_{i}") is None:
-                    all_blicket_answered = False
-                    break
-            
             # Check if rule hypothesis is provided
-            rule_hypothesis = st.session_state.get("rule_hypothesis")
-            
-            # Show warnings for missing answers
-            if not all_blicket_answered:
-                st.warning("⚠️ Please answer all blicket questions before finishing the task.")
+            rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
             if not rule_hypothesis:
-                st.warning("⚠️ Please select which rule you think the blicket detector follows.")
+                st.warning("⚠️ Please provide your hypothesis about the rule before finishing the task.")
             
-            can_finish = all_blicket_answered and rule_hypothesis
-            
-            if st.button("Finish Task", disabled=not can_finish):
+            if st.button("Finish Task", disabled=not rule_hypothesis):
                 # Collect blicket classifications
                 blicket_classifications = {}
                 for i in range(round_config['num_objects']):
-                    answer = st.session_state.get(f"blicket_q_{i}")
-                    blicket_classifications[f"object_{i+1}"] = answer if answer is not None else "No"
+                    blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
                 
                 # Get rule hypothesis
-                rule_hypothesis = st.session_state.get("rule_hypothesis")
+                rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                 
                 # Save final round data with detailed action tracking
                 round_data = {
@@ -770,32 +703,13 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     "round_number": current_round + 1,
                     "round_config": round_config,
                     "user_actions": st.session_state.user_actions,  # All place/remove actions
-                    
-                    # 🎯 User Responses
-                    "user_responses": {
-                        "blicket_classifications": blicket_classifications,  # User's blicket answers (Yes/No for each object)
-                        "rule_hypothesis": rule_hypothesis,  # User's rule selection (Conjunctive/Disjunctive)
-                    },
-                    
-                    # 🎯 True Values (Ground Truth)
-                    "true_values": {
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Indices of actual blickets
-                        "true_rule": round_config['rule'],  # Actual rule used (conjunctive/disjunctive)
-                        "true_blicket_objects": [f"object_{i+1}" for i in game_state['blicket_indices']],  # Object names of true blickets
-                    },
-                    
-                    # Game State
+                    "blicket_classifications": blicket_classifications,  # User's blicket answers
+                    "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
+                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
                     "final_machine_state": bool(game_state['true_state'][-1]),
                     "total_steps_taken": st.session_state.steps_taken,
                     "final_objects_on_machine": list(st.session_state.selected_objects),
-                    
-                    # 📊 Analysis Data
-                    "analysis": {
-                        "blicket_accuracy": calculate_blicket_accuracy(blicket_classifications, game_state['blicket_indices']),
-                        "rule_accuracy": rule_hypothesis.lower() == round_config['rule'],
-                        "total_objects": round_config['num_objects'],
-                        "num_true_blickets": len(game_state['blicket_indices']),
-                    }
+                    "rule": round_config['rule']
                 }
                 
                 # Use the provided save function or default Firebase function
