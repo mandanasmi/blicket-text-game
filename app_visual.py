@@ -15,6 +15,9 @@ from visual_blicket_game import visual_blicket_game_page
 # Load environment variables
 load_dotenv()
 
+# Set visual mode
+os.environ['BLICKET_VISUAL_MODE'] = 'True'
+
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -99,87 +102,8 @@ def save_game_data(participant_id, game_data):
     game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     games_ref.child(game_id).set(game_data)
 
-
-
-
-
-def handle_enter():
-    """Callback for processing each command during the game."""
-    cmd = st.session_state.cmd.strip().lower()
-    if not cmd:
-        return
-    now = datetime.datetime.now()
-    # record user command
-    st.session_state.log.append(f"```{cmd}```")
-    st.session_state.times.append(now)
-
-    # step the environment
-    game_state, reward, done = st.session_state.env.step(cmd)
-    feedback = game_state["feedback"]
-
-    now2 = datetime.datetime.now()
-    st.session_state.log.append(feedback)
-    st.session_state.times.append(now2)
-    st.session_state.cmd = ""
-
-    if done:
-        st.session_state.phase = "qa"
-
-def submit_qa():
-    """Callback when the user clicks 'Submit Q&A'—saves to Firebase and continues or ends."""
-    qa_time = datetime.datetime.now()
-    binary_answers = {
-        question: st.session_state.get(f"qa_{i}", "No")
-        for i, question in enumerate(BINARY_QUESTIONS)
-    }
-
-    # Save current round data
-    round_data = {
-        "start_time": st.session_state.start_time.isoformat(),
-        "events": [
-            {"time": t.isoformat(), "entry": e}
-            for t, e in zip(st.session_state.times, st.session_state.log)
-        ],
-        "binary_answers": binary_answers,
-        "qa_time": qa_time.isoformat(),
-        "round_config": st.session_state.round_configs[st.session_state.current_round],
-        "round_number": st.session_state.current_round + 1
-    }
-    
-    save_game_data(st.session_state.current_participant_id, round_data)
-    
-    # Check if there are more rounds
-    if st.session_state.current_round + 1 < len(st.session_state.round_configs):
-        # Move to next round
-        st.session_state.current_round += 1
-        next_round_config = st.session_state.round_configs[st.session_state.current_round]
-        
-        # Create new game for next round
-        env, first_obs = create_new_game(
-            seed=42 + st.session_state.current_round,  # Different seed for each round
-            num_objects=next_round_config['num_objects'],
-            num_blickets=next_round_config['num_blickets'],
-            rule=next_round_config['rule']
-        )
-        
-        now = datetime.datetime.now()
-        st.session_state.env = env
-        st.session_state.start_time = now
-        st.session_state.log = [first_obs]
-        st.session_state.times = [now]
-        st.session_state.phase = "game"
-        
-        # Clear Q&A state
-        for i in range(len(BINARY_QUESTIONS)):
-            st.session_state.pop(f"qa_{i}", None)
-    else:
-        # All rounds completed
-        st.session_state.phase = "end"
-
 def reset_all():
     """Clears all session_state so we go back to the intro screen cleanly."""
-    for i in range(len(BINARY_QUESTIONS)):
-        st.session_state.pop(f"qa_{i}", None)
     st.session_state.phase = "intro"
     st.session_state.env = None
     st.session_state.start_time = None
@@ -190,12 +114,6 @@ def reset_all():
     st.session_state.round_configs = []
     st.session_state.num_objects_selected = None
     st.session_state.participant_id_entered = False
-
-BINARY_QUESTIONS = [
-    "Did you test each object at least once?",
-    "Did you use the feedback from the last test before making a decision?",
-    "Were you confident in your final hypothesis?"
-]
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 # SESSION-STATE INITIALIZATION
@@ -222,56 +140,8 @@ if "participant_id_entered" not in st.session_state:
     st.session_state.participant_id_entered = False
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-st.title("🧙 Blicket Adventure - Choose Your Interface")
-
-# Add interface selection at the top
-if "interface_selected" not in st.session_state:
-    st.session_state.interface_selected = False
-
-if not st.session_state.interface_selected:
-    st.markdown("### Choose Your Preferred Interface")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        #### 🎨 Visual Interface
-        - Object images and shapes
-        - Visual blicket detector machine
-        - Interactive visual elements
-        - More engaging experience
-        """)
-        if st.button("🎨 Use Visual Interface", type="primary"):
-            st.session_state.interface_type = "visual"
-            st.session_state.interface_selected = True
-            st.rerun()
-    
-    with col2:
-        st.markdown("""
-        #### 📝 Text Interface
-        - Text-only descriptions
-        - No images or visuals
-        - Faster loading
-        - Better for accessibility
-        """)
-        if st.button("📝 Use Text Interface"):
-            st.session_state.interface_type = "text"
-            st.session_state.interface_selected = True
-            st.rerun()
-    
-    st.stop()
-
-# Show current interface type
-interface_emoji = "🎨" if st.session_state.interface_type == "visual" else "📝"
-st.markdown(f"**Current Interface:** {interface_emoji} {st.session_state.interface_type.title()} Mode")
-
-# Add switch interface button
-if st.button("🔄 Switch Interface", help="Change between visual and text modes"):
-    st.session_state.interface_selected = False
-    # Reset game state when switching
-    st.session_state.phase = "intro"
-    st.session_state.participant_id_entered = False
-    st.rerun()
+st.title("🧙 Blicket Visual Adventure")
+st.markdown("*Visual version with images and interactive elements*")
 
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
@@ -279,7 +149,9 @@ if st.session_state.phase == "intro":
         # Step 1: Ask for Participant ID
         st.markdown(
             """
-**Welcome to the Blicket Text Adventure!**
+**Welcome to the Blicket Visual Adventure!**
+
+This version includes visual representations of objects and the blicket detector machine.
 
 Please enter your participant ID to begin.
 """
@@ -308,7 +180,7 @@ How many objects would you like to play with in each round?
         
         st.info(f"🎯 You will play with **{num_objects} objects** in each round. The number of blickets and rules will stay the same between rounds.")
         
-        if st.button("Start Game"):
+        if st.button("Start Visual Game"):
             st.session_state.num_objects_selected = num_objects
             
             # Create random configuration (3 rounds with user-specified number of objects)
@@ -347,7 +219,7 @@ How many objects would you like to play with in each round?
                 'num_rounds': num_rounds,
                 'user_selected_objects': num_objects,
                 'rounds': round_configs,
-                'interface_type': st.session_state.interface_type
+                'interface_type': 'visual'
             }
             save_participant_config(st.session_state.current_participant_id, config)
             
@@ -374,16 +246,13 @@ How many objects would you like to play with in each round?
 
 # 2) GAME RUN
 elif st.session_state.phase == "game":
-    # Use visual blicket game interface
+    # Use visual blicket game interface with visual mode enabled
     round_config = st.session_state.round_configs[st.session_state.current_round]
     
     # Pass the save_game_data function to avoid circular imports
     def save_visual_game_data(participant_id, game_data):
-        game_data['interface_type'] = st.session_state.interface_type
+        game_data['interface_type'] = 'visual'
         save_game_data(participant_id, game_data)
-    
-    # Determine visual mode based on interface selection
-    use_visual_mode = st.session_state.interface_type == "visual"
     
     visual_blicket_game_page(
         st.session_state.current_participant_id,
@@ -391,7 +260,7 @@ elif st.session_state.phase == "game":
         st.session_state.current_round,
         len(st.session_state.round_configs),
         save_visual_game_data,
-        use_visual_mode=use_visual_mode
+        use_visual_mode=True  # Force visual mode
     )
 
 # 3) NEXT ROUND HANDLING
@@ -401,19 +270,8 @@ elif st.session_state.phase == "next_round":
     st.session_state.phase = "game"
     st.rerun()
 
-# 4) Q&A (keeping for compatibility but not used in visual version)
-elif st.session_state.phase == "qa":
-    st.markdown(f"## 📝 Round {st.session_state.current_round + 1} Q&A")
-    for i, question in enumerate(BINARY_QUESTIONS):
-        st.radio(question, ("Yes", "No"), key=f"qa_{i}")
-    
-    if st.session_state.current_round + 1 < len(st.session_state.round_configs):
-        st.button("Submit & Continue to Next Round", on_click=submit_qa)
-    else:
-        st.button("Submit & Finish", on_click=submit_qa)
-
-# 5) END-OF-GAME SCREEN
+# 4) END-OF-GAME SCREEN
 elif st.session_state.phase == "end":
     st.markdown("## 🎉 All done!")
-    st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}! All your responses have been saved to the database.")
+    st.markdown(f"Thanks for playing the Visual Adventure, {st.session_state.current_participant_id}! All your responses have been saved to the database.")
     st.button("Start Over", on_click=reset_all)

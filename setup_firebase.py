@@ -38,14 +38,14 @@ def setup_firebase_credentials():
         
         # Create .env file content
         env_content = f"""# Firebase Configuration
-FIREBASE_PROJECT_ID={project_id}
-FIREBASE_PRIVATE_KEY_ID={private_key_id}
-FIREBASE_PRIVATE_KEY="{private_key}"
-FIREBASE_CLIENT_EMAIL={client_email}
-FIREBASE_CLIENT_ID={client_id}
-FIREBASE_CLIENT_X509_CERT_URL={client_x509_cert_url}
-FIREBASE_DATABASE_URL={database_url}
-"""
+            FIREBASE_PROJECT_ID={project_id}
+            FIREBASE_PRIVATE_KEY_ID={private_key_id}
+            FIREBASE_PRIVATE_KEY="{private_key}"
+            FIREBASE_CLIENT_EMAIL={client_email}
+            FIREBASE_CLIENT_ID={client_id}
+            FIREBASE_CLIENT_X509_CERT_URL={client_x509_cert_url}
+            FIREBASE_DATABASE_URL={database_url}
+            """
         
         # Write .env file
         with open('.env', 'w') as f:
@@ -132,3 +132,4 @@ if __name__ == "__main__":
             print("\nWould you like to test the connection now? (y/n): ", end="")
             if input().lower().startswith('y'):
                 test_firebase_connection()
+

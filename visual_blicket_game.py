@@ -68,8 +68,15 @@ def save_game_data(participant_id, game_data):
     
     print(f"Saving game data for {participant_id}: {game_data}")
 
-def visual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None):
-    """Main visual blicket game page"""
+def visual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None):
+    """Main blicket game page - supports both visual and text modes"""
+    
+    # Determine which mode to use
+    if use_visual_mode is not None:
+        USE_TEXT_VERSION = not use_visual_mode
+    else:
+        # Fall back to global setting or environment variable
+        USE_TEXT_VERSION = os.getenv('BLICKET_VISUAL_MODE', 'False').lower() != 'true'
     
     # Add custom CSS for better styling
     st.markdown("""
@@ -329,11 +336,16 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         </div>
         """, unsafe_allow_html=True)
     
-    # Text-only version: Show steps counter
+    # Text-only version: Show steps counter and machine status
     if USE_TEXT_VERSION:
         horizon = round_config.get('horizon', 32)
         steps_left = horizon - st.session_state.steps_taken
-        st.markdown(f"**Steps Remaining: {steps_left}**")
+        machine_status = "🟢 LIT" if machine_lit else "🔴 NOT LIT"
+        
+        st.markdown(f"""
+        ### 🏭 Blicket Detector Status: {machine_status}
+        **Steps Remaining: {steps_left}/{horizon}**
+        """)
         st.markdown("---")
     
     # Show warning if no steps left

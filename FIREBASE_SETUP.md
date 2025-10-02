@@ -134,3 +134,4 @@ Once Firebase is configured:
 - Never commit your `.env` file to version control
 - Keep your service account JSON file secure
 - Consider using Firebase Authentication for production
+
