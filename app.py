@@ -309,6 +309,7 @@ elif st.session_state.phase == "comprehension":
         - Click on objects to place them on the blicket detector machine
         - Some objects are "blickets" that make the machine light up
         - Your goal is to figure out which objects are blickets and how the machine works
+        - **You have exactly 5 actions** (placing or removing objects) to explore
         
         **The machine will show:**
         - 🟢 LIT = Machine is active
@@ -325,7 +326,7 @@ elif st.session_state.phase == "comprehension":
                 'rule': 'conjunctive',
                 'init_prob': 0.2,
                 'transition_noise': 0.0,
-                'horizon': 5  # Shorter practice round
+                'horizon': 5  # Practice round limited to 5 actions only
             }
             
             # Create practice game
@@ -404,13 +405,19 @@ elif st.session_state.phase == "practice_complete":
     
     Now that you've practiced with the interface, you're ready for the main experiment.
     
-    **Important Notes:**
-    - The main experiment has **3 rounds** with different configurations
+    **Main Experiment Structure:**
+    - **3 rounds** total in the main experiment
+    - **Same number of objects** (4 objects) in each round
+    - **The rule may change** between rounds (conjunctive vs disjunctive)
     - **All data will be recorded** for research purposes
-    - Each round will have different objects and rules
-    - Take your time to explore and understand each round
+    - Each round is independent - what you learn in one round may not apply to the next
     
-    Click the button below when you're ready to start the main experiment.
+    **What to expect:**
+    - Round 1: Explore with one rule type
+    - Round 2: New configuration, possibly different rule
+    - Round 3: Final configuration, possibly different rule again
+    
+    Take your time to explore and understand each round. Click the button below when you're ready to start the main experiment.
     """)
     
     if st.button("Start Main Experiment", type="primary"):
