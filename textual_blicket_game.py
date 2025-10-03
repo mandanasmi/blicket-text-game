@@ -401,7 +401,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     """, unsafe_allow_html=True)
     
     if use_text_version:
-        st.markdown("Click on an object to place it on the machine. Click again to remove it.")
+        st.markdown("""
+        **How to use the interface:**
+        - Click on an object button to **place** it on the blicket detector
+        - The button will turn **green** when the object is placed
+        - Click the button again to **remove** the object from the detector
+        - The button will turn **gray** when the object is removed
+        - Try different combinations to figure out which objects are blickets!
+        """)
         
         # Text-only version: Simple button grid
         cols = st.columns(4)
@@ -675,9 +682,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     elif st.session_state.visual_game_state == "questionnaire":
         st.markdown("""
-        <div style="padding: 20px; border-radius: 15px; color: white; margin: 20px 0;">
-            <h3 style="margin: 0; text-align: center;">🎯 Blicket Classification</h3>
-            <p style="margin: 10px 0 0 0; text-align: center; opacity: 0.9;">For each object, indicate whether you think it is a blicket or not:</p>
+        <div style="padding: 20px; border-radius: 15px; background-color: #e3f2fd; border: 2px solid #2196f3; margin: 20px 0;">
+            <h3 style="margin: 0; text-align: center; color: #1565c0;">🎯 Blicket Classification</h3>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #1976d2;">For each object, indicate whether you think it is a blicket or not:</p>
         </div>
         """, unsafe_allow_html=True)
         
@@ -746,9 +753,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
 
     elif st.session_state.visual_game_state == "rule_type_classification":
         st.markdown("""
-        <div style="padding: 20px; border-radius: 15px; color: white; margin: 20px 0;">
-            <h3 style="margin: 0; text-align: center;">🎯 Rule Type Classification</h3>
-            <p style="margin: 10px 0 0 0; text-align: center; opacity: 0.9;">Based on your observations, what type of rule do you think governs the blicket detector?</p>
+        <div style="padding: 20px; border-radius: 15px; background-color: #f3e5f5; border: 2px solid #9c27b0; margin: 20px 0;">
+            <h3 style="margin: 0; text-align: center; color: #4a148c;">🎯 Rule Type Classification</h3>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #6a1b9a;">Based on your observations, what type of rule do you think governs the blicket detector?</p>
         </div>
         """, unsafe_allow_html=True)
         
