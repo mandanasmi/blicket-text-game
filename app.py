@@ -247,9 +247,6 @@ if "comprehension_completed" not in st.session_state:
     st.session_state.comprehension_completed = False
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-st.title("📝 Blicket Text Adventure")
-st.markdown("*Text-only interface with 4 objects*")
-
 # Show Firebase status
 if firebase_initialized:
     st.success("✅ Data saving enabled - Firebase connected successfully")
