@@ -366,27 +366,34 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Display available objects
     st.markdown("### Available Objects")
     
-    # Add custom CSS for green/gray button styling
+    # Add custom CSS for green/gray button styling with higher specificity
     st.markdown("""
     <style>
-    /* Green styling for selected objects */
-    .stButton > button[kind="primary"] {
+    /* Target all button elements with higher specificity */
+    .stApp .stButton button[kind="primary"],
+    .main .stButton button[kind="primary"],
+    div.stButton button[kind="primary"] {
         background-color: #28a745 !important;
         border-color: #28a745 !important;
         color: white !important;
     }
-    .stButton > button[kind="primary"]:hover {
+    .stApp .stButton button[kind="primary"]:hover,
+    .main .stButton button[kind="primary"]:hover,
+    div.stButton button[kind="primary"]:hover {
         background-color: #218838 !important;
         border-color: #1e7e34 !important;
     }
     
-    /* Gray styling for unselected objects */
-    .stButton > button[kind="secondary"] {
+    .stApp .stButton button[kind="secondary"],
+    .main .stButton button[kind="secondary"],
+    div.stButton button[kind="secondary"] {
         background-color: #6c757d !important;
         border-color: #6c757d !important;
         color: white !important;
     }
-    .stButton > button[kind="secondary"]:hover {
+    .stApp .stButton button[kind="secondary"]:hover,
+    .main .stButton button[kind="secondary"]:hover,
+    div.stButton button[kind="secondary"]:hover {
         background-color: #5a6268 !important;
         border-color: #545b62 !important;
     }
@@ -405,17 +412,40 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 steps_left = horizon - st.session_state.steps_taken
                 interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                 
-                # Button with dynamic styling based on selection state
-                if is_selected:
-                    # Selected state - green button (via CSS)
-                    button_type = "primary"
-                    button_text = f"Object {i + 1}"
-                else:
-                    # Unselected state - gray button (via CSS)
-                    button_type = "secondary"
-                    button_text = f"Object {i + 1}"
+                # Use container with custom styling for visual feedback
+                with st.container():
+                    if is_selected:
+                        # Selected state - green background container
+                        st.markdown(f"""
+                        <div style="
+                            background-color: #d4edda; 
+                            border: 2px solid #28a745; 
+                            border-radius: 8px; 
+                            padding: 10px; 
+                            margin: 5px;
+                            text-align: center;
+                        ">
+                            <strong style="color: #155724;">Object {i + 1} ✅</strong>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        button_type = "primary"
+                    else:
+                        # Unselected state - gray background container
+                        st.markdown(f"""
+                        <div style="
+                            background-color: #f8f9fa; 
+                            border: 2px solid #6c757d; 
+                            border-radius: 8px; 
+                            padding: 10px; 
+                            margin: 5px;
+                            text-align: center;
+                        ">
+                            <strong style="color: #495057;">Object {i + 1}</strong>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        button_type = "secondary"
                 
-                if st.button(button_text, 
+                if st.button(f"Click to {'Remove' if is_selected else 'Place'} Object {i + 1}", 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
                            type=button_type,
