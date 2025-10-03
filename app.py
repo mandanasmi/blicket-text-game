@@ -289,8 +289,6 @@ elif st.session_state.phase == "comprehension":
         st.markdown(f"**Hello {st.session_state.current_participant_id}!**")
         
         st.markdown("""
-        ### Comprehension Phase
-        
         This is the comprehension phase to help you understand the interface.
         
         **Instructions:**
