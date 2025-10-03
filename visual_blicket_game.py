@@ -641,6 +641,15 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             """, unsafe_allow_html=True)
             
             if st.button("🚀 PROCEED TO ANSWER QUESTIONS", type="primary", key="proceed_btn", use_container_width=True):
+                # Clear any previous answers to ensure fresh start
+                for i in range(round_config['num_objects']):
+                    if f"blicket_q_{i}" in st.session_state:
+                        del st.session_state[f"blicket_q_{i}"]
+                # Clear rule inference and rule type answers
+                if "rule_hypothesis" in st.session_state:
+                    del st.session_state["rule_hypothesis"]
+                if "rule_type" in st.session_state:
+                    del st.session_state["rule_type"]
                 st.session_state.visual_game_state = "questionnaire"
                 st.rerun()
         else:
@@ -655,6 +664,10 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("🎯 READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
+                    # Clear any previous blicket answers to ensure fresh start
+                    for i in range(round_config['num_objects']):
+                        if f"blicket_q_{i}" in st.session_state:
+                            del st.session_state[f"blicket_q_{i}"]
                     st.session_state.visual_game_state = "questionnaire"
                     st.rerun()
             
@@ -676,7 +689,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.radio(
                     f"Is Object {i + 1} a blicket?",
                     ["Yes", "No"],
-                    key=f"blicket_q_{i}"
+                    key=f"blicket_q_{i}",
+                    index=None
                 )
                 st.markdown("---")
             else:
@@ -693,7 +707,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 st.radio(
                     f"Is Object {i + 1} a blicket?",
                     ["Yes", "No"],
-                    key=f"blicket_q_{i}"
+                    key=f"blicket_q_{i}",
+                    index=None
                 )
                 
                 st.markdown("</div></div>", unsafe_allow_html=True)
@@ -760,7 +775,8 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         rule_type = st.radio(
             "What type of rule do you think applies?",
             ["Conjunctive (ALL blickets must be present)", "Disjunctive (ANY blicket can activate)"],
-            key="rule_type"
+            key="rule_type",
+            index=None
         )
         
         # Back button
