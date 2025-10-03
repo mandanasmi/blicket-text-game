@@ -403,13 +403,31 @@ elif st.session_state.phase == "practice_complete":
         num_rounds = 3
         round_configs = []
         
+        # Initialize rule generation
+        current_rule = random.choice(['conjunctive', 'disjunctive'])
+        rule_change_probability = 0.4  # 40% chance to change rule each round
+        
         for i in range(num_rounds):
             # Always use 4 objects
             num_objects = 4
             # Random number of blickets between 1 and 4
             num_blickets = random.randint(1, 4)
-            # Random rule
-            rule = random.choice(['conjunctive', 'disjunctive'])
+            
+            # Rule logic: sometimes change, sometimes stay the same
+            if i == 0:
+                # First round: use initial rule
+                rule = current_rule
+            else:
+                # Subsequent rounds: decide whether to change
+                if random.random() < rule_change_probability:
+                    # Change the rule
+                    available_rules = ['conjunctive', 'disjunctive']
+                    available_rules.remove(current_rule)
+                    rule = random.choice(available_rules)
+                    current_rule = rule
+                else:
+                    # Keep the same rule
+                    rule = current_rule
             # Random initial probability
             init_prob = random.uniform(0.1, 0.3)
             # Random transition noise
