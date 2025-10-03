@@ -247,15 +247,19 @@ if "comprehension_completed" not in st.session_state:
     st.session_state.comprehension_completed = False
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-# Show Firebase status
-if firebase_initialized:
-    st.success("✅ Data saving enabled - Firebase connected successfully")
-else:
-    st.warning("⚠️ Data saving disabled - app will run in demo mode")
-    st.info("💡 To enable data saving, ensure Firebase credentials are properly configured in your environment.")
 
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
+    # Show title and Firebase status for intro page
+    st.title("🧙 Blicket Text Adventure")
+    
+    # Show Firebase status
+    if firebase_initialized:
+        st.success("✅ Data saving enabled - Firebase connected successfully")
+    else:
+        st.warning("⚠️ Data saving disabled - app will run in demo mode")
+        st.info("💡 To enable data saving, ensure Firebase credentials are properly configured in your environment.")
+    
     if not st.session_state.participant_id_entered:
         # Ask for Participant ID and start comprehension phase
         st.markdown(
@@ -282,6 +286,15 @@ Please enter your participant ID to begin.
 
 # 2) COMPREHENSION PHASE
 elif st.session_state.phase == "comprehension":
+    # Show title and Firebase status
+    st.title("🧙 Blicket Text Adventure")
+    
+    # Show Firebase status
+    if firebase_initialized:
+        st.success("✅ Data saving enabled - Firebase connected successfully")
+    else:
+        st.warning("⚠️ Data saving disabled - app will run in demo mode")
+    
     if not st.session_state.comprehension_completed:
         st.markdown("## 🧠 Comprehension Phase")
         st.markdown(f"**Hello {st.session_state.current_participant_id}!**")
@@ -312,7 +325,7 @@ elif st.session_state.phase == "comprehension":
                 'rule': 'conjunctive',
                 'init_prob': 0.2,
                 'transition_noise': 0.0,
-                'horizon': 16  # Shorter practice round
+                'horizon': 5  # Shorter practice round
             }
             
             # Create practice game
@@ -335,7 +348,16 @@ elif st.session_state.phase == "comprehension":
 
 # 3) PRACTICE GAME
 elif st.session_state.phase == "practice_game":
-    st.markdown("## 🧠 Practice Round")
+    # Show title and Firebase status
+    st.title("🧙 Blicket Text Adventure")
+    
+    # Show Firebase status
+    if firebase_initialized:
+        st.success("✅ Data saving enabled - Firebase connected successfully")
+    else:
+        st.warning("⚠️ Data saving disabled - app will run in demo mode")
+    
+    st.markdown("## Practice Round")
     st.markdown("**This is practice - no data will be recorded!**")
     
     # Create a simple practice configuration
@@ -365,6 +387,15 @@ elif st.session_state.phase == "practice_game":
 
 # 4) PRACTICE COMPLETION
 elif st.session_state.phase == "practice_complete":
+    # Show title and Firebase status
+    st.title("🧙 Blicket Text Adventure")
+    
+    # Show Firebase status
+    if firebase_initialized:
+        st.success("✅ Data saving enabled - Firebase connected successfully")
+    else:
+        st.warning("⚠️ Data saving disabled - app will run in demo mode")
+    
     st.markdown("## 🎉 Practice Round Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
     
