@@ -57,16 +57,20 @@ def save_game_data(participant_id, game_data):
     # Convert NumPy types to JSON-serializable types
     game_data = convert_numpy_types(game_data)
     
-    # Get database reference
-    db_ref = db.reference()
-    participant_ref = db_ref.child(participant_id)
-    games_ref = participant_ref.child('games')
-    
-    # Create a new game entry with timestamp
-    game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    games_ref.child(game_id).set(game_data)
-    
-    print(f"Saving game data for {participant_id}: {game_data}")
+    try:
+        # Get database reference
+        db_ref = db.reference()
+        participant_ref = db_ref.child(participant_id)
+        games_ref = participant_ref.child('games')
+        
+        # Create a new game entry with timestamp
+        game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        games_ref.child(game_id).set(game_data)
+        
+        print(f"Successfully saved game data for {participant_id}")
+    except Exception as e:
+        print(f"Failed to save game data for {participant_id}: {e}")
+        print("Game data (not saved):", game_data)
 
 def visual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None):
     """Main blicket game page - supports both visual and text modes"""

@@ -19,11 +19,14 @@ load_dotenv()
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# Initialize Firebase using environment variables or Streamlit secrets
+# Initialize Firebase - with fallback for deployment issues
+firebase_initialized = False
+db_ref = None
+
 if not firebase_admin._apps:
     try:
         # Try Streamlit secrets first (for Cloud deployment)
-        if hasattr(st, 'secrets') and 'firebase' in st.secrets:
+        if hasattr(st, 'secrets') and hasattr(st.secrets, 'firebase') and 'firebase' in st.secrets:
             firebase_credentials = {
                 "type": "service_account",
                 "project_id": st.secrets["firebase"]["project_id"],
@@ -38,8 +41,13 @@ if not firebase_admin._apps:
                 "universe_domain": "googleapis.com"
             }
             database_url = st.secrets["firebase"]["database_url"]
-        else:
-            # Fall back to environment variables (for local development)
+            
+            cred = credentials.Certificate(firebase_credentials)
+            firebase_admin.initialize_app(cred, {'databaseURL': database_url})
+            db_ref = db.reference()
+            firebase_initialized = True
+            
+        elif os.getenv("FIREBASE_PROJECT_ID"):  # Local development
             firebase_credentials = {
                 "type": "service_account",
                 "project_id": os.getenv("FIREBASE_PROJECT_ID"),
@@ -54,17 +62,17 @@ if not firebase_admin._apps:
                 "universe_domain": "googleapis.com"
             }
             database_url = os.getenv("FIREBASE_DATABASE_URL")
-        
-        cred = credentials.Certificate(firebase_credentials)
-        firebase_admin.initialize_app(cred, {
-            'databaseURL': database_url
-        })
+            
+            cred = credentials.Certificate(firebase_credentials)
+            firebase_admin.initialize_app(cred, {'databaseURL': database_url})
+            db_ref = db.reference()
+            firebase_initialized = True
+            
     except Exception as e:
-        st.error(f"Failed to initialize Firebase: {str(e)}")
-        st.stop()
-
-# Get database reference
-db_ref = db.reference()
+        # Firebase initialization failed - app will run without data saving
+        firebase_initialized = False
+        print(f"Firebase initialization failed: {str(e)}")
+        print("App will run without data saving capability")
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
@@ -83,21 +91,33 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
 
 def save_participant_config(participant_id, config):
     """Save participant configuration to Firebase"""
-    participant_ref = db_ref.child(participant_id)
-    participant_ref.set({
-        'config': config,
-        'created_at': datetime.datetime.now().isoformat(),
-        'status': 'configured'
-    })
+    if firebase_initialized and db_ref:
+        try:
+            participant_ref = db_ref.child(participant_id)
+            participant_ref.set({
+                'config': config,
+                'created_at': datetime.datetime.now().isoformat(),
+                'status': 'configured'
+            })
+        except Exception as e:
+            print(f"Failed to save participant config: {e}")
+    else:
+        print(f"Firebase not available - would save config for {participant_id}")
 
 def save_game_data(participant_id, game_data):
     """Save game data to Firebase"""
-    participant_ref = db_ref.child(participant_id)
-    games_ref = participant_ref.child('games')
-    
-    # Create a new game entry
-    game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-    games_ref.child(game_id).set(game_data)
+    if firebase_initialized and db_ref:
+        try:
+            participant_ref = db_ref.child(participant_id)
+            games_ref = participant_ref.child('games')
+            
+            # Create a new game entry
+            game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+            games_ref.child(game_id).set(game_data)
+        except Exception as e:
+            print(f"Failed to save game data: {e}")
+    else:
+        print(f"Firebase not available - would save game data for {participant_id}")
 
 
 
@@ -224,6 +244,12 @@ if "participant_id_entered" not in st.session_state:
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 st.title("📝 Blicket Text Adventure")
 st.markdown("*Text-only interface with 4 objects*")
+
+# Show Firebase status
+if firebase_initialized:
+    st.success("✅ Data saving enabled")
+else:
+    st.warning("⚠️ Data saving disabled - app will run in demo mode")
 
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
