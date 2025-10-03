@@ -286,14 +286,8 @@ Please enter your participant ID to begin.
 
 # 2) COMPREHENSION PHASE
 elif st.session_state.phase == "comprehension":
-    # Show title and Firebase status
+    # Show title only (no Firebase status during comprehension)
     st.title("🧙 Blicket Text Adventure")
-    
-    # Show Firebase status
-    if firebase_initialized:
-        st.success("✅ Data saving enabled - Firebase connected successfully")
-    else:
-        st.warning("⚠️ Data saving disabled - app will run in demo mode")
     
     if not st.session_state.comprehension_completed:
         st.markdown("## 🧠 Comprehension Phase")
@@ -349,14 +343,8 @@ elif st.session_state.phase == "comprehension":
 
 # 3) PRACTICE GAME
 elif st.session_state.phase == "practice_game":
-    # Show title and Firebase status
+    # Show title only (no Firebase status during practice)
     st.title("🧙 Blicket Text Adventure")
-    
-    # Show Firebase status
-    if firebase_initialized:
-        st.success("✅ Data saving enabled - Firebase connected successfully")
-    else:
-        st.warning("⚠️ Data saving disabled - app will run in demo mode")
     
     st.markdown("## Practice Round")
     st.markdown("**This is practice - no data will be recorded!**")
@@ -368,7 +356,7 @@ elif st.session_state.phase == "practice_game":
         'rule': 'conjunctive',
         'init_prob': 0.2,
         'transition_noise': 0.0,
-        'horizon': 16
+        'horizon': 5
     }
     
     # Use the visual game page but with practice mode (no data saving)
@@ -388,10 +376,10 @@ elif st.session_state.phase == "practice_game":
 
 # 4) PRACTICE COMPLETION
 elif st.session_state.phase == "practice_complete":
-    # Show title and Firebase status
+    # Show title and Firebase status (data collection starts soon)
     st.title("🧙 Blicket Text Adventure")
     
-    # Show Firebase status
+    # Show Firebase status since data collection is about to begin
     if firebase_initialized:
         st.success("✅ Data saving enabled - Firebase connected successfully")
     else:
@@ -412,10 +400,6 @@ elif st.session_state.phase == "practice_complete":
     - **All data will be recorded** for research purposes
     - Each round is independent - what you learn in one round may not apply to the next
     
-    **What to expect:**
-    - Round 1: Explore with one rule type
-    - Round 2: New configuration, possibly different rule
-    - Round 3: Final configuration, possibly different rule again
     
     Take your time to explore and understand each round. Click the button below when you're ready to start the main experiment.
     """)
@@ -482,6 +466,15 @@ elif st.session_state.phase == "practice_complete":
 
 # 5) MAIN GAME RUN
 elif st.session_state.phase == "game":
+    # Show title and Firebase status (data collection active)
+    st.title("🧙 Blicket Text Adventure")
+    
+    # Show Firebase status during data collection
+    if firebase_initialized:
+        st.success("✅ Data collection active - Firebase connected")
+    else:
+        st.warning("⚠️ Data collection disabled - Firebase not connected")
+    
     # Use visual blicket game interface
     round_config = st.session_state.round_configs[st.session_state.current_round]
     
