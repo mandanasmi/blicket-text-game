@@ -15,8 +15,7 @@ from textual_blicket_game import textual_blicket_game_page
 # Load environment variables
 load_dotenv()
 
-# Debug: Print Firebase initialization status
-print(f"Firebase initialization status: FIREBASE_PROJECT_ID={'SET' if os.getenv('FIREBASE_PROJECT_ID') else 'NOT SET'}")
+# Firebase initialization (no debug output)
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
@@ -51,7 +50,7 @@ if not firebase_admin._apps:
             firebase_initialized = True
             
         elif os.getenv("FIREBASE_PROJECT_ID"):  # Local development
-            print("Using local development Firebase credentials from environment variables")
+            # Using local development Firebase credentials
             firebase_credentials = {
                 "type": "service_account",
                 "project_id": os.getenv("FIREBASE_PROJECT_ID"),
@@ -71,13 +70,12 @@ if not firebase_admin._apps:
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
-            print("Firebase initialized successfully from environment variables")
+            # Firebase initialized successfully
             
     except Exception as e:
         # Firebase initialization failed - app will run without data saving
         firebase_initialized = False
-        print(f"Firebase initialization failed: {str(e)}")
-        print("App will run without data saving capability")
+        # Firebase initialization failed - app will run without data saving
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
@@ -107,7 +105,7 @@ def save_participant_config(participant_id, config):
         except Exception as e:
             print(f"Failed to save participant config: {e}")
     else:
-        print(f"Firebase not available - would save config for {participant_id}")
+        pass  # Firebase not available - config not saved
 
 def save_game_data(participant_id, game_data):
     """Save game data to Firebase"""
@@ -122,7 +120,7 @@ def save_game_data(participant_id, game_data):
         except Exception as e:
             print(f"Failed to save game data: {e}")
     else:
-        print(f"Firebase not available - would save game data for {participant_id}")
+        pass  # Firebase not available - game data not saved
 
 
 
