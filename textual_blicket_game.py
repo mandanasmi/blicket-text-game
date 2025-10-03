@@ -283,8 +283,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
       
         - **put ... on ...:** put an object on the machine or the floor
         - **take ... off ...:** take an object off the machine
-        - **exit:** exit the game
-
+        
         **Tips:**
         - All objects can be either on the machine or on the floor.
         - You should think about how to efficiently explore the relationship between the objects and the machine.
@@ -712,7 +711,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         if not rule_hypothesis:
             st.markdown("""
             <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                <h4 style="color: #856404; margin: 0;">⚠️ Please provide your hypothesis about the rule before proceeding!</h4>
+                <h4 style="color: #856404; margin: 0;">Please provide your hypothesis about the rule before proceeding!</h4>
             </div>
             """, unsafe_allow_html=True)
         
@@ -769,7 +768,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if not rule_type:
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 0;">⚠️ Please select the rule type before proceeding!</h4>
+                    <h4 style="color: #856404; margin: 0;">Please select the rule type before proceeding!</h4>
                 </div>
                 """, unsafe_allow_html=True)
         
@@ -831,7 +830,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if not rule_type:
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 0;">⚠️ Please select the rule type before finishing!</h4>
+                    <h4 style="color: #856404; margin: 0;">Please select the rule type before finishing!</h4>
                 </div>
                 """, unsafe_allow_html=True)
         
