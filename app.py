@@ -200,6 +200,7 @@ def submit_qa():
         st.session_state.user_actions = []
         st.session_state.action_history = []
         st.session_state.state_history = []
+        st.session_state.selected_objects = set()  # Ensure all buttons start gray
         
         st.session_state.phase = "game"
         
@@ -508,6 +509,7 @@ elif st.session_state.phase == "practice_complete":
         st.session_state.user_actions = []
         st.session_state.action_history = []
         st.session_state.state_history = []
+        st.session_state.selected_objects = set()  # Ensure all buttons start gray
         
         st.session_state.phase = "game"
         st.rerun()
@@ -548,6 +550,7 @@ elif st.session_state.phase == "next_round":
     st.session_state.user_actions = []
     st.session_state.action_history = []
     st.session_state.state_history = []
+    st.session_state.selected_objects = set()  # Ensure all buttons start gray
     
     st.session_state.phase = "game"
     st.rerun()
