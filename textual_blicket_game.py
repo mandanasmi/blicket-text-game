@@ -757,14 +757,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             index=None
         )
         
-        # Back button
-        st.markdown("---")
-        col1, col2, col3 = st.columns([2, 1, 2])
-        with col2:
-            if st.button("⬅️ Back to Rule Inference", key="back_to_inference"):
-                st.session_state.visual_game_state = "questionnaire"
-                st.rerun()
-        
         # Navigation buttons
         st.markdown("---")
         st.markdown("### 🚀 Submit Your Answers")
