@@ -245,6 +245,8 @@ if "participant_id_entered" not in st.session_state:
     st.session_state.participant_id_entered = False
 if "comprehension_completed" not in st.session_state:
     st.session_state.comprehension_completed = False
+if "interface_type" not in st.session_state:
+    st.session_state.interface_type = "text"  # Fixed to text mode
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
@@ -303,7 +305,7 @@ elif st.session_state.phase == "comprehension":
         - Click on objects to place them on the blicket detector machine
         - Some objects are "blickets" that make the machine light up
         - Your goal is to figure out which objects are blickets and how the machine works
-        - **You have exactly 5 actions** (placing or removing objects) to explore
+        - **You have exactly 5 actions** (placing or removing objects) to explore in this phase
         
         **The machine will show:**
         - 🟢 LIT = Machine is active
