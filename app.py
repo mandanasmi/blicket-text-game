@@ -264,8 +264,8 @@ if st.session_state.phase == "intro":
 This is a text-only interface with 4 objects. 
 
 **The study has two phases:**
-1. **Comprehension Phase**: Practice with the interface (no data recorded)
-2. **Main Game**: Actual experiment with data collection
+1. **Comprehension Phase**: Learn the interface (data recorded)
+2. **Main Experiment**: Actual experiment with data collection
 
 Please enter your participant ID to begin.
 """
@@ -289,9 +289,9 @@ elif st.session_state.phase == "comprehension":
         st.markdown(f"**Hello {st.session_state.current_participant_id}!**")
         
         st.markdown("""
-        ### Practice Round (No Data Recording)
+        ### Comprehension Phase (Data Recording)
         
-        This is a practice round to help you understand the interface. Your actions here will **NOT** be recorded.
+        This is the comprehension phase to help you understand the interface. Your actions here will be recorded for research purposes.
         
         **Instructions:**
         - You will see 4 objects (Object 1, Object 2, Object 3, Object 4)
@@ -304,10 +304,10 @@ elif st.session_state.phase == "comprehension":
         - 🟢 LIT = Machine is active
         - 🔴 NOT LIT = Machine is inactive
         
-        When you're ready, click the button below to start the practice round.
+        When you're ready, click the button below to start the comprehension phase.
         """)
         
-        if st.button("Start Practice Round", type="primary"):
+        if st.button("Start Comprehension Phase", type="primary"):
             # Create a simple practice configuration
             practice_config = {
                 'num_objects': 4,
@@ -341,8 +341,8 @@ elif st.session_state.phase == "practice_game":
     # Show title only (no Firebase status during practice)
     st.title("🧙 Blicket Text Adventure")
     
-    st.markdown("## Practice Round")
-    st.markdown("**This is practice - no data will be recorded!**")
+    st.markdown("## Comprehension Phase - Round 1")
+    st.markdown("**This is the comprehension phase - your data will be recorded for research purposes.**")
     
     # Create a simple practice configuration
     practice_config = {
@@ -354,17 +354,19 @@ elif st.session_state.phase == "practice_game":
         'horizon': 5
     }
     
-    # Use the visual game page but with practice mode (no data saving)
-    def practice_save_func(participant_id, game_data):
-        # Do nothing - this is practice
-        pass
+    # Use the visual game page with data saving for comprehension phase
+    def comprehension_save_func(participant_id, game_data):
+        # Add phase identifier to distinguish comprehension data
+        game_data['phase'] = 'comprehension'
+        game_data['interface_type'] = st.session_state.interface_type
+        save_game_data(participant_id, game_data)
     
     textual_blicket_game_page(
         st.session_state.current_participant_id,
         practice_config,
         0,  # Single practice round
         1,  # Total rounds = 1
-        practice_save_func,
+        comprehension_save_func,
         use_visual_mode=False,
         is_practice=True
     )
@@ -376,7 +378,7 @@ elif st.session_state.phase == "practice_complete":
     
     # Firebase status removed for cleaner interface
     
-    st.markdown("## 🎉 Practice Round Complete!")
+    st.markdown("## 🎉 Comprehension Phase Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
     
     st.markdown("""
@@ -465,6 +467,7 @@ elif st.session_state.phase == "game":
     
     # Pass the save_game_data function to avoid circular imports
     def save_visual_game_data(participant_id, game_data):
+        game_data['phase'] = 'main_experiment'
         game_data['interface_type'] = st.session_state.interface_type
         save_game_data(participant_id, game_data)
     
