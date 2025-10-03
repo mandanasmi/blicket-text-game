@@ -264,7 +264,7 @@ if st.session_state.phase == "intro":
 This is a text-only interface with 4 objects. 
 
 **The study has two phases:**
-1. **Comprehension Phase**: Learn the interface (data recorded)
+1. **Comprehension Phase**: Learn the interface
 2. **Main Experiment**: Actual experiment with data collection
 
 Please enter your participant ID to begin.
@@ -289,9 +289,9 @@ elif st.session_state.phase == "comprehension":
         st.markdown(f"**Hello {st.session_state.current_participant_id}!**")
         
         st.markdown("""
-        ### Comprehension Phase (Data Recording)
+        ### Comprehension Phase
         
-        This is the comprehension phase to help you understand the interface. Your actions here will be recorded for research purposes.
+        This is the comprehension phase to help you understand the interface.
         
         **Instructions:**
         - You will see 4 objects (Object 1, Object 2, Object 3, Object 4)
@@ -342,7 +342,7 @@ elif st.session_state.phase == "practice_game":
     st.title("🧙 Blicket Text Adventure")
     
     st.markdown("## Comprehension Phase - Round 1")
-    st.markdown("**This is the comprehension phase - your data will be recorded for research purposes.**")
+    st.markdown("**This is the comprehension phase to help you understand the interface.**")
     
     # Create a simple practice configuration
     practice_config = {
