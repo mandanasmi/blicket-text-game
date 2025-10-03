@@ -82,38 +82,38 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Fall back to global setting or environment variable
         use_text_version = os.getenv('BLICKET_VISUAL_MODE', 'False').lower() != 'true'
     
-    # Add custom CSS for better styling
+    # Simple CSS for clean button styling
     st.markdown("""
     <style>
-    .object-highlight {
-        border: 2px solid #00ff00;
-        border-radius: 10px;
-        padding: 10px;
-        margin: 5px;
-    }
-    .object-normal {
-        border: 2px solid #cccccc;
-        border-radius: 10px;
-        padding: 10px;
-        margin: 5px;
-    }
-    
-    /* Style the toggle buttons to be more compact */
-    div[data-testid="stButton"] > button {
-        background: rgba(255, 255, 255, 0.1) !important;
-        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    /* Clean button styling - only green/gray colors */
+    .stApp .stButton button[kind="primary"] {
+        background-color: #28a745 !important;
+        border-color: #28a745 !important;
+        color: white !important;
         border-radius: 8px !important;
         padding: 8px 16px !important;
-        margin: 5px 0 !important;
-        color: white !important;
-        font-size: 12px !important;
-        transition: all 0.2s ease !important;
+        margin: 5px !important;
+        font-weight: bold !important;
     }
     
-    div[data-testid="stButton"] > button:hover {
-        background: rgba(255, 255, 255, 0.2) !important;
-        border-color: rgba(255, 255, 255, 0.5) !important;
-        transform: translateY(-1px) !important;
+    .stApp .stButton button[kind="primary"]:hover {
+        background-color: #218838 !important;
+        border-color: #1e7e34 !important;
+    }
+    
+    .stApp .stButton button[kind="secondary"] {
+        background-color: #6c757d !important;
+        border-color: #6c757d !important;
+        color: white !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        margin: 5px !important;
+        font-weight: bold !important;
+    }
+    
+    .stApp .stButton button[kind="secondary"]:hover {
+        background-color: #5a6268 !important;
+        border-color: #545b62 !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -365,39 +365,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Display available objects
     st.markdown("### Available Objects")
     
-    # Add custom CSS for green/gray button styling with higher specificity
-    st.markdown("""
-    <style>
-    /* Target all button elements with higher specificity */
-    .stApp .stButton button[kind="primary"],
-    .main .stButton button[kind="primary"],
-    div.stButton button[kind="primary"] {
-        background-color: #28a745 !important;
-        border-color: #28a745 !important;
-        color: white !important;
-    }
-    .stApp .stButton button[kind="primary"]:hover,
-    .main .stButton button[kind="primary"]:hover,
-    div.stButton button[kind="primary"]:hover {
-        background-color: #218838 !important;
-        border-color: #1e7e34 !important;
-    }
-    
-    .stApp .stButton button[kind="secondary"],
-    .main .stButton button[kind="secondary"],
-    div.stButton button[kind="secondary"] {
-        background-color: #6c757d !important;
-        border-color: #6c757d !important;
-        color: white !important;
-    }
-    .stApp .stButton button[kind="secondary"]:hover,
-    .main .stButton button[kind="secondary"]:hover,
-    div.stButton button[kind="secondary"]:hover {
-        background-color: #5a6268 !important;
-        border-color: #545b62 !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+    # Button styling is handled at the top of the function
     
     if use_text_version:
         st.markdown("""
