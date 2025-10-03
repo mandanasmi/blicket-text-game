@@ -582,8 +582,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 """, unsafe_allow_html=True)
                 
                 if st.button("🚀 Start Main Game", type="primary", key="complete_btn", use_container_width=True):
-                    # For practice phase, we don't need to save questionnaire data
-                    # Just return to the main app flow
+                    # Return to main app for completion
+                    st.session_state.phase = "practice_complete"
                     st.rerun()
             else:
                 # Main experiment - show questionnaire
@@ -620,8 +620,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 if is_practice:
                     # Comprehension phase - no questions, just show completion option
                     if st.button("🚀 Start Main Game", type="primary", key="complete_ready_btn", use_container_width=True):
-                        # For practice phase, we don't need to save questionnaire data
-                        # Just return to the main app flow
+                        # Return to main app for completion
+                        st.session_state.phase = "practice_complete"
                         st.rerun()
                 else:
                     # Main experiment - show questionnaire button
