@@ -222,96 +222,27 @@ if "participant_id_entered" not in st.session_state:
     st.session_state.participant_id_entered = False
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-st.title("🧙 Blicket Adventure - Choose Your Interface")
-
-# Add interface selection at the top
-if "interface_selected" not in st.session_state:
-    st.session_state.interface_selected = False
-
-if not st.session_state.interface_selected:
-    st.markdown("### Choose Your Preferred Interface")
-    
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("""
-        #### 🎨 Visual Interface
-        - Object images and shapes
-        - Visual blicket detector machine
-        - Interactive visual elements
-        - More engaging experience
-        """)
-        if st.button("🎨 Use Visual Interface", type="primary"):
-            st.session_state.interface_type = "visual"
-            st.session_state.interface_selected = True
-            st.rerun()
-    
-    with col2:
-        st.markdown("""
-        #### 📝 Text Interface
-        - Text-only descriptions
-        - No images or visuals
-        - Faster loading
-        - Better for accessibility
-        """)
-        if st.button("📝 Use Text Interface"):
-            st.session_state.interface_type = "text"
-            st.session_state.interface_selected = True
-            st.rerun()
-    
-    st.stop()
-
-# Show current interface type
-interface_emoji = "🎨" if st.session_state.interface_type == "visual" else "📝"
-st.markdown(f"**Current Interface:** {interface_emoji} {st.session_state.interface_type.title()} Mode")
-
-# Add switch interface button
-if st.button("🔄 Switch Interface", help="Change between visual and text modes"):
-    st.session_state.interface_selected = False
-    # Reset game state when switching
-    st.session_state.phase = "intro"
-    st.session_state.participant_id_entered = False
-    st.rerun()
+st.title("📝 Blicket Text Adventure")
+st.markdown("*Text-only interface with 4 objects*")
 
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
     if not st.session_state.participant_id_entered:
-        # Step 1: Ask for Participant ID
+        # Ask for Participant ID and start game directly
         st.markdown(
             """
 **Welcome to the Blicket Text Adventure!**
 
-Please enter your participant ID to begin.
+This is a text-only interface with 4 objects. Please enter your participant ID to begin.
 """
         )
         participant_id = st.text_input("Participant ID:", key="participant_id")
-        if st.button("Continue") and participant_id.strip():
+        if st.button("Start Game", type="primary") and participant_id.strip():
             st.session_state.current_participant_id = participant_id.strip()
-            st.session_state.participant_id_entered = True
-            st.rerun()
-    else:
-        # Step 2: Ask for number of objects
-        st.markdown(
-            f"""
-**Hello {st.session_state.current_participant_id}!**
-
-How many objects would you like to play with in each round?
-"""
-        )
-        
-        num_objects = st.selectbox(
-            "Number of objects per round:",
-            options=[3, 4, 5, 6, 7, 8],
-            index=1,  # Default to 4 objects
-            key="num_objects_selector"
-        )
-        
-        st.info(f"🎯 You will play with **{num_objects} objects** in each round. The number of blickets and rules will stay the same between rounds.")
-        
-        if st.button("Start Game"):
-            st.session_state.num_objects_selected = num_objects
+            st.session_state.num_objects_selected = 4  # Fixed to 4 objects
+            st.session_state.interface_type = "text"   # Fixed to text mode
             
-            # Create random configuration (3 rounds with user-specified number of objects)
+            # Create random configuration (3 rounds with 4 objects)
             import random
             
             # Set random seed based on participant ID for reproducibility
@@ -321,16 +252,16 @@ How many objects would you like to play with in each round?
             round_configs = []
             
             for i in range(num_rounds):
-                # Use user-specified number of objects
-                num_objects = st.session_state.num_objects_selected
-                # Random number of blickets between 1 and num_objects
-                num_blickets = random.randint(1, num_objects)
+                # Always use 4 objects
+                num_objects = 4
+                # Random number of blickets between 1 and 4
+                num_blickets = random.randint(1, 4)
                 # Random rule
                 rule = random.choice(['conjunctive', 'disjunctive'])
                 # Random initial probability
                 init_prob = random.uniform(0.1, 0.3)
                 # Random transition noise
-                transition_noise = 0.0 #random.uniform(0.0, 0.1)
+                transition_noise = 0.0
                 
                 round_config = {
                     'num_objects': num_objects,
@@ -345,9 +276,9 @@ How many objects would you like to play with in each round?
             # Save configuration to Firebase
             config = {
                 'num_rounds': num_rounds,
-                'user_selected_objects': num_objects,
+                'user_selected_objects': 4,  # Fixed to 4 objects
                 'rounds': round_configs,
-                'interface_type': st.session_state.interface_type
+                'interface_type': 'text'  # Fixed to text mode
             }
             save_participant_config(st.session_state.current_participant_id, config)
             
@@ -382,8 +313,8 @@ elif st.session_state.phase == "game":
         game_data['interface_type'] = st.session_state.interface_type
         save_game_data(participant_id, game_data)
     
-    # Determine visual mode based on interface selection
-    use_visual_mode = st.session_state.interface_type == "visual"
+    # Always use text mode
+    use_visual_mode = False
     
     visual_blicket_game_page(
         st.session_state.current_participant_id,

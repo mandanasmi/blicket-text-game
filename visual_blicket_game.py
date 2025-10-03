@@ -571,24 +571,36 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     st.markdown("---")
     st.markdown("### 🎯 Game Controls")
     
-    
     if st.session_state.visual_game_state == "exploration":
         horizon = round_config.get('horizon', 32)
         steps_left = horizon - st.session_state.steps_taken
         
         # Show different buttons based on steps remaining
         if steps_left <= 0:
-            st.warning("⏰ No steps remaining! Please proceed to answer questions.")
-            if st.button("Proceed to Answer Questions", type="primary", key="proceed_btn"):
+            st.markdown("""
+            <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
+                <h3 style="color: #856404; margin: 0;">⏰ No Steps Remaining!</h3>
+                <p style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.button("🚀 PROCEED TO ANSWER QUESTIONS", type="primary", key="proceed_btn", use_container_width=True):
                 st.session_state.visual_game_state = "questionnaire"
                 st.rerun()
         else:
-            st.info(f"You have {steps_left} steps remaining. You can continue exploring or proceed to questions.")
+            st.markdown(f"""
+            <div style="background: rgba(13, 202, 240, 0.1); border: 2px solid #0dcaf0; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
+                <h3 style="color: #0dcaf0; margin: 0;">📊 You have {steps_left} steps remaining</h3>
+                <p style="color: #0dcaf0; margin: 10px 0;">You can continue exploring or proceed to answer questions about blickets.</p>
+            </div>
+            """, unsafe_allow_html=True)
             
-            # Make the button more prominent and always visible
-            if st.button("🎯 Ready to Answer Questions", type="primary", key="ready_btn"):
-                st.session_state.visual_game_state = "questionnaire"
-                st.rerun()
+            # Make the button very prominent
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                if st.button("🎯 READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
+                    st.session_state.visual_game_state = "questionnaire"
+                    st.rerun()
             
             st.markdown(f"**Steps remaining: {steps_left}/{horizon}**")
     
@@ -642,112 +654,127 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         )
         
         # Navigation buttons
+        st.markdown("---")
+        st.markdown("### 🚀 Submit Your Answers")
+        
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
             # Check if rule hypothesis is provided
             rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
             if not rule_hypothesis:
-                st.warning("⚠️ Please provide your hypothesis about the rule before proceeding to the next round.")
+                st.markdown("""
+                <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
+                    <h4 style="color: #856404; margin: 0;">⚠️ Please provide your hypothesis about the rule before proceeding!</h4>
+                </div>
+                """, unsafe_allow_html=True)
             
-            if st.button("Next Round", disabled=not rule_hypothesis):
-                # Collect blicket classifications
-                blicket_classifications = {}
-                for i in range(round_config['num_objects']):
-                    blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_hypothesis, use_container_width=True):
+                    # Collect blicket classifications
+                    blicket_classifications = {}
+                    for i in range(round_config['num_objects']):
+                        blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
                 
-                # Get rule hypothesis
-                rule_hypothesis = st.session_state.get("rule_hypothesis", "")
-                
-                # Save current round data with detailed action tracking
-                round_data = {
-                    "start_time": st.session_state.game_start_time.isoformat(),
-                    "end_time": datetime.datetime.now().isoformat(),
-                    "round_number": current_round + 1,
-                    "round_config": round_config,
-                    "user_actions": st.session_state.user_actions,  # All place/remove actions
-                    "blicket_classifications": blicket_classifications,  # User's blicket answers
-                    "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
-                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
-                    "final_machine_state": bool(game_state['true_state'][-1]),
-                    "total_steps_taken": st.session_state.steps_taken,
-                    "final_objects_on_machine": list(st.session_state.selected_objects),
-                    "rule": round_config['rule']
-                }
-                
-                # Use the provided save function or default Firebase function
-                if save_data_func:
-                    save_data_func(participant_id, round_data)
-                else:
-                    save_game_data(participant_id, round_data)
-                
-                # Clear session state for next round
-                st.session_state.pop("visual_game_state", None)
-                st.session_state.pop("env", None)
-                st.session_state.pop("game_state", None)
-                st.session_state.pop("object_positions", None)
-                st.session_state.pop("selected_objects", None)
-                st.session_state.pop("blicket_answers", None)
-                st.session_state.pop("game_start_time", None)
-                st.session_state.pop("shape_images", None)
-                st.session_state.pop("steps_taken", None)
-                st.session_state.pop("user_actions", None)
-                
-                # Return to main app for next round
-                st.session_state.phase = "next_round"
-                st.rerun()
+                    # Get rule hypothesis
+                    rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    
+                    # Save current round data with detailed action tracking
+                    round_data = {
+                        "start_time": st.session_state.game_start_time.isoformat(),
+                        "end_time": datetime.datetime.now().isoformat(),
+                        "round_number": current_round + 1,
+                        "round_config": round_config,
+                        "user_actions": st.session_state.user_actions,  # All place/remove actions
+                        "blicket_classifications": blicket_classifications,  # User's blicket answers
+                        "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
+                        "final_machine_state": bool(game_state['true_state'][-1]),
+                        "total_steps_taken": st.session_state.steps_taken,
+                        "final_objects_on_machine": list(st.session_state.selected_objects),
+                        "rule": round_config['rule']
+                    }
+                    
+                    # Use the provided save function or default Firebase function
+                    if save_data_func:
+                        save_data_func(participant_id, round_data)
+                    else:
+                        save_game_data(participant_id, round_data)
+                    
+                    # Clear session state for next round
+                    st.session_state.pop("visual_game_state", None)
+                    st.session_state.pop("env", None)
+                    st.session_state.pop("game_state", None)
+                    st.session_state.pop("object_positions", None)
+                    st.session_state.pop("selected_objects", None)
+                    st.session_state.pop("blicket_answers", None)
+                    st.session_state.pop("game_start_time", None)
+                    st.session_state.pop("shape_images", None)
+                    st.session_state.pop("steps_taken", None)
+                    st.session_state.pop("user_actions", None)
+                    
+                    # Return to main app for next round
+                    st.session_state.phase = "next_round"
+                    st.rerun()
         else:
             # Show Finish Task button only on the last round
             # Check if rule hypothesis is provided
             rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
             if not rule_hypothesis:
-                st.warning("⚠️ Please provide your hypothesis about the rule before finishing the task.")
+                st.markdown("""
+                <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
+                    <h4 style="color: #856404; margin: 0;">⚠️ Please provide your hypothesis about the rule before finishing!</h4>
+                </div>
+                """, unsafe_allow_html=True)
             
-            if st.button("Finish Task", disabled=not rule_hypothesis):
-                # Collect blicket classifications
-                blicket_classifications = {}
-                for i in range(round_config['num_objects']):
-                    blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                if st.button("🏁 FINISH TASK", type="primary", disabled=not rule_hypothesis, use_container_width=True):
+                    # Collect blicket classifications
+                    blicket_classifications = {}
+                    for i in range(round_config['num_objects']):
+                        blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
                 
-                # Get rule hypothesis
-                rule_hypothesis = st.session_state.get("rule_hypothesis", "")
-                
-                # Save final round data with detailed action tracking
-                round_data = {
-                    "start_time": st.session_state.game_start_time.isoformat(),
-                    "end_time": datetime.datetime.now().isoformat(),
-                    "round_number": current_round + 1,
-                    "round_config": round_config,
-                    "user_actions": st.session_state.user_actions,  # All place/remove actions
-                    "blicket_classifications": blicket_classifications,  # User's blicket answers
-                    "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
-                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
-                    "final_machine_state": bool(game_state['true_state'][-1]),
-                    "total_steps_taken": st.session_state.steps_taken,
-                    "final_objects_on_machine": list(st.session_state.selected_objects),
-                    "rule": round_config['rule']
-                }
-                
-                # Use the provided save function or default Firebase function
-                if save_data_func:
-                    save_data_func(participant_id, round_data)
-                else:
-                    save_game_data(participant_id, round_data)
-                
-                # Clear session state
-                st.session_state.pop("visual_game_state", None)
-                st.session_state.pop("env", None)
-                st.session_state.pop("game_state", None)
-                st.session_state.pop("object_positions", None)
-                st.session_state.pop("selected_objects", None)
-                st.session_state.pop("blicket_answers", None)
-                st.session_state.pop("game_start_time", None)
-                st.session_state.pop("shape_images", None)
-                st.session_state.pop("steps_taken", None)
-                st.session_state.pop("user_actions", None)
-                
-                # Return to main app for completion
-                st.session_state.phase = "end"
-                st.rerun()
+                    # Get rule hypothesis
+                    rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    
+                    # Save final round data with detailed action tracking
+                    round_data = {
+                        "start_time": st.session_state.game_start_time.isoformat(),
+                        "end_time": datetime.datetime.now().isoformat(),
+                        "round_number": current_round + 1,
+                        "round_config": round_config,
+                        "user_actions": st.session_state.user_actions,  # All place/remove actions
+                        "blicket_classifications": blicket_classifications,  # User's blicket answers
+                        "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
+                        "final_machine_state": bool(game_state['true_state'][-1]),
+                        "total_steps_taken": st.session_state.steps_taken,
+                        "final_objects_on_machine": list(st.session_state.selected_objects),
+                        "rule": round_config['rule']
+                    }
+                    
+                    # Use the provided save function or default Firebase function
+                    if save_data_func:
+                        save_data_func(participant_id, round_data)
+                    else:
+                        save_game_data(participant_id, round_data)
+                    
+                    # Clear session state
+                    st.session_state.pop("visual_game_state", None)
+                    st.session_state.pop("env", None)
+                    st.session_state.pop("game_state", None)
+                    st.session_state.pop("object_positions", None)
+                    st.session_state.pop("selected_objects", None)
+                    st.session_state.pop("blicket_answers", None)
+                    st.session_state.pop("game_start_time", None)
+                    st.session_state.pop("shape_images", None)
+                    st.session_state.pop("steps_taken", None)
+                    st.session_state.pop("user_actions", None)
+                    
+                    # Return to main app for completion
+                    st.session_state.phase = "end"
+                    st.rerun()
 
 if __name__ == "__main__":
     # Test the visual game
