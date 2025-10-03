@@ -273,17 +273,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     with st.expander("📋 Game Instructions", expanded=False):
         horizon = round_config.get('horizon', 32)  # Default to 32 steps
         st.markdown(f"""
-        You are an intelligent, curious agent. You are playing a game where you are in a room with different objects, and a machine. Some of these objects are blickets. You can't tell which object is a blicket just by looking at it, but they have blicktness inside of them. Blicktness makes the machine turn on, following some hidden rule.
 
         **Your goals are:**
         - Identify which objects are blickets.
         - Infer the underlying rule for how the machine turns on. 
 
-        **Here are the available commands:**
-      
-        - **put ... on ...:** put an object on the machine or the floor
-        - **take ... off ...:** take an object off the machine
-        
         **Tips:**
         - All objects can be either on the machine or on the floor.
         - You should think about how to efficiently explore the relationship between the objects and the machine.
@@ -578,25 +572,40 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Show different buttons based on steps remaining
         if steps_left <= 0:
-            st.markdown("""
-            <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                <h3 style="color: #856404; margin: 0;">⏰ No Steps Remaining!</h3>
-                <p style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</p>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            if st.button("🚀 PROCEED TO ANSWER QUESTIONS", type="primary", key="proceed_btn", use_container_width=True):
-                # Clear any previous answers to ensure fresh start
-                for i in range(round_config['num_objects']):
-                    if f"blicket_q_{i}" in st.session_state:
-                        del st.session_state[f"blicket_q_{i}"]
-                # Clear rule inference and rule type answers
-                if "rule_hypothesis" in st.session_state:
-                    del st.session_state["rule_hypothesis"]
-                if "rule_type" in st.session_state:
-                    del st.session_state["rule_type"]
-                st.session_state.visual_game_state = "questionnaire"
-                st.rerun()
+            if is_practice:
+                # Comprehension phase - no questions, just show completion message
+                st.markdown("""
+                <div style="background: rgba(40, 167, 69, 0.8); border: 2px solid #28a745; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
+                    <h3 style="color: #155724; margin: 0;">🎉 Comprehension Phase Complete!</h3>
+                    <p style="color: #155724; margin: 10px 0;">You've completed the comprehension phase. You can now proceed to the main experiment.</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                if st.button("✅ Complete Comprehension Phase", type="primary", key="complete_btn", use_container_width=True):
+                    # For practice phase, we don't need to save questionnaire data
+                    # Just return to the main app flow
+                    st.rerun()
+            else:
+                # Main experiment - show questionnaire
+                st.markdown("""
+                <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
+                    <h3 style="color: #856404; margin: 0;">⏰ No Steps Remaining!</h3>
+                    <p style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</p>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                if st.button("🚀 PROCEED TO ANSWER QUESTIONS", type="primary", key="proceed_btn", use_container_width=True):
+                    # Clear any previous answers to ensure fresh start
+                    for i in range(round_config['num_objects']):
+                        if f"blicket_q_{i}" in st.session_state:
+                            del st.session_state[f"blicket_q_{i}"]
+                    # Clear rule inference and rule type answers
+                    if "rule_hypothesis" in st.session_state:
+                        del st.session_state["rule_hypothesis"]
+                    if "rule_type" in st.session_state:
+                        del st.session_state["rule_type"]
+                    st.session_state.visual_game_state = "questionnaire"
+                    st.rerun()
         else:
             st.markdown(f"""
             <div style="background: rgba(13, 202, 240, 0.1); border: 2px solid #0dcaf0; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
@@ -605,20 +614,28 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             </div>
             """, unsafe_allow_html=True)
             
-            # Make the button very prominent
+            # Show different button based on phase
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                if st.button("🎯 READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
-                    # Clear any previous blicket answers to ensure fresh start
-                    for i in range(round_config['num_objects']):
-                        if f"blicket_q_{i}" in st.session_state:
-                            del st.session_state[f"blicket_q_{i}"]
-                    st.session_state.visual_game_state = "questionnaire"
-                    st.rerun()
+                if is_practice:
+                    # Comprehension phase - no questions, just show completion option
+                    if st.button("✅ Complete Comprehension Phase", type="primary", key="complete_ready_btn", use_container_width=True):
+                        # For practice phase, we don't need to save questionnaire data
+                        # Just return to the main app flow
+                        st.rerun()
+                else:
+                    # Main experiment - show questionnaire button
+                    if st.button("🎯 READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
+                        # Clear any previous blicket answers to ensure fresh start
+                        for i in range(round_config['num_objects']):
+                            if f"blicket_q_{i}" in st.session_state:
+                                del st.session_state[f"blicket_q_{i}"]
+                        st.session_state.visual_game_state = "questionnaire"
+                        st.rerun()
             
             st.markdown(f"**Steps remaining: {steps_left}/{horizon}**")
     
-    elif st.session_state.visual_game_state == "questionnaire":
+    elif st.session_state.visual_game_state == "questionnaire" and not is_practice:
         st.markdown("""
         <div style="padding: 20px; border-radius: 15px; background-color: #e3f2fd; border: 2px solid #2196f3; margin: 20px 0;">
             <h3 style="margin: 0; text-align: center; color: #1565c0;">🎯 Blicket Classification</h3>
@@ -689,7 +706,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 st.session_state.visual_game_state = "rule_type_classification"
                 st.rerun()
 
-    elif st.session_state.visual_game_state == "rule_type_classification":
+    elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
         <div style="padding: 20px; border-radius: 15px; background-color: #f3e5f5; border: 2px solid #9c27b0; margin: 20px 0;">
             <h3 style="margin: 0; text-align: center; color: #4a148c;">🎯 Rule Type Classification</h3>
