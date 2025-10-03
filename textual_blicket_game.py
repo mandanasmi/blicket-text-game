@@ -72,8 +72,8 @@ def save_game_data(participant_id, game_data):
         print(f"Failed to save game data for {participant_id}: {e}")
         print("Game data (not saved):", game_data)
 
-def visual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
-    """Main blicket game page - supports both visual and text modes"""
+def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
+    """Main blicket game page - text-only interface"""
     
     # Determine which mode to use - this is the LOCAL variable for this function
     if use_visual_mode is not None:
@@ -920,7 +920,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     st.rerun()
 
 if __name__ == "__main__":
-    # Test the visual game
+    # Test the textual game
     test_config = {
         'num_objects': 4,
         'num_blickets': 2,
@@ -928,4 +928,4 @@ if __name__ == "__main__":
         'init_prob': 0.1,
         'transition_noise': 0.0
     }
-    visual_blicket_game_page("test_user", test_config, 0, 3, None)
+    textual_blicket_game_page("test_user", test_config, 0, 3, None)

@@ -10,10 +10,15 @@ from firebase_admin import credentials, db
 from dotenv import load_dotenv
 
 import env.blicket_text as blicket_text
-from visual_blicket_game import visual_blicket_game_page
+from textual_blicket_game import textual_blicket_game_page
 
 # Load environment variables
 load_dotenv()
+
+# Debug: Print current working directory and .env file status
+print(f"Current working directory: {os.getcwd()}")
+print(f".env file exists: {os.path.exists('.env')}")
+print(f"FIREBASE_PROJECT_ID loaded: {os.getenv('FIREBASE_PROJECT_ID') is not None}")
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
@@ -48,6 +53,7 @@ if not firebase_admin._apps:
             firebase_initialized = True
             
         elif os.getenv("FIREBASE_PROJECT_ID"):  # Local development
+            print("Using local development Firebase credentials from environment variables")
             firebase_credentials = {
                 "type": "service_account",
                 "project_id": os.getenv("FIREBASE_PROJECT_ID"),
@@ -67,6 +73,7 @@ if not firebase_admin._apps:
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
+            print("Firebase initialized successfully from environment variables")
             
     except Exception as e:
         # Firebase initialization failed - app will run without data saving
@@ -350,7 +357,7 @@ elif st.session_state.phase == "practice_game":
         # Do nothing - this is practice
         pass
     
-    visual_blicket_game_page(
+    textual_blicket_game_page(
         st.session_state.current_participant_id,
         practice_config,
         0,  # Single practice round
@@ -452,7 +459,7 @@ elif st.session_state.phase == "game":
     # Always use text mode
     use_visual_mode = False
     
-    visual_blicket_game_page(
+    textual_blicket_game_page(
         st.session_state.current_participant_id,
         round_config,
         st.session_state.current_round,
