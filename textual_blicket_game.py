@@ -693,11 +693,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Check if rule hypothesis is provided
         rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
         
-        # Debug: Show current rule hypothesis value
-        st.markdown(f"**Debug: Rule hypothesis length: {len(rule_hypothesis)}**")
-        if rule_hypothesis:
-            st.markdown(f"**Debug: Rule hypothesis: '{rule_hypothesis}'**")
-        
         if not rule_hypothesis:
             st.markdown("""
             <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
@@ -707,11 +702,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            # Debug: Show button state
-            st.markdown(f"**Debug: Button disabled: {not rule_hypothesis}**")
-            
             if st.button("➡️ NEXT: Rule Type Classification", type="primary", disabled=not rule_hypothesis, use_container_width=True):
-                st.markdown("**Debug: Button clicked! Transitioning to rule_type_classification**")
                 st.session_state.visual_game_state = "rule_type_classification"
                 st.rerun()
 
