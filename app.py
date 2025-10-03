@@ -15,8 +15,7 @@ from textual_blicket_game import textual_blicket_game_page
 # Load environment variables
 load_dotenv()
 
-# Firebase initialization with debug output
-print("=== FIREBASE INITIALIZATION DEBUG ===")
+# Firebase initialization
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
@@ -71,12 +70,12 @@ if not firebase_admin._apps:
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
-            print("✅ Firebase initialized successfully from environment variables")
+            # Firebase initialized successfully
             
     except Exception as e:
         # Firebase initialization failed - app will run without data saving
         firebase_initialized = False
-        print(f"❌ Firebase initialization failed: {e}")
+        # Firebase initialization failed
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
@@ -95,8 +94,7 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
 
 def save_participant_config(participant_id, config):
     """Save participant configuration to Firebase"""
-    print(f"DEBUG: save_participant_config called for {participant_id}")
-    print(f"DEBUG: firebase_initialized={firebase_initialized}, db_ref={'available' if db_ref else 'None'}")
+    # Save participant config
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
@@ -112,8 +110,7 @@ def save_participant_config(participant_id, config):
 
 def save_game_data(participant_id, game_data):
     """Save game data to Firebase"""
-    print(f"DEBUG: save_game_data called for {participant_id}")
-    print(f"DEBUG: firebase_initialized={firebase_initialized}, db_ref={'available' if db_ref else 'None'}")
+    # Save game data
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
