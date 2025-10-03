@@ -366,6 +366,33 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
     # Display available objects
     st.markdown("### Available Objects")
     
+    # Add custom CSS for green/gray button styling
+    st.markdown("""
+    <style>
+    /* Green styling for selected objects */
+    .stButton > button[kind="primary"] {
+        background-color: #28a745 !important;
+        border-color: #28a745 !important;
+        color: white !important;
+    }
+    .stButton > button[kind="primary"]:hover {
+        background-color: #218838 !important;
+        border-color: #1e7e34 !important;
+    }
+    
+    /* Gray styling for unselected objects */
+    .stButton > button[kind="secondary"] {
+        background-color: #6c757d !important;
+        border-color: #6c757d !important;
+        color: white !important;
+    }
+    .stButton > button[kind="secondary"]:hover {
+        background-color: #5a6268 !important;
+        border-color: #545b62 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     if use_text_version:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
@@ -380,11 +407,11 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 
                 # Button with dynamic styling based on selection state
                 if is_selected:
-                    # Selected state - green button
+                    # Selected state - green button (via CSS)
                     button_type = "primary"
-                    button_text = f"✅ Object {i + 1}"
+                    button_text = f"Object {i + 1}"
                 else:
-                    # Unselected state - secondary button
+                    # Unselected state - gray button (via CSS)
                     button_type = "secondary"
                     button_text = f"Object {i + 1}"
                 
