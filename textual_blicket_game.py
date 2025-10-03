@@ -576,12 +576,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Comprehension phase - no questions, just show completion message
                 st.markdown("""
                 <div style="background: rgba(40, 167, 69, 0.8); border: 2px solid #28a745; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h3 style="color: #155724; margin: 0;">🎉 Comprehension Phase Complete!</h3>
-                    <p style="color: #155724; margin: 10px 0;">You've completed the comprehension phase. You can now proceed to the main experiment.</p>
+                    <h3 style="color: #155724; margin: 0;">⏰ No Remaining Steps</h3>
+                    <p style="color: #155724; margin: 10px 0;">Now that the comprehension phase is over, you can play the main game!</p>
                 </div>
                 """, unsafe_allow_html=True)
                 
-                if st.button("✅ Complete Comprehension Phase", type="primary", key="complete_btn", use_container_width=True):
+                if st.button("🚀 Start Main Game", type="primary", key="complete_btn", use_container_width=True):
                     # For practice phase, we don't need to save questionnaire data
                     # Just return to the main app flow
                     st.rerun()
@@ -619,7 +619,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             with col2:
                 if is_practice:
                     # Comprehension phase - no questions, just show completion option
-                    if st.button("✅ Complete Comprehension Phase", type="primary", key="complete_ready_btn", use_container_width=True):
+                    if st.button("🚀 Start Main Game", type="primary", key="complete_ready_btn", use_container_width=True):
                         # For practice phase, we don't need to save questionnaire data
                         # Just return to the main app flow
                         st.rerun()
