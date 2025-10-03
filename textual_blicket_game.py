@@ -693,13 +693,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Check if rule hypothesis is provided
         rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
         
-        if not rule_hypothesis:
-            st.markdown("""
-            <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                <h4 style="color: #856404; margin: 0;">Please provide your hypothesis about the rule before proceeding!</h4>
-            </div>
-            """, unsafe_allow_html=True)
-        
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
             if st.button("➡️ NEXT: Rule Type Classification", type="primary", disabled=not rule_hypothesis, use_container_width=True):
@@ -750,13 +743,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Check if rule type is provided
             rule_type = st.session_state.get("rule_type", "")
             
-            if not rule_type:
-                st.markdown("""
-                <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 0;">Please select the rule type before proceeding!</h4>
-                </div>
-                """, unsafe_allow_html=True)
-        
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
@@ -812,13 +798,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Check if rule type is provided
             rule_type = st.session_state.get("rule_type", "")
             
-            if not rule_type:
-                st.markdown("""
-                <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 0;">Please select the rule type before finishing!</h4>
-                </div>
-                """, unsafe_allow_html=True)
-        
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("🏁 FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
