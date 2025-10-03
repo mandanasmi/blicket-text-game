@@ -255,12 +255,7 @@ if st.session_state.phase == "intro":
     # Show title and Firebase status for intro page
     st.title("🧙 Blicket Text Adventure")
     
-    # Show Firebase status
-    if firebase_initialized:
-        st.success("✅ Data saving enabled - Firebase connected successfully")
-    else:
-        st.warning("⚠️ Data saving disabled - app will run in demo mode")
-        st.info("💡 To enable data saving, ensure Firebase credentials are properly configured in your environment.")
+    # Firebase status removed for cleaner interface
     
     if not st.session_state.participant_id_entered:
         # Ask for Participant ID and start comprehension phase
@@ -381,11 +376,7 @@ elif st.session_state.phase == "practice_complete":
     # Show title and Firebase status (data collection starts soon)
     st.title("🧙 Blicket Text Adventure")
     
-    # Show Firebase status since data collection is about to begin
-    if firebase_initialized:
-        st.success("✅ Data saving enabled - Firebase connected successfully")
-    else:
-        st.warning("⚠️ Data saving disabled - app will run in demo mode")
+    # Firebase status removed for cleaner interface
     
     st.markdown("## 🎉 Practice Round Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
