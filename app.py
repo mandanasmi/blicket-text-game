@@ -252,10 +252,8 @@ if "interface_type" not in st.session_state:
 
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
-    # Show title and Firebase status for intro page
+    # Show title
     st.title("🧙 Blicket Text Adventure")
-    
-    # Firebase status removed for cleaner interface
     
     if not st.session_state.participant_id_entered:
         # Ask for Participant ID and start comprehension phase
@@ -283,7 +281,7 @@ Please enter your participant ID to begin.
 
 # 2) COMPREHENSION PHASE
 elif st.session_state.phase == "comprehension":
-    # Show title only (no Firebase status during comprehension)
+    # Show title
     st.title("🧙 Blicket Text Adventure")
     
     if not st.session_state.comprehension_completed:
@@ -340,7 +338,7 @@ elif st.session_state.phase == "comprehension":
 
 # 3) PRACTICE GAME
 elif st.session_state.phase == "practice_game":
-    # Show title only (no Firebase status during practice)
+    # Show title
     st.title("🧙 Blicket Text Adventure")
     
     st.markdown("## Comprehension Phase - Round 1")
@@ -375,10 +373,8 @@ elif st.session_state.phase == "practice_game":
 
 # 4) PRACTICE COMPLETION
 elif st.session_state.phase == "practice_complete":
-    # Show title and Firebase status (data collection starts soon)
+    # Show title
     st.title("🧙 Blicket Text Adventure")
-    
-    # Firebase status removed for cleaner interface
     
     st.markdown("## 🎉 Comprehension Phase Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
@@ -431,7 +427,7 @@ elif st.session_state.phase == "practice_complete":
             }
             round_configs.append(round_config)
         
-        # Save configuration to Firebase
+        # Save configuration
         config = {
             'num_rounds': num_rounds,
             'user_selected_objects': 4,  # Fixed to 4 objects
@@ -461,7 +457,7 @@ elif st.session_state.phase == "practice_complete":
 
 # 5) MAIN GAME RUN
 elif st.session_state.phase == "game":
-    # Show title only (no Firebase status during game)
+    # Show title
     st.title("🧙 Blicket Text Adventure")
     
     # Use visual blicket game interface
