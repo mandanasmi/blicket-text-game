@@ -407,6 +407,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         - The button will turn **green** when the object is placed
         - Click the button again to **remove** the object from the detector
         - The button will turn **gray** when the object is removed
+        - Each button shows the current state: **green = placed**, **gray = not placed**
         - Try different combinations to figure out which objects are blickets!
         """)
         
@@ -419,40 +420,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 steps_left = horizon - st.session_state.steps_taken
                 interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                 
-                # Use container with custom styling for visual feedback
-                with st.container():
-                    if is_selected:
-                        # Selected state - green background container
-                        st.markdown(f"""
-                        <div style="
-                            background-color: #d4edda; 
-                            border: 2px solid #28a745; 
-                            border-radius: 8px; 
-                            padding: 10px; 
-                            margin: 5px;
-                            text-align: center;
-                        ">
-                            <strong style="color: #155724;">Object {i + 1} ✅</strong>
-                        </div>
-                        """, unsafe_allow_html=True)
-                        button_type = "primary"
-                    else:
-                        # Unselected state - gray background container
-                        st.markdown(f"""
-                        <div style="
-                            background-color: #f8f9fa; 
-                            border: 2px solid #6c757d; 
-                            border-radius: 8px; 
-                            padding: 10px; 
-                            margin: 5px;
-                            text-align: center;
-                        ">
-                            <strong style="color: #495057;">Object {i + 1}</strong>
-                        </div>
-                        """, unsafe_allow_html=True)
-                        button_type = "secondary"
+                # Single button that toggles between green (selected) and gray (unselected)
+                button_type = "primary" if is_selected else "secondary"
                 
-                if st.button(f"Click to {'Remove' if is_selected else 'Place'} Object {i + 1}", 
+                if st.button(f"Object {i + 1}", 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
                            type=button_type,
