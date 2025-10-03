@@ -194,6 +194,13 @@ def submit_qa():
         st.session_state.start_time = now
         st.session_state.log = [first_obs]
         st.session_state.times = [now]
+        
+        # Reset action history for next round
+        st.session_state.steps_taken = 0
+        st.session_state.user_actions = []
+        st.session_state.action_history = []
+        st.session_state.state_history = []
+        
         st.session_state.phase = "game"
         
         # Clear Q&A state
@@ -495,6 +502,13 @@ elif st.session_state.phase == "practice_complete":
         st.session_state.start_time = now
         st.session_state.log = [first_obs]
         st.session_state.times = [now]
+        
+        # Reset action history for main game (clear comprehension phase history)
+        st.session_state.steps_taken = 0
+        st.session_state.user_actions = []
+        st.session_state.action_history = []
+        st.session_state.state_history = []
+        
         st.session_state.phase = "game"
         st.rerun()
 
@@ -528,6 +542,13 @@ elif st.session_state.phase == "game":
 elif st.session_state.phase == "next_round":
     # Move to next round
     st.session_state.current_round += 1
+    
+    # Reset action history for next round
+    st.session_state.steps_taken = 0
+    st.session_state.user_actions = []
+    st.session_state.action_history = []
+    st.session_state.state_history = []
+    
     st.session_state.phase = "game"
     st.rerun()
 
