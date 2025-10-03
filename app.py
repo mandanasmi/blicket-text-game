@@ -468,14 +468,8 @@ elif st.session_state.phase == "practice_complete":
 
 # 5) MAIN GAME RUN
 elif st.session_state.phase == "game":
-    # Show title and Firebase status (data collection active)
+    # Show title only (no Firebase status during game)
     st.title("🧙 Blicket Text Adventure")
-    
-    # Show Firebase status during data collection
-    if firebase_initialized:
-        st.success("✅ Data collection active - Firebase connected")
-    else:
-        st.warning("⚠️ Data collection disabled - Firebase not connected")
     
     # Use visual blicket game interface
     round_config = st.session_state.round_configs[st.session_state.current_round]
