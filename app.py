@@ -236,10 +236,10 @@ if "current_round" not in st.session_state:
     st.session_state.current_round = 0
 if "round_configs" not in st.session_state:
     st.session_state.round_configs = []
-if "num_objects_selected" not in st.session_state:
-    st.session_state.num_objects_selected = None
 if "participant_id_entered" not in st.session_state:
     st.session_state.participant_id_entered = False
+if "comprehension_completed" not in st.session_state:
+    st.session_state.comprehension_completed = False
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 st.title("📝 Blicket Text Adventure")
@@ -254,82 +254,192 @@ else:
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
     if not st.session_state.participant_id_entered:
-        # Ask for Participant ID and start game directly
+        # Ask for Participant ID and start comprehension phase
         st.markdown(
             """
 **Welcome to the Blicket Text Adventure!**
 
-This is a text-only interface with 4 objects. Please enter your participant ID to begin.
+This is a text-only interface with 4 objects. 
+
+**The study has two phases:**
+1. **Comprehension Phase**: Practice with the interface (no data recorded)
+2. **Main Game**: Actual experiment with data collection
+
+Please enter your participant ID to begin.
 """
         )
         participant_id = st.text_input("Participant ID:", key="participant_id")
-        if st.button("Start Game", type="primary") and participant_id.strip():
+        if st.button("Start Comprehension Phase", type="primary") and participant_id.strip():
             st.session_state.current_participant_id = participant_id.strip()
-            st.session_state.num_objects_selected = 4  # Fixed to 4 objects
-            st.session_state.interface_type = "text"   # Fixed to text mode
-            
-            # Create random configuration (3 rounds with 4 objects)
-            import random
-            
-            # Set random seed based on participant ID for reproducibility
-            random.seed(hash(st.session_state.current_participant_id) % 2**32)
-            
-            num_rounds = 3
-            round_configs = []
-            
-            for i in range(num_rounds):
-                # Always use 4 objects
-                num_objects = 4
-                # Random number of blickets between 1 and 4
-                num_blickets = random.randint(1, 4)
-                # Random rule
-                rule = random.choice(['conjunctive', 'disjunctive'])
-                # Random initial probability
-                init_prob = random.uniform(0.1, 0.3)
-                # Random transition noise
-                transition_noise = 0.0
-                
-                round_config = {
-                    'num_objects': num_objects,
-                    'num_blickets': num_blickets,
-                    'rule': rule,
-                    'init_prob': init_prob,
-                    'transition_noise': transition_noise,
-                    'horizon': 32  # Default step limit
-                }
-                round_configs.append(round_config)
-            
-            # Save configuration to Firebase
-            config = {
-                'num_rounds': num_rounds,
-                'user_selected_objects': 4,  # Fixed to 4 objects
-                'rounds': round_configs,
-                'interface_type': 'text'  # Fixed to text mode
-            }
-            save_participant_config(st.session_state.current_participant_id, config)
-            
-            # Initialize first round
-            st.session_state.current_round = 0
-            st.session_state.round_configs = round_configs
-            round_config = round_configs[0]
-            env, first_obs = create_new_game(
-                seed=42,
-                num_objects=round_config['num_objects'],
-                num_blickets=round_config['num_blickets'],
-                rule=round_config['rule']
-            )
-            
-            now = datetime.datetime.now()
-            st.session_state.env = env
-            st.session_state.start_time = now
-            st.session_state.log = [first_obs]
-            st.session_state.times = [now]
-            st.session_state.phase = "game"
+            st.session_state.participant_id_entered = True
+            st.session_state.phase = "comprehension"
             st.rerun()
     
     st.stop()
 
-# 2) GAME RUN
+# 2) COMPREHENSION PHASE
+elif st.session_state.phase == "comprehension":
+    if not st.session_state.comprehension_completed:
+        st.markdown("## 🧠 Comprehension Phase")
+        st.markdown(f"**Hello {st.session_state.current_participant_id}!**")
+        
+        st.markdown("""
+        ### Practice Round (No Data Recording)
+        
+        This is a practice round to help you understand the interface. Your actions here will **NOT** be recorded.
+        
+        **Instructions:**
+        - You will see 4 objects (Object 1, Object 2, Object 3, Object 4)
+        - Click on objects to place them on the blicket detector machine
+        - Some objects are "blickets" that make the machine light up
+        - Your goal is to figure out which objects are blickets and how the machine works
+        
+        **The machine will show:**
+        - 🟢 LIT = Machine is active
+        - 🔴 NOT LIT = Machine is inactive
+        
+        When you're ready, click the button below to start the practice round.
+        """)
+        
+        if st.button("Start Practice Round", type="primary"):
+            # Create a simple practice configuration
+            practice_config = {
+                'num_objects': 4,
+                'num_blickets': 2,
+                'rule': 'conjunctive',
+                'init_prob': 0.2,
+                'transition_noise': 0.0,
+                'horizon': 16  # Shorter practice round
+            }
+            
+            # Create practice game
+            env, first_obs = create_new_game(
+                seed=999,  # Fixed seed for practice
+                num_objects=practice_config['num_objects'],
+                num_blickets=practice_config['num_blickets'],
+                rule=practice_config['rule']
+            )
+            
+            st.session_state.env = env
+            st.session_state.start_time = datetime.datetime.now()
+            st.session_state.log = [first_obs]
+            st.session_state.times = [datetime.datetime.now()]
+            st.session_state.comprehension_completed = True
+            st.session_state.phase = "practice_game"
+            st.rerun()
+    
+    st.stop()
+
+# 3) PRACTICE GAME
+elif st.session_state.phase == "practice_game":
+    st.markdown("## 🧠 Practice Round")
+    st.markdown("**This is practice - no data will be recorded!**")
+    
+    # Create a simple practice configuration
+    practice_config = {
+        'num_objects': 4,
+        'num_blickets': 2,
+        'rule': 'conjunctive',
+        'init_prob': 0.2,
+        'transition_noise': 0.0,
+        'horizon': 16
+    }
+    
+    # Use the visual game page but with practice mode (no data saving)
+    def practice_save_func(participant_id, game_data):
+        # Do nothing - this is practice
+        pass
+    
+    visual_blicket_game_page(
+        st.session_state.current_participant_id,
+        practice_config,
+        0,  # Single practice round
+        1,  # Total rounds = 1
+        practice_save_func,
+        use_visual_mode=False,
+        is_practice=True
+    )
+
+# 4) PRACTICE COMPLETION
+elif st.session_state.phase == "practice_complete":
+    st.markdown("## 🎉 Practice Round Complete!")
+    st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
+    
+    st.markdown("""
+    ### Ready for the Main Experiment?
+    
+    Now that you've practiced with the interface, you're ready for the main experiment.
+    
+    **Important Notes:**
+    - The main experiment has **3 rounds** with different configurations
+    - **All data will be recorded** for research purposes
+    - Each round will have different objects and rules
+    - Take your time to explore and understand each round
+    
+    Click the button below when you're ready to start the main experiment.
+    """)
+    
+    if st.button("Start Main Experiment", type="primary"):
+        # Create random configuration for actual experiment (3 rounds with 4 objects)
+        import random
+        
+        # Set random seed based on participant ID for reproducibility
+        random.seed(hash(st.session_state.current_participant_id) % 2**32)
+        
+        num_rounds = 3
+        round_configs = []
+        
+        for i in range(num_rounds):
+            # Always use 4 objects
+            num_objects = 4
+            # Random number of blickets between 1 and 4
+            num_blickets = random.randint(1, 4)
+            # Random rule
+            rule = random.choice(['conjunctive', 'disjunctive'])
+            # Random initial probability
+            init_prob = random.uniform(0.1, 0.3)
+            # Random transition noise
+            transition_noise = 0.0
+            
+            round_config = {
+                'num_objects': num_objects,
+                'num_blickets': num_blickets,
+                'rule': rule,
+                'init_prob': init_prob,
+                'transition_noise': transition_noise,
+                'horizon': 32  # Default step limit
+            }
+            round_configs.append(round_config)
+        
+        # Save configuration to Firebase
+        config = {
+            'num_rounds': num_rounds,
+            'user_selected_objects': 4,  # Fixed to 4 objects
+            'rounds': round_configs,
+            'interface_type': 'text'  # Fixed to text mode
+        }
+        save_participant_config(st.session_state.current_participant_id, config)
+        
+        # Initialize first round
+        st.session_state.current_round = 0
+        st.session_state.round_configs = round_configs
+        round_config = round_configs[0]
+        env, first_obs = create_new_game(
+            seed=42,
+            num_objects=round_config['num_objects'],
+            num_blickets=round_config['num_blickets'],
+            rule=round_config['rule']
+        )
+        
+        now = datetime.datetime.now()
+        st.session_state.env = env
+        st.session_state.start_time = now
+        st.session_state.log = [first_obs]
+        st.session_state.times = [now]
+        st.session_state.phase = "game"
+        st.rerun()
+
+# 5) MAIN GAME RUN
 elif st.session_state.phase == "game":
     # Use visual blicket game interface
     round_config = st.session_state.round_configs[st.session_state.current_round]

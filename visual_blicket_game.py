@@ -13,7 +13,7 @@ from firebase_admin import db
 import env.blicket_text as blicket_text
 
 # Global variable to control visual vs text-only version
-use_text_version = False
+USE_TEXT_VERSION = True
 
 def get_image_base64(image_path):
     """Convert image to base64 string for display"""
@@ -72,7 +72,7 @@ def save_game_data(participant_id, game_data):
         print(f"Failed to save game data for {participant_id}: {e}")
         print("Game data (not saved):", game_data)
 
-def visual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None):
+def visual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - supports both visual and text modes"""
     
     # Determine which mode to use - this is the LOCAL variable for this function
@@ -280,7 +280,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
         - Infer the underlying rule for how the machine turns on. 
 
         **Here are the available commands:**
-        - **look:** describe the current room
+      
         - **put ... on ...:** put an object on the machine or the floor
         - **take ... off ...:** take an object off the machine
         - **exit:** exit the game
@@ -378,25 +378,20 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                 steps_left = horizon - st.session_state.steps_taken
                 interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                 
-                # Create selection indicator box above the button
-                box_color = "#00ff00" if is_selected else "#333333"
-                st.markdown(f"""
-                <div style="margin: 5px;">
-                    <div style="
-                        width: 60px; 
-                        height: 20px; 
-                        background-color: {box_color}; 
-                        border: 2px solid #666666; 
-                        border-radius: 5px; 
-                        margin-bottom: 5px;
-                        transition: all 0.2s ease;
-                    "></div>
-                </div>
-                """, unsafe_allow_html=True)
+                # Button with dynamic styling based on selection state
+                if is_selected:
+                    # Selected state - green button
+                    button_type = "primary"
+                    button_text = f"✅ Object {i + 1}"
+                else:
+                    # Unselected state - secondary button
+                    button_type = "secondary"
+                    button_text = f"Object {i + 1}"
                 
-                if st.button(f"Object {i + 1}", 
+                if st.button(button_text, 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
+                           type=button_type,
                            help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
                     # Record the action before making changes
                     action_time = datetime.datetime.now()
@@ -657,31 +652,65 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             key="rule_hypothesis"
         )
         
+        # Add conjunctive/disjunctive question
+        st.markdown("---")
+        st.markdown("### Rule Type Classification")
+        st.markdown("Based on your observations, what type of rule do you think governs the blicket detector?")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.markdown("""
+            **🔄 Conjunctive Rule**
+            
+            The machine lights up when **ALL** of the blickets are present on the machine.
+            
+            *Example: If Objects 1 and 3 are blickets, the machine only lights up when BOTH Object 1 AND Object 3 are on the machine.*
+            """)
+        
+        with col2:
+            st.markdown("""
+            **🔀 Disjunctive Rule**
+            
+            The machine lights up when **ANY** of the blickets are present on the machine.
+            
+            *Example: If Objects 1 and 3 are blickets, the machine lights up when EITHER Object 1 OR Object 3 (or both) are on the machine.*
+            """)
+        
+        rule_type = st.radio(
+            "What type of rule do you think applies?",
+            ["Conjunctive (ALL blickets must be present)", "Disjunctive (ANY blicket can activate)"],
+            key="rule_type"
+        )
+        
         # Navigation buttons
         st.markdown("---")
         st.markdown("### 🚀 Submit Your Answers")
         
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
-            # Check if rule hypothesis is provided
+            # Check if rule hypothesis and rule type are provided
             rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
-            if not rule_hypothesis:
+            rule_type = st.session_state.get("rule_type", "")
+            
+            if not rule_hypothesis or not rule_type:
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 0;">⚠️ Please provide your hypothesis about the rule before proceeding!</h4>
+                    <h4 style="color: #856404; margin: 0;">⚠️ Please provide both your hypothesis about the rule AND select the rule type before proceeding!</h4>
                 </div>
                 """, unsafe_allow_html=True)
-            
+        
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_hypothesis, use_container_width=True):
+                if st.button("➡️ NEXT ROUND", type="primary", disabled=(not rule_hypothesis or not rule_type), use_container_width=True):
                     # Collect blicket classifications
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
                         blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
                 
-                    # Get rule hypothesis
+                    # Get rule hypothesis and rule type
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    rule_type = st.session_state.get("rule_type", "")
                     
                     # Save current round data with detailed action tracking
                     round_data = {
@@ -692,6 +721,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         "user_actions": st.session_state.user_actions,  # All place/remove actions
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
+                        "rule_type": rule_type,  # User's rule type classification
                         "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
                         "final_machine_state": bool(game_state['true_state'][-1]),
                         "total_steps_taken": st.session_state.steps_taken,
@@ -722,25 +752,28 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     st.rerun()
         else:
             # Show Finish Task button only on the last round
-            # Check if rule hypothesis is provided
+            # Check if rule hypothesis and rule type are provided
             rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
-            if not rule_hypothesis:
+            rule_type = st.session_state.get("rule_type", "")
+            
+            if not rule_hypothesis or not rule_type:
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 0;">⚠️ Please provide your hypothesis about the rule before finishing!</h4>
+                    <h4 style="color: #856404; margin: 0;">⚠️ Please provide both your hypothesis about the rule AND select the rule type before finishing!</h4>
                 </div>
                 """, unsafe_allow_html=True)
-            
+        
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                if st.button("🏁 FINISH TASK", type="primary", disabled=not rule_hypothesis, use_container_width=True):
+                if st.button("🏁 FINISH TASK", type="primary", disabled=(not rule_hypothesis or not rule_type), use_container_width=True):
                     # Collect blicket classifications
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
                         blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
                 
-                    # Get rule hypothesis
+                    # Get rule hypothesis and rule type
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    rule_type = st.session_state.get("rule_type", "")
                     
                     # Save final round data with detailed action tracking
                     round_data = {
@@ -751,6 +784,7 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                         "user_actions": st.session_state.user_actions,  # All place/remove actions
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
+                        "rule_type": rule_type,  # User's rule type classification
                         "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
                         "final_machine_state": bool(game_state['true_state'][-1]),
                         "total_steps_taken": st.session_state.steps_taken,
@@ -777,7 +811,10 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     st.session_state.pop("user_actions", None)
                     
                     # Return to main app for completion
-                    st.session_state.phase = "end"
+                    if is_practice:
+                        st.session_state.phase = "practice_complete"
+                    else:
+                        st.session_state.phase = "end"
                     st.rerun()
 
 if __name__ == "__main__":

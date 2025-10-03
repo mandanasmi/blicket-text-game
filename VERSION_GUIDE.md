@@ -1,20 +1,23 @@
 # Blicket Game - Version Guide
 
-This project now offers **three different ways** to run the Blicket experiment:
+This project now features a **two-phase experimental design** with enhanced data collection.
 
-## 📱 Available Versions
+## 🧠 Current Version
 
-### 1. 🧙 **Main App with Interface Selection** (`app.py`)
-- **Best for most users**
-- Allows participants to choose between Visual or Text interface
-- Single deployment with both options
+### Main App (`app.py`)
+- **Best for research and data collection**
+- **Two-phase design**: Comprehension + Main Experiment
+- **Enhanced questionnaire** with rule type classification
+- **Text-only interface** with 4 objects
 - **Public URL**: https://blicket-text-game.streamlit.app/
 
 **Features:**
-- Interface selection screen
-- Switch between modes anytime
-- Unified data collection
-- Best user experience
+- ✅ **Comprehension Phase**: Practice round (no data recorded)
+- ✅ **Main Experiment**: 3 rounds with data collection
+- ✅ **Enhanced Questions**: Rule inference + conjunctive/disjunctive classification
+- ✅ **Clear Navigation**: Prominent buttons with helpful messages
+- ✅ **Firebase Integration**: Automatic data saving
+- ✅ **Fixed Configuration**: 4 objects for consistency
 
 **Run locally:**
 ```bash
@@ -25,79 +28,72 @@ streamlit run app.py
 
 ---
 
-### 2. 🎨 **Visual-Only Version** (`app_visual.py`)
-- **For visual interface only**
-- Object images and shape representations
-- Visual blicket detector machine
-- Interactive visual elements
+## 📊 Study Flow
 
-**Features:**
-- ✅ Object images with unique shapes
-- ✅ Visual blicket detector (lights up)
-- ✅ Clickable object interactions
-- ✅ Visual state history
-- ✅ Rich visual feedback
+### Phase 1: Participant ID Entry
+- User enters participant ID
+- System shows study overview with two phases
 
-**Run locally:**
-```bash
-./run_visual.sh
-# or
-streamlit run app_visual.py
-```
+### Phase 2: Comprehension Phase
+- **Practice round** to understand interface
+- **No data recorded** - pure learning
+- Simple conjunctive rule with 2 blickets
+- Shorter time limit (16 steps)
 
----
+### Phase 3: Main Experiment
+- **3 rounds** with different configurations
+- **All data recorded** to Firebase
+- Random rules (conjunctive/disjunctive)
+- Random number of blickets (1-4)
+- Full time limit (32 steps)
 
-### 3. 📝 **Text-Only Version** (`app_text.py`)
-- **For text interface only**
-- No images or visual elements
-- Pure text descriptions
-- Faster loading, better accessibility
-
-**Features:**
-- ✅ Text-based object representations ("Object 1", "Object 2", etc.)
-- ✅ Text machine status ("🟢 LIT" or "🔴 NOT LIT")
-- ✅ Simple button interactions
-- ✅ Text-based state history
-- ✅ Accessibility-friendly
-
-**Run locally:**
-```bash
-./run_text.sh
-# or
-streamlit run app_text.py
-```
+### Phase 4: Enhanced Questionnaire
+For each round, participants answer:
+1. **Blicket Classification**: Which objects are blickets?
+2. **Rule Inference**: Open-ended description of the rule
+3. **Rule Type**: Multiple choice between conjunctive/disjunctive with explanations
 
 ---
 
-## 🚀 Deployment Options
+## 🎯 Enhanced Data Collection
 
-### For Public Sharing (Recommended)
-Use the **main app** (`app.py`) which includes both interfaces:
-- **URL**: https://blicket-text-game.streamlit.app/
-- Participants can choose their preferred interface
-- Single URL to share with friends
+The new version collects richer data:
 
-### For Specific Research Needs
-Deploy individual versions if you need to control the interface:
-- **Visual only**: Deploy `app_visual.py` 
-- **Text only**: Deploy `app_text.py`
-
----
-
-## 📊 Data Collection
-
-All versions save the same data structure to Firebase, with an additional field:
 ```json
 {
-  "interface_type": "visual" | "text",
-  "participant_actions": [...],
-  "blicket_classifications": {...},
-  "rule_hypothesis": "...",
-  ...
+  "interface_type": "text",
+  "comprehension_completed": true,
+  "rounds": [
+    {
+      "round_number": 1,
+      "blicket_classifications": {...},
+      "rule_hypothesis": "All blickets must be present...",
+      "rule_type": "Conjunctive (ALL blickets must be present)",
+      "user_actions": [...],
+      "true_blicket_indices": [...],
+      "rule": "conjunctive"
+    }
+  ]
 }
 ```
 
-This allows you to analyze differences between interface types in your research.
+**New Data Fields:**
+- `rule_type`: Participant's conjunctive/disjunctive classification
+- `comprehension_completed`: Whether practice phase was completed
+- Enhanced rule hypothesis collection
+
+---
+
+## 🚀 Deployment
+
+### For Public Sharing (Recommended)
+Use the **main app** (`app.py`):
+- **URL**: https://blicket-text-game.streamlit.app/
+- Two-phase design ensures participants understand before data collection
+- Enhanced questionnaire provides richer research data
+
+### Firebase Setup
+Follow the `STREAMLIT_CLOUD_SECRETS.md` guide to enable data collection in Streamlit Cloud.
 
 ---
 
@@ -105,40 +101,45 @@ This allows you to analyze differences between interface types in your research.
 
 ### File Structure
 ```
-├── app.py              # Main app with interface selection
-├── app_visual.py       # Visual-only version
-├── app_text.py         # Text-only version
-├── visual_blicket_game.py  # Shared game logic (supports both modes)
-├── run_app.sh          # Run main app
-├── run_visual.sh       # Run visual app
-├── run_text.sh         # Run text app
+├── app.py                    # Main app with two-phase design
+├── visual_blicket_game.py    # Game logic (supports practice mode)
+├── run_app.sh               # Run main app
+├── STREAMLIT_CLOUD_SECRETS.md # Firebase setup guide
 └── ...
 ```
 
-### Visual vs Text Mode Logic
-The `visual_blicket_game.py` file now supports both modes through the `use_visual_mode` parameter:
-- `use_visual_mode=True`: Shows images, visual machine, rich UI
-- `use_visual_mode=False`: Shows text only, simple buttons, text status
+### Removed Files (Cleanup)
+- `app_visual.py` - Redundant visual-only version
+- `app_text.py` - Redundant text-only version  
+- `run_visual.sh` - Redundant script
+- `run_text.sh` - Redundant script
+
+### Key Features
+- **Practice Mode**: `is_practice=True` parameter prevents data saving
+- **Enhanced Validation**: Both rule hypothesis AND rule type required
+- **Clear Messaging**: Prominent warnings and instructions
+- **Consistent Experience**: Fixed 4-object, text-only interface
 
 ---
 
-## 🎯 Which Version Should You Use?
+## 🎯 Research Benefits
 
-| Use Case | Recommended Version | Why |
-|----------|-------------------|-----|
-| **General Research** | Main App (`app.py`) | Participants can choose, more data |
-| **Visual-focused Study** | Visual App (`app_visual.py`) | Consistent visual experience |
-| **Accessibility Study** | Text App (`app_text.py`) | No visual dependencies |
-| **Sharing with Friends** | Main App (`app.py`) | Most flexible and user-friendly |
+| Feature | Benefit |
+|---------|---------|
+| **Comprehension Phase** | Ensures participants understand before data collection |
+| **Rule Type Question** | Quantitative measure of rule understanding |
+| **Enhanced Validation** | Prevents incomplete responses |
+| **Consistent Interface** | Eliminates interface effects on results |
+| **Clear Navigation** | Reduces user confusion and dropouts |
 
 ---
 
-## 🔧 Development
+## 🔧 Development Notes
 
-All versions share the same core logic but differ in:
-- **Interface rendering**: Visual vs text elements
-- **User interaction**: Image clicks vs button clicks  
-- **Data labeling**: Interface type tracking
-- **Performance**: Visual version loads images, text version is faster
+The app now uses a single, streamlined codebase:
+- **No interface selection** - fixed to text-only for consistency
+- **No object count selection** - fixed to 4 objects for experimental control
+- **Practice mode support** - `is_practice` parameter controls data saving
+- **Enhanced questionnaire** - collects both qualitative and quantitative rule understanding
 
-The shared `visual_blicket_game.py` handles both modes seamlessly.
+All navigation buttons are optimized for visibility and user experience.
