@@ -652,10 +652,33 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             key="rule_hypothesis"
         )
         
-        # Add conjunctive/disjunctive question
+        # Navigation button to go to rule type classification
         st.markdown("---")
-        st.markdown("### Rule Type Classification")
-        st.markdown("Based on your observations, what type of rule do you think governs the blicket detector?")
+        st.markdown("### 🚀 Continue to Rule Type Classification")
+        
+        # Check if rule hypothesis is provided
+        rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+        
+        if not rule_hypothesis:
+            st.markdown("""
+            <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
+                <h4 style="color: #856404; margin: 0;">⚠️ Please provide your hypothesis about the rule before proceeding!</h4>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button("➡️ NEXT: Rule Type Classification", type="primary", disabled=not rule_hypothesis, use_container_width=True):
+                st.session_state.visual_game_state = "rule_type_classification"
+                st.rerun()
+
+    elif st.session_state.visual_game_state == "rule_type_classification":
+        st.markdown("""
+        <div style="padding: 20px; border-radius: 15px; color: white; margin: 20px 0;">
+            <h3 style="margin: 0; text-align: center;">🎯 Rule Type Classification</h3>
+            <p style="margin: 10px 0 0 0; text-align: center; opacity: 0.9;">Based on your observations, what type of rule do you think governs the blicket detector?</p>
+        </div>
+        """, unsafe_allow_html=True)
         
         col1, col2 = st.columns(2)
         
@@ -683,26 +706,33 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
             key="rule_type"
         )
         
+        # Back button
+        st.markdown("---")
+        col1, col2, col3 = st.columns([2, 1, 2])
+        with col2:
+            if st.button("⬅️ Back to Rule Inference", key="back_to_inference"):
+                st.session_state.visual_game_state = "questionnaire"
+                st.rerun()
+        
         # Navigation buttons
         st.markdown("---")
         st.markdown("### 🚀 Submit Your Answers")
         
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
-            # Check if rule hypothesis and rule type are provided
-            rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            # Check if rule type is provided
             rule_type = st.session_state.get("rule_type", "")
             
-            if not rule_hypothesis or not rule_type:
+            if not rule_type:
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 0;">⚠️ Please provide both your hypothesis about the rule AND select the rule type before proceeding!</h4>
+                    <h4 style="color: #856404; margin: 0;">⚠️ Please select the rule type before proceeding!</h4>
                 </div>
                 """, unsafe_allow_html=True)
         
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                if st.button("➡️ NEXT ROUND", type="primary", disabled=(not rule_hypothesis or not rule_type), use_container_width=True):
+                if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
                     # Collect blicket classifications
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
@@ -752,20 +782,19 @@ def visual_blicket_game_page(participant_id, round_config, current_round, total_
                     st.rerun()
         else:
             # Show Finish Task button only on the last round
-            # Check if rule hypothesis and rule type are provided
-            rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            # Check if rule type is provided
             rule_type = st.session_state.get("rule_type", "")
             
-            if not rule_hypothesis or not rule_type:
+            if not rule_type:
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 15px; margin: 15px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 0;">⚠️ Please provide both your hypothesis about the rule AND select the rule type before finishing!</h4>
+                    <h4 style="color: #856404; margin: 0;">⚠️ Please select the rule type before finishing!</h4>
                 </div>
                 """, unsafe_allow_html=True)
         
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                if st.button("🏁 FINISH TASK", type="primary", disabled=(not rule_hypothesis or not rule_type), use_container_width=True):
+                if st.button("🏁 FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
                     # Collect blicket classifications
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
