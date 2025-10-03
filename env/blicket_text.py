@@ -36,7 +36,7 @@ ENV_DESC = "You are in a room. You see a machine at the center of this room. "\
 
 class BlicketTextEnv:
     def __init__(self, num_objects: int, num_blickets: int, init_prob: float, 
-                 transition_noise: float, rule: str,  seed: int = 0):
+                 transition_noise: float, rule: str,  seed: int = 0, blicket_indices: list = None):
         self.num_objects = num_objects
         self.num_blickets = num_blickets
         self.init_prob = init_prob # initial probability of object being on machine
@@ -52,7 +52,12 @@ class BlicketTextEnv:
         self.object_names = [f"object {i}" for i in range(self.num_objects)]  # TODO: make customizable
 
         # sample blicket indices
-        self.blicket_indices = sorted(self._rng.choice(self.num_objects, self.num_blickets, replace=False))
+        if blicket_indices is not None:
+            # Use provided blicket indices
+            self.blicket_indices = sorted(blicket_indices)
+        else:
+            # Randomly sample blicket indices
+            self.blicket_indices = sorted(self._rng.choice(self.num_objects, self.num_blickets, replace=False))
 
         # _state: first num_objects booleans for objects, last element for machine state.
         self._state = np.empty((self.num_objects + 1,), dtype=bool)

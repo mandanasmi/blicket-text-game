@@ -77,7 +77,7 @@ if not firebase_admin._apps:
         firebase_initialized = False
         # Firebase initialization failed
 
-def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
+def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", blicket_indices=None):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
     random.seed(seed)
     np.random.seed(seed)
@@ -88,6 +88,7 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
         rule=rule,
         transition_noise=0.0,
         seed=seed,
+        blicket_indices=blicket_indices
     )
     game_state = env.reset()
     return env, game_state["feedback"]
@@ -184,7 +185,8 @@ def submit_qa():
             seed=42 + st.session_state.current_round,  # Different seed for each round
             num_objects=next_round_config['num_objects'],
             num_blickets=next_round_config['num_blickets'],
-            rule=next_round_config['rule']
+            rule=next_round_config['rule'],
+            blicket_indices=next_round_config.get('blicket_indices', None)
         )
         
         now = datetime.datetime.now()
@@ -407,11 +409,34 @@ elif st.session_state.phase == "practice_complete":
         current_rule = random.choice(['conjunctive', 'disjunctive'])
         rule_change_probability = 0.4  # 40% chance to change rule each round
         
+        # Define diverse blicket combinations (object indices 0-3)
+        blicket_combinations = [
+            [0, 1],  # Objects 1, 2
+            [1, 2],  # Objects 2, 3
+            [0, 2],  # Objects 1, 3
+            [2, 3],  # Objects 3, 4
+            [0, 3],  # Objects 1, 4
+            [1, 3],  # Objects 2, 4
+            [0],     # Object 1 only
+            [1],     # Object 2 only
+            [2],     # Object 3 only
+            [3],     # Object 4 only
+            [0, 1, 2],  # Objects 1, 2, 3
+            [1, 2, 3],  # Objects 2, 3, 4
+            [0, 2, 3],  # Objects 1, 3, 4
+            [0, 1, 3],  # Objects 1, 2, 4
+            [0, 1, 2, 3]  # All objects
+        ]
+        
+        # Shuffle combinations for variety
+        random.shuffle(blicket_combinations)
+        
         for i in range(num_rounds):
             # Always use 4 objects
             num_objects = 4
-            # Random number of blickets between 1 and 4
-            num_blickets = random.randint(1, 4)
+            # Select diverse blicket combination
+            blicket_indices = blicket_combinations[i % len(blicket_combinations)]
+            num_blickets = len(blicket_indices)
             
             # Rule logic: sometimes change, sometimes stay the same
             if i == 0:
@@ -436,6 +461,7 @@ elif st.session_state.phase == "practice_complete":
             round_config = {
                 'num_objects': num_objects,
                 'num_blickets': num_blickets,
+                'blicket_indices': blicket_indices,  # Specific objects that are blickets
                 'rule': rule,
                 'init_prob': init_prob,
                 'transition_noise': transition_noise,
@@ -460,7 +486,8 @@ elif st.session_state.phase == "practice_complete":
             seed=42,
             num_objects=round_config['num_objects'],
             num_blickets=round_config['num_blickets'],
-            rule=round_config['rule']
+            rule=round_config['rule'],
+            blicket_indices=round_config.get('blicket_indices', None)
         )
         
         now = datetime.datetime.now()
