@@ -15,10 +15,8 @@ from textual_blicket_game import textual_blicket_game_page
 # Load environment variables
 load_dotenv()
 
-# Debug: Print current working directory and .env file status
-print(f"Current working directory: {os.getcwd()}")
-print(f".env file exists: {os.path.exists('.env')}")
-print(f"FIREBASE_PROJECT_ID loaded: {os.getenv('FIREBASE_PROJECT_ID') is not None}")
+# Debug: Print Firebase initialization status
+print(f"Firebase initialization status: FIREBASE_PROJECT_ID={'SET' if os.getenv('FIREBASE_PROJECT_ID') else 'NOT SET'}")
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
@@ -254,9 +252,10 @@ st.markdown("*Text-only interface with 4 objects*")
 
 # Show Firebase status
 if firebase_initialized:
-    st.success("✅ Data saving enabled")
+    st.success("✅ Data saving enabled - Firebase connected successfully")
 else:
     st.warning("⚠️ Data saving disabled - app will run in demo mode")
+    st.info("💡 To enable data saving, ensure Firebase credentials are properly configured in your environment.")
 
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
