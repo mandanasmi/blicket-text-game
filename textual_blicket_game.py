@@ -350,7 +350,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     if steps_left <= 0:
         st.markdown("""
         <div style="background: rgba(220, 53, 69, 0.8); border: 1px solid rgba(220, 53, 69, 0.9); border-radius: 10px; padding: 15px; margin: 10px 0; text-align: center;">
-            <strong>⚠️ No steps remaining! You can only proceed to answer questions.</strong>
+            <strong>No steps remaining!</strong>
         </div>
         """, unsafe_allow_html=True)
     
