@@ -37,6 +37,24 @@ def convert_numpy_types(obj):
     else:
         return obj
 
+def convert_to_one_based_indices(indices):
+    """Convert 0-based indices to 1-based indices for data storage"""
+    if isinstance(indices, (list, np.ndarray)):
+        return [i + 1 for i in indices]
+    elif isinstance(indices, (int, np.integer)):
+        return indices + 1
+    else:
+        return indices
+
+def convert_to_zero_based_indices(indices):
+    """Convert 1-based indices to 0-based indices for internal processing"""
+    if isinstance(indices, (list, np.ndarray)):
+        return [i - 1 for i in indices]
+    elif isinstance(indices, (int, np.integer)):
+        return indices - 1
+    else:
+        return indices
+
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
     random.seed(seed)
@@ -115,7 +133,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
             "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
-            "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
+            "selected_objects": convert_to_one_based_indices(list(st.session_state.selected_objects)) if 'selected_objects' in st.session_state else [],
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
             "phase": phase,
             "round_number": current_round + 1,
@@ -809,7 +827,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
-                    # Collect blicket classifications
+                    # Collect blicket classifications (using 1-based object IDs)
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
                         blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
@@ -843,10 +861,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # True blickets
+                        "true_blicket_indices": convert_to_one_based_indices(convert_numpy_types(game_state['blicket_indices'])),  # True blickets (1-based)
                         "true_rule": round_config['rule'],  # True rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
-                        "final_objects_on_machine": list(st.session_state.selected_objects),
+                        "final_objects_on_machine": convert_to_one_based_indices(list(st.session_state.selected_objects)),
                         "rule": round_config['rule'],  # Keep for compatibility
                         "phase": "comprehension" if is_practice else "main_experiment",
                         "interface_type": "text"
@@ -881,7 +899,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("🏁 FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
-                    # Collect blicket classifications
+                    # Collect blicket classifications (using 1-based object IDs)
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
                         blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
@@ -915,10 +933,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # True blickets
+                        "true_blicket_indices": convert_to_one_based_indices(convert_numpy_types(game_state['blicket_indices'])),  # True blickets (1-based)
                         "true_rule": round_config['rule'],  # True rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
-                        "final_objects_on_machine": list(st.session_state.selected_objects),
+                        "final_objects_on_machine": convert_to_one_based_indices(list(st.session_state.selected_objects)),
                         "rule": round_config['rule'],  # Keep for compatibility
                         "phase": "main_experiment",
                         "interface_type": "text"

@@ -267,7 +267,7 @@ def submit_qa():
         "round_config": current_round_config,
         "round_number": st.session_state.current_round + 1,
         "true_rule": current_round_config.get('rule', 'unknown'),  # True rule for this round
-        "true_blicket_indices": current_round_config.get('blicket_indices', []),  # True blickets if available
+        "true_blicket_indices": [i + 1 for i in current_round_config.get('blicket_indices', [])],  # True blickets (1-based)
         "phase": "main_experiment",
         "interface_type": "text"
     }
