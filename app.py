@@ -157,29 +157,37 @@ def save_game_data(participant_id, game_data):
         print("⚠️ Firebase not available - game data not saved")
 
 def save_intermediate_progress_app(participant_id, phase, round_number=None, total_rounds=None, action_count=0):
-    """Save intermediate progress for app.py Q&A phases - simplified to only save actions"""
+    """Save intermediate progress - update single comprehension entry with action history"""
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
-            progress_ref = participant_ref.child('comprehension')
+            comprehension_ref = participant_ref.child('comprehension')
             
-            # Create simplified progress data - only actions
+            # Create or update the single comprehension entry
             now = datetime.datetime.now()
-            progress_id = f"action_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+            entry_id = "action_history"
             
-            progress_data = {
-                "timestamp": now.isoformat(),
+            # Get existing data or create new
+            existing_data = comprehension_ref.child(entry_id).get() or {}
+            
+            # Update with current action history
+            updated_data = {
+                **existing_data,
+                "last_updated": now.isoformat(),
                 "user_actions": st.session_state.get('user_actions', []) if hasattr(st, 'session_state') else [],
-                "total_actions": action_count
+                "total_actions": action_count,
+                "phase": phase,
+                "round_number": round_number,
+                "total_rounds": total_rounds
             }
             
-            progress_ref.child(progress_id).set(progress_data)
-            print(f"💾 Actions saved for {participant_id} - {action_count} actions")
+            comprehension_ref.child(entry_id).set(updated_data)
+            print(f"💾 Action history updated for {participant_id} - {action_count} actions")
             
         except Exception as e:
-            print(f"❌ Failed to save actions for {participant_id}: {e}")
+            print(f"❌ Failed to save action history for {participant_id}: {e}")
     else:
-        print("⚠️ Firebase not available - actions not saved")
+        print("⚠️ Firebase not available - action history not saved")
 
 
 

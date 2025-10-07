@@ -88,33 +88,41 @@ def save_game_data(participant_id, game_data):
         print("Game data (not saved):", game_data)
 
 def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False):
-    """Save intermediate progress after each action - simplified to only save actions"""
+    """Save intermediate progress - update single comprehension entry with action history"""
     try:
         # Get database reference
         db_ref = db.reference()
         participant_ref = db_ref.child(participant_id)
+        comprehension_ref = participant_ref.child('comprehension')
         
-        # Save to 'comprehension' key for all intermediate progress
-        progress_ref = participant_ref.child('comprehension')
-        
-        # Create simplified progress data - only actions
+        # Create or update the single comprehension entry
         now = datetime.datetime.now()
-        progress_id = f"action_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+        entry_id = "action_history"
         
-        progress_data = {
-            "timestamp": now.isoformat(),
+        # Get existing data or create new
+        existing_data = comprehension_ref.child(entry_id).get() or {}
+        
+        # Update with current action history
+        updated_data = {
+            **existing_data,
+            "last_updated": now.isoformat(),
             "user_actions": st.session_state.user_actions.copy() if 'user_actions' in st.session_state else [],
-            "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0
+            "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
+            "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
+            "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
+            "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
+            "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
+            "phase": "comprehension" if is_practice else "main_experiment"
         }
         
         # Convert NumPy types to JSON-serializable types
-        progress_data = convert_numpy_types(progress_data)
+        updated_data = convert_numpy_types(updated_data)
         
-        progress_ref.child(progress_id).set(progress_data)
-        print(f"💾 Actions saved for {participant_id} - {progress_data['total_actions']} actions")
+        comprehension_ref.child(entry_id).set(updated_data)
+        print(f"💾 Action history updated for {participant_id} - {updated_data['total_actions']} actions")
         
     except Exception as e:
-        print(f"❌ Failed to save actions for {participant_id}: {e}")
+        print(f"❌ Failed to save action history for {participant_id}: {e}")
 
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - text-only interface"""
