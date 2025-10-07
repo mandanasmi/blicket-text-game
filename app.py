@@ -387,7 +387,7 @@ Please enter your participant ID to begin.
 """
         )
         participant_id = st.text_input("Participant ID:", key="participant_id")
-        if st.button("Start Comprehension Phase", type="primary") and participant_id.strip():
+        if st.button("Next Step", type="primary") and participant_id.strip():
             st.session_state.current_participant_id = participant_id.strip()
             st.session_state.participant_id_entered = True
             st.session_state.phase = "comprehension"
