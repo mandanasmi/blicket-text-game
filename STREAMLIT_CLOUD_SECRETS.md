@@ -43,3 +43,4 @@ database_url = "https://rational-cat-473121-k4-default-rtdb.firebaseio.com/"
 1. Check that your Firebase project is active
 2. Verify that the Realtime Database is enabled in Firebase console
 3. Make sure the service account has proper permissions
+
