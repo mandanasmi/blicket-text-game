@@ -53,7 +53,7 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
     return env, game_state
 
 def save_game_data(participant_id, game_data):
-    """Save game data to Firebase"""
+    """Save game data to Firebase with enhanced tracking"""
     # Convert NumPy types to JSON-serializable types
     game_data = convert_numpy_types(game_data)
     
@@ -63,13 +63,22 @@ def save_game_data(participant_id, game_data):
         participant_ref = db_ref.child(participant_id)
         games_ref = participant_ref.child('games')
         
-        # Create a new game entry with timestamp
-        game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-        games_ref.child(game_id).set(game_data)
+        # Create a new game entry with detailed timestamp
+        now = datetime.datetime.now()
+        game_id = now.strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Include milliseconds
         
-        print(f"Successfully saved game data for {participant_id}")
+        # Enhance game_data with additional metadata
+        enhanced_game_data = {
+            **game_data,
+            "saved_at": now.isoformat(),
+            "game_id": game_id,
+            "session_timestamp": now.timestamp()
+        }
+        
+        games_ref.child(game_id).set(enhanced_game_data)
+        print(f"✅ Successfully saved game data for {participant_id} - Game ID: {game_id}")
     except Exception as e:
-        print(f"Failed to save game data for {participant_id}: {e}")
+        print(f"❌ Failed to save game data for {participant_id}: {e}")
         print("Game data (not saved):", game_data)
 
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
@@ -751,21 +760,31 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
+                    # Calculate total time spent on this round
+                    end_time = datetime.datetime.now()
+                    total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
+                    
                     # Save current round data with detailed action tracking
                     round_data = {
                         "start_time": st.session_state.game_start_time.isoformat(),
-                        "end_time": datetime.datetime.now().isoformat(),
+                        "end_time": end_time.isoformat(),
+                        "total_time_seconds": total_time_seconds,
                         "round_number": current_round + 1,
                         "round_config": round_config,
                         "user_actions": st.session_state.user_actions,  # All place/remove actions
+                        "action_history": st.session_state.action_history,  # Detailed action history
+                        "state_history": st.session_state.state_history,  # State changes
+                        "total_actions": len(st.session_state.user_actions),
+                        "total_steps_taken": st.session_state.steps_taken,
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
                         "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
                         "final_machine_state": bool(game_state['true_state'][-1]),
-                        "total_steps_taken": st.session_state.steps_taken,
                         "final_objects_on_machine": list(st.session_state.selected_objects),
-                        "rule": round_config['rule']
+                        "rule": round_config['rule'],
+                        "phase": "comprehension" if is_practice else "main_experiment",
+                        "interface_type": "text"
                     }
                     
                     # Use the provided save function or default Firebase function
@@ -806,21 +825,31 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
+                    # Calculate total time spent on this round
+                    end_time = datetime.datetime.now()
+                    total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
+                    
                     # Save final round data with detailed action tracking
                     round_data = {
                         "start_time": st.session_state.game_start_time.isoformat(),
-                        "end_time": datetime.datetime.now().isoformat(),
+                        "end_time": end_time.isoformat(),
+                        "total_time_seconds": total_time_seconds,
                         "round_number": current_round + 1,
                         "round_config": round_config,
                         "user_actions": st.session_state.user_actions,  # All place/remove actions
+                        "action_history": st.session_state.action_history,  # Detailed action history
+                        "state_history": st.session_state.state_history,  # State changes
+                        "total_actions": len(st.session_state.user_actions),
+                        "total_steps_taken": st.session_state.steps_taken,
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
                         "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
                         "final_machine_state": bool(game_state['true_state'][-1]),
-                        "total_steps_taken": st.session_state.steps_taken,
                         "final_objects_on_machine": list(st.session_state.selected_objects),
-                        "rule": round_config['rule']
+                        "rule": round_config['rule'],
+                        "phase": "main_experiment",
+                        "interface_type": "text"
                     }
                     
                     # Use the provided save function or default Firebase function

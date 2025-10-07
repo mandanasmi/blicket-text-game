@@ -110,20 +110,31 @@ def save_participant_config(participant_id, config):
         pass  # Firebase not available - config not saved
 
 def save_game_data(participant_id, game_data):
-    """Save game data to Firebase"""
+    """Save game data to Firebase with enhanced tracking"""
     # Save game data
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
             games_ref = participant_ref.child('games')
             
-            # Create a new game entry
-            game_id = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
-            games_ref.child(game_id).set(game_data)
+            # Create a new game entry with detailed timestamp
+            now = datetime.datetime.now()
+            game_id = now.strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Include milliseconds
+            
+            # Enhance game_data with additional metadata
+            enhanced_game_data = {
+                **game_data,
+                "saved_at": now.isoformat(),
+                "game_id": game_id,
+                "session_timestamp": now.timestamp()
+            }
+            
+            games_ref.child(game_id).set(enhanced_game_data)
+            print(f"✅ Successfully saved game data for {participant_id} - Game ID: {game_id}")
         except Exception as e:
-            print(f"Failed to save game data: {e}")
+            print(f"❌ Failed to save game data: {e}")
     else:
-        pass  # Firebase not available - game data not saved
+        print("⚠️ Firebase not available - game data not saved")
 
 
 
@@ -159,17 +170,36 @@ def submit_qa():
         for i, question in enumerate(BINARY_QUESTIONS)
     }
 
-    # Save current round data
+    # Calculate total time spent on this round
+    total_time_seconds = (qa_time - st.session_state.start_time).total_seconds()
+    
+    # Extract user actions (commands) from the log
+    user_actions = []
+    action_timestamps = []
+    for i, (time, entry) in enumerate(zip(st.session_state.times, st.session_state.log)):
+        if entry.startswith("```") and entry.endswith("```"):
+            # This is a user command
+            command = entry[3:-3]  # Remove the backticks
+            user_actions.append(command)
+            action_timestamps.append(time.isoformat())
+
+    # Save current round data with enhanced tracking
     round_data = {
         "start_time": st.session_state.start_time.isoformat(),
+        "end_time": qa_time.isoformat(),
+        "total_time_seconds": total_time_seconds,
         "events": [
-            {"time": t.isoformat(), "entry": e}
+            {"time": t.isoformat(), "entry": e, "event_type": "command" if e.startswith("```") else "feedback"}
             for t, e in zip(st.session_state.times, st.session_state.log)
         ],
+        "user_actions": user_actions,
+        "action_timestamps": action_timestamps,
+        "total_actions": len(user_actions),
         "binary_answers": binary_answers,
         "qa_time": qa_time.isoformat(),
         "round_config": st.session_state.round_configs[st.session_state.current_round],
-        "round_number": st.session_state.current_round + 1
+        "round_number": st.session_state.current_round + 1,
+        "phase": "main_experiment"
     }
     
     save_game_data(st.session_state.current_participant_id, round_data)
