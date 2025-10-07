@@ -82,47 +82,33 @@ def save_game_data(participant_id, game_data):
         print("Game data (not saved):", game_data)
 
 def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False):
-    """Save intermediate progress after each action"""
+    """Save intermediate progress after each action - simplified to only save actions"""
     try:
         # Get database reference
         db_ref = db.reference()
         participant_ref = db_ref.child(participant_id)
-        progress_ref = participant_ref.child('intermediate_progress')
         
-        # Create progress data
+        # Save to 'comprehension' key for all intermediate progress
+        progress_ref = participant_ref.child('comprehension')
+        
+        # Create simplified progress data - only actions
         now = datetime.datetime.now()
-        progress_id = f"progress_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+        progress_id = f"action_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
         
         progress_data = {
-            "progress_id": progress_id,
             "timestamp": now.isoformat(),
-            "phase": "comprehension" if is_practice else "main_experiment",
-            "round_number": current_round + 1,
-            "total_rounds": total_rounds,
-            "round_config": round_config,
             "user_actions": st.session_state.user_actions.copy() if 'user_actions' in st.session_state else [],
-            "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
-            "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
-            "action_history_length": len(st.session_state.action_history) if 'action_history' in st.session_state else 0,
-            "steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
-            "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
-            "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
-            "current_time": now.isoformat(),
-            "time_elapsed": (now - st.session_state.game_start_time).total_seconds() if 'game_start_time' in st.session_state else 0,
-            "true_rule": round_config.get('rule', 'unknown'),
-            "true_blicket_indices": round_config.get('blicket_indices', []),
-            "interface_type": "text",
-            "progress_type": "intermediate_save"
+            "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0
         }
         
         # Convert NumPy types to JSON-serializable types
         progress_data = convert_numpy_types(progress_data)
         
         progress_ref.child(progress_id).set(progress_data)
-        print(f"💾 Intermediate progress saved for {participant_id} - {progress_data['total_actions']} actions taken")
+        print(f"💾 Actions saved for {participant_id} - {progress_data['total_actions']} actions")
         
     except Exception as e:
-        print(f"❌ Failed to save intermediate progress for {participant_id}: {e}")
+        print(f"❌ Failed to save actions for {participant_id}: {e}")
 
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - text-only interface"""

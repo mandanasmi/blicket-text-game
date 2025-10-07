@@ -151,36 +151,29 @@ def save_game_data(participant_id, game_data):
         print("⚠️ Firebase not available - game data not saved")
 
 def save_intermediate_progress_app(participant_id, phase, round_number=None, total_rounds=None, action_count=0):
-    """Save intermediate progress for app.py Q&A phases"""
+    """Save intermediate progress for app.py Q&A phases - simplified to only save actions"""
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
-            progress_ref = participant_ref.child('intermediate_progress')
+            progress_ref = participant_ref.child('comprehension')
             
-            # Create progress data
+            # Create simplified progress data - only actions
             now = datetime.datetime.now()
-            progress_id = f"progress_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+            progress_id = f"action_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
             
             progress_data = {
-                "progress_id": progress_id,
                 "timestamp": now.isoformat(),
-                "phase": phase,
-                "round_number": round_number,
-                "total_rounds": total_rounds,
-                "action_count": action_count,
-                "session_state_keys": list(st.session_state.keys()) if hasattr(st, 'session_state') else [],
-                "current_participant_id": st.session_state.get('current_participant_id', 'unknown') if hasattr(st, 'session_state') else 'unknown',
-                "interface_type": "text",
-                "progress_type": "intermediate_save"
+                "user_actions": st.session_state.get('user_actions', []) if hasattr(st, 'session_state') else [],
+                "total_actions": action_count
             }
             
             progress_ref.child(progress_id).set(progress_data)
-            print(f"💾 Intermediate progress saved for {participant_id} - Phase: {phase}, Actions: {action_count}")
+            print(f"💾 Actions saved for {participant_id} - {action_count} actions")
             
         except Exception as e:
-            print(f"❌ Failed to save intermediate progress for {participant_id}: {e}")
+            print(f"❌ Failed to save actions for {participant_id}: {e}")
     else:
-        print("⚠️ Firebase not available - intermediate progress not saved")
+        print("⚠️ Firebase not available - actions not saved")
 
 
 
@@ -484,9 +477,7 @@ elif st.session_state.phase == "practice_complete":
     st.markdown("## 🎉 Comprehension Phase Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
     
-    # Show progress indicator
-    st.progress(0.5)
-    st.markdown("**Progress:** Comprehension Phase ✅ → Main Experiment 🎯 → Complete 🏆")
+    # Progress indicator removed as requested
     
     st.markdown("""
     ### Ready for the Main Experiment?
@@ -676,9 +667,7 @@ elif st.session_state.phase == "end":
     st.markdown("## 🎉 All done!")
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
     
-    # Show completion progress
-    st.progress(1.0)
-    st.markdown("**Progress:** Comprehension Phase ✅ → Main Experiment ✅ → Complete 🏆")
+    # Progress indicator removed as requested
     
     st.markdown("""
     ### 🎯 Experiment Complete!
