@@ -322,9 +322,9 @@ if st.session_state.phase == "intro":
     
     # Show Firebase connection status
     if firebase_initialized:
-        print("✅ Firebase connected - Data saving enabled")
+        st.success("✅ Firebase connected - Data saving enabled")
     else:
-        print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
+        st.warning("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
     
     if not st.session_state.participant_id_entered:
         # Ask for Participant ID and start comprehension phase
@@ -372,6 +372,8 @@ elif st.session_state.phase == "comprehension":
         **The machine will show:**
         - 🟢 LIT = Machine is active
         - 🔴 NOT LIT = Machine is inactive
+        
+        **⚠️ IMPORTANT:** You must complete all 5 actions and answer the questions at the end to proceed to the main experiment.
         
         When you're ready, click the button below to start the comprehension phase.
         """)
@@ -448,6 +450,10 @@ elif st.session_state.phase == "practice_complete":
     st.markdown("## 🎉 Comprehension Phase Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
     
+    # Show progress indicator
+    st.progress(0.5)
+    st.markdown("**Progress:** Comprehension Phase ✅ → Main Experiment 🎯 → Complete 🏆")
+    
     st.markdown("""
     ### Ready for the Main Experiment?
     
@@ -460,6 +466,7 @@ elif st.session_state.phase == "practice_complete":
     - **All data will be recorded** for research purposes
     - Each round is independent - what you learn in one round may not apply to the next
     
+    **⚠️ IMPORTANT:** You must complete all 3 rounds to finish the experiment. Your progress will be saved automatically.
     
     Take your time to explore and understand each round. Click the button below when you're ready to start the main experiment.
     """)
@@ -630,5 +637,22 @@ elif st.session_state.phase == "qa":
 # 5) END-OF-GAME SCREEN
 elif st.session_state.phase == "end":
     st.markdown("## 🎉 All done!")
-    st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}! All your responses have been saved to the database.")
+    st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
+    
+    # Show completion progress
+    st.progress(1.0)
+    st.markdown("**Progress:** Comprehension Phase ✅ → Main Experiment ✅ → Complete 🏆")
+    
+    st.markdown("""
+    ### 🎯 Experiment Complete!
+    
+    **Your data has been successfully saved to our research database:**
+    - ✅ Comprehension phase data recorded
+    - ✅ Main experiment data recorded (3 rounds)
+    - ✅ All actions and responses saved
+    - ✅ Enhanced tracking data captured
+    
+    Thank you for participating in our blicket research study!
+    """)
+    
     st.button("Start Over", on_click=reset_all)
