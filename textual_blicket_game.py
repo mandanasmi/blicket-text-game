@@ -278,10 +278,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         # Text version: show object numbers with green highlighting
                         objects_text = ""
                         for obj_idx in range(round_config['num_objects']):
-                            if obj_idx in state['objects_on_machine']:
-                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{obj_idx + 1}</span>"
+                            object_id = obj_idx + 1  # Convert to 1-based object ID
+                            if object_id in state['objects_on_machine']:
+                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
                             else:
-                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{obj_idx + 1}</span>"
+                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
                         
                         # Show machine state on same row
                         machine_status = "🟢" if state['machine_lit'] else "🔴"
@@ -295,8 +296,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         
                         # Show each object
                         for obj_idx in range(round_config['num_objects']):
+                            object_id = obj_idx + 1  # Convert to 1-based object ID
                             with cols[obj_idx + 1]:
-                                if obj_idx in state['objects_on_machine']:
+                                if object_id in state['objects_on_machine']:
                                     # Selected object - green background
                                     st.markdown(f"""
                                     <div style="
