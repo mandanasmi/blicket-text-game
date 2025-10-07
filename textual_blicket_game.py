@@ -133,7 +133,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
             "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
-            "selected_objects": convert_to_one_based_indices(list(st.session_state.selected_objects)) if 'selected_objects' in st.session_state else [],
+            "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
             "phase": phase,
             "round_number": current_round + 1,
@@ -449,7 +449,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         cols = st.columns(4)
         for i in range(round_config['num_objects']):
             with cols[i % 4]:
-                is_selected = i in st.session_state.selected_objects
+                object_id = i + 1  # Convert to 1-based object ID
+                is_selected = object_id in st.session_state.selected_objects
                 horizon = round_config.get('horizon', 32)
                 steps_left = horizon - st.session_state.steps_taken
                 interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
@@ -468,12 +469,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     
                     # Update object selection
                     if is_selected:
-                        st.session_state.selected_objects.remove(i)
+                        st.session_state.selected_objects.remove(object_id)
                     else:
-                        st.session_state.selected_objects.add(i)
+                        st.session_state.selected_objects.add(object_id)
                     
-                    # Update environment state
-                    env._state[i] = (i in st.session_state.selected_objects)
+                    # Update environment state (convert back to 0-based for internal state)
+                    env._state[i] = (object_id in st.session_state.selected_objects)
                     env._update_machine_state()
                     game_state = env.step("look")[0]  # Get updated state
                     st.session_state.game_state = game_state
@@ -525,7 +526,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 with cols[j]:
                     # Check if this column should have an object
                     if j < len(row_objects):
-                        obj_idx = row_objects[j]
+                        obj_idx = row_objects[j] + 1  # Convert to 1-based object ID
                     else:
                         # Empty column - skip rendering
                         continue
@@ -593,7 +594,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         </div>
                         """, unsafe_allow_html=True)
                         
-                        if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
+                        if st.button(f"Select Object {obj_idx}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx}"):
                             # Record the action before making changes
                             action_time = datetime.datetime.now()
                             action_type = "remove" if is_selected else "place"
@@ -604,8 +605,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             else:
                                 st.session_state.selected_objects.add(obj_idx)
                             
-                            # Update environment state
-                            env._state[obj_idx] = (obj_idx in st.session_state.selected_objects)
+                            # Update environment state (convert to 0-based for internal state)
+                            env._state[obj_idx - 1] = (obj_idx in st.session_state.selected_objects)
                             env._update_machine_state()
                             game_state = env.step("look")[0]  # Get updated state
                             st.session_state.game_state = game_state
@@ -861,10 +862,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
-                        "true_blicket_indices": convert_to_one_based_indices(convert_numpy_types(game_state['blicket_indices'])),  # True blickets (1-based)
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # True blickets (already 1-based)
                         "true_rule": round_config['rule'],  # True rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
-                        "final_objects_on_machine": convert_to_one_based_indices(list(st.session_state.selected_objects)),
+                        "final_objects_on_machine": list(st.session_state.selected_objects),
                         "rule": round_config['rule'],  # Keep for compatibility
                         "phase": "comprehension" if is_practice else "main_experiment",
                         "interface_type": "text"
@@ -933,10 +934,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
-                        "true_blicket_indices": convert_to_one_based_indices(convert_numpy_types(game_state['blicket_indices'])),  # True blickets (1-based)
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # True blickets (already 1-based)
                         "true_rule": round_config['rule'],  # True rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
-                        "final_objects_on_machine": convert_to_one_based_indices(list(st.session_state.selected_objects)),
+                        "final_objects_on_machine": list(st.session_state.selected_objects),
                         "rule": round_config['rule'],  # Keep for compatibility
                         "phase": "main_experiment",
                         "interface_type": "text"

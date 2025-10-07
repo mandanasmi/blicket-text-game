@@ -49,7 +49,7 @@ class BlicketTextEnv:
         self._rng = np.random.default_rng(seed=seed)
 
         # 
-        self.object_names = [f"object {i}" for i in range(self.num_objects)]  # TODO: make customizable
+        self.object_names = [f"object {i+1}" for i in range(self.num_objects)]  # 1-based object names: "object 1", "object 2", etc.
 
         # sample blicket indices
         if blicket_indices is not None:
