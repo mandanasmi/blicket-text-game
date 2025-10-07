@@ -289,10 +289,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
 
     
-    # Display environment description
-    st.markdown("### Environment Description")
-    st.markdown(game_state['feedback'])
-    
     # Text-only version: Display action history
     if use_text_version:
         st.markdown("### Action History")
