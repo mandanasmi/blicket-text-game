@@ -480,7 +480,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     st.session_state.game_state = game_state
                     
                     # Add to action history
-                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {i + 1} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
+                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {object_id} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
                     st.session_state.action_history.append(action_text)
                     
                     # Add to state history
@@ -495,8 +495,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     action_data = {
                         "timestamp": action_time.isoformat(),
                         "action_type": action_type,
-                        "object_index": i,
-                        "object_id": f"object_{i + 1}",
+                        "object_index": object_id,
+                        "object_id": f"object_{object_id}",
                         "machine_state_before": bool(not machine_lit),  # Previous state
                         "machine_state_after": bool(game_state['true_state'][-1]),  # New state
                         "objects_on_machine": list(st.session_state.selected_objects),
@@ -624,7 +624,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                 "timestamp": action_time.isoformat(),
                                 "action_type": action_type,
                                 "object_index": obj_idx,
-                                "object_id": f"object_{obj_idx + 1}",
+                                "object_id": f"object_{obj_idx}",
                                 "machine_state_before": bool(not machine_lit),  # Previous state
                                 "machine_state_after": bool(game_state['true_state'][-1]),  # New state
                                 "objects_on_machine": list(st.session_state.selected_objects),
