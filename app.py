@@ -150,6 +150,38 @@ def save_game_data(participant_id, game_data):
     else:
         print("⚠️ Firebase not available - game data not saved")
 
+def save_intermediate_progress_app(participant_id, phase, round_number=None, total_rounds=None, action_count=0):
+    """Save intermediate progress for app.py Q&A phases"""
+    if firebase_initialized and db_ref:
+        try:
+            participant_ref = db_ref.child(participant_id)
+            progress_ref = participant_ref.child('intermediate_progress')
+            
+            # Create progress data
+            now = datetime.datetime.now()
+            progress_id = f"progress_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+            
+            progress_data = {
+                "progress_id": progress_id,
+                "timestamp": now.isoformat(),
+                "phase": phase,
+                "round_number": round_number,
+                "total_rounds": total_rounds,
+                "action_count": action_count,
+                "session_state_keys": list(st.session_state.keys()) if hasattr(st, 'session_state') else [],
+                "current_participant_id": st.session_state.get('current_participant_id', 'unknown') if hasattr(st, 'session_state') else 'unknown',
+                "interface_type": "text",
+                "progress_type": "intermediate_save"
+            }
+            
+            progress_ref.child(progress_id).set(progress_data)
+            print(f"💾 Intermediate progress saved for {participant_id} - Phase: {phase}, Actions: {action_count}")
+            
+        except Exception as e:
+            print(f"❌ Failed to save intermediate progress for {participant_id}: {e}")
+    else:
+        print("⚠️ Firebase not available - intermediate progress not saved")
+
 
 
 
@@ -322,9 +354,9 @@ if st.session_state.phase == "intro":
     
     # Show Firebase connection status
     if firebase_initialized:
-        st.success("✅ Firebase connected - Data saving enabled")
+        print("✅ Firebase connected - Data saving enabled")
     else:
-        st.warning("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
+        print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
     
     if not st.session_state.participant_id_entered:
         # Ask for Participant ID and start comprehension phase
@@ -373,8 +405,6 @@ elif st.session_state.phase == "comprehension":
         - 🟢 LIT = Machine is active
         - 🔴 NOT LIT = Machine is inactive
         
-        **⚠️ IMPORTANT:** You must complete all 5 actions and answer the questions at the end to proceed to the main experiment.
-        
         When you're ready, click the button below to start the comprehension phase.
         """)
         
@@ -403,6 +433,10 @@ elif st.session_state.phase == "comprehension":
             st.session_state.times = [datetime.datetime.now()]
             st.session_state.comprehension_completed = True
             st.session_state.phase = "practice_game"
+            
+            # Save intermediate progress - starting comprehension game
+            save_intermediate_progress_app(st.session_state.current_participant_id, "comprehension_game_start", 1, 1, 0)
+            
             st.rerun()
     
     st.stop()
@@ -578,6 +612,9 @@ elif st.session_state.phase == "practice_complete":
         st.session_state.action_history = []
         st.session_state.state_history = []
         st.session_state.selected_objects = set()  # Ensure all buttons start gray
+        
+        # Save intermediate progress - starting main experiment
+        save_intermediate_progress_app(st.session_state.current_participant_id, "main_experiment_start", 1, num_rounds, 0)
         
         st.session_state.phase = "game"
         st.rerun()
