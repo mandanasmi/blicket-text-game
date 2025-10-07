@@ -495,7 +495,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     action_data = {
                         "timestamp": action_time.isoformat(),
                         "action_type": action_type,
-                        "object_index": object_id,
+                        "object_index": object_id - 1,
                         "object_id": f"object_{object_id}",
                         "machine_state_before": bool(not machine_lit),  # Previous state
                         "machine_state_after": bool(game_state['true_state'][-1]),  # New state
@@ -623,7 +623,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             action_data = {
                                 "timestamp": action_time.isoformat(),
                                 "action_type": action_type,
-                                "object_index": obj_idx,
+                                "object_index": obj_idx - 1,
                                 "object_id": f"object_{obj_idx}",
                                 "machine_state_before": bool(not machine_lit),  # Previous state
                                 "machine_state_after": bool(game_state['true_state'][-1]),  # New state
