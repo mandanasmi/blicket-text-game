@@ -469,6 +469,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     action_time = datetime.datetime.now()
                     action_type = "remove" if is_selected else "place"
                     
+                    # Capture machine state BEFORE making changes
+                    machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
+                    
                     # Update object selection
                     if is_selected:
                         st.session_state.selected_objects.remove(object_id)
@@ -499,7 +502,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "action_type": action_type,
                         "object_index": object_id - 1,
                         "object_id": f"object_{object_id}",
-                        "machine_state_before": bool(not machine_lit),  # Previous state
+                        "machine_state_before": machine_state_before,  # Machine state before this action
                         "machine_state_after": bool(game_state['true_state'][-1]),  # New state
                         "objects_on_machine": list(st.session_state.selected_objects),
                         "step_number": st.session_state.steps_taken + 1
@@ -601,6 +604,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             action_time = datetime.datetime.now()
                             action_type = "remove" if is_selected else "place"
                             
+                            # Capture machine state BEFORE making changes
+                            machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
+                            
                             # Update object selection
                             if is_selected:
                                 st.session_state.selected_objects.remove(obj_idx)
@@ -627,7 +633,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                 "action_type": action_type,
                                 "object_index": obj_idx - 1,
                                 "object_id": f"object_{obj_idx}",
-                                "machine_state_before": bool(not machine_lit),  # Previous state
+                                "machine_state_before": machine_state_before,  # Machine state before this action
                                 "machine_state_after": bool(game_state['true_state'][-1]),  # New state
                                 "objects_on_machine": list(st.session_state.selected_objects),
                                 "step_number": st.session_state.steps_taken + 1
