@@ -129,7 +129,13 @@ def save_game_data(participant_id, game_data):
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
-            games_ref = participant_ref.child('games')
+            
+            # Determine which key to use based on phase
+            phase = game_data.get('phase', 'unknown')
+            if phase == 'main_experiment':
+                games_ref = participant_ref.child('main_game')
+            else:
+                games_ref = participant_ref.child('games')  # Keep comprehension phase data in 'games'
             
             # Create a new game entry with detailed timestamp
             now = datetime.datetime.now()
@@ -144,7 +150,7 @@ def save_game_data(participant_id, game_data):
             }
             
             games_ref.child(game_id).set(enhanced_game_data)
-            print(f"✅ Successfully saved game data for {participant_id} - Game ID: {game_id}")
+            print(f"✅ Successfully saved {phase} data for {participant_id} - Game ID: {game_id}")
         except Exception as e:
             print(f"❌ Failed to save game data: {e}")
     else:
@@ -518,15 +524,15 @@ elif st.session_state.phase == "practice_complete":
             [2, 3],  # Objects 3, 4
             [0, 3],  # Objects 1, 4
             [1, 3],  # Objects 2, 4
-            [0],     # Object 1 only
-            [1],     # Object 2 only
-            [2],     # Object 3 only
-            [3],     # Object 4 only
-            [0, 1, 2],  # Objects 1, 2, 3
-            [1, 2, 3],  # Objects 2, 3, 4
-            [0, 2, 3],  # Objects 1, 3, 4
-            [0, 1, 3],  # Objects 1, 2, 4
-            [0, 1, 2, 3]  # All objects
+            # [0],     # Object 1 only
+            # [1],     # Object 2 only
+            # [2],     # Object 3 only
+            # [3],     # Object 4 only
+            # [0, 1, 2],  # Objects 1, 2, 3
+            # [1, 2, 3],  # Objects 2, 3, 4
+            # [0, 2, 3],  # Objects 1, 3, 4
+            # [0, 1, 3],  # Objects 1, 2, 4
+            # [0, 1, 2, 3]  # All objects
         ]
         
         # Shuffle combinations for variety

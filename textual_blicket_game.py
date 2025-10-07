@@ -61,7 +61,13 @@ def save_game_data(participant_id, game_data):
         # Get database reference
         db_ref = db.reference()
         participant_ref = db_ref.child(participant_id)
-        games_ref = participant_ref.child('games')
+        
+        # Determine which key to use based on phase
+        phase = game_data.get('phase', 'unknown')
+        if phase == 'main_experiment':
+            games_ref = participant_ref.child('main_game')
+        else:
+            games_ref = participant_ref.child('games')  # Keep comprehension phase data in 'games'
         
         # Create a new game entry with detailed timestamp
         now = datetime.datetime.now()
@@ -76,7 +82,7 @@ def save_game_data(participant_id, game_data):
         }
         
         games_ref.child(game_id).set(enhanced_game_data)
-        print(f"✅ Successfully saved game data for {participant_id} - Game ID: {game_id}")
+        print(f"✅ Successfully saved {phase} data for {participant_id} - Game ID: {game_id}")
     except Exception as e:
         print(f"❌ Failed to save game data for {participant_id}: {e}")
         print("Game data (not saved):", game_data)
