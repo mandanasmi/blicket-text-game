@@ -765,7 +765,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
                     
                     # Generate unique round ID
-                    import datetime
                     now = datetime.datetime.now()
                     round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
                     
