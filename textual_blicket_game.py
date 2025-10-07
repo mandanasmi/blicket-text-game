@@ -764,8 +764,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     end_time = datetime.datetime.now()
                     total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
                     
+                    # Generate unique round ID
+                    import datetime
+                    now = datetime.datetime.now()
+                    round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+                    
                     # Save current round data with detailed action tracking
                     round_data = {
+                        "round_id": round_id,  # Unique identifier for this round
                         "start_time": st.session_state.game_start_time.isoformat(),
                         "end_time": end_time.isoformat(),
                         "total_time_seconds": total_time_seconds,
@@ -775,14 +781,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "action_history": st.session_state.action_history,  # Detailed action history
                         "state_history": st.session_state.state_history,  # State changes
                         "total_actions": len(st.session_state.user_actions),
+                        "action_history_length": len(st.session_state.action_history),  # Length of action history
                         "total_steps_taken": st.session_state.steps_taken,
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # True blickets
+                        "true_rule": round_config['rule'],  # True rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
                         "final_objects_on_machine": list(st.session_state.selected_objects),
-                        "rule": round_config['rule'],
+                        "rule": round_config['rule'],  # Keep for compatibility
                         "phase": "comprehension" if is_practice else "main_experiment",
                         "interface_type": "text"
                     }
@@ -829,8 +837,13 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     end_time = datetime.datetime.now()
                     total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
                     
+                    # Generate unique round ID for main phase
+                    now = datetime.datetime.now()
+                    round_id = f"main_round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+                    
                     # Save final round data with detailed action tracking
                     round_data = {
+                        "round_id": round_id,  # Unique identifier for this round
                         "start_time": st.session_state.game_start_time.isoformat(),
                         "end_time": end_time.isoformat(),
                         "total_time_seconds": total_time_seconds,
@@ -840,14 +853,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "action_history": st.session_state.action_history,  # Detailed action history
                         "state_history": st.session_state.state_history,  # State changes
                         "total_actions": len(st.session_state.user_actions),
+                        "action_history_length": len(st.session_state.action_history),  # Length of action history
                         "total_steps_taken": st.session_state.steps_taken,
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # True blickets
+                        "true_rule": round_config['rule'],  # True rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
                         "final_objects_on_machine": list(st.session_state.selected_objects),
-                        "rule": round_config['rule'],
+                        "rule": round_config['rule'],  # Keep for compatibility
                         "phase": "main_experiment",
                         "interface_type": "text"
                     }

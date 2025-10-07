@@ -1,3 +1,4 @@
+from cgi import print_arguments, print_environ
 import os
 import json
 import random
@@ -27,8 +28,11 @@ db_ref = None
 
 if not firebase_admin._apps:
     try:
-        # Try Streamlit secrets first (for Cloud deployment)
+        print("🔍 Attempting Firebase initialization...")
+        
+        # Try Streamlit secrets first (for both local and cloud deployment)
         if hasattr(st, 'secrets') and hasattr(st.secrets, 'firebase') and 'firebase' in st.secrets:
+            print("✅ Found Streamlit secrets - using secrets.toml")
             firebase_credentials = {
                 "type": "service_account",
                 "project_id": st.secrets["firebase"]["project_id"],
@@ -48,9 +52,10 @@ if not firebase_admin._apps:
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
+            print("✅ Firebase initialized successfully using Streamlit secrets")
             
-        elif os.getenv("FIREBASE_PROJECT_ID"):  # Local development
-            # Using local development Firebase credentials
+        elif os.getenv("FIREBASE_PROJECT_ID"):  # Fallback to environment variables
+            print("⚠️ Using environment variables as fallback")
             firebase_credentials = {
                 "type": "service_account",
                 "project_id": os.getenv("FIREBASE_PROJECT_ID"),
@@ -70,12 +75,21 @@ if not firebase_admin._apps:
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
-            # Firebase initialized successfully
+            print("✅ Firebase initialized successfully using environment variables")
+        else:
+            print("❌ No Firebase credentials found in secrets or environment variables")
+            firebase_initialized = False
             
     except Exception as e:
         # Firebase initialization failed - app will run without data saving
         firebase_initialized = False
-        # Firebase initialization failed
+        print(f"❌ Firebase initialization failed: {e}")
+        import traceback
+        traceback.print_exc()
+else:
+    print("✅ Firebase already initialized")
+    firebase_initialized = True
+    db_ref = db.reference()
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", blicket_indices=None):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
@@ -183,8 +197,15 @@ def submit_qa():
             user_actions.append(command)
             action_timestamps.append(time.isoformat())
 
+    # Generate unique round ID
+    round_id = f"qa_round_{st.session_state.current_round + 1}_{qa_time.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+    
+    # Get current round config
+    current_round_config = st.session_state.round_configs[st.session_state.current_round]
+    
     # Save current round data with enhanced tracking
     round_data = {
+        "round_id": round_id,  # Unique identifier for this round
         "start_time": st.session_state.start_time.isoformat(),
         "end_time": qa_time.isoformat(),
         "total_time_seconds": total_time_seconds,
@@ -195,11 +216,15 @@ def submit_qa():
         "user_actions": user_actions,
         "action_timestamps": action_timestamps,
         "total_actions": len(user_actions),
+        "action_history_length": len(user_actions),  # Length of action history
         "binary_answers": binary_answers,
         "qa_time": qa_time.isoformat(),
-        "round_config": st.session_state.round_configs[st.session_state.current_round],
+        "round_config": current_round_config,
         "round_number": st.session_state.current_round + 1,
-        "phase": "main_experiment"
+        "true_rule": current_round_config.get('rule', 'unknown'),  # True rule for this round
+        "true_blicket_indices": current_round_config.get('blicket_indices', []),  # True blickets if available
+        "phase": "main_experiment",
+        "interface_type": "text"
     }
     
     save_game_data(st.session_state.current_participant_id, round_data)
@@ -294,6 +319,12 @@ if "interface_type" not in st.session_state:
 if st.session_state.phase == "intro":
     # Show title
     st.title("🧙 Blicket Text Adventure")
+    
+    # Show Firebase connection status
+    if firebase_initialized:
+        print("✅ Firebase connected - Data saving enabled")
+    else:
+        print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
     
     if not st.session_state.participant_id_entered:
         # Ask for Participant ID and start comprehension phase
