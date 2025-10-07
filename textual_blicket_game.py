@@ -88,21 +88,26 @@ def save_game_data(participant_id, game_data):
         print("Game data (not saved):", game_data)
 
 def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False):
-    """Save intermediate progress - update single comprehension entry with action history"""
+    """Save intermediate progress - update single entry with action history based on phase"""
     try:
         # Get database reference
         db_ref = db.reference()
         participant_ref = db_ref.child(participant_id)
-        comprehension_ref = participant_ref.child('comprehension')
         
-        # Create or update the single comprehension entry
-        now = datetime.datetime.now()
-        entry_id = "action_history"
+        # Determine which key to use based on phase
+        phase = "comprehension" if is_practice else "main_experiment"
+        if phase == "main_experiment":
+            progress_ref = participant_ref.child('main_game')
+            entry_id = f"round_{current_round + 1}_progress"
+        else:
+            progress_ref = participant_ref.child('comprehension')
+            entry_id = "action_history"
         
         # Get existing data or create new
-        existing_data = comprehension_ref.child(entry_id).get() or {}
+        existing_data = progress_ref.child(entry_id).get() or {}
         
         # Update with current action history
+        now = datetime.datetime.now()
         updated_data = {
             **existing_data,
             "last_updated": now.isoformat(),
@@ -112,17 +117,19 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
             "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
-            "phase": "comprehension" if is_practice else "main_experiment"
+            "phase": phase,
+            "round_number": current_round + 1,
+            "round_config": round_config
         }
         
         # Convert NumPy types to JSON-serializable types
         updated_data = convert_numpy_types(updated_data)
         
-        comprehension_ref.child(entry_id).set(updated_data)
-        print(f"💾 Action history updated for {participant_id} - {updated_data['total_actions']} actions")
+        progress_ref.child(entry_id).set(updated_data)
+        print(f"💾 {phase} progress updated for {participant_id} - Round {current_round + 1} - {updated_data['total_actions']} actions")
         
     except Exception as e:
-        print(f"❌ Failed to save action history for {participant_id}: {e}")
+        print(f"❌ Failed to save {phase} progress for {participant_id}: {e}")
 
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - text-only interface"""

@@ -157,18 +157,24 @@ def save_game_data(participant_id, game_data):
         print("⚠️ Firebase not available - game data not saved")
 
 def save_intermediate_progress_app(participant_id, phase, round_number=None, total_rounds=None, action_count=0):
-    """Save intermediate progress - update single comprehension entry with action history"""
+    """Save intermediate progress - update entry with action history based on phase"""
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
-            comprehension_ref = participant_ref.child('comprehension')
             
-            # Create or update the single comprehension entry
+            # Determine which key to use based on phase
+            if phase == "main_experiment" or phase == "main_experiment_start":
+                progress_ref = participant_ref.child('main_game')
+                entry_id = f"round_{round_number}_progress" if round_number else "main_progress"
+            else:
+                progress_ref = participant_ref.child('comprehension')
+                entry_id = "action_history"
+            
+            # Create or update the entry
             now = datetime.datetime.now()
-            entry_id = "action_history"
             
             # Get existing data or create new
-            existing_data = comprehension_ref.child(entry_id).get() or {}
+            existing_data = progress_ref.child(entry_id).get() or {}
             
             # Update with current action history
             updated_data = {
@@ -181,13 +187,13 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
                 "total_rounds": total_rounds
             }
             
-            comprehension_ref.child(entry_id).set(updated_data)
-            print(f"💾 Action history updated for {participant_id} - {action_count} actions")
+            progress_ref.child(entry_id).set(updated_data)
+            print(f"💾 {phase} progress updated for {participant_id} - Round {round_number} - {action_count} actions")
             
         except Exception as e:
-            print(f"❌ Failed to save action history for {participant_id}: {e}")
+            print(f"❌ Failed to save {phase} progress for {participant_id}: {e}")
     else:
-        print("⚠️ Firebase not available - action history not saved")
+        print("⚠️ Firebase not available - progress not saved")
 
 
 
@@ -686,11 +692,6 @@ elif st.session_state.phase == "end":
     st.markdown("""
     ### 🎯 Experiment Complete!
     
-    **Your data has been successfully saved to our research database:**
-    - ✅ Comprehension phase data recorded
-    - ✅ Main experiment data recorded (3 rounds)
-    - ✅ All actions and responses saved
-    - ✅ Enhanced tracking data captured
     
     Thank you for participating in our blicket research study!
     """)
