@@ -617,6 +617,9 @@ elif st.session_state.phase == "practice_complete":
         st.session_state.log = [first_obs]
         st.session_state.times = [now]
         
+        # Save final comprehension phase data before clearing session state
+        save_intermediate_progress_app(st.session_state.current_participant_id, "comprehension", 0, 1, len(st.session_state.get('user_actions', [])))
+        
         # Reset action history for main game (clear comprehension phase history)
         st.session_state.steps_taken = 0
         st.session_state.user_actions = []
