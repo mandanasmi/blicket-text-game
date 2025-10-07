@@ -105,6 +105,89 @@ def save_game_data(participant_id, game_data):
         print(f"❌ Failed to save game data for {participant_id}: {e}")
         print("Game data (not saved):", game_data)
 
+def save_qa_data_immediately(participant_id, round_config, current_round, total_rounds, is_practice, rule_hypothesis, rule_type):
+    """Save Q&A data immediately when user provides rule hypothesis"""
+    try:
+        # Get database reference
+        db_ref = db.reference()
+        participant_ref = db_ref.child(participant_id)
+        
+        # Determine which key to use based on phase
+        phase = "comprehension" if is_practice else "main_experiment"
+        if phase == "main_experiment":
+            games_ref = participant_ref.child('main_game')
+            entry_id = f"round_{current_round + 1}_qa"
+        else:
+            games_ref = participant_ref.child('games')
+            entry_id = f"comprehension_qa"
+        
+        # Collect blicket classifications (using 1-based object IDs)
+        blicket_classifications = {}
+        for i in range(round_config['num_objects']):
+            blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+        
+        # Calculate total time spent on this round
+        end_time = datetime.datetime.now()
+        total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
+        
+        # Generate unique round ID
+        now = datetime.datetime.now()
+        round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+        
+        # Save Q&A data
+        qa_data = {
+            "round_id": round_id,
+            "start_time": st.session_state.game_start_time.isoformat(),
+            "end_time": end_time.isoformat(),
+            "total_time_seconds": total_time_seconds,
+            "round_number": current_round + 1,
+            "round_config": round_config,
+            "user_actions": st.session_state.user_actions.copy() if 'user_actions' in st.session_state else [],
+            "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
+            "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],
+            "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
+            "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
+            "final_machine_state": bool(st.session_state.game_state['true_state'][-1]) if 'game_state' in st.session_state else False,
+            "final_objects_on_machine": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
+            "blicket_classifications": blicket_classifications,
+            "rule_hypothesis": rule_hypothesis,
+            "rule_type": rule_type,
+            "true_blicket_indices": round_config.get('blicket_indices', []),
+            "true_rule": round_config['rule'],
+            "phase": phase,
+            "interface_type": "text",
+            "qa_saved_immediately": True,
+            "qa_submitted_at": now.isoformat()
+        }
+        
+        # Convert NumPy types to JSON-serializable types
+        qa_data = convert_numpy_types(qa_data)
+        
+        games_ref.child(entry_id).set(qa_data)
+        print(f"✅ Q&A data saved immediately for {participant_id} - Round {current_round + 1}")
+        
+        # Clear session state and finish round
+        st.session_state.pop("visual_game_state", None)
+        st.session_state.pop("env", None)
+        st.session_state.pop("game_state", None)
+        st.session_state.pop("object_positions", None)
+        st.session_state.pop("selected_objects", None)
+        st.session_state.pop("blicket_answers", None)
+        st.session_state.pop("game_start_time", None)
+        st.session_state.pop("shape_images", None)
+        st.session_state.pop("steps_taken", None)
+        st.session_state.pop("user_actions", None)
+        
+        # Return to main app for completion
+        if is_practice:
+            st.session_state.phase = "practice_complete"
+        else:
+            st.session_state.phase = "end"
+        st.rerun()
+        
+    except Exception as e:
+        print(f"❌ Failed to save Q&A data immediately for {participant_id}: {e}")
+
 def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False):
     """Save intermediate progress - update single entry with action history based on phase"""
     try:
@@ -776,7 +859,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             key="rule_hypothesis"
         )
         
-        # Navigation button to go to rule type classification
+        # Navigation buttons - allow users to save and continue or finish
         st.markdown("---")
         st.markdown("### 🚀 Continue to Rule Type Classification")
         
@@ -788,6 +871,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if st.button("➡️ NEXT: Rule Type Classification", type="primary", disabled=not rule_hypothesis, use_container_width=True):
                 st.session_state.visual_game_state = "rule_type_classification"
                 st.rerun()
+        
+        # Add a "Save & Finish Round" button as backup
+        if rule_hypothesis:
+            st.markdown("---")
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                if st.button("💾 Save & Finish Round (Skip Rule Type)", type="secondary", use_container_width=True):
+                    # Save current data even without rule type selection
+                    save_qa_data_immediately(participant_id, round_config, current_round, total_rounds, is_practice, rule_hypothesis, "")
+                    st.rerun()
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
@@ -828,11 +921,21 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("---")
         st.markdown("### 🚀 Submit Your Answers")
         
+        # Check if rule type is provided
+        rule_type = st.session_state.get("rule_type", "")
+        rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+        
+        # Add backup save button if user has written rule hypothesis but no rule type
+        if rule_hypothesis and not rule_type:
+            st.markdown("---")
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col2:
+                if st.button("💾 Save & Finish (Skip Rule Type)", type="secondary", use_container_width=True):
+                    # Save with empty rule type
+                    save_qa_data_immediately(participant_id, round_config, current_round, total_rounds, is_practice, rule_hypothesis, "")
+        
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
-            # Check if rule type is provided
-            rule_type = st.session_state.get("rule_type", "")
-            
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
