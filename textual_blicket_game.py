@@ -167,16 +167,7 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
         print(f"✅ Q&A data saved immediately for {participant_id} - Round {current_round + 1}")
         
         # Clear session state and finish round
-        st.session_state.pop("visual_game_state", None)
-        st.session_state.pop("env", None)
-        st.session_state.pop("game_state", None)
-        st.session_state.pop("object_positions", None)
-        st.session_state.pop("selected_objects", None)
-        st.session_state.pop("blicket_answers", None)
-        st.session_state.pop("game_start_time", None)
-        st.session_state.pop("shape_images", None)
-        st.session_state.pop("steps_taken", None)
-        st.session_state.pop("user_actions", None)
+        reset_game_session_state()
         
         # Return to main app for completion
         if is_practice:
@@ -187,6 +178,25 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
         
     except Exception as e:
         print(f"❌ Failed to save Q&A data immediately for {participant_id}: {e}")
+
+def reset_game_session_state():
+    """Reset all game-related session state variables"""
+    # Clear all game state variables
+    game_state_vars = [
+        "visual_game_state", "env", "game_state", "object_positions", 
+        "selected_objects", "blicket_answers", "game_start_time", 
+        "shape_images", "steps_taken", "user_actions", "action_history", 
+        "state_history", "rule_hypothesis", "rule_type"
+    ]
+    
+    for var in game_state_vars:
+        st.session_state.pop(var, None)
+    
+    # Clear blicket question answers
+    for i in range(10):  # Clear up to 10 possible blicket questions
+        st.session_state.pop(f"blicket_q_{i}", None)
+    
+    print("🔄 Game session state reset complete")
 
 def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False):
     """Save intermediate progress - update single entry with action history based on phase"""
@@ -285,7 +295,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             seed=42 + current_round,
             num_objects=round_config['num_objects'],
             num_blickets=round_config['num_blickets'],
-            rule=round_config['rule']
+            rule=round_config['rule'],
+            blicket_indices=round_config.get('blicket_indices', None)
         )
         st.session_state.object_positions = {}  # Track object positions
         st.session_state.selected_objects = set()  # Objects currently on machine
@@ -295,6 +306,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.session_state.user_actions = []  # Track all user actions for Firebase
         st.session_state.action_history = []  # Track action history for text version
         st.session_state.state_history = []  # Track complete state history
+        
+        print(f"🔄 New round initialized - Round {current_round + 1}/{total_rounds}")
+        print(f"   - Objects: {round_config['num_objects']}")
+        print(f"   - Blickets: {round_config['num_blickets']}")
+        print(f"   - Rule: {round_config['rule']}")
+        print(f"   - Blicket indices: {round_config.get('blicket_indices', 'None')}")
         
         # Initialize fixed shape images for this round (ensure different images)
         if not use_text_version:
@@ -989,16 +1006,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         save_game_data(participant_id, round_data)
                     
                     # Clear session state for next round
-                    st.session_state.pop("visual_game_state", None)
-                    st.session_state.pop("env", None)
-                    st.session_state.pop("game_state", None)
-                    st.session_state.pop("object_positions", None)
-                    st.session_state.pop("selected_objects", None)
-                    st.session_state.pop("blicket_answers", None)
-                    st.session_state.pop("game_start_time", None)
-                    st.session_state.pop("shape_images", None)
-                    st.session_state.pop("steps_taken", None)
-                    st.session_state.pop("user_actions", None)
+                    # Clear session state completely
+                    reset_game_session_state()
                     
                     # Return to main app for next round
                     st.session_state.phase = "next_round"
@@ -1060,17 +1069,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     else:
                         save_game_data(participant_id, round_data)
                     
-                    # Clear session state
-                    st.session_state.pop("visual_game_state", None)
-                    st.session_state.pop("env", None)
-                    st.session_state.pop("game_state", None)
-                    st.session_state.pop("object_positions", None)
-                    st.session_state.pop("selected_objects", None)
-                    st.session_state.pop("blicket_answers", None)
-                    st.session_state.pop("game_start_time", None)
-                    st.session_state.pop("shape_images", None)
-                    st.session_state.pop("steps_taken", None)
-                    st.session_state.pop("user_actions", None)
+                    # Clear session state completely
+                    reset_game_session_state()
                     
                     # Return to main app for completion
                     if is_practice:

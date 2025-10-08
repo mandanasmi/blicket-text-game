@@ -302,6 +302,15 @@ def submit_qa():
         st.session_state.state_history = []
         st.session_state.selected_objects = set()  # Ensure all buttons start gray
         
+        # Clear any remaining game state variables
+        st.session_state.pop("visual_game_state", None)
+        st.session_state.pop("rule_hypothesis", None)
+        st.session_state.pop("rule_type", None)
+        
+        # Clear blicket question answers
+        for i in range(10):  # Clear up to 10 possible blicket questions
+            st.session_state.pop(f"blicket_q_{i}", None)
+        
         st.session_state.phase = "game"
         
         # Clear Q&A state
@@ -626,6 +635,15 @@ elif st.session_state.phase == "practice_complete":
         st.session_state.action_history = []
         st.session_state.state_history = []
         st.session_state.selected_objects = set()  # Ensure all buttons start gray
+        
+        # Clear any remaining game state variables
+        st.session_state.pop("visual_game_state", None)
+        st.session_state.pop("rule_hypothesis", None)
+        st.session_state.pop("rule_type", None)
+        
+        # Clear blicket question answers
+        for i in range(10):  # Clear up to 10 possible blicket questions
+            st.session_state.pop(f"blicket_q_{i}", None)
         
         # Save intermediate progress - starting main experiment
         save_intermediate_progress_app(st.session_state.current_participant_id, "main_experiment_start", 1, num_rounds, 0)
