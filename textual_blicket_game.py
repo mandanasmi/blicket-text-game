@@ -1005,9 +1005,24 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     else:
                         save_game_data(participant_id, round_data)
                     
-                    # Clear session state for next round
-                    # Clear session state completely
-                    reset_game_session_state()
+                    # Clear session state for next round (but NOT the round counter or phase management)
+                    # Only clear game-specific variables, not phase control variables
+                    st.session_state.pop("visual_game_state", None)
+                    st.session_state.pop("env", None)
+                    st.session_state.pop("game_state", None)
+                    st.session_state.pop("object_positions", None)
+                    st.session_state.pop("shape_images", None)
+                    st.session_state.pop("blicket_answers", None)
+                    st.session_state.pop("game_start_time", None)
+                    
+                    # Clear Q&A variables
+                    st.session_state.pop("rule_hypothesis", None)
+                    st.session_state.pop("rule_type", None)
+                    for i in range(10):
+                        st.session_state.pop(f"blicket_q_{i}", None)
+                    
+                    # Note: Don't clear selected_objects, user_actions, action_history, state_history, steps_taken
+                    # These will be reset by app.py's next_round handler
                     
                     # Return to main app for next round
                     st.session_state.phase = "next_round"
@@ -1069,7 +1084,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     else:
                         save_game_data(participant_id, round_data)
                     
-                    # Clear session state completely
+                    # Clear session state completely for phase transition
                     reset_game_session_state()
                     
                     # Return to main app for completion
