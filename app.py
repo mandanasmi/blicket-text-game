@@ -435,6 +435,7 @@ elif st.session_state.phase == "comprehension":
             practice_config = {
                 'num_objects': 4,
                 'num_blickets': 2,
+                'blicket_indices': [1, 2],  # Objects 1 and 2 are blickets in comprehension phase
                 'rule': 'conjunctive',
                 'init_prob': 0.2,
                 'transition_noise': 0.0,
@@ -446,7 +447,8 @@ elif st.session_state.phase == "comprehension":
                 seed=999,  # Fixed seed for practice
                 num_objects=practice_config['num_objects'],
                 num_blickets=practice_config['num_blickets'],
-                rule=practice_config['rule']
+                rule=practice_config['rule'],
+                blicket_indices=practice_config['blicket_indices']
             )
             
             st.session_state.env = env
@@ -475,6 +477,7 @@ elif st.session_state.phase == "practice_game":
     practice_config = {
         'num_objects': 4,
         'num_blickets': 2,
+        'blicket_indices': [1, 2],  # Objects 1 and 2 are blickets in comprehension phase
         'rule': 'conjunctive',
         'init_prob': 0.2,
         'transition_noise': 0.0,
