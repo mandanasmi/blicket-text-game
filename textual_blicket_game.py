@@ -55,7 +55,7 @@ def convert_to_zero_based_indices(indices):
     else:
         return indices
 
-def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
+def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", blicket_indices=None):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
     random.seed(seed)
     np.random.seed(seed)
@@ -66,6 +66,7 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive"):
         rule=rule,
         transition_noise=0.0,
         seed=seed,
+        blicket_indices=blicket_indices
     )
     game_state = env.reset()
     return env, game_state
