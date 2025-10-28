@@ -1050,6 +1050,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
+                    # Get current game state from session state (ensure we have the latest)
+                    current_game_state = st.session_state.get("game_state", game_state)
+                    
                     # Calculate total time spent on this round
                     end_time = datetime.datetime.now()
                     total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
@@ -1066,19 +1069,19 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "total_time_seconds": total_time_seconds,
                         "round_number": current_round + 1,
                         "round_config": round_config,
-                        "user_actions": st.session_state.user_actions,  # All place/remove actions
-                        "action_history": st.session_state.action_history,  # Detailed action history
-                        "state_history": st.session_state.state_history,  # State changes
-                        "total_actions": len(st.session_state.user_actions),
-                        "action_history_length": len(st.session_state.action_history),  # Length of action history
-                        "total_steps_taken": st.session_state.steps_taken,
+                        "user_actions": st.session_state.get("user_actions", []),  # All place/remove actions
+                        "action_history": st.session_state.get("action_history", []),  # Detailed action history
+                        "state_history": st.session_state.get("state_history", []),  # State changes
+                        "total_actions": len(st.session_state.get("user_actions", [])),
+                        "action_history_length": len(st.session_state.get("action_history", [])),  # Length of action history
+                        "total_steps_taken": st.session_state.get("steps_taken", 0),
                         "blicket_classifications": blicket_classifications,  # User's blicket answers
                         "rule_hypothesis": rule_hypothesis,  # User's rule hypothesis
                         "rule_type": rule_type,  # User's rule type classification
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # True blickets (already 1-based)
+                        "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # True blickets
                         "true_rule": round_config['rule'],  # True rule for this round
-                        "final_machine_state": bool(game_state['true_state'][-1]),
-                        "final_objects_on_machine": list(st.session_state.selected_objects),
+                        "final_machine_state": bool(current_game_state.get('true_state', [False])[-1]) if current_game_state else False,
+                        "final_objects_on_machine": list(st.session_state.get("selected_objects", set())),
                         "rule": round_config['rule'],  # Keep for compatibility
                         "phase": "main_experiment",
                         "interface_type": "text"
