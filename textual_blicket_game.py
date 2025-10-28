@@ -1054,24 +1054,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             col1, col2, col3 = st.columns([1, 2, 1])
             with             col2:
                 if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
-                    # Collect blicket classifications from saved tracked key first, then fall back to widget keys
-                    saved_classifications = st.session_state.get("saved_blicket_classifications", {})
-                    blicket_classifications = saved_classifications.copy() if saved_classifications else {}
-                    
-                    print(f"🔍 DEBUG: Retrieved saved_blicket_classifications: {saved_classifications}")
-                    
-                    # If we don't have saved classifications, try to get from widget keys
-                    if not blicket_classifications:
-                        print(f"🔍 DEBUG: No saved classifications, reading from widget keys...")
-                        for i in range(round_config['num_objects']):
-                            key = f"blicket_q_{i}"
-                            raw_value = st.session_state.get(key, "MISSING_KEY")
-                            print(f"🔍 DEBUG: blicket_q_{i}: raw_value = '{raw_value}'")
-                            answer = "No" if raw_value == "MISSING_KEY" else raw_value
-                            blicket_classifications[f"object_{i}"] = answer
-                            print(f"🔍 Round {current_round + 1}: blicket_q_{i} = {answer}")
-                    else:
-                        print(f"🔍 DEBUG: Using saved classifications: {blicket_classifications}")
+                    # Get blicket classifications directly from saved tracked key
+                    blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
+                    print(f"🔍 DEBUG: Using saved_blicket_classifications directly: {blicket_classifications}")
                 
                     # Get rule hypothesis and rule type from session state
                     # Use saved_rule_hypothesis which was saved when leaving the text_area screen
@@ -1198,21 +1183,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("🏁 FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
-                    # Collect blicket classifications from saved tracked key first, then fall back to widget keys
-                    saved_classifications = st.session_state.get("saved_blicket_classifications", {})
-                    blicket_classifications = saved_classifications.copy() if saved_classifications else {}
-                    
-                    print(f"🔍 DEBUG (FINAL): Retrieved saved_blicket_classifications: {saved_classifications}")
-                    
-                    # If we don't have saved classifications, try to get from widget keys
-                    if not blicket_classifications:
-                        print(f"🔍 DEBUG (FINAL): No saved classifications, reading from widget keys...")
-                        for i in range(round_config['num_objects']):
-                            answer = st.session_state.get(f"blicket_q_{i}", "No")
-                            blicket_classifications[f"object_{i}"] = answer
-                            print(f"🔍 Round {current_round + 1} (FINAL): blicket_q_{i} = {answer}")
-                    else:
-                        print(f"🔍 DEBUG (FINAL): Using saved classifications: {blicket_classifications}")
+                    # Get blicket classifications directly from saved tracked key
+                    blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
+                    print(f"🔍 DEBUG (FINAL): Using saved_blicket_classifications directly: {blicket_classifications}")
                 
                     # Get rule hypothesis and rule type from session state
                     # Use saved_rule_hypothesis which was saved when leaving the text_area screen
