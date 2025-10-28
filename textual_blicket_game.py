@@ -1148,6 +1148,19 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     else:
                         save_game_data(participant_id, round_data)
                     
+                    # Clean up old round_X_progress entries for main_game (if they exist)
+                    if not is_practice:
+                        try:
+                            from firebase_admin import db
+                            participant_ref = db.reference(f'participants/{participant_id}')
+                            main_game_ref = participant_ref.child('main_game')
+                            progress_key = f"round_{current_round + 1}_progress"
+                            if main_game_ref.child(progress_key).get():
+                                main_game_ref.child(progress_key).delete()
+                                print(f"🗑️ Deleted old {progress_key} entry")
+                        except Exception as e:
+                            print(f"⚠️ Could not delete old progress entry: {e}")
+                    
                     # Clear session state for next round (but NOT the round counter or phase management)
                     # Only clear game-specific variables, not phase control variables
                     st.session_state.pop("visual_game_state", None)
@@ -1268,6 +1281,18 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         save_data_func(participant_id, round_data)
                     else:
                         save_game_data(participant_id, round_data)
+                    
+                    # Clean up old round_X_progress entries for this round (if they exist)
+                    try:
+                        from firebase_admin import db
+                        participant_ref = db.reference(f'participants/{participant_id}')
+                        main_game_ref = participant_ref.child('main_game')
+                        progress_key = f"round_{current_round + 1}_progress"
+                        if main_game_ref.child(progress_key).get():
+                            main_game_ref.child(progress_key).delete()
+                            print(f"🗑️ Deleted old {progress_key} entry (FINAL)")
+                    except Exception as e:
+                        print(f"⚠️ Could not delete old progress entry: {e}")
                     
                     # Clear session state completely for phase transition
                     reset_game_session_state()
