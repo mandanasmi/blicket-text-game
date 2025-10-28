@@ -1057,10 +1057,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         print(f"🔍 Round {current_round + 1}: blicket_q_{i} = {answer}")
                 
                     # Get rule hypothesis and rule type from session state
-                    # Debug: Check if hypothesis is in session state
-                    print(f"🔍 DEBUG: rule_hypothesis in session state: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
-                    rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    # Use saved_rule_hypothesis which was saved when leaving the text_area screen
+                    saved_hypothesis = st.session_state.get("saved_rule_hypothesis", "")
+                    widget_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    rule_hypothesis = saved_hypothesis if saved_hypothesis else widget_hypothesis
                     rule_type = st.session_state.get("rule_type", "")
+                    
+                    # Debug: Check all hypothesis sources
+                    print(f"🔍 DEBUG: saved_rule_hypothesis = '{saved_hypothesis[:50] if saved_hypothesis else 'EMPTY'}...'")
+                    print(f"🔍 DEBUG: widget rule_hypothesis = '{widget_hypothesis[:50] if widget_hypothesis else 'EMPTY'}...'")
+                    print(f"🔍 DEBUG: final rule_hypothesis = '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
                     
                     # Debug: Print rule hypothesis and rule type
                     print(f"🔍 Round {current_round + 1}: rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
