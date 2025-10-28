@@ -1019,6 +1019,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "interface_type": "text"
                     }
                     
+                    # Debug: Print what will be saved to Firebase
+                    print(f"💾 Saving to Firebase - Round {current_round + 1}:")
+                    print(f"   - rule_type: {round_data.get('rule_type', 'MISSING')}")
+                    print(f"   - rule_hypothesis: {round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...")
+                    print(f"   - user_chosen_blickets: {round_data.get('user_chosen_blickets', 'MISSING')}")
+                    
                     # Use the provided save function or default Firebase function
                     if save_data_func:
                         save_data_func(participant_id, round_data)
@@ -1111,6 +1117,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "phase": "main_experiment",
                         "interface_type": "text"
                     }
+                    
+                    # Debug: Print what will be saved to Firebase
+                    print(f"💾 Saving to Firebase - Round {current_round + 1} (FINAL):")
+                    print(f"   - rule_type: {round_data.get('rule_type', 'MISSING')}")
+                    print(f"   - rule_hypothesis: {round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...")
+                    print(f"   - user_chosen_blickets: {round_data.get('user_chosen_blickets', 'MISSING')}")
                     
                     # Use the provided save function or default Firebase function
                     if save_data_func:
