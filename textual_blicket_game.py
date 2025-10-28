@@ -974,6 +974,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
+                    # Debug: Print rule hypothesis
+                    print(f"🔍 Round {current_round + 1}: rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
+                    print(f"🔍 Round {current_round + 1}: rule_type = {rule_type}")
+                    
                     # Extract user's chosen blickets (objects marked as "Yes")
                     user_chosen_blickets = []
                     for i in range(round_config['num_objects']):
@@ -1059,6 +1063,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Get rule hypothesis and rule type
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
+                    
+                    # Debug: Print rule hypothesis
+                    print(f"🔍 Round {current_round + 1} (FINAL): rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
+                    print(f"🔍 Round {current_round + 1} (FINAL): rule_type = {rule_type}")
                     
                     # Extract user's chosen blickets (objects marked as "Yes")
                     user_chosen_blickets = []
