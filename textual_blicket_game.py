@@ -62,7 +62,7 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", 
     env = blicket_text.BlicketTextEnv(
         num_objects=num_objects,
         num_blickets=num_blickets,
-        init_prob=0.1,
+        init_prob=0.0,  # Start with all objects OFF the machine
         rule=rule,
         transition_noise=0.0,
         seed=seed,
@@ -297,9 +297,19 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     </style>
     """, unsafe_allow_html=True)
     
-    # Initialize session state for this page
-    if "visual_game_state" not in st.session_state:
+    # Initialize or reset session state for this page based on round
+    # Check if we need to reinitialize (first time or new round)
+    needs_init = "visual_game_state" not in st.session_state
+    needs_reset = (st.session_state.get("last_round", -1) != current_round)
+    
+    if needs_init or needs_reset:
+        # Clear visual_game_state to force full reinitialization
+        if not needs_init:
+            st.session_state.pop("visual_game_state", None)
+        
         st.session_state.visual_game_state = "exploration"
+        st.session_state.last_round = current_round  # Track which round we're on
+        
         st.session_state.env, st.session_state.game_state = create_new_game(
             seed=42 + current_round,
             num_objects=round_config['num_objects'],

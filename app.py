@@ -98,7 +98,7 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", 
     env = blicket_text.BlicketTextEnv(
         num_objects=num_objects,
         num_blickets=num_blickets,
-        init_prob=0.1,
+        init_prob=0.0,  # Start with all objects OFF the machine
         rule=rule,
         transition_noise=0.0,
         seed=seed,
