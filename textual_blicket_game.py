@@ -202,7 +202,7 @@ def reset_game_session_state():
     
     print("🔄 Game session state reset complete")
 
-def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False, blicket_classifications=None, rule_hypothesis=None, rule_type=None):
+def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False, blicket_classifications=None, rule_hypothesis=None, rule_type=None, objects_on_machine=None):
     """Save intermediate progress - update single entry with action history and Q&A based on phase"""
     try:
         # Determine which key to use based on phase
@@ -250,6 +250,8 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             updated_data["rule_hypothesis"] = rule_hypothesis
         if rule_type is not None:
             updated_data["rule_type"] = rule_type
+        if objects_on_machine is not None:
+            updated_data["objects_on_machine_before_qa"] = objects_on_machine
         
         # Convert NumPy types to JSON-serializable types
         updated_data = convert_numpy_types(updated_data)
@@ -925,7 +927,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     for i in range(round_config['num_objects']):
                         blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
                     
-                    # Save intermediate progress with blicket Q&A and hypothesis
+                    # Get objects that were on the machine before Q&A
+                    objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
+                    
+                    # Save intermediate progress with blicket Q&A, hypothesis, and objects on machine
                     save_intermediate_progress(
                         participant_id, 
                         round_config, 
@@ -933,10 +938,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         total_rounds, 
                         is_practice,
                         blicket_classifications=blicket_classifications,
-                        rule_hypothesis=current_hypothesis
+                        rule_hypothesis=current_hypothesis,
+                        objects_on_machine=objects_on_machine_before_qa
                     )
                     
-                    print(f"✅ Saved blicket Q&A and hypothesis for round {current_round + 1}")
+                    print(f"✅ Saved blicket Q&A, hypothesis, and objects on machine for round {current_round + 1}")
+                    print(f"   - Objects on machine: {objects_on_machine_before_qa}")
                     
                     st.session_state.visual_game_state = "rule_type_classification"
                     st.rerun()
@@ -971,12 +978,29 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             *Example: If Objects 1 and 3 are blickets, the machine lights up when EITHER Object 1 OR Object 3 (or both) are on the machine.*
             """)
         
+        # Capture rule_type from session state to check if it changed
+        previous_rule_type = st.session_state.get("rule_type", "")
+        
         rule_type = st.radio(
             "What type of rule do you think applies?",
             ["Conjunctive (ALL blickets must be present)", "Disjunctive (ANY blicket can activate)"],
             key="rule_type",
             index=None
         )
+        
+        # Auto-save rule_type when user selects it
+        current_rule_type = st.session_state.get("rule_type", "")
+        if current_rule_type and current_rule_type != previous_rule_type:
+            # User just selected a rule type, save it immediately
+            save_intermediate_progress(
+                participant_id, 
+                round_config, 
+                current_round, 
+                total_rounds, 
+                is_practice,
+                rule_type=current_rule_type
+            )
+            print(f"✅ Auto-saved rule_type for round {current_round + 1}: {current_rule_type}")
         
         # Navigation buttons
         st.markdown("---")
