@@ -912,6 +912,22 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Check if rule hypothesis is provided
                 current_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
                 if current_hypothesis:
+                    # Save blicket classifications before moving to rule type
+                    blicket_classifications = {}
+                    for i in range(round_config['num_objects']):
+                        blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                    
+                    # Save intermediate progress with blicket Q&A
+                    progress_data = {
+                        "blicket_classifications": blicket_classifications,
+                        "rule_hypothesis": current_hypothesis,
+                        "step": "after_hypothesis",
+                        "timestamp": datetime.datetime.now().isoformat()
+                    }
+                    save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
+                    
+                    print(f"✅ Saved blicket Q&A and hypothesis for round {current_round + 1}")
+                    
                     st.session_state.visual_game_state = "rule_type_classification"
                     st.rerun()
                 else:
