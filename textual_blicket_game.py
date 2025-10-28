@@ -228,6 +228,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         existing_data = progress_ref.child(entry_id).get() or {}
         
         # Update with current action history and Q&A data
+        # Note: We don't save round_config here - it's already in the final round data
         now = datetime.datetime.now()
         updated_data = {
             **existing_data,
@@ -239,8 +240,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
             "phase": phase,
-            "round_number": current_round + 1,
-            "round_config": round_config
+            "round_number": current_round + 1
         }
         
         # Add Q&A data if provided
