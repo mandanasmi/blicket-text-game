@@ -907,16 +907,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if st.button("➡️ NEXT: Rule Type Classification", type="primary", disabled=not rule_hypothesis, use_container_width=True):
                 st.session_state.visual_game_state = "rule_type_classification"
                 st.rerun()
-        
-        # Add a "Save & Finish Round" button as backup
-        if rule_hypothesis:
-            st.markdown("---")
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                if st.button("💾 Save & Finish Round (Skip Rule Type)", type="secondary", use_container_width=True):
-                    # Save current data even without rule type selection
-                    save_qa_data_immediately(participant_id, round_config, current_round, total_rounds, is_practice, rule_hypothesis, "")
-                    st.rerun()
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
@@ -960,15 +950,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
         rule_hypothesis = st.session_state.get("rule_hypothesis", "")
-        
-        # Add backup save button if user has written rule hypothesis but no rule type
-        if rule_hypothesis and not rule_type:
-            st.markdown("---")
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                if st.button("💾 Save & Finish (Skip Rule Type)", type="secondary", use_container_width=True):
-                    # Save with empty rule type
-                    save_qa_data_immediately(participant_id, round_config, current_round, total_rounds, is_practice, rule_hypothesis, "")
         
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
