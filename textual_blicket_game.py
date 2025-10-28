@@ -978,9 +978,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             *Example: If Objects 1 and 3 are blickets, the machine lights up when EITHER Object 1 OR Object 3 (or both) are on the machine.*
             """)
         
-        # Capture rule_type from session state to check if it changed
-        previous_rule_type = st.session_state.get("rule_type", "")
-        
         rule_type = st.radio(
             "What type of rule do you think applies?",
             ["Conjunctive (ALL blickets must be present)", "Disjunctive (ANY blicket can activate)"],
@@ -988,25 +985,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             index=None
         )
         
-        # Auto-save rule_type when user selects it
-        current_rule_type = st.session_state.get("rule_type", "")
-        if current_rule_type and current_rule_type != previous_rule_type:
-            # User just selected a rule type, save it immediately
-            save_intermediate_progress(
-                participant_id, 
-                round_config, 
-                current_round, 
-                total_rounds, 
-                is_practice,
-                rule_type=current_rule_type
-            )
-            print(f"✅ Auto-saved rule_type for round {current_round + 1}: {current_rule_type}")
-        
         # Navigation buttons
         st.markdown("---")
         st.markdown("### 🚀 Submit Your Answers")
         
-        # Check if rule type is provided
+        # Check if rule type is provided and save it immediately to progress
         rule_type = st.session_state.get("rule_type", "")
         rule_hypothesis = st.session_state.get("rule_hypothesis", "")
         
@@ -1026,9 +1009,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
-                    # Debug: Print rule hypothesis
+                    # Debug: Print rule hypothesis and rule type
                     print(f"🔍 Round {current_round + 1}: rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
-                    print(f"🔍 Round {current_round + 1}: rule_type = {rule_type}")
+                    print(f"🔍 Round {current_round + 1}: rule_type = '{rule_type}'")
+                    print(f"🔍 Round {current_round + 1}: rule_type type = {type(rule_type)}")
+                    print(f"🔍 Round {current_round + 1}: rule_type bool = {bool(rule_type)}")
+                    print(f"🔍 Round {current_round + 1}: rule_type length = {len(rule_type) if rule_type else 0}")
                     
                     # Extract user's chosen blickets (objects marked as "Yes")
                     user_chosen_blickets = []
@@ -1066,7 +1052,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
                         "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
                         "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
-                        "rule_type": rule_type,  # Hypothesis chosen in the last question (conjunctive vs disjunctive)
+                        "rule_type": rule_type if rule_type else "",  # Hypothesis chosen in the last question (conjunctive vs disjunctive) - FORCE string
                         "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Ground truth blicket indices
                         "true_rule": round_config['rule'],  # Ground truth rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
@@ -1078,9 +1064,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     
                     # Debug: Print what will be saved to Firebase
                     print(f"💾 Saving to Firebase - Round {current_round + 1}:")
-                    print(f"   - rule_type: {round_data.get('rule_type', 'MISSING')}")
-                    print(f"   - rule_hypothesis: {round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...")
-                    print(f"   - user_chosen_blickets: {round_data.get('user_chosen_blickets', 'MISSING')}")
+                    print(f"   - rule_type in dict: '{round_data.get('rule_type', 'MISSING')}'")
+                    print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
+                    print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
+                    print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
                     
                     # Use the provided save function or default Firebase function
                     if save_data_func:
@@ -1172,7 +1159,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
                         "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
                         "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
-                        "rule_type": rule_type,  # Hypothesis chosen in the last question (conjunctive vs disjunctive)
+                        "rule_type": rule_type if rule_type else "",  # Hypothesis chosen in the last question (conjunctive vs disjunctive) - FORCE string
                         "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # Ground truth blicket indices
                         "true_rule": round_config['rule'],  # Ground truth rule for this round
                         "final_machine_state": bool(current_game_state.get('true_state', [False])[-1]) if current_game_state else False,
@@ -1184,9 +1171,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     
                     # Debug: Print what will be saved to Firebase
                     print(f"💾 Saving to Firebase - Round {current_round + 1} (FINAL):")
-                    print(f"   - rule_type: {round_data.get('rule_type', 'MISSING')}")
-                    print(f"   - rule_hypothesis: {round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...")
-                    print(f"   - user_chosen_blickets: {round_data.get('user_chosen_blickets', 'MISSING')}")
+                    print(f"   - rule_type in dict: '{round_data.get('rule_type', 'MISSING')}'")
+                    print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
+                    print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
+                    print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
                     
                     # Use the provided save function or default Firebase function
                     if save_data_func:
