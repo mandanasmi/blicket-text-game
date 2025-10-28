@@ -1019,7 +1019,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
             col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
+            with             col2:
                 if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
                     # Collect blicket classifications (using 0-based object IDs)
                     blicket_classifications = {}
@@ -1028,8 +1028,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         blicket_classifications[f"object_{i}"] = answer
                         print(f"🔍 Round {current_round + 1}: blicket_q_{i} = {answer}")
                 
-                    # Get rule hypothesis and rule type
-                    rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    # Get rule hypothesis - try to retrieve from round progress first, then session state
+                    from firebase_admin import db
+                    phase = "comprehension" if is_practice else "main_experiment"
+                    participant_ref = db.reference(f'participants/{participant_id}')
+                    progress_ref = participant_ref.child('main_game') if phase == "main_experiment" else participant_ref.child('comprehension')
+                    entry_id = f"round_{current_round + 1}_progress" if phase == "main_experiment" else "action_history"
+                    saved_progress = progress_ref.child(entry_id).get() or {}
+                    
+                    # Get rule hypothesis from saved progress or session state
+                    rule_hypothesis = saved_progress.get("rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
                     # Debug: Print rule hypothesis and rule type
@@ -1139,8 +1147,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         blicket_classifications[f"object_{i}"] = answer
                         print(f"🔍 Round {current_round + 1} (FINAL): blicket_q_{i} = {answer}")
                 
-                    # Get rule hypothesis and rule type
-                    rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    # Get rule hypothesis - try to retrieve from round progress first, then session state
+                    from firebase_admin import db
+                    phase = "comprehension" if is_practice else "main_experiment"
+                    participant_ref = db.reference(f'participants/{participant_id}')
+                    progress_ref = participant_ref.child('main_game') if phase == "main_experiment" else participant_ref.child('comprehension')
+                    entry_id = f"round_{current_round + 1}_progress" if phase == "main_experiment" else "action_history"
+                    saved_progress = progress_ref.child(entry_id).get() or {}
+                    
+                    # Get rule hypothesis from saved progress or session state
+                    rule_hypothesis = saved_progress.get("rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
                     # Debug: Print rule hypothesis
