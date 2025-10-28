@@ -989,9 +989,32 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("---")
         st.markdown("### 🚀 Submit Your Answers")
         
-        # Check if rule type is provided and save it immediately to progress
+        # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
         rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+        
+        # Auto-save rule_type to round progress if it's been selected
+        if rule_type:
+            # Save rule_type to round progress whenever it's available
+            blicket_classifications = {}
+            for i in range(round_config['num_objects']):
+                blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
+            
+            objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
+            
+            # Update round progress with all Q&A data including rule_type
+            save_intermediate_progress(
+                participant_id, 
+                round_config, 
+                current_round, 
+                total_rounds, 
+                is_practice,
+                blicket_classifications=blicket_classifications,
+                rule_hypothesis=rule_hypothesis,
+                rule_type=rule_type,
+                objects_on_machine=objects_on_machine_before_qa
+            )
+            print(f"✅ Auto-saved complete Q&A data (including rule_type) for round {current_round + 1}")
         
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
