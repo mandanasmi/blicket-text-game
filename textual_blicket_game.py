@@ -922,11 +922,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if st.button("➡️ NEXT: Rule Type Classification", type="primary", use_container_width=True):
                 # Check if rule hypothesis is provided
                 current_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+                print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
+                print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
+                
                 if current_hypothesis:
                     # Save blicket classifications before moving to rule type
                     blicket_classifications = {}
+                    print(f"🔍 DEBUG: About to collect blicket answers, num_objects = {round_config['num_objects']}")
                     for i in range(round_config['num_objects']):
-                        answer = st.session_state.get(f"blicket_q_{i}", "No")
+                        raw_answer = st.session_state.get(f"blicket_q_{i}", None)
+                        print(f"🔍 DEBUG: Raw blicket_q_{i} from session state: {raw_answer}")
+                        answer = raw_answer if raw_answer is not None else "No"
                         blicket_classifications[f"object_{i}"] = answer
                         print(f"🔍 Saving intermediate - blicket_q_{i} = {answer}")
                     
