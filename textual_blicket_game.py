@@ -967,9 +967,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         if f"blicket_q_{i}" not in st.session_state:
                             st.session_state[f"blicket_q_{i}"] = blicket_classifications.get(f"object_{i}", "No")
                     
-                    # Note: rule_hypothesis is already in session state from the st.text_area widget
-                    # We don't need to set it manually - the widget manages it
-                    print(f"🔍 DEBUG: rule_hypothesis already in session state: {st.session_state.get('rule_hypothesis', 'NOT FOUND')[:50] if st.session_state.get('rule_hypothesis') else 'EMPTY'}...")
+                    # Preserve hypothesis in a separate key that won't be cleared by widget lifecycle
+                    # The widget key "rule_hypothesis" won't persist once we leave this screen
+                    st.session_state["saved_rule_hypothesis"] = current_hypothesis
+                    print(f"🔍 DEBUG: Saved rule_hypothesis to saved_rule_hypothesis key: {current_hypothesis[:50]}...")
                     
                     st.session_state.visual_game_state = "rule_type_classification"
                     st.rerun()
@@ -1018,8 +1019,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
         
-        # Get rule_hypothesis from session state (it should still be there from previous screen)
-        rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+        # Get rule_hypothesis from saved_rule_hypothesis (saved when leaving text_area screen) or original widget key
+        rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
         print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
         print(f"🔍 Retrieved rule_type: '{rule_type}'")
         
@@ -1156,8 +1157,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         print(f"🔍 Round {current_round + 1} (FINAL): blicket_q_{i} = {answer}")
                 
                     # Get rule hypothesis and rule type from session state
-                    # These should still be in session state from the Q&A screens
-                    rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    # Use saved_rule_hypothesis which was saved when leaving the text_area screen
+                    rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
                     # Debug: Print rule hypothesis
