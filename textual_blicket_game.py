@@ -899,14 +899,20 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("---")
         st.markdown("### 🚀 Continue to Rule Type Classification")
         
-        # Check if rule hypothesis is provided
-        rule_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+        # Check if rule hypothesis is provided (read from session state)
+        rule_hypothesis = st.session_state.get("rule_hypothesis", "")
         
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            if st.button("➡️ NEXT: Rule Type Classification", type="primary", disabled=not rule_hypothesis, use_container_width=True):
-                st.session_state.visual_game_state = "rule_type_classification"
-                st.rerun()
+            # Always show the button, but check inside the callback
+            if st.button("➡️ NEXT: Rule Type Classification", type="primary", use_container_width=True):
+                # Check if rule hypothesis is provided
+                current_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+                if current_hypothesis:
+                    st.session_state.visual_game_state = "rule_type_classification"
+                    st.rerun()
+                else:
+                    st.warning("Please enter a rule hypothesis before proceeding.")
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
