@@ -202,12 +202,18 @@ def reset_game_session_state():
 def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False):
     """Save intermediate progress - update single entry with action history based on phase"""
     try:
+        # Determine which key to use based on phase
+        phase = "comprehension" if is_practice else "main_experiment"
+        
+        # Check if Firebase is initialized
+        if not firebase_admin._apps:
+            print(f"⚠️ Firebase not initialized - skipping {phase} progress save")
+            return
+        
         # Get database reference
         db_ref = db.reference()
         participant_ref = db_ref.child(participant_id)
         
-        # Determine which key to use based on phase
-        phase = "comprehension" if is_practice else "main_experiment"
         if phase == "main_experiment":
             progress_ref = participant_ref.child('main_game')
             entry_id = f"round_{current_round + 1}_progress"
@@ -241,7 +247,9 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         print(f"💾 {phase} progress updated for {participant_id} - Round {current_round + 1} - {updated_data['total_actions']} actions")
         
     except Exception as e:
+        import traceback
         print(f"❌ Failed to save {phase} progress for {participant_id}: {e}")
+        print(f"Full traceback: {traceback.format_exc()}")
 
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - text-only interface"""
