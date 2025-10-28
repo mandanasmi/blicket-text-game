@@ -53,10 +53,19 @@ class BlicketTextEnv:
 
         # sample blicket indices
         if blicket_indices is not None:
-            # Use provided blicket indices
-            self.blicket_indices = sorted(blicket_indices)
+            # Use provided blicket indices, converting from 1-based to 0-based if needed
+            # Check if indices are 1-based (contain values > num_objects or start from 1)
+            provided_indices = sorted(blicket_indices)
+            # Determine if conversion is needed based on the values
+            max_idx = max(blicket_indices)
+            if max_idx >= self.num_objects or min(blicket_indices) > 0:
+                # Likely 1-based (indices 1-4 for 4 objects), convert to 0-based
+                self.blicket_indices = sorted([idx - 1 for idx in blicket_indices])
+            else:
+                # Already 0-based
+                self.blicket_indices = sorted(blicket_indices)
         else:
-            # Randomly sample blicket indices
+            # Randomly sample blicket indices (already 0-based)
             self.blicket_indices = sorted(self._rng.choice(self.num_objects, self.num_blickets, replace=False))
 
         # _state: first num_objects booleans for objects, last element for machine state.
