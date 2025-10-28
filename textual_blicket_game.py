@@ -968,7 +968,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Collect blicket classifications (using 0-based object IDs)
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
-                        blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                        answer = st.session_state.get(f"blicket_q_{i}", "No")
+                        blicket_classifications[f"object_{i}"] = answer
+                        print(f"🔍 Round {current_round + 1}: blicket_q_{i} = {answer}")
                 
                     # Get rule hypothesis and rule type
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
@@ -981,8 +983,13 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Extract user's chosen blickets (objects marked as "Yes")
                     user_chosen_blickets = []
                     for i in range(round_config['num_objects']):
-                        if blicket_classifications.get(f"object_{i}", "No") == "Yes":
+                        classification = blicket_classifications.get(f"object_{i}", "No")
+                        print(f"🔍 Checking object_{i}: classification = '{classification}'")
+                        if classification == "Yes":
                             user_chosen_blickets.append(i)  # 0-based index
+                            print(f"   ✅ Added {i} to user_chosen_blickets")
+                    
+                    print(f"🔍 Final user_chosen_blickets: {user_chosen_blickets}")
                     
                     # Calculate total time spent on this round
                     end_time = datetime.datetime.now()
@@ -1064,7 +1071,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Collect blicket classifications (using 0-based object IDs)
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
-                        blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                        answer = st.session_state.get(f"blicket_q_{i}", "No")
+                        blicket_classifications[f"object_{i}"] = answer
+                        print(f"🔍 Round {current_round + 1} (FINAL): blicket_q_{i} = {answer}")
                 
                     # Get rule hypothesis and rule type
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
@@ -1077,8 +1086,13 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Extract user's chosen blickets (objects marked as "Yes")
                     user_chosen_blickets = []
                     for i in range(round_config['num_objects']):
-                        if blicket_classifications.get(f"object_{i}", "No") == "Yes":
+                        classification = blicket_classifications.get(f"object_{i}", "No")
+                        print(f"🔍 Checking object_{i} (FINAL): classification = '{classification}'")
+                        if classification == "Yes":
                             user_chosen_blickets.append(i)  # 0-based index
+                            print(f"   ✅ Added {i} to user_chosen_blickets")
+                    
+                    print(f"🔍 Final user_chosen_blickets: {user_chosen_blickets}")
                     
                     # Get current game state from session state (ensure we have the latest)
                     current_game_state = st.session_state.get("game_state", game_state)
