@@ -940,9 +940,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     for i in range(round_config['num_objects']):
                         raw_answer = st.session_state.get(f"blicket_q_{i}", None)
                         print(f"🔍 DEBUG: Raw blicket_q_{i} from session state: {raw_answer}")
-                        answer = raw_answer if raw_answer is not None else "No"
-                        blicket_classifications[f"object_{i}"] = answer
-                        print(f"🔍 Saving intermediate - blicket_q_{i} = {answer}")
+                        # Only save actual values from the user, don't default to "No"
+                        if raw_answer is not None:
+                            blicket_classifications[f"object_{i}"] = raw_answer
+                            print(f"🔍 Saving intermediate - blicket_q_{i} = {raw_answer}")
+                        else:
+                            print(f"⚠️  WARNING: blicket_q_{i} is None - user didn't select an answer!")
                     
                     # Get objects that were on the machine before Q&A
                     objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
