@@ -205,8 +205,12 @@ def reset_game_session_state():
 def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False, blicket_classifications=None, rule_hypothesis=None, rule_type=None, objects_on_machine=None):
     """Save intermediate progress - update single entry with action history and Q&A based on phase"""
     try:
-        # Determine which key to use based on phase
-        phase = "comprehension" if is_practice else "main_experiment"
+        # Only save intermediate progress for comprehension phase, NOT for main experiment
+        if not is_practice:
+            print(f"⚠️ Skipping intermediate progress save for main_experiment")
+            return
+        
+        phase = "comprehension"
         
         # Check if Firebase is initialized
         if not firebase_admin._apps:
@@ -216,13 +220,8 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         # Get database reference
         db_ref = db.reference()
         participant_ref = db_ref.child(participant_id)
-        
-        if phase == "main_experiment":
-            progress_ref = participant_ref.child('main_game')
-            entry_id = f"round_{current_round + 1}_progress"
-        else:
-            progress_ref = participant_ref.child('comprehension')
-            entry_id = "action_history"
+        progress_ref = participant_ref.child('comprehension')
+        entry_id = "action_history"
         
         # Get existing data or create new
         existing_data = progress_ref.child(entry_id).get() or {}
