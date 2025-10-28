@@ -967,9 +967,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         if f"blicket_q_{i}" not in st.session_state:
                             st.session_state[f"blicket_q_{i}"] = blicket_classifications.get(f"object_{i}", "No")
                     
-                    # Ensure hypothesis stays in session state
-                    st.session_state["rule_hypothesis"] = current_hypothesis
-                    print(f"🔍 DEBUG: Set rule_hypothesis in session state to: {current_hypothesis[:50]}...")
+                    # Note: rule_hypothesis is already in session state from the st.text_area widget
+                    # We don't need to set it manually - the widget manages it
+                    print(f"🔍 DEBUG: rule_hypothesis already in session state: {st.session_state.get('rule_hypothesis', 'NOT FOUND')[:50] if st.session_state.get('rule_hypothesis') else 'EMPTY'}...")
                     
                     st.session_state.visual_game_state = "rule_type_classification"
                     st.rerun()
