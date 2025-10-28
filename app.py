@@ -366,6 +366,10 @@ if "comprehension_completed" not in st.session_state:
     st.session_state.comprehension_completed = False
 if "interface_type" not in st.session_state:
     st.session_state.interface_type = "text"  # Fixed to text mode
+if "selected_hypothesis" not in st.session_state:
+    st.session_state.selected_hypothesis = []  # Store all hypotheses from each round
+if "selected_rule" not in st.session_state:
+    st.session_state.selected_rule = []  # Store all rule types from each round
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
@@ -685,12 +689,31 @@ elif st.session_state.phase == "next_round":
     # Move to next round
     st.session_state.current_round += 1
     
+    # Capture hypothesis and rule from the previous round before clearing
+    # These are set by the textual_blicket_game_page when user completes Q&A
+    previous_hypothesis = st.session_state.get("rule_hypothesis", "")
+    previous_rule_type = st.session_state.get("rule_type", "")
+    
+    # Store the hypothesis and rule for the completed round
+    st.session_state.selected_hypothesis.append(previous_hypothesis)
+    st.session_state.selected_rule.append(previous_rule_type)
+    
+    print(f"💾 Captured for previous round {st.session_state.current_round}:")
+    print(f"   - Hypothesis: {previous_hypothesis[:50] if previous_hypothesis else 'EMPTY'}...")
+    print(f"   - Rule Type: {previous_rule_type}")
+    print(f"   - All hypotheses so far: {st.session_state.selected_hypothesis}")
+    print(f"   - All rule types so far: {st.session_state.selected_rule}")
+    
     # Reset action history for next round
     st.session_state.steps_taken = 0
     st.session_state.user_actions = []
     st.session_state.action_history = []
     st.session_state.state_history = []
     st.session_state.selected_objects = set()  # Ensure all buttons start gray
+    
+    # Clear Q&A variables for next round
+    st.session_state.pop("rule_hypothesis", None)
+    st.session_state.pop("rule_type", None)
     
     st.session_state.phase = "game"
     st.rerun()
@@ -708,6 +731,33 @@ elif st.session_state.phase == "qa":
 
 # 5) END-OF-GAME SCREEN
 elif st.session_state.phase == "end":
+    # Capture final round's hypothesis and rule
+    final_hypothesis = st.session_state.get("rule_hypothesis", "")
+    final_rule_type = st.session_state.get("rule_type", "")
+    
+    # Add final round to the lists
+    if final_hypothesis or final_rule_type:
+        st.session_state.selected_hypothesis.append(final_hypothesis)
+        st.session_state.selected_rule.append(final_rule_type)
+    
+    # Save all rounds' hypotheses and rule types to Firebase
+    if firebase_initialized and db_ref and len(st.session_state.selected_hypothesis) > 0:
+        try:
+            participant_ref = db_ref.child(st.session_state.current_participant_id)
+            summary_data = {
+                "all_hypotheses": st.session_state.selected_hypothesis,
+                "all_rule_types": st.session_state.selected_rule,
+                "total_rounds": len(st.session_state.selected_hypothesis),
+                "saved_at": datetime.datetime.now().isoformat()
+            }
+            participant_ref.child("round_summary").set(summary_data)
+            print(f"✅ Saved round summary to Firebase for {st.session_state.current_participant_id}")
+            print(f"   - Total rounds: {len(st.session_state.selected_hypothesis)}")
+            print(f"   - All hypotheses: {st.session_state.selected_hypothesis}")
+            print(f"   - All rule types: {st.session_state.selected_rule}")
+        except Exception as e:
+            print(f"❌ Failed to save round summary: {e}")
+    
     st.markdown("## 🎉 All done!")
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
     
