@@ -776,8 +776,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             # Increment step counter
                             st.session_state.steps_taken += 1
                             
-                            # Save intermediate progress after each action
-                            save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
+                            # Save intermediate progress after each action (only for comprehension phase)
+                            if is_practice:
+                                save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
                             
                             st.rerun()
                     
