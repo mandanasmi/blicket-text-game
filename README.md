@@ -13,9 +13,13 @@ This application presents a causal learning task where participants must discove
 
 ### Interactive Gameplay
 - **Text-based interface** for placing/removing objects on the blicket machine
-- **Step-by-step visualization** of machine state changes
-- **Action history tracking** showing all player actions and resulting states
-- **Limited steps per round** to encourage strategic exploration
+- **0-based object indexing**: Objects are labeled as "Object 0", "Object 1", "Object 2", "Object 3"
+- **Step-by-step visualization** of machine state changes showing before/after states
+- **Action history tracking** showing all player actions, timestamps, and resulting states
+- **State history display** with visual indicators showing which objects are on the machine at each step
+- **Machine activation feedback** showing whether the machine is ON or OFF after each action
+- **No step limits** - participants can explore freely
+- **Session state reset** between rounds and phases to ensure clean data collection
 
 ### Data Collection
 
@@ -31,39 +35,84 @@ The application automatically collects comprehensive behavioral data for each pa
     "experiment_type": "conjunctive_or_disjunctive"
   },
   "comprehension": {
-    "action_history": [...],
+    "action_history": [
+      {
+        "action": "place",
+        "object_index": 0,
+        "timestamp": "...",
+        "machine_state_before": false,
+        "machine_state_after": false,
+        "objects_on_machine": [0]
+      }
+    ],
     "total_actions": 5,
-    "total_steps_taken": 10
+    "total_steps_taken": 10,
+    "user_actions": ["place Object 0", "remove Object 0", ...]
   },
   "main_game": {
-    "round_1": {...},
-    "round_1_progress": {...},
-    "round_2": {...},
-    "round_2_progress": {...},
-    "round_3": {...},
-    "round_3_progress": {...}
+    "round_1_20240101_120000_123": {
+      "round_id": "round_1_20240101_120000_123",
+      "round_number": 1,
+      "total_actions": 8,
+      "action_history": [...],
+      "state_history": [...],
+      "blicket_classifications": {
+        "object_0": "No",
+        "object_1": "Yes",
+        "object_2": "Yes",
+        "object_3": "No"
+      },
+      "user_chosen_blickets": [1, 2],
+      "rule_hypothesis": "Both objects need to be on the machine",
+      "rule_type": "Conjunctive",
+      "objects_on_machine_before_qa": [1, 2],
+      "round_config": {
+        "rule": "conjunctive",
+        "blicket_indices": [0, 1],
+        "num_objects": 4
+      },
+      "true_blicket_indices": [0, 1],
+      "true_rule": "conjunctive",
+      "start_time": "...",
+      "end_time": "...",
+      "total_time_seconds": 245.5,
+      "phase": "main_experiment",
+      "interface_type": "text"
+    }
   }
 }
 ```
 
 #### Round Data Fields
 Each round captures:
-- **Actions**: All place/remove actions with timestamps
-- **Blicket Classifications**: Yes/No responses for each object
-- **User Chosen Blickets**: Indices of objects the participant identified as blickets
+- **Round ID**: Unique timestamped identifier for the round
+- **Actions**: All place/remove actions with timestamps and machine state changes
+- **Action History**: Detailed history showing `machine_state_before`, `machine_state_after`, and `objects_on_machine` for each action
+- **State History**: Complete machine state transitions throughout the round
+- **Blicket Classifications**: Yes/No responses for each object (0-based indexing)
+- **User Chosen Blickets**: 0-based indices of objects the participant identified as blickets
 - **Rule Hypothesis**: Free-text description of the participant's hypothesis
 - **Rule Type**: Selected rule classification (Conjunctive vs. Disjunctive)
-- **Ground Truth**: True blickets and true rule for this round
-- **Objects on Machine Before Q&A**: State of the machine when Q&A phase started
-- **Time Metrics**: Start time, end time, and total duration
-- **State History**: Complete machine state transitions throughout the round
+- **Objects on Machine Before Q&A**: 0-based indices of objects on machine when Q&A phase started
+- **Round Config**: The true configuration including `blicket_indices` (0-based) and `rule`
+- **True Blicket Indices**: 0-based ground truth indices of actual blickets
+- **True Rule**: Ground truth rule (conjunctive or disjunctive)
+- **Time Metrics**: Start time, end time, and total duration in seconds
+- **Phase**: Always "main_experiment" for main game rounds
+- **Interface Type**: Always "text" for text-based interface
+
+**Note**: Object indexing is 0-based throughout (Object 0, Object 1, Object 2, Object 3).
 
 ### Question & Answer Phase
 
 After each round, participants complete:
-1. **Blicket Classification**: For each object, indicate whether it's a blicket
-2. **Rule Hypothesis**: Write a free-text description of the hypothesized rule
-3. **Rule Type Selection**: Choose between conjunctive (ALL blickets required) or disjunctive (ANY blicket activates)
+1. **Blicket Classification**: For each object (Object 0, 1, 2, 3), indicate "Yes" or "No" - whether it's a blicket
+2. **Rule Hypothesis**: Write a free-text description of the hypothesized rule in a text area
+3. **Rule Type Selection**: Choose between:
+   - **Conjunctive**: ALL blickets must be on the machine (AND rule)
+   - **Disjunctive**: ANY blicket on the machine activates it (OR rule)
+
+All responses are automatically saved and cannot be skipped.
 
 ## Setup
 
@@ -128,25 +177,33 @@ The app will be available at `http://localhost:8501`
 Data is stored in Firebase Realtime Database with the following structure:
 
 ```
-participants/
-  └── {participant_id}/
-      ├── config/
-      ├── comprehension/
-      └── main_game/
-          ├── round_1/
-          ├── round_1_progress/
-          ├── round_2/
-          ├── round_2_progress/
-          ├── round_3/
-          └── round_3_progress/
+{participant_id}/
+  ├── config/
+  ├── comprehension/
+  │   └── action_history
+  └── main_game/
+      ├── round_1_20240101_120000_123/  (timestamped)
+      ├── round_2_20240101_120530_456/  (timestamped)
+      └── round_3_20240101_121100_789/  (timestamped)
 ```
 
-Each round includes:
-- Action history with timestamps
-- User inferences (hypothesis text and rule type)
-- Chosen blickets vs. ground truth
-- Complete state transitions
-- Time-to-completion metrics
+**Important**: No intermediate `round_X_progress` entries are created - only final timestamped round data is saved.
+
+Each round entry (keyed by timestamp) includes:
+- Complete action history with timestamps and machine state changes
+- All Q&A responses (blicket classifications, hypothesis, rule type)
+- User-chosen blicket indices vs. ground truth blicket indices
+- Complete state transitions showing machine activation for each action
+- Objects on machine before Q&A phase
+- Time-to-completion metrics (start, end, total duration)
+- Round configuration with true blickets and true rule
+
+### Data Integrity
+
+- **No progress entries**: The app no longer creates `round_X_progress` entries, ensuring a clean database
+- **Unique timestamps**: Each round has a unique timestamped ID (format: `round_N_YYYYMMDD_HHMMSS_mmm`)
+- **Automatic saving**: All data is saved automatically when completing each round
+- **Session preservation**: Comprehension phase data is preserved when transitioning to main game
 
 ## Technical Details
 
