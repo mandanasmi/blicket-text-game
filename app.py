@@ -267,7 +267,7 @@ def submit_qa():
         "round_config": current_round_config,
         "round_number": st.session_state.current_round + 1,
         "true_rule": current_round_config.get('rule', 'unknown'),  # True rule for this round
-        "true_blicket_indices": current_round_config.get('blicket_indices', []),  # True blickets (already 1-based)
+        "true_blicket_indices": current_round_config.get('blicket_indices', []),  # True blickets (0-based)
         "phase": "main_experiment",
         "interface_type": "text"
     }
@@ -542,23 +542,23 @@ elif st.session_state.phase == "practice_complete":
         current_rule = random.choice(['conjunctive', 'disjunctive'])
         rule_change_probability = 0.4  # 40% chance to change rule each round
         
-        # Define diverse blicket combinations (1-based object indices 1-4)
+        # Define diverse blicket combinations (0-based object indices 0-3)
         blicket_combinations = [
+            [0, 1],  # Objects 0, 1
             [1, 2],  # Objects 1, 2
+            [0, 2],  # Objects 0, 2
             [2, 3],  # Objects 2, 3
+            [0, 3],  # Objects 0, 3
             [1, 3],  # Objects 1, 3
-            [3, 4],  # Objects 3, 4
-            [1, 4],  # Objects 1, 4
-            [2, 4],  # Objects 2, 4
+            # [0],     # Object 0 only
             # [1],     # Object 1 only
             # [2],     # Object 2 only
             # [3],     # Object 3 only
-            # [4],     # Object 4 only
+            # [0, 1, 2],  # Objects 0, 1, 2
             # [1, 2, 3],  # Objects 1, 2, 3
-            # [2, 3, 4],  # Objects 2, 3, 4
-            # [1, 3, 4],  # Objects 1, 3, 4
-            # [1, 2, 4],  # Objects 1, 2, 4
-            # [1, 2, 3, 4]  # All objects
+            # [0, 2, 3],  # Objects 0, 2, 3
+            # [0, 1, 3],  # Objects 0, 1, 3
+            # [0, 1, 2, 3]  # All objects
         ]
         
         # Shuffle combinations for variety

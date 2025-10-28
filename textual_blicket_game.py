@@ -122,10 +122,10 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
             games_ref = participant_ref.child('games')
             entry_id = f"comprehension_qa"
         
-        # Collect blicket classifications (using 1-based object IDs)
+        # Collect blicket classifications (using 0-based object IDs)
         blicket_classifications = {}
         for i in range(round_config['num_objects']):
-            blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+            blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
         
         # Calculate total time spent on this round
         end_time = datetime.datetime.now()
@@ -397,7 +397,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         # Text version: show object numbers with green highlighting
                         objects_text = ""
                         for obj_idx in range(round_config['num_objects']):
-                            object_id = obj_idx + 1  # Convert to 1-based object ID
+                            object_id = obj_idx  # 0-based object ID
                             if object_id in state['objects_on_machine']:
                                 objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
                             else:
@@ -415,7 +415,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         
                         # Show each object
                         for obj_idx in range(round_config['num_objects']):
-                            object_id = obj_idx + 1  # Convert to 1-based object ID
+                            object_id = obj_idx  # 0-based object ID
                             with cols[obj_idx + 1]:
                                 if object_id in state['objects_on_machine']:
                                     # Selected object - green background
@@ -570,7 +570,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         cols = st.columns(4)
         for i in range(round_config['num_objects']):
             with cols[i % 4]:
-                object_id = i + 1  # Convert to 1-based object ID
+                object_id = i  # 0-based object ID
                 is_selected = object_id in st.session_state.selected_objects
                 horizon = round_config.get('horizon', 32)
                 steps_left = horizon - st.session_state.steps_taken
@@ -579,11 +579,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Single button that toggles between green (selected) and gray (unselected)
                 button_type = "primary" if is_selected else "secondary"
                 
-                if st.button(f"Object {i + 1}", 
+                if st.button(f"Object {i}", 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
                            type=button_type,
-                           help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
+                           help=f"Click to {'remove' if is_selected else 'place'} Object {i}"):
                     # Record the action before making changes
                     action_time = datetime.datetime.now()
                     action_type = "remove" if is_selected else "place"
@@ -619,7 +619,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     action_data = {
                         "timestamp": action_time.isoformat(),
                         "action_type": action_type,
-                        "object_index": object_id - 1,
+                        "object_index": object_id,
                         "object_id": f"object_{object_id}",
                         "machine_state_before": machine_state_before,  # Machine state before this action
                         "machine_state_after": bool(game_state['true_state'][-1]),  # New state
@@ -856,9 +856,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         for i in range(round_config['num_objects']):
             if use_text_version:
                 # Text-only version: Simple text-based questionnaire
-                st.markdown(f"**Object {i + 1}**")
+                st.markdown(f"**Object {i}**")
                 st.radio(
-                    f"Is Object {i + 1} a blicket?",
+                    f"Is Object {i} a blicket?",
                     ["Yes", "No"],
                     key=f"blicket_q_{i}",
                     index=None
@@ -956,10 +956,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
-                    # Collect blicket classifications (using 1-based object IDs)
+                    # Collect blicket classifications (using 0-based object IDs)
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
-                        blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                        blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
                 
                     # Get rule hypothesis and rule type
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
@@ -1035,10 +1035,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if st.button("🏁 FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
-                    # Collect blicket classifications (using 1-based object IDs)
+                    # Collect blicket classifications (using 0-based object IDs)
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
-                        blicket_classifications[f"object_{i+1}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                        blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
                 
                     # Get rule hypothesis and rule type
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
