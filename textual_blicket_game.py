@@ -978,7 +978,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     
                     # Save blicket classifications to a tracked key that won't be affected by widget lifecycle
                     st.session_state["saved_blicket_classifications"] = blicket_classifications
-                    print(f"🔍 DEBUG: Saved blicket_classifications to tracked key: {blicket_classifications}")
+                    print(f"🔍 DEBUG: Saving blicket_classifications to tracked key")
+                    print(f"🔍 DEBUG: blicket_classifications dict: {blicket_classifications}")
+                    for obj, ans in blicket_classifications.items():
+                        print(f"   - {obj}: {ans}")
+                    print(f"🔍 DEBUG: Verified saved_blicket_classifications in session state: {st.session_state.get('saved_blicket_classifications')}")
                     
                     # Keep blicket answers in session state for the rule type classification phase
                     for i in range(round_config['num_objects']):
@@ -990,8 +994,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     st.session_state["saved_rule_hypothesis"] = current_hypothesis
                     print(f"🔍 DEBUG: Saved rule_hypothesis to saved_rule_hypothesis key: {current_hypothesis[:50]}...")
                     
-                    st.session_state.visual_game_state = "rule_type_classification"
-                    st.rerun()
+                st.session_state.visual_game_state = "rule_type_classification"
+                st.rerun()
                 else:
                     st.warning("Please enter a rule hypothesis before proceeding.")
 
@@ -1034,9 +1038,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("---")
         st.markdown("### 🚀 Submit Your Answers")
         
-        # Check if rule type is provided
-        rule_type = st.session_state.get("rule_type", "")
-        
+            # Check if rule type is provided
+            rule_type = st.session_state.get("rule_type", "")
+            
         # Get rule_hypothesis from saved_rule_hypothesis (saved when leaving text_area screen) or original widget key
         rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
         print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
