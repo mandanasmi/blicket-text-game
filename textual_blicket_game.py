@@ -1047,12 +1047,15 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     
                     # Debug: Check all blicket_q keys in session state
                     print(f"🔍 DEBUG: Checking session state for blicket answers...")
-                    for key in list(st.session_state.keys()):
+                    print(f"🔍 DEBUG: All keys in session state: {list(st.session_state.keys())}")
+                    for key in sorted(st.session_state.keys()):
                         if key.startswith("blicket_q_"):
-                            print(f"   Found key: {key} = {st.session_state.get(key, 'NOT FOUND')}")
-                    
+                            print(f"   ✅ Found key: {key} = '{st.session_state.get(key)}'")
                     for i in range(round_config['num_objects']):
-                        answer = st.session_state.get(f"blicket_q_{i}", "No")
+                        key = f"blicket_q_{i}"
+                        raw_value = st.session_state.get(key, "MISSING_KEY")
+                        print(f"🔍 DEBUG: blicket_q_{i}: raw_value = '{raw_value}'")
+                        answer = "No" if raw_value == "MISSING_KEY" else raw_value
                         blicket_classifications[f"object_{i}"] = answer
                         print(f"🔍 Round {current_round + 1}: blicket_q_{i} = {answer}")
                 
