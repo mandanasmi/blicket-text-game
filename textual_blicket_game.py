@@ -30,6 +30,9 @@ def convert_numpy_types(obj):
         return obj.tolist()
     elif isinstance(obj, np.bool_):
         return bool(obj)
+    elif isinstance(obj, (set, frozenset)):
+        # Convert sets to sorted lists for consistent serialization
+        return sorted(convert_numpy_types(list(obj)))
     elif isinstance(obj, dict):
         return {key: convert_numpy_types(value) for key, value in obj.items()}
     elif isinstance(obj, list):
