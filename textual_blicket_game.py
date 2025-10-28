@@ -954,10 +954,21 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     print(f"   - Blicket classifications: {blicket_classifications}")
                     print(f"   - Hypothesis: {current_hypothesis[:50]}...")
                     
+                    # Debug: Check session state before transition
+                    print(f"🔍 DEBUG: Before transitioning to rule_type, checking session state:")
+                    print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
+                    for i in range(round_config['num_objects']):
+                        if f"blicket_q_{i}" in st.session_state:
+                            print(f"   - blicket_q_{i}: {st.session_state.get(f'blicket_q_{i}', 'NOT FOUND')}")
+                    
                     # Keep blicket answers in session state for the rule type classification phase
                     for i in range(round_config['num_objects']):
                         if f"blicket_q_{i}" not in st.session_state:
                             st.session_state[f"blicket_q_{i}"] = blicket_classifications.get(f"object_{i}", "No")
+                    
+                    # Ensure hypothesis stays in session state
+                    st.session_state["rule_hypothesis"] = current_hypothesis
+                    print(f"🔍 DEBUG: Set rule_hypothesis in session state to: {current_hypothesis[:50]}...")
                     
                     st.session_state.visual_game_state = "rule_type_classification"
                     st.rerun()
@@ -1018,13 +1029,21 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
                     # Collect blicket classifications (using 0-based object IDs)
                     blicket_classifications = {}
+                    
+                    # Debug: Check all blicket_q keys in session state
+                    print(f"🔍 DEBUG: Checking session state for blicket answers...")
+                    for key in list(st.session_state.keys()):
+                        if key.startswith("blicket_q_"):
+                            print(f"   Found key: {key} = {st.session_state.get(key, 'NOT FOUND')}")
+                    
                     for i in range(round_config['num_objects']):
                         answer = st.session_state.get(f"blicket_q_{i}", "No")
                         blicket_classifications[f"object_{i}"] = answer
                         print(f"🔍 Round {current_round + 1}: blicket_q_{i} = {answer}")
                 
                     # Get rule hypothesis and rule type from session state
-                    # These should still be in session state from the Q&A screens
+                    # Debug: Check if hypothesis is in session state
+                    print(f"🔍 DEBUG: rule_hypothesis in session state: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
