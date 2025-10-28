@@ -925,7 +925,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Save blicket classifications before moving to rule type
                     blicket_classifications = {}
                     for i in range(round_config['num_objects']):
-                        blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                        answer = st.session_state.get(f"blicket_q_{i}", "No")
+                        blicket_classifications[f"object_{i}"] = answer
+                        print(f"🔍 Saving intermediate - blicket_q_{i} = {answer}")
                     
                     # Get objects that were on the machine before Q&A
                     objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
@@ -944,6 +946,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     
                     print(f"✅ Saved blicket Q&A, hypothesis, and objects on machine for round {current_round + 1}")
                     print(f"   - Objects on machine: {objects_on_machine_before_qa}")
+                    print(f"   - Blicket classifications: {blicket_classifications}")
+                    
+                    # Keep blicket answers in session state for the rule type classification phase
+                    for i in range(round_config['num_objects']):
+                        if f"blicket_q_{i}" not in st.session_state:
+                            st.session_state[f"blicket_q_{i}"] = blicket_classifications.get(f"object_{i}", "No")
                     
                     st.session_state.visual_game_state = "rule_type_classification"
                     st.rerun()
@@ -998,7 +1006,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Save rule_type to round progress whenever it's available
             blicket_classifications = {}
             for i in range(round_config['num_objects']):
-                blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
+                answer = st.session_state.get(f"blicket_q_{i}", "No")
+                blicket_classifications[f"object_{i}"] = answer
+                print(f"🔍 Auto-saving with rule_type - blicket_q_{i} = {answer}")
             
             objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
             
