@@ -171,15 +171,16 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
     """Save intermediate progress - update entry with action history based on phase"""
     if firebase_initialized and db_ref:
         try:
+            # Skip intermediate progress saves for main_experiment
+            if phase == "main_experiment" or phase == "main_experiment_start":
+                print(f"⚠️ Skipping intermediate progress save for main_experiment")
+                return
+            
             participant_ref = db_ref.child(participant_id)
             
-            # Determine which key to use based on phase
-            if phase == "main_experiment" or phase == "main_experiment_start":
-                progress_ref = participant_ref.child('main_game')
-                entry_id = f"round_{round_number}_progress" if round_number else "main_progress"
-            else:
-                progress_ref = participant_ref.child('comprehension')
-                entry_id = "action_history"
+            # Only save comprehension phase progress
+            progress_ref = participant_ref.child('comprehension')
+            entry_id = "action_history"
             
             # Create or update the entry
             now = datetime.datetime.now()
