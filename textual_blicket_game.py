@@ -958,8 +958,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     print(f"🔍 DEBUG: Before transitioning to rule_type, checking session state:")
                     print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
                     for i in range(round_config['num_objects']):
-                        if f"blicket_q_{i}" in st.session_state:
-                            print(f"   - blicket_q_{i}: {st.session_state.get(f'blicket_q_{i}', 'NOT FOUND')}")
+                        key = f"blicket_q_{i}"
+                        if key in st.session_state:
+                            print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
                     
                     # Keep blicket answers in session state for the rule type classification phase
                     for i in range(round_config['num_objects']):
