@@ -999,7 +999,18 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
-        rule_hypothesis = st.session_state.get("rule_hypothesis", "")
+        
+        # Get rule_hypothesis from saved intermediate progress first, then session state
+        from firebase_admin import db
+        phase = "comprehension" if is_practice else "main_experiment"
+        participant_ref = db.reference(f'participants/{participant_id}')
+        progress_ref = participant_ref.child('main_game') if phase == "main_experiment" else participant_ref.child('comprehension')
+        entry_id = f"round_{current_round + 1}_progress" if phase == "main_experiment" else "action_history"
+        saved_progress = progress_ref.child(entry_id).get() or {}
+        
+        # Get rule_hypothesis from saved progress or session state
+        rule_hypothesis = saved_progress.get("rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
+        print(f"🔍 Retrieved rule_hypothesis for auto-save: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
         
         # Auto-save rule_type to round progress if it's been selected
         if rule_type:
