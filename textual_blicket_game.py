@@ -202,8 +202,8 @@ def reset_game_session_state():
     
     print("🔄 Game session state reset complete")
 
-def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False):
-    """Save intermediate progress - update single entry with action history based on phase"""
+def save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice=False, blicket_classifications=None, rule_hypothesis=None, rule_type=None):
+    """Save intermediate progress - update single entry with action history and Q&A based on phase"""
     try:
         # Determine which key to use based on phase
         phase = "comprehension" if is_practice else "main_experiment"
@@ -227,7 +227,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         # Get existing data or create new
         existing_data = progress_ref.child(entry_id).get() or {}
         
-        # Update with current action history
+        # Update with current action history and Q&A data
         now = datetime.datetime.now()
         updated_data = {
             **existing_data,
@@ -243,11 +243,19 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "round_config": round_config
         }
         
+        # Add Q&A data if provided
+        if blicket_classifications is not None:
+            updated_data["blicket_classifications"] = blicket_classifications
+        if rule_hypothesis is not None:
+            updated_data["rule_hypothesis"] = rule_hypothesis
+        if rule_type is not None:
+            updated_data["rule_type"] = rule_type
+        
         # Convert NumPy types to JSON-serializable types
         updated_data = convert_numpy_types(updated_data)
         
         progress_ref.child(entry_id).set(updated_data)
-        print(f"💾 {phase} progress updated for {participant_id} - Round {current_round + 1} - {updated_data['total_actions']} actions")
+        print(f"💾 {phase} progress updated for {participant_id} - Round {current_round + 1} - Q&A data included")
         
     except Exception as e:
         import traceback
@@ -917,14 +925,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     for i in range(round_config['num_objects']):
                         blicket_classifications[f"object_{i}"] = st.session_state.get(f"blicket_q_{i}", "No")
                     
-                    # Save intermediate progress with blicket Q&A
-                    progress_data = {
-                        "blicket_classifications": blicket_classifications,
-                        "rule_hypothesis": current_hypothesis,
-                        "step": "after_hypothesis",
-                        "timestamp": datetime.datetime.now().isoformat()
-                    }
-                    save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
+                    # Save intermediate progress with blicket Q&A and hypothesis
+                    save_intermediate_progress(
+                        participant_id, 
+                        round_config, 
+                        current_round, 
+                        total_rounds, 
+                        is_practice,
+                        blicket_classifications=blicket_classifications,
+                        rule_hypothesis=current_hypothesis
+                    )
                     
                     print(f"✅ Saved blicket Q&A and hypothesis for round {current_round + 1}")
                     
