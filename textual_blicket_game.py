@@ -1000,7 +1000,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
         
-        # Get rule_hypothesis from saved intermediate progress first, then session state
+        # Get rule_hypothesis from saved intermediate progress first (if exists), then session state
+        # This is for retrieving the hypothesis that was saved when user clicked "Continue to Rule Type Classification"
         from firebase_admin import db
         phase = "comprehension" if is_practice else "main_experiment"
         participant_ref = db.reference(f'participants/{participant_id}')
@@ -1010,32 +1011,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Get rule_hypothesis from saved progress or session state
         rule_hypothesis = saved_progress.get("rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
-        print(f"🔍 Retrieved rule_hypothesis for auto-save: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
-        
-        # Auto-save rule_type to round progress if it's been selected
-        if rule_type:
-            # Save rule_type to round progress whenever it's available
-            blicket_classifications = {}
-            for i in range(round_config['num_objects']):
-                answer = st.session_state.get(f"blicket_q_{i}", "No")
-                blicket_classifications[f"object_{i}"] = answer
-                print(f"🔍 Auto-saving with rule_type - blicket_q_{i} = {answer}")
-            
-            objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
-            
-            # Update round progress with all Q&A data including rule_type
-            save_intermediate_progress(
-                participant_id, 
-                round_config, 
-                current_round, 
-                total_rounds, 
-                is_practice,
-                blicket_classifications=blicket_classifications,
-                rule_hypothesis=rule_hypothesis,
-                rule_type=rule_type,
-                objects_on_machine=objects_on_machine_before_qa
-            )
-            print(f"✅ Auto-saved complete Q&A data (including rule_type) for round {current_round + 1}")
+        print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
         
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
