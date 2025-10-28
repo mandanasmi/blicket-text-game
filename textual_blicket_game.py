@@ -1069,6 +1069,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
                     print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
                     
+                    # Convert numpy types to ensure Firebase compatibility
+                    round_data = convert_numpy_types(round_data)
+                    print(f"💾 After convert_numpy_types - rule_type: '{round_data.get('rule_type', 'MISSING')}'")
+                    
                     # Use the provided save function or default Firebase function
                     if save_data_func:
                         save_data_func(participant_id, round_data)
@@ -1175,6 +1179,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
                     print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
                     print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
+                    
+                    # Convert numpy types to ensure Firebase compatibility
+                    round_data = convert_numpy_types(round_data)
+                    print(f"💾 After convert_numpy_types (FINAL) - rule_type: '{round_data.get('rule_type', 'MISSING')}'")
                     
                     # Use the provided save function or default Firebase function
                     if save_data_func:

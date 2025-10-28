@@ -141,6 +141,12 @@ def save_game_data(participant_id, game_data):
             now = datetime.datetime.now()
             game_id = now.strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Include milliseconds
             
+            # Debug: Print what we're about to save
+            print(f"🔥 save_game_data called - Round: {game_data.get('round_number', 'unknown')}")
+            print(f"🔥 rule_type in game_data: '{game_data.get('rule_type', 'MISSING')}'")
+            print(f"🔥 rule_hypothesis in game_data: '{game_data.get('rule_hypothesis', 'MISSING')[:50] if game_data.get('rule_hypothesis') else 'EMPTY'}...'")
+            print(f"🔥 blicket_classifications in game_data: {game_data.get('blicket_classifications', 'MISSING')}")
+            
             # Enhance game_data with additional metadata
             enhanced_game_data = {
                 **game_data,
@@ -149,10 +155,15 @@ def save_game_data(participant_id, game_data):
                 "session_timestamp": now.timestamp()
             }
             
+            # Debug: Verify rule_type is in enhanced data
+            print(f"🔥 rule_type in enhanced_game_data: '{enhanced_game_data.get('rule_type', 'MISSING')}'")
+            
             games_ref.child(game_id).set(enhanced_game_data)
             print(f"✅ Successfully saved {phase} data for {participant_id} - Game ID: {game_id}")
         except Exception as e:
             print(f"❌ Failed to save game data: {e}")
+            import traceback
+            print(f"Traceback: {traceback.format_exc()}")
     else:
         print("⚠️ Firebase not available - game data not saved")
 
