@@ -974,6 +974,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
+                    # Extract user's chosen blickets (objects marked as "Yes")
+                    user_chosen_blickets = []
+                    for i in range(round_config['num_objects']):
+                        if blicket_classifications.get(f"object_{i}", "No") == "Yes":
+                            user_chosen_blickets.append(i)  # 0-based index
+                    
                     # Calculate total time spent on this round
                     end_time = datetime.datetime.now()
                     total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
@@ -997,10 +1003,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "action_history_length": len(st.session_state.action_history),  # Length of action history
                         "total_steps_taken": st.session_state.steps_taken,
                         "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
+                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
                         "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
                         "rule_type": rule_type,  # Hypothesis chosen in the last question (conjunctive vs disjunctive)
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # True blickets (already 1-based)
-                        "true_rule": round_config['rule'],  # True rule for this round
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Ground truth blicket indices
+                        "true_rule": round_config['rule'],  # Ground truth rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
                         "final_objects_on_machine": list(st.session_state.selected_objects),
                         "rule": round_config['rule'],  # Keep for compatibility
@@ -1053,6 +1060,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     rule_hypothesis = st.session_state.get("rule_hypothesis", "")
                     rule_type = st.session_state.get("rule_type", "")
                     
+                    # Extract user's chosen blickets (objects marked as "Yes")
+                    user_chosen_blickets = []
+                    for i in range(round_config['num_objects']):
+                        if blicket_classifications.get(f"object_{i}", "No") == "Yes":
+                            user_chosen_blickets.append(i)  # 0-based index
+                    
                     # Get current game state from session state (ensure we have the latest)
                     current_game_state = st.session_state.get("game_state", game_state)
                     
@@ -1079,10 +1092,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "action_history_length": len(st.session_state.get("action_history", [])),  # Length of action history
                         "total_steps_taken": st.session_state.get("steps_taken", 0),
                         "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
+                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
                         "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
                         "rule_type": rule_type,  # Hypothesis chosen in the last question (conjunctive vs disjunctive)
-                        "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # True blickets
-                        "true_rule": round_config['rule'],  # True rule for this round
+                        "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # Ground truth blicket indices
+                        "true_rule": round_config['rule'],  # Ground truth rule for this round
                         "final_machine_state": bool(current_game_state.get('true_state', [False])[-1]) if current_game_state else False,
                         "final_objects_on_machine": list(st.session_state.get("selected_objects", set())),
                         "rule": round_config['rule'],  # Keep for compatibility
