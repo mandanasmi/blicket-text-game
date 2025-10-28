@@ -866,6 +866,13 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         </div>
         """, unsafe_allow_html=True)
         
+        # Debug: Check existing session state before rendering radio buttons
+        print(f"🔍 DEBUG: Rendering questionnaire, checking session state...")
+        for i in range(round_config['num_objects']):
+            key = f"blicket_q_{i}"
+            if key in st.session_state:
+                print(f"   - {key} already exists: {st.session_state.get(key)}")
+        
         # Create questionnaire with object images
         for i in range(round_config['num_objects']):
             if use_text_version:
