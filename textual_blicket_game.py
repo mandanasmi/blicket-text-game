@@ -923,10 +923,19 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Check if rule hypothesis is provided (read from session state)
         rule_hypothesis = st.session_state.get("rule_hypothesis", "")
         
+        # Compute completeness for this phase (blicket radios + hypothesis)
+        current_hypothesis_val = st.session_state.get("rule_hypothesis", "").strip()
+        radios_complete = all(
+            st.session_state.get(f"blicket_q_{i}", None) is not None
+            for i in range(round_config['num_objects'])
+        )
+        
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            # Always show the button, but check inside the callback
-            if st.button("➡️ NEXT: Rule Type Classification", type="primary", use_container_width=True):
+            # Disable until hypothesis provided AND all radios answered
+            proceed_disabled = not (current_hypothesis_val and radios_complete)
+            # Always show the button, but disable until complete
+            if st.button("➡️ NEXT: Rule Type Classification", type="primary", use_container_width=True, disabled=proceed_disabled):
                 # Check if rule hypothesis is provided
                 current_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
                 print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
@@ -995,10 +1004,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # The widget key "rule_hypothesis" won't persist once we leave this screen
                     st.session_state["saved_rule_hypothesis"] = current_hypothesis
                     print(f"🔍 DEBUG: Saved rule_hypothesis to saved_rule_hypothesis key: {current_hypothesis[:50]}...")
+                    
                     # Transition to rule type classification
-                st.session_state.visual_game_state = "rule_type_classification"
-                st.rerun()
-            else:
+                    st.session_state.visual_game_state = "rule_type_classification"
+                    st.rerun()
+                else:
                     st.warning("Please enter a rule hypothesis before proceeding.")
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
@@ -1043,19 +1053,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
         
-        # Ensure all blicket questions are answered (from current radios or saved copy)
-        saved_blicket = st.session_state.get("saved_blicket_classifications", {})
-        current_complete = all(
-            st.session_state.get(f"blicket_q_{i}", None) is not None
-            for i in range(round_config['num_objects'])
-        )
-        saved_complete = (
-            isinstance(saved_blicket, dict)
-            and len(saved_blicket) == round_config['num_objects']
-            and all(f"object_{i}" in saved_blicket for i in range(round_config['num_objects']))
-        )
-        all_blicket_answered = current_complete or saved_complete
-        
         # Get rule_hypothesis from saved_rule_hypothesis (saved when leaving text_area screen) or original widget key
         rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
         print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
@@ -1065,7 +1062,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         if current_round + 1 < total_rounds:
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                if st.button("➡️ NEXT ROUND", type="primary", disabled=not (rule_type and all_blicket_answered), use_container_width=True):
+                if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
                     # Get blicket classifications directly from saved tracked key
                     blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
                     print(f"🔍 DEBUG: Using saved_blicket_classifications directly: {blicket_classifications}")
