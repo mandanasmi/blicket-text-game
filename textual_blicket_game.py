@@ -10,6 +10,20 @@ import base64
 import firebase_admin
 from firebase_admin import db
 
+# Guard print against BrokenPipeError in Streamlit teardown
+import builtins as _builtins
+
+def _safe_print(*args, **kwargs):
+    try:
+        _builtins.print(*args, **kwargs)
+    except BrokenPipeError:
+        pass
+    except Exception:
+        # Swallow any unexpected stdout errors to avoid crashing the app
+        pass
+
+print = _safe_print
+
 import env.blicket_text as blicket_text
 
 # Global variable to control visual vs text-only version
