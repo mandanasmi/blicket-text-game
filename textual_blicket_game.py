@@ -1042,7 +1042,20 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
-            
+        
+        # Ensure all blicket questions are answered (from current radios or saved copy)
+        saved_blicket = st.session_state.get("saved_blicket_classifications", {})
+        current_complete = all(
+            st.session_state.get(f"blicket_q_{i}", None) is not None
+            for i in range(round_config['num_objects'])
+        )
+        saved_complete = (
+            isinstance(saved_blicket, dict)
+            and len(saved_blicket) == round_config['num_objects']
+            and all(f"object_{i}" in saved_blicket for i in range(round_config['num_objects']))
+        )
+        all_blicket_answered = current_complete or saved_complete
+        
         # Get rule_hypothesis from saved_rule_hypothesis (saved when leaving text_area screen) or original widget key
         rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
         print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
