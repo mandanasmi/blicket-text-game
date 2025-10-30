@@ -591,11 +591,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Single button that toggles between green (selected) and gray (unselected)
                 button_type = "primary" if is_selected else "secondary"
                 
-                if st.button(f"Object {i}", 
+                if st.button(f"Object {i + 1}", 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
                            type=button_type,
-                           help=f"Click to {'remove' if is_selected else 'place'} Object {i}"):
+                           help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
                     # Record the action before making changes
                     action_time = datetime.datetime.now()
                     action_type = "remove" if is_selected else "place"
