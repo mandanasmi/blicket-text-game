@@ -502,7 +502,7 @@ if st.session_state.phase == "intro":
         print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
     
     if not st.session_state.participant_id_entered:
-        # Ask for Participant ID and start comprehension phase
+        # Ask for Prolific ID and demographics, then start comprehension phase
         st.markdown(
             """
 **Welcome to the Blicket Text Adventure!**
@@ -513,11 +513,33 @@ This is a text-only interface with 4 objects.
 1. **Comprehension Phase**: Learn the interface
 2. **Main Experiment**: Actual experiment with data collection
 
-Please enter your participant ID to begin.
+Please enter your Prolific ID to begin and provide your age and gender.
 """
         )
-        participant_id = st.text_input("Participant ID:", key="participant_id")
-        if st.button("Next Step", type="primary") and participant_id.strip():
+        participant_id = st.text_input("Prolific ID:", key="participant_id")
+        col_a, col_b = st.columns(2)
+        with col_a:
+            age_options = list(range(18, 100))
+            age = st.selectbox("Age:", age_options, index=0, key="participant_age")
+        with col_b:
+            gender = st.selectbox(
+                "Gender:",
+                [
+                    "Prefer not to say",
+                    "Female",
+                    "Male",
+                    "Non-binary",
+                    "Other",
+                ],
+                index=0,
+                key="participant_gender",
+            )
+
+        if st.button("Next Step", type="primary"):
+            if not participant_id.strip():
+                st.warning("Please enter your Prolific ID to continue.")
+                st.stop()
+
             st.session_state.current_participant_id = participant_id.strip()
             st.session_state.participant_id_entered = True
             # Persist consent information alongside config as soon as ID is available
@@ -528,6 +550,11 @@ Please enter your participant ID to begin.
                         'given': True,
                         'timestamp': st.session_state.consent_timestamp,
                         'irb_protocol_number': IRB_PROTOCOL_NUMBER
+                    })
+                    participant_ref.child('demographics').set({
+                        'prolific_id': st.session_state.current_participant_id,
+                        'age': int(st.session_state.participant_age) if st.session_state.get('participant_age') is not None else None,
+                        'gender': st.session_state.participant_gender,
                     })
                 except Exception:
                     pass
@@ -739,7 +766,12 @@ elif st.session_state.phase == "practice_complete":
             'num_rounds': num_rounds,
             'user_selected_objects': 4,  # Fixed to 4 objects
             'rounds': round_configs,
-            'interface_type': 'text'  # Fixed to text mode
+            'interface_type': 'text',  # Fixed to text mode
+            'demographics': {
+                'prolific_id': st.session_state.get('current_participant_id', ''),
+                'age': int(st.session_state.participant_age) if 'participant_age' in st.session_state else None,
+                'gender': st.session_state.get('participant_gender', 'Prefer not to say'),
+            }
         }
         save_participant_config(st.session_state.current_participant_id, config)
         
