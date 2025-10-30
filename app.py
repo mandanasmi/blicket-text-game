@@ -458,7 +458,7 @@ if st.session_state.phase == "consent":
 
 # 0b) NO CONSENT SCREEN
 elif st.session_state.phase == "no_consent":
-    st.title("Consent Not Given")
+    st.title("thanks for your response")
     st.markdown("## You did not consent. The study will now close. Thank you for your time.")
     st.stop()
 
