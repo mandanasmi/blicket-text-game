@@ -397,7 +397,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Create sidebar for state history
     with st.sidebar:
-        st.markdown("### State History")
+        st.markdown("### 📜 State History")
         
         # Create a container with fixed height and scrollbar
         history_container = st.container()
@@ -416,8 +416,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                 objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
                         
                         # Show machine state on same row
-                        machine_status = "🟢" if state['machine_lit'] else "🔴"
-                        st.markdown(f"<div style='margin: 2px 0; font-size: 12px;'><strong>{i + 1}:</strong> {objects_text} {machine_status}</div>", unsafe_allow_html=True)
+                        machine_status = "✅ LIT" if state['machine_lit'] else "✖️ NOT LIT"
+                        st.markdown(f"<div style='margin: 4px 0; font-size: 14px;'><strong>{i + 1}:</strong> {objects_text} <span style='padding-left:6px;'>{machine_status}</span></div>", unsafe_allow_html=True)
                     else:
                         # Visual version: show object numbers with colored backgrounds (much faster than images)
                         cols = st.columns(round_config['num_objects'] + 2)  # +2 for step number and machine status
@@ -440,7 +440,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                         margin: 1px; 
                                         text-align: center;
                                         color: black;
-                                        font-size: 10px;
+                                        font-size: 12px;
                                         font-weight: bold;
                                     ">
                                         {obj_idx + 1}
@@ -457,7 +457,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                         margin: 1px; 
                                         text-align: center;
                                         color: white;
-                                        font-size: 10px;
+                                        font-size: 12px;
                                         font-weight: bold;
                                     ">
                                         {obj_idx + 1}
@@ -466,8 +466,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         
                         # Show machine status
                         with cols[-1]:
-                            machine_status = "🟢" if state['machine_lit'] else "🔴"
-                            st.markdown(f"<div style='font-size: 12px; margin: 2px 0;'>{machine_status}</div>", unsafe_allow_html=True)
+                            machine_status = "✅ LIT" if state['machine_lit'] else "✖️ NOT LIT"
+                            st.markdown(f"<div style='font-size: 14px; margin: 2px 0; font-weight: 600;'>{machine_status}</div>", unsafe_allow_html=True)
             else:
                 st.markdown("*No states recorded yet.*")
     
@@ -481,7 +481,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Collapsible instruction section
     with st.expander("📋 Game Instructions", expanded=False):
-        horizon = round_config.get('horizon', 32)  # Default to 32 steps
+        horizon = round_config.get('horizon', 32)  # Default to 32 actions
         st.markdown(f"""
 
         **Your goals are:**
@@ -492,7 +492,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         - All objects can be either on the machine or on the floor.
         - You should think about how to efficiently explore the relationship between the objects and the machine.
 
-        You have **{horizon} steps** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
+        You have **{horizon} actions** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
 
         You will be prompted at each turn to choose actions.
         """)
@@ -731,7 +731,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         </div>
                         """, unsafe_allow_html=True)
                         
-                        if st.button(f"Select Object {obj_idx}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx}"):
+                        if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
                             # Record the action before making changes
                             action_time = datetime.datetime.now()
                             action_type = "remove" if is_selected else "place"
@@ -799,7 +799,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Comprehension phase - no questions, just show completion message
                 st.markdown("""
                 <div style="background: rgba(40, 167, 69, 0.8); border: 2px solid #28a745; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h3 style="color: #155724; margin: 0;">⏰ No Remaining Steps</h3>
+                    <h3 style="color: #155724; margin: 0;">⏰ No Remaining Actions</h3>
                     <p style="color: #155724; margin: 10px 0;">Now that the comprehension phase is over, you can play the main game!</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -812,7 +812,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Main experiment - show questionnaire
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h3 style="color: #856404; margin: 0;">⏰ No Steps Remaining!</h3>
+                    <h3 style="color: #856404; margin: 0;">⏰ No Actions Remaining!</h3>
                     <p style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</p>
                 </div>
                 """, unsafe_allow_html=True)
