@@ -411,9 +411,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         for obj_idx in range(round_config['num_objects']):
                             object_id = obj_idx  # 0-based object ID
                             if object_id in state['objects_on_machine']:
-                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
+                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{object_id}</span>"
                             else:
-                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
+                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{object_id}</span>"
                         
                         # Show machine state on same row
                         machine_status = "✅ LIT" if state['machine_lit'] else "✖️ NOT LIT"
@@ -423,7 +423,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         cols = st.columns(round_config['num_objects'] + 2)  # +2 for step number and machine status
                         
                         with cols[0]:
-                            st.markdown(f"<div style='font-size: 12px; margin: 2px 0;'><strong>{i + 1}:</strong></div>", unsafe_allow_html=True)
+                            st.markdown(f"<div style='font-size: 14px; margin: 2px 0;'><strong>{i + 1}:</strong></div>", unsafe_allow_html=True)
                         
                         # Show each object
                         for obj_idx in range(round_config['num_objects']):
@@ -440,7 +440,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                         margin: 1px; 
                                         text-align: center;
                                         color: black;
-                                        font-size: 12px;
+                                        font-size: 14px;
                                         font-weight: bold;
                                     ">
                                         {obj_idx + 1}
@@ -457,7 +457,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                         margin: 1px; 
                                         text-align: center;
                                         color: white;
-                                        font-size: 12px;
+                                        font-size: 14px;
                                         font-weight: bold;
                                     ">
                                         {obj_idx + 1}
@@ -504,7 +504,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("### Action History")
         if st.session_state.action_history:
             for action_text in st.session_state.action_history:
-                st.markdown(f"• {action_text}")
+                st.markdown(f"<div style='font-size: 14px;'>• {action_text}</div>", unsafe_allow_html=True)
         else:
             st.markdown("*No actions taken yet.*")
         st.markdown("---")
