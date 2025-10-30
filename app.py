@@ -90,10 +90,7 @@ if not firebase_admin._apps:
         import traceback
         traceback.print_exc()
 else:
-    try:
-        print("✅ Firebase already initialized")
-    except BrokenPipeError:
-        pass
+    print("✅ Firebase already initialized")
     firebase_initialized = True
     db_ref = db.reference()
 
@@ -414,7 +411,7 @@ if st.session_state.phase == "consent":
     st.markdown("### Purpose of the Study")
     st.markdown(
         """
-        This study is conducted by UC Berkeley and research staff.
+        This study is conducted by Alison Gopnik (UC Berkeley) and research staff.
         It investigates how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
         Participation is entirely voluntary.
         """
@@ -446,7 +443,7 @@ if st.session_state.phase == "consent":
     st.markdown("### Compensation")
     st.markdown(
         """
-        For your participation in our research, you will receive a maximum rate of \$8 per hour. Payment ranges from \$0.54 to \$0.67 for a 5-minute task and from \$3.25 to \$4.00 for a 30-minute task, depending on the time it takes to complete the type of task you've been assigned. For studies on Prolific, you will receive a minimum rate of \$6.50 per hour. For experiments with a differential bonus payment system you may have the opportunity to earn "points" that are worth up to 5 cents each, with a total bonus of no more than 30 cents paid on top of the flat fee paid for the task completion. Your online account will be credited directly.
+        For your participation in our research, you will receive a maximum rate of $8 per hour. Payment ranges from $0.54 to $0.67 for a 5-minute task and from $3.25 to $4.00 for a 30-minute task, depending on the time it takes to complete the type of task you've been assigned. For studies on Prolific, you will receive a minimum rate of $6.50 per hour. For experiments with a differential bonus payment system you may have the opportunity to earn "points" that are worth up to 5 cents each, with a total bonus of no more than 30 cents paid on top of the flat fee paid for the task completion. Your online account will be credited directly.
         """
     )
 
@@ -460,26 +457,22 @@ if st.session_state.phase == "consent":
     st.markdown("### Questions")
     st.markdown(
         """
-        If you have any questions now, please email us at the addresses listed at the end of this form. If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu.
+        If you have any questions now, please contact the lab at 643-2172 or Professor Alison Gopnik (642-2752), or email us at the addresses listed at the end of this form. If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu.
         """
     )
 
     if IRB_PROTOCOL_NUMBER:
         st.markdown(f"**IRB Protocol Number:** {IRB_PROTOCOL_NUMBER}")
 
-    st.markdown(
-        "> By selecting the \"Accept\" button below, I acknowledge that I am 18 or older, have read this consent form, and I agree to take part in the research. If you do NOT agree to participate in this study, please click the \"Decline\" button below."
-    )
-
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("Accept", type="primary"):
+        if st.button("I Consent and Agree", type="primary"):
             st.session_state.consent = True
             st.session_state.consent_timestamp = datetime.datetime.now().isoformat()
             st.session_state.phase = "intro"
             st.rerun()
     with col2:
-        if st.button("Decline", type="secondary"):
+        if st.button("I Do Not Consent", type="secondary"):
             st.session_state.consent = False
             st.session_state.consent_timestamp = datetime.datetime.now().isoformat()
             st.session_state.phase = "no_consent"
@@ -505,43 +498,22 @@ if st.session_state.phase == "intro":
         print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
     
     if not st.session_state.participant_id_entered:
-        # Ask for Prolific ID and demographics, then start comprehension phase
+        # Ask for Participant ID and start comprehension phase
         st.markdown(
             """
-**Welcome!**
+**Welcome to the Blicket Text Adventure!**
 
-In this game, you’ll see a machine that can light up when certain objects are placed on it. Your task is to figure out which object or combination of objects makes the machine turn on. You’ll complete several rounds:
+This is a text-only interface with 4 objects. 
 
-1. A brief comprehension phase to make sure you understand the game.
-2. Three separate test rounds, each with a new machine and new objects to figure out. You can test the machine up to 32 times in each round before submitting your answer.
+**The study has two phases:**
+1. **Comprehension Phase**: Learn the interface
+2. **Main Experiment**: Actual experiment with data collection
 
-Please enter your Prolific ID to begin and provide your age and gender.
+Please enter your participant ID to begin.
 """
         )
-        participant_id = st.text_input("Prolific ID:", key="participant_id")
-        col_a, col_b = st.columns(2)
-        with col_a:
-            age_options = list(range(18, 100))
-            age = st.selectbox("Age:", age_options, index=0, key="participant_age")
-        with col_b:
-            gender = st.selectbox(
-                "Gender:",
-                [
-                    "Prefer not to say",
-                    "Female",
-                    "Male",
-                    "Non-binary",
-                    "Other",
-                ],
-                index=0,
-                key="participant_gender",
-            )
-
-        if st.button("Continue", type="primary"):
-            if not participant_id.strip():
-                st.warning("Please enter your Prolific ID to continue.")
-                st.stop()
-
+        participant_id = st.text_input("Participant ID:", key="participant_id")
+        if st.button("Next Step", type="primary") and participant_id.strip():
             st.session_state.current_participant_id = participant_id.strip()
             st.session_state.participant_id_entered = True
             # Persist consent information alongside config as soon as ID is available
@@ -552,11 +524,6 @@ Please enter your Prolific ID to begin and provide your age and gender.
                         'given': True,
                         'timestamp': st.session_state.consent_timestamp,
                         'irb_protocol_number': IRB_PROTOCOL_NUMBER
-                    })
-                    participant_ref.child('demographics').set({
-                        'prolific_id': st.session_state.current_participant_id,
-                        'age': int(st.session_state.participant_age) if st.session_state.get('participant_age') is not None else None,
-                        'gender': st.session_state.participant_gender,
                     })
                 except Exception:
                     pass
@@ -578,11 +545,15 @@ elif st.session_state.phase == "comprehension":
         This is the comprehension phase to help you understand the interface.
         
         **Instructions:**
-        - You will see 4 objects. Click to place them on the machine.
-        - You can place one or more objects on the machine and click "Test."
-        - If the machine lights up, the combination works.
-        - Your goal is to figure out which object(s) turn the machine on and how it works.
-        - Your tests and outcomes will appear in the State History panel on the left-hand side.
+        - You will see 4 objects (Object 1, Object 2, Object 3, Object 4)
+        - Click on objects to place them on the blicket detector machine
+        - Some objects are "blickets" that make the machine light up
+        - Your goal is to figure out which objects are blickets and how the machine works
+        - **You have exactly 5 actions** (placing or removing objects) to explore in this phase
+        
+        **The machine will show:**
+        - 🟢 LIT = Machine is active
+        - 🔴 NOT LIT = Machine is inactive
         
         When you're ready, click the button below to start the comprehension phase.
         """)
@@ -671,15 +642,16 @@ elif st.session_state.phase == "practice_complete":
     st.markdown("""
     ### Ready for the Main Experiment?
     
-    Now that you’ve learned about the game, you’re ready for the main experiment.
+    Now that you've practiced with the interface, you're ready for the main experiment.
     
-    **Structure:**
-    - 3 rounds total
-    - 4 objects in each round
-    - The rule for when the machine lights up may change between rounds.
-    - Each round is independent; what you learn in one round may not apply to the next.
-    - You must complete all three rounds to finish the experiment.
-    - You will receive bonus payment for correctly answering the questions after exploration.
+    **Main Experiment Structure:**
+    - **3 rounds** total in the main experiment
+    - **Same number of objects** (4 objects) in each round
+    - **The rule may change** between rounds (conjunctive vs disjunctive)
+    - **All data will be recorded** for research purposes
+    - Each round is independent - what you learn in one round may not apply to the next
+    
+    **⚠️ IMPORTANT:** You must complete all 3 rounds to finish the experiment. Your progress will be saved automatically.
     
     Take your time to explore and understand each round. Click the button below when you're ready to start the main experiment.
     """)
@@ -763,12 +735,7 @@ elif st.session_state.phase == "practice_complete":
             'num_rounds': num_rounds,
             'user_selected_objects': 4,  # Fixed to 4 objects
             'rounds': round_configs,
-            'interface_type': 'text',  # Fixed to text mode
-            'demographics': {
-                'prolific_id': st.session_state.get('current_participant_id', ''),
-                'age': int(st.session_state.participant_age) if 'participant_age' in st.session_state else None,
-                'gender': st.session_state.get('participant_gender', 'Prefer not to say'),
-            }
+            'interface_type': 'text'  # Fixed to text mode
         }
         save_participant_config(st.session_state.current_participant_id, config)
         
@@ -889,23 +856,13 @@ elif st.session_state.phase == "end":
     st.markdown("## 🎉 All done!")
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
     
-    # Generate a 7-character alphanumeric completion code once
-    if "completion_code" not in st.session_state or not st.session_state.completion_code:
-        import string
-        code_chars = string.ascii_uppercase + string.digits
-        st.session_state.completion_code = "".join(random.choice(code_chars) for _ in range(7))
-        # Persist to Firebase for verification
-        if firebase_initialized and db_ref:
-            try:
-                participant_ref = db_ref.child(st.session_state.current_participant_id)
-                participant_ref.child('completion').set({
-                    'code': st.session_state.completion_code,
-                    'completed_at': datetime.datetime.now().isoformat()
-                })
-            except Exception:
-                pass
+    # Progress indicator removed as requested
     
-    st.markdown(f"### Thank you for participating in our game! Your completion code is: `{st.session_state.completion_code}`")
-    st.markdown("Use this code as proof of completion.")
+    st.markdown("""
+    ### 🎯 Experiment Complete!
+    
+    
+    Thank you for participating in our blicket research study!
+    """)
     
     st.button("Start Over", on_click=reset_all)
