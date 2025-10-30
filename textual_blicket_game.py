@@ -877,9 +877,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         for i in range(round_config['num_objects']):
             if use_text_version:
                 # Text-only version: Simple text-based questionnaire
-                st.markdown(f"**Object {i}**")
+                st.markdown(f"**Object {i + 1}**")
                 st.radio(
-                    f"Is Object {i} a blicket?",
+                    f"Is Object {i + 1} a blicket?",
                     ["Yes", "No"],
                     key=f"blicket_q_{i}",
                     index=None
