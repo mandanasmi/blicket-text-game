@@ -443,7 +443,7 @@ if st.session_state.phase == "consent":
     st.markdown("### Compensation")
     st.markdown(
         """
-        For your participation in our research, you will receive a maximum rate of $8 per hour. Payment ranges from $0.54 to $0.67 for a 5-minute task and from $3.25 to $4.00 for a 30-minute task, depending on the time it takes to complete the type of task you've been assigned. For studies on Prolific, you will receive a minimum rate of $6.50 per hour. For experiments with a differential bonus payment system you may have the opportunity to earn "points" that are worth up to 5 cents each, with a total bonus of no more than 30 cents paid on top of the flat fee paid for the task completion. Your online account will be credited directly.
+        For your participation in our research, you will receive a maximum rate of \$8 per hour. Payment ranges from \$0.54 to \$0.67 for a 5-minute task and from \$3.25 to \$4.00 for a 30-minute task, depending on the time it takes to complete the type of task you've been assigned. For studies on Prolific, you will receive a minimum rate of \$6.50 per hour. For experiments with a differential bonus payment system you may have the opportunity to earn "points" that are worth up to 5 cents each, with a total bonus of no more than 30 cents paid on top of the flat fee paid for the task completion. Your online account will be credited directly.
         """
     )
 
