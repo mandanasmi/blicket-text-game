@@ -90,7 +90,10 @@ if not firebase_admin._apps:
         import traceback
         traceback.print_exc()
 else:
-    print("✅ Firebase already initialized")
+    try:
+        print("✅ Firebase already initialized")
+    except BrokenPipeError:
+        pass
     firebase_initialized = True
     db_ref = db.reference()
 

@@ -397,7 +397,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Create sidebar for state history
     with st.sidebar:
-        st.markdown("### 📜 State History")
+        st.markdown("### State History")
         
         # Create a container with fixed height and scrollbar
         history_container = st.container()
@@ -410,11 +410,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         objects_text = ""
                         for obj_idx in range(round_config['num_objects']):
                             object_id = obj_idx  # 0-based object ID
-                            label = object_id + 1  # 1-based label for display
                             if object_id in state['objects_on_machine']:
-                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{label}</span>"
+                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
                             else:
-                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{label}</span>"
+                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
                         
                         # Show machine state on same row
                         machine_status = "✅ LIT" if state['machine_lit'] else "✖️ NOT LIT"
@@ -482,17 +481,20 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Collapsible instruction section
     with st.expander("📋 Game Instructions", expanded=False):
-        horizon = round_config.get('horizon', 32)  # Default to 32 actions
+        horizon = round_config.get('horizon', 32)  # Default to 32 steps
         st.markdown(f"""
 
-        You will see 4 objects labeled 1–4. Click an object to place it on the machine; click again to remove it.
-        You can place one or more objects on the machine and click "Test" to evaluate the current combination.
-        If the machine lights up, that combination works for the current round.
+        **Your goals are:**
+        - Identify which objects are blickets.
+        - Infer the underlying rule for how the machine turns on. 
 
-        Your goal is to figure out which object(s) turn the machine on and how it works.
-        Your tests and outcomes will appear in the State History panel on the left-hand side.
+        **Tips:**
+        - All objects can be either on the machine or on the floor.
+        - You should think about how to efficiently explore the relationship between the objects and the machine.
 
-        You have **{horizon} actions** to complete your exploration in this round. You may proceed to the questions whenever you feel ready.
+        You have **{horizon} actions** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
+
+        You will be prompted at each turn to choose actions.
         """)
     
 
@@ -589,11 +591,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Single button that toggles between green (selected) and gray (unselected)
                 button_type = "primary" if is_selected else "secondary"
                 
-                if st.button(f"Object {i + 1}", 
+                if st.button(f"Object {i}", 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
                            type=button_type,
-                           help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
+                           help=f"Click to {'remove' if is_selected else 'place'} Object {i}"):
                     # Record the action before making changes
                     action_time = datetime.datetime.now()
                     action_type = "remove" if is_selected else "place"
@@ -614,7 +616,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     st.session_state.game_state = game_state
                     
                     # Add to action history
-                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {object_id + 1} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
+                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {object_id} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
                     st.session_state.action_history.append(action_text)
                     
                     # Add to state history
@@ -729,7 +731,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         </div>
                         """, unsafe_allow_html=True)
                         
-                        if st.button(f"Select Object {obj_idx + 1}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx + 1}"):
+                        if st.button(f"Select Object {obj_idx}", key=f"obj_{obj_idx}", help=f"Click to {'remove' if is_selected else 'place'} Object {obj_idx}"):
                             # Record the action before making changes
                             action_time = datetime.datetime.now()
                             action_type = "remove" if is_selected else "place"
@@ -797,7 +799,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Comprehension phase - no questions, just show completion message
                 st.markdown("""
                 <div style="background: rgba(40, 167, 69, 0.8); border: 2px solid #28a745; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h3 style="color: #155724; margin: 0;">⏰ No Remaining Actions</h3>
+                    <h3 style="color: #155724; margin: 0;">⏰ No Remaining Steps</h3>
                     <p style="color: #155724; margin: 10px 0;">Now that the comprehension phase is over, you can play the main game!</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -810,7 +812,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Main experiment - show questionnaire
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h3 style="color: #856404; margin: 0;">⏰ No Actions Remaining!</h3>
+                    <h3 style="color: #856404; margin: 0;">⏰ No Steps Remaining!</h3>
                     <p style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -908,7 +910,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("### Rule Inference")
         st.markdown("Based on your observations, what do you think is the rule for how the blicket detector works?")
         st.text_area(
-            "What do you think is the rule?",
             placeholder="Describe your hypothesis about how the blicket detector determines when to light up...",
             height=100,
             key="rule_hypothesis"
@@ -930,9 +931,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
                 print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
                 
-                if not current_hypothesis:
-                    st.warning("Please enter a rule hypothesis before proceeding.")
-                else:
+                if current_hypothesis:
                     # Save blicket classifications before moving to rule type
                     blicket_classifications = {}
                     print(f"🔍 DEBUG: About to collect blicket answers, num_objects = {round_config['num_objects']}")
@@ -995,10 +994,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # The widget key "rule_hypothesis" won't persist once we leave this screen
                     st.session_state["saved_rule_hypothesis"] = current_hypothesis
                     print(f"🔍 DEBUG: Saved rule_hypothesis to saved_rule_hypothesis key: {current_hypothesis[:50]}...")
-                    
                     # Transition to rule type classification
                 st.session_state.visual_game_state = "rule_type_classification"
                 st.rerun()
+            else:
+                    st.warning("Please enter a rule hypothesis before proceeding.")
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
@@ -1041,7 +1041,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
-        
+            
         # Get rule_hypothesis from saved_rule_hypothesis (saved when leaving text_area screen) or original widget key
         rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
         print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
@@ -1051,7 +1051,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         if current_round + 1 < total_rounds:
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
-                if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
+                if st.button("➡️ NEXT ROUND", type="primary", disabled=not (rule_type and all_blicket_answered), use_container_width=True):
                     # Get blicket classifications directly from saved tracked key
                     blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
                     print(f"🔍 DEBUG: Using saved_blicket_classifications directly: {blicket_classifications}")
