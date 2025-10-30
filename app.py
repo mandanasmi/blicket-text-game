@@ -411,7 +411,7 @@ if st.session_state.phase == "consent":
     st.markdown("### Purpose of the Study")
     st.markdown(
         """
-        This study is conducted by Alison Gopnik (UC Berkeley) and research staff.
+        This study is conducted by UC Berkeley and research staff.
         It investigates how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
         Participation is entirely voluntary.
         """
@@ -457,7 +457,7 @@ if st.session_state.phase == "consent":
     st.markdown("### Questions")
     st.markdown(
         """
-        If you have any questions now, please contact the lab at 643-2172 or Professor Alison Gopnik (642-2752), or email us at the addresses listed at the end of this form. If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu.
+        If you have any questions now, please email us at the addresses listed at the end of this form. If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu.
         """
     )
 
@@ -886,13 +886,23 @@ elif st.session_state.phase == "end":
     st.markdown("## 🎉 All done!")
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
     
-    # Progress indicator removed as requested
+    # Generate a 7-character alphanumeric completion code once
+    if "completion_code" not in st.session_state or not st.session_state.completion_code:
+        import string
+        code_chars = string.ascii_uppercase + string.digits
+        st.session_state.completion_code = "".join(random.choice(code_chars) for _ in range(7))
+        # Persist to Firebase for verification
+        if firebase_initialized and db_ref:
+            try:
+                participant_ref = db_ref.child(st.session_state.current_participant_id)
+                participant_ref.child('completion').set({
+                    'code': st.session_state.completion_code,
+                    'completed_at': datetime.datetime.now().isoformat()
+                })
+            except Exception:
+                pass
     
-    st.markdown("""
-    ### 🎯 Experiment Complete!
-    
-    
-    Thank you for participating in our blicket research study!
-    """)
+    st.markdown(f"### Thank you for participating in our game! Your completion code is: `{st.session_state.completion_code}`")
+    st.markdown("Use this code as proof of completion.")
     
     st.button("Start Over", on_click=reset_all)
