@@ -424,10 +424,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         objects_text = ""
                         for obj_idx in range(round_config['num_objects']):
                             object_id = obj_idx  # 0-based object ID
+                            display_id = object_id + 1  # 1-based for display
                             if object_id in state['objects_on_machine']:
-                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{object_id}</span>"
+                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{display_id}</span>"
                             else:
-                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{object_id}</span>"
+                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{display_id}</span>"
                         
                         # Show machine state on same row
                         machine_status = "✅ LIT" if state['machine_lit'] else "✖️ NOT LIT"
@@ -630,7 +631,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     st.session_state.game_state = game_state
                     
                     # Add to action history
-                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {object_id} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
+                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {object_id + 1} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
                     st.session_state.action_history.append(action_text)
                     
                     # Add to state history
