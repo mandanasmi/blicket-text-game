@@ -485,17 +485,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         horizon = round_config.get('horizon', 32)  # Default to 32 actions
         st.markdown(f"""
 
-        **Your goals are:**
-        - Identify which objects are blickets.
-        - Infer the underlying rule for how the machine turns on. 
+        You will see 4 objects labeled 1–4. Click an object to place it on the machine; click again to remove it.
+        You can place one or more objects on the machine and click "Test" to evaluate the current combination.
+        If the machine lights up, that combination works for the current round.
 
-        **Tips:**
-        - All objects can be either on the machine or on the floor.
-        - You should think about how to efficiently explore the relationship between the objects and the machine.
+        Your goal is to figure out which object(s) turn the machine on and how it works.
+        Your tests and outcomes will appear in the State History panel on the left-hand side.
 
-        You have **{horizon} actions** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
-
-        You will be prompted at each turn to choose actions.
+        You have **{horizon} actions** to complete your exploration in this round. You may proceed to the questions whenever you feel ready.
         """)
     
 
@@ -1044,7 +1041,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
-            
+        
         # Get rule_hypothesis from saved_rule_hypothesis (saved when leaving text_area screen) or original widget key
         rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
         print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
