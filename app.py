@@ -505,13 +505,12 @@ if st.session_state.phase == "intro":
         # Ask for Prolific ID and demographics, then start comprehension phase
         st.markdown(
             """
-**Welcome to the Blicket Text Adventure!**
+**Welcome!**
 
-This is a text-only interface with 4 objects. 
+In this game, you’ll see a machine that can light up when certain objects are placed on it. Your task is to figure out which object or combination of objects makes the machine turn on. You’ll complete several rounds:
 
-**The study has two phases:**
-1. **Comprehension Phase**: Learn the interface
-2. **Main Experiment**: Actual experiment with data collection
+1. A brief comprehension phase to make sure you understand the game.
+2. Three separate test rounds, each with a new machine and new objects to figure out. You can test the machine up to 32 times in each round before submitting your answer.
 
 Please enter your Prolific ID to begin and provide your age and gender.
 """
@@ -535,7 +534,7 @@ Please enter your Prolific ID to begin and provide your age and gender.
                 key="participant_gender",
             )
 
-        if st.button("Next Step", type="primary"):
+        if st.button("Continue", type="primary"):
             if not participant_id.strip():
                 st.warning("Please enter your Prolific ID to continue.")
                 st.stop()
