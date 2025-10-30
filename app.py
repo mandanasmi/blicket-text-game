@@ -464,15 +464,19 @@ if st.session_state.phase == "consent":
     if IRB_PROTOCOL_NUMBER:
         st.markdown(f"**IRB Protocol Number:** {IRB_PROTOCOL_NUMBER}")
 
+    st.markdown(
+        "> By selecting the \"Accept\" button below, I acknowledge that I am 18 or older, have read this consent form, and I agree to take part in the research. If you do NOT agree to participate in this study, please click the \"Decline\" button below."
+    )
+
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("I Consent and Agree", type="primary"):
+        if st.button("Accept", type="primary"):
             st.session_state.consent = True
             st.session_state.consent_timestamp = datetime.datetime.now().isoformat()
             st.session_state.phase = "intro"
             st.rerun()
     with col2:
-        if st.button("I Do Not Consent", type="secondary"):
+        if st.button("Decline", type="secondary"):
             st.session_state.consent = False
             st.session_state.consent_timestamp = datetime.datetime.now().isoformat()
             st.session_state.phase = "no_consent"
