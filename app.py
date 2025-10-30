@@ -574,18 +574,14 @@ elif st.session_state.phase == "comprehension":
         
         st.markdown("""
         This is the comprehension phase to help you understand the interface.
-        
+
         **Instructions:**
-        - You will see 4 objects (Object 1, Object 2, Object 3, Object 4)
-        - Click on objects to place them on the blicket detector machine
-        - Some objects are "blickets" that make the machine light up
-        - Your goal is to figure out which objects are blickets and how the machine works
-        - **You have exactly 5 actions** (placing or removing objects) to explore in this phase
-        
-        **The machine will show:**
-        - 🟢 LIT = Machine is active
-        - 🔴 NOT LIT = Machine is inactive
-        
+        - You will see 4 objects. Click to place them on the machine.
+        - You can place one or more objects on the machine and click "Test."
+        - If the machine lights up, the combination works.
+        - Your goal is to figure out which object(s) turn the machine on and how it works.
+        - Your tests and outcomes will appear in the State History panel on the left-hand side.
+
         When you're ready, click the button below to start the comprehension phase.
         """)
         
