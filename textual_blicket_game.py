@@ -910,7 +910,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("### Rule Inference")
         st.markdown("Based on your observations, what do you think is the rule for how the blicket detector works?")
         st.text_area(
-            placeholder="Describe your hypothesis about how the blicket detector determines when to light up...",
+            label="What do you think is the rule?",
+            placeholder="Describe your hypothesis about how the detector determines when to light up...",
             height=100,
             key="rule_hypothesis"
         )
