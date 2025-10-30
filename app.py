@@ -437,6 +437,30 @@ if st.session_state.phase == "consent":
         """
     )
 
+    st.markdown("### Costs of Study Participation")
+    st.markdown("There are no costs associated with study participation.")
+
+    st.markdown("### Compensation")
+    st.markdown(
+        """
+        For your participation in our research, you will receive a maximum rate of $8 per hour. Payment ranges from $0.54 to $0.67 for a 5-minute task and from $3.25 to $4.00 for a 30-minute task, depending on the time it takes to complete the type of task you've been assigned. For studies on Prolific, you will receive a minimum rate of $6.50 per hour. For experiments with a differential bonus payment system you may have the opportunity to earn "points" that are worth up to 5 cents each, with a total bonus of no more than 30 cents paid on top of the flat fee paid for the task completion. Your online account will be credited directly.
+        """
+    )
+
+    st.markdown("### Rights")
+    st.markdown(
+        """
+        Participation is voluntary. You are free to withdraw your consent and discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled.
+        """
+    )
+
+    st.markdown("### Questions")
+    st.markdown(
+        """
+        If you have any questions now, please contact the lab at 643-2172 or Professor Alison Gopnik (642-2752), or email us at the addresses listed at the end of this form. If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu.
+        """
+    )
+
     if IRB_PROTOCOL_NUMBER:
         st.markdown(f"**IRB Protocol Number:** {IRB_PROTOCOL_NUMBER}")
 
@@ -458,8 +482,8 @@ if st.session_state.phase == "consent":
 
 # 0b) NO CONSENT SCREEN
 elif st.session_state.phase == "no_consent":
-    st.title("thanks for your response")
-    st.markdown("## You did not consent. The study will now close. Thank you for your time.")
+    st.title("Thanks for your response")
+    st.markdown("## You did not consent. The study will now close.")
     st.stop()
 
 # 1) PARTICIPANT ID ENTRY SCREEN
