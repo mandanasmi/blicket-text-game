@@ -616,7 +616,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     st.session_state.game_state = game_state
                     
                     # Add to action history
-                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {object_id} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
+                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {object_id + 1} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
                     st.session_state.action_history.append(action_text)
                     
                     # Add to state history
