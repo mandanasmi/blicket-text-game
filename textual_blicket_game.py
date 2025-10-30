@@ -410,10 +410,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         objects_text = ""
                         for obj_idx in range(round_config['num_objects']):
                             object_id = obj_idx  # 0-based object ID
+                            label = object_id + 1  # 1-based label for display
                             if object_id in state['objects_on_machine']:
-                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
+                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{label}</span>"
                             else:
-                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{object_id}</span>"
+                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 12px;'>{label}</span>"
                         
                         # Show machine state on same row
                         machine_status = "✅ LIT" if state['machine_lit'] else "✖️ NOT LIT"
@@ -932,7 +933,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
                 print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
                 
-                if current_hypothesis:
+                if not current_hypothesis:
+                    st.warning("Please enter a rule hypothesis before proceeding.")
+                else:
                     # Save blicket classifications before moving to rule type
                     blicket_classifications = {}
                     print(f"🔍 DEBUG: About to collect blicket answers, num_objects = {round_config['num_objects']}")
@@ -996,10 +999,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     st.session_state["saved_rule_hypothesis"] = current_hypothesis
                     print(f"🔍 DEBUG: Saved rule_hypothesis to saved_rule_hypothesis key: {current_hypothesis[:50]}...")
                     
-                    st.session_state.visual_game_state = "rule_type_classification"
-                    st.rerun()
-                else:
-                    st.warning("Please enter a rule hypothesis before proceeding.")
+                    # Transition to rule type classification
+                st.session_state.visual_game_state = "rule_type_classification"
+                st.rerun()
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
@@ -1051,7 +1053,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Show Next Round button for all rounds except the last one
         if current_round + 1 < total_rounds:
             col1, col2, col3 = st.columns([1, 2, 1])
-            with             col2:
+            with col2:
                 if st.button("➡️ NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
                     # Get blicket classifications directly from saved tracked key
                     blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
