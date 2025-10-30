@@ -13,6 +13,9 @@ from dotenv import load_dotenv
 import env.blicket_text as blicket_text
 from textual_blicket_game import textual_blicket_game_page
 
+# Optional: IRB protocol number can be provided via environment
+IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
+
 # Load environment variables
 load_dotenv()
 
@@ -356,7 +359,11 @@ BINARY_QUESTIONS = [
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 # SESSION-STATE INITIALIZATION
 if "phase" not in st.session_state:
-    st.session_state.phase = "intro"
+    st.session_state.phase = "consent"
+if "consent" not in st.session_state:
+    st.session_state.consent = None
+if "consent_timestamp" not in st.session_state:
+    st.session_state.consent_timestamp = None
 
 if "env" not in st.session_state:
     st.session_state.env = None
@@ -384,6 +391,70 @@ if "round_rule_type" not in st.session_state:
     st.session_state.round_rule_type = ""  # Store rule type for current round (string)
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+
+# 0) CONSENT SCREEN
+if st.session_state.phase == "consent":
+    st.title("Research Consent")
+    st.markdown("**Please read the consent information below carefully. Participation is voluntary.**")
+
+    with st.expander("Key Information", expanded=True):
+        st.markdown(
+            """
+            - You are being invited to participate in a research study. Participation is completely voluntary.
+            - Purpose: to examine how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
+            - Sessions: 1–4 testing sessions (usually one), each ≤ 30 minutes. You will play interactive games; sometimes you may receive payment incentives based on your choices. You may view short clips, images, or music and answer related questions.
+            - Risks: primarily the risk of breach of confidentiality.
+            - Benefits: no direct benefits. Results may improve our understanding of causal reasoning and social cognition.
+            """
+        )
+
+    st.markdown("### Purpose of the Study")
+    st.markdown(
+        """
+        This study is conducted by Alison Gopnik (UC Berkeley) and research staff.
+        It investigates how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
+        Participation is entirely voluntary.
+        """
+    )
+
+    st.markdown("### Study Procedures")
+    st.markdown(
+        """
+        Up to 4 testing sessions (usually one), each ≤ 30 minutes. Tasks may include causal learning, linguistic, imagination, categorization/association, and general cognitive tasks. You may be asked to make judgments, answer questions, observe events, and perform actions (e.g., grouping objects or activating machines). You can skip any question and withdraw at any time without penalty. Attention checks ensure data quality; failure may result in rejection and no compensation.
+        """
+    )
+
+    st.markdown("### Benefits")
+    st.markdown("While there is no direct benefit, you may enjoy the interactive displays and contribute to science.")
+
+    st.markdown("### Risks/Discomforts")
+    st.markdown("We do not expect foreseeable risks beyond a minimal risk of confidentiality breach; safeguards are in place to minimize this risk.")
+
+    st.markdown("### Confidentiality")
+    st.markdown(
+        """
+        Your identity will be separated from your data and a random code used for tracking. Data are kept indefinitely and stored securely (encrypted, restricted access). Identifiers may be removed for future research use without additional consent. Your personal information may be released if required by law. Authorized representatives (e.g., sponsors such as NSF, Mind Science Foundation, Princeton University, Defense Advanced Research) may review data for study oversight.
+        """
+    )
+
+    if IRB_PROTOCOL_NUMBER:
+        st.markdown(f"**IRB Protocol Number:** {IRB_PROTOCOL_NUMBER}")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("I Consent and Agree", type="primary"):
+            st.session_state.consent = True
+            st.session_state.consent_timestamp = datetime.datetime.now().isoformat()
+            st.session_state.phase = "intro"
+            st.rerun()
+    with col2:
+        if st.button("I Do Not Consent", type="secondary"):
+            st.session_state.consent = False
+            st.session_state.consent_timestamp = datetime.datetime.now().isoformat()
+            st.warning("You did not consent. The study will now close. Thank you for your time.")
+            st.stop()
+
+    st.stop()
 
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
@@ -415,6 +486,17 @@ Please enter your participant ID to begin.
         if st.button("Next Step", type="primary") and participant_id.strip():
             st.session_state.current_participant_id = participant_id.strip()
             st.session_state.participant_id_entered = True
+            # Persist consent information alongside config as soon as ID is available
+            if firebase_initialized and db_ref and st.session_state.consent:
+                try:
+                    participant_ref = db_ref.child(st.session_state.current_participant_id)
+                    participant_ref.child('consent').set({
+                        'given': True,
+                        'timestamp': st.session_state.consent_timestamp,
+                        'irb_protocol_number': IRB_PROTOCOL_NUMBER
+                    })
+                except Exception:
+                    pass
             st.session_state.phase = "comprehension"
             st.rerun()
     
