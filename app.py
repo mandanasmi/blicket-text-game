@@ -672,15 +672,14 @@ elif st.session_state.phase == "practice_complete":
     Now that you've practiced with the interface, you're ready for the main experiment.
     
     **Main Experiment Structure:**
-    - **3 rounds** total in the main experiment
-    - **Same number of objects** (4 objects) in each round
-    - **The rule may change** between rounds (conjunctive vs disjunctive)
-    - **All data will be recorded** for research purposes
-    - Each round is independent - what you learn in one round may not apply to the next
-    
-    **⚠️ IMPORTANT:** You must complete all 3 rounds to finish the experiment. Your progress will be saved automatically.
-    
-    Take your time to explore and understand each round. Click the button below when you're ready to start the main experiment.
+    - 3 rounds total
+    - 4 objects in each round
+    - The rule for when the machine light up may change between rounds. 
+    - Each round is independent, what you learn in one round may not apply to the next.
+    - You must complete all three rounds to finish the experiment.
+    - You will receive bonus payment for correctly answering the questions after exploration.
+
+
     """)
     
     if st.button("Start Main Experiment", type="primary"):
