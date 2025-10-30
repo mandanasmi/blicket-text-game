@@ -411,7 +411,7 @@ if st.session_state.phase == "consent":
     st.markdown("### Purpose of the Study")
     st.markdown(
         """
-        This study is conducted by UC Berkeley and research staff.
+        This study is conducted by Alison Gopnik (UC Berkeley) and research staff.
         It investigates how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
         Participation is entirely voluntary.
         """
@@ -457,7 +457,7 @@ if st.session_state.phase == "consent":
     st.markdown("### Questions")
     st.markdown(
         """
-        If you have any questions now, please email us at the addresses listed at the end of this form. If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu.
+        If you have any questions now, please contact the lab at 643-2172 or Professor Alison Gopnik (642-2752), or email us at the addresses listed at the end of this form. If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu.
         """
     )
 
@@ -502,7 +502,7 @@ if st.session_state.phase == "intro":
         print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
     
     if not st.session_state.participant_id_entered:
-        # Ask for Participant ID and start comprehension phase
+        # Ask for Prolific ID and demographics, then start comprehension phase
         st.markdown(
             """
 **Welcome to the Blicket Text Adventure!**
@@ -513,11 +513,33 @@ This is a text-only interface with 4 objects.
 1. **Comprehension Phase**: Learn the interface
 2. **Main Experiment**: Actual experiment with data collection
 
-Please enter your participant ID to begin.
+Please enter your Prolific ID to begin and provide your age and gender.
 """
         )
-        participant_id = st.text_input("Participant ID:", key="participant_id")
-        if st.button("Next Step", type="primary") and participant_id.strip():
+        participant_id = st.text_input("Prolific ID:", key="participant_id")
+        col_a, col_b = st.columns(2)
+        with col_a:
+            age_options = list(range(18, 100))
+            age = st.selectbox("Age:", age_options, index=0, key="participant_age")
+        with col_b:
+            gender = st.selectbox(
+                "Gender:",
+                [
+                    "Prefer not to say",
+                    "Female",
+                    "Male",
+                    "Non-binary",
+                    "Other",
+                ],
+                index=0,
+                key="participant_gender",
+            )
+
+        if st.button("Next Step", type="primary"):
+            if not participant_id.strip():
+                st.warning("Please enter your Prolific ID to continue.")
+                st.stop()
+
             st.session_state.current_participant_id = participant_id.strip()
             st.session_state.participant_id_entered = True
             # Persist consent information alongside config as soon as ID is available
@@ -528,6 +550,11 @@ Please enter your participant ID to begin.
                         'given': True,
                         'timestamp': st.session_state.consent_timestamp,
                         'irb_protocol_number': IRB_PROTOCOL_NUMBER
+                    })
+                    participant_ref.child('demographics').set({
+                        'prolific_id': st.session_state.current_participant_id,
+                        'age': int(st.session_state.participant_age) if st.session_state.get('participant_age') is not None else None,
+                        'gender': st.session_state.participant_gender,
                     })
                 except Exception:
                     pass
@@ -549,11 +576,15 @@ elif st.session_state.phase == "comprehension":
         This is the comprehension phase to help you understand the interface.
         
         **Instructions:**
-        - You will see 4 objects. Click to place them on the machine.
-        - You can place one or more objects on the machine and click "Test."
-        - If the machine lights up, the combination works.
-        - Your goal is to figure out which object(s) turn the machine on and how it works.
-        - Your tests and outcomes will appear in the State History panel on the left-hand side.
+        - You will see 4 objects (Object 1, Object 2, Object 3, Object 4)
+        - Click on objects to place them on the blicket detector machine
+        - Some objects are "blickets" that make the machine light up
+        - Your goal is to figure out which objects are blickets and how the machine works
+        - **You have exactly 5 actions** (placing or removing objects) to explore in this phase
+        
+        **The machine will show:**
+        - 🟢 LIT = Machine is active
+        - 🔴 NOT LIT = Machine is inactive
         
         When you're ready, click the button below to start the comprehension phase.
         """)
@@ -735,7 +766,12 @@ elif st.session_state.phase == "practice_complete":
             'num_rounds': num_rounds,
             'user_selected_objects': 4,  # Fixed to 4 objects
             'rounds': round_configs,
-            'interface_type': 'text'  # Fixed to text mode
+            'interface_type': 'text',  # Fixed to text mode
+            'demographics': {
+                'prolific_id': st.session_state.get('current_participant_id', ''),
+                'age': int(st.session_state.participant_age) if 'participant_age' in st.session_state else None,
+                'gender': st.session_state.get('participant_gender', 'Prefer not to say'),
+            }
         }
         save_participant_config(st.session_state.current_participant_id, config)
         
