@@ -1111,6 +1111,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 print(f"🔍 Round {current_round + 1}: rule_type bool = {bool(rule_type)}")
                 print(f"🔍 Round {current_round + 1}: rule_type length = {len(rule_type) if rule_type else 0}")
                 
+                # Ensure classifications are available
+                blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
+                
                 # Extract user's chosen blickets (objects marked as "Yes")
                 user_chosen_blickets = []
                 for i in range(round_config['num_objects']):
