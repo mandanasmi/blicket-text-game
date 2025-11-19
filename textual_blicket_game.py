@@ -274,7 +274,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         
     except Exception as e:
         import traceback
-        print(f"❌ Failed to save {phase} progress for {participant_id}: {e}")
+        print(f"Failed to save {phase} progress for {participant_id}: {e}")
         print(f"Full traceback: {traceback.format_exc()}")
 
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
@@ -287,28 +287,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Fall back to global setting or environment variable
         use_text_version = os.getenv('BLICKET_VISUAL_MODE', 'False').lower() != 'true'
     
-    # Simple CSS for clean button styling
+    # Simple CSS for neutral button styling
     st.markdown("""
     <style>
-    /* Clean button styling - only green/gray colors */
-    .stApp .stButton button[kind="primary"] {
-        background-color: #28a745 !important;
-        border-color: #28a745 !important;
-        color: white !important;
-        border-radius: 8px !important;
-        padding: 8px 16px !important;
-        margin: 5px !important;
-        font-weight: bold !important;
-    }
-    
-    .stApp .stButton button[kind="primary"]:hover {
-        background-color: #218838 !important;
-        border-color: #1e7e34 !important;
-    }
-    
+    /* Neutral button styling - no color-based feedback */
+    .stApp .stButton button[kind="primary"],
     .stApp .stButton button[kind="secondary"] {
-        background-color: #6c757d !important;
-        border-color: #6c757d !important;
+        background-color: #5a5a5a !important;
+        border-color: #4a4a4a !important;
         color: white !important;
         border-radius: 8px !important;
         padding: 8px 16px !important;
@@ -316,9 +302,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         font-weight: bold !important;
     }
     
+    .stApp .stButton button[kind="primary"]:hover,
     .stApp .stButton button[kind="secondary"]:hover {
-        background-color: #5a6268 !important;
-        border-color: #545b62 !important;
+        background-color: #6a6a6a !important;
+        border-color: #5a5a5a !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -411,80 +398,112 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Create sidebar for state history
     with st.sidebar:
-        st.markdown("### 📜 State History")
+        st.markdown("""
+        <div style="background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); padding: 8px; border-radius: 2px; margin-bottom: 4px;">
+            <h2 style="margin: 0; color: white; text-align: center; font-size: 16px;">📜 Test History</h2>
+        </div>
+        """, unsafe_allow_html=True)
         
-        # Create a container with fixed height and scrollbar
+        # Create a container for history entries with increased height
+        st.markdown("""
+        <style>
+        [data-testid="stSidebarContent"] {
+            min-height: 1000px;
+            min-width: 300px;
+        }
+        </style>
+        """, unsafe_allow_html=True)
+        
         history_container = st.container()
         
         with history_container:
             if st.session_state.state_history:
+                st.markdown(f"<div style='text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 10px; padding: 14px; background-color: #f0f0f0; border-radius: 5px;'>Total Tests: {len(st.session_state.state_history)}</div>", unsafe_allow_html=True)
+                
                 for i, state in enumerate(st.session_state.state_history):
                     if use_text_version:
-                        # Text version: show object numbers with green highlighting
+                        # Text version: show object yes/no format with ID on top
                         objects_text = ""
                         for obj_idx in range(round_config['num_objects']):
                             object_id = obj_idx  # 0-based object ID
                             display_id = object_id + 1  # 1-based for display
-                            if object_id in state['objects_on_machine']:
-                                objects_text += f"<span style='background-color: #00ff00; color: black; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{display_id}</span>"
-                            else:
-                                objects_text += f"<span style='background-color: #333333; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{display_id}</span>"
+                            is_on_platform = object_id in state['objects_on_machine']
+                            yes_no = "Yes" if is_on_platform else "No"
+                            bg_color = "#d0d0d0" if is_on_platform else "#f5f5f5"
+                            border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
+                            objects_text += f"<span style='display: inline-flex; align-items: center; justify-content: center; background-color: {bg_color}; color: black; padding: 4px 8px; margin: 1px 1px; border-radius: 3px; font-size: 14px; font-weight: bold; border: {border_style}; min-width: 45px; flex-shrink: 0;'><div style='font-size: 11px; margin-bottom: 1px; font-weight: bold; color: #333; margin-right: 3px;'>{display_id}</div><div style='font-size: 13px; font-weight: bold;'>{yes_no}</div></span>"
                         
                         # Show machine state on same row
-                        machine_status = "✅ LIT" if state['machine_lit'] else "✖️ NOT LIT"
-                        st.markdown(f"<div style='margin: 4px 0; font-size: 14px;'><strong>{i + 1}:</strong> {objects_text} <span style='padding-left:6px;'>{machine_status}</span></div>", unsafe_allow_html=True)
+                        machine_status = "ON" if state['machine_lit'] else "OFF"
+                        machine_color = "#000000"  # Always black
+                        st.markdown(f"""
+                        <div style='
+                            margin: 6px 0; 
+                            padding: 8px 50px; 
+                            background-color: #fafafa; 
+                            border-left: 3px solid #2196f3;
+                            border-radius: 4px;
+                            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+                        '>
+                            <div style='font-size: 14px; font-weight: bold; margin-bottom: 4px; color: #1976d2;'>Test {i + 1}</div>
+                            <div style='margin-bottom: 4px; font-size: 12px; white-space: nowrap; overflow: hidden; display: flex; flex-wrap: nowrap; justify-content: center;'>{objects_text}</div>
+                            <div style='font-size: 12px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
                     else:
-                        # Visual version: show object numbers with colored backgrounds (much faster than images)
-                        cols = st.columns(round_config['num_objects'] + 2)  # +2 for step number and machine status
+                        # Visual version: show object numbers with colored backgrounds
+                        cols = st.columns(round_config['num_objects'] + 2)
                         
                         with cols[0]:
-                            st.markdown(f"<div style='font-size: 14px; margin: 2px 0;'><strong>{i + 1}:</strong></div>", unsafe_allow_html=True)
+                            st.markdown(f"<div style='font-size: 18px; font-weight: bold; margin: 8px 0;'>Test {i + 1}</div>", unsafe_allow_html=True)
                         
                         # Show each object
                         for obj_idx in range(round_config['num_objects']):
-                            object_id = obj_idx  # 0-based object ID
+                            object_id = obj_idx
                             with cols[obj_idx + 1]:
-                                if object_id in state['objects_on_machine']:
-                                    # Selected object - green background
-                                    st.markdown(f"""
-                                    <div style="
-                                        background-color: #00ff00; 
-                                        border: 1px solid #00ff00; 
-                                        border-radius: 3px; 
-                                        padding: 2px 4px; 
-                                        margin: 1px; 
-                                        text-align: center;
-                                        color: black;
-                                        font-size: 14px;
-                                        font-weight: bold;
-                                    ">
+                                is_on_platform = object_id in state['objects_on_machine']
+                                yes_no = "Yes" if is_on_platform else "No"
+                                bg_color = "#d0d0d0" if is_on_platform else "#f5f5f5"
+                                border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
+                                st.markdown(f"""
+                                <div style="
+                                    background-color: {bg_color}; 
+                                    border: {border_style}; 
+                                    border-radius: 5px; 
+                                    padding: 8px; 
+                                    margin: 2px; 
+                                    text-align: center;
+                                    color: black;
+                                    font-weight: bold;
+                                    min-width: 45px;
+                                ">
+                                    <div style="font-size: 11px; margin-bottom: 4px; color: #333;">
                                         {obj_idx + 1}
                                     </div>
-                                    """, unsafe_allow_html=True)
-                                else:
-                                    # Unselected object - gray background
-                                    st.markdown(f"""
-                                    <div style="
-                                        background-color: #333333; 
-                                        border: 1px solid #666666; 
-                                        border-radius: 3px; 
-                                        padding: 2px 4px; 
-                                        margin: 1px; 
-                                        text-align: center;
-                                        color: white;
-                                        font-size: 14px;
-                                        font-weight: bold;
-                                    ">
-                                        {obj_idx + 1}
+                                    <div style="font-size: 13px;">
+                                        {yes_no}
                                     </div>
-                                    """, unsafe_allow_html=True)
+                                </div>
+                                """, unsafe_allow_html=True)
                         
                         # Show machine status
                         with cols[-1]:
-                            machine_status = "✅ LIT" if state['machine_lit'] else "✖️ NOT LIT"
-                            st.markdown(f"<div style='font-size: 14px; margin: 2px 0; font-weight: 600;'>{machine_status}</div>", unsafe_allow_html=True)
+                            machine_status = "ON" if state['machine_lit'] else "OFF"
+                            machine_color = "#000000"  # Always black
+                            st.markdown(f"<div style='font-size: 16px; margin: 8px 0; font-weight: bold; color: {machine_color};'>{machine_status}</div>", unsafe_allow_html=True)
             else:
-                st.markdown("*No states recorded yet.*")
+                st.markdown("""
+                <div style='
+                    padding: 20px; 
+                    text-align: center; 
+                    background-color: #f0f0f0; 
+                    border-radius: 5px; 
+                    color: #666;
+                    font-size: 16px;
+                '>
+                No tests recorded yet. Click TEST COMBINATION to begin.
+                </div>
+                """, unsafe_allow_html=True)
     
     # Main content area
     # Display round info and progress
@@ -500,7 +519,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown(f"""
 
         **Your goals are:**
-        - Identify which objects are blickets.
+        - Identify which objects will turn on the detector.
         - Infer the underlying rule for how the machine turns on. 
 
         **Tips:**
@@ -510,7 +529,21 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         You have **{horizon} actions** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
 
         You will be prompted at each turn to choose actions.
+
+        **Understanding the State History:**
+        - The **State History** panel on the left shows a record of each test you perform.
+        - For each object, it shows **Yes** if the object was **ON the platform**, or **No** if it was **NOT on the platform**.
+        - Each row also shows whether the detector was **ON** or **OFF** after that test.
+
+        **How to use the interface:**
+        1. Click on object buttons to **select** the objects you want to test
+        2. A status box below each button shows: **ON PLATFORM** or **NOT ON PLATFORM**
+        3. Click an object again to **deselect** it
+        4. Once you have selected your combination, click the **TEST COMBINATION** button
+        5. The test will be recorded, and you'll see the result in the State History
+        6. Repeat: select new objects and test again as needed
         """)
+
     
 
     
@@ -543,8 +576,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             <div style="display: flex; align-items: center; justify-content: center; gap: 20px;">
                 <div>
                     <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
-                    <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: {'#00ff00' if machine_lit else '#ff4444'};">
-                        Blicket Detector {'LIT' if machine_lit else 'NOT LIT'}
+                    <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: #333;">
+                        Blicket Detector: {'ON' if machine_lit else 'OFF'}
                     </div>
                 </div>
                 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
@@ -559,10 +592,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     if use_text_version:
         horizon = round_config.get('horizon', 32)
         steps_left = horizon - st.session_state.steps_taken
-        machine_status = "🟢 LIT" if machine_lit else "🔴 NOT LIT"
+        machine_status = "ON" if machine_lit else "OFF"
         
         st.markdown(f"""
-        ### 🏭 Blicket Detector Status: {machine_status}
+        ### Blicket Detector Status: {machine_status}
         **Steps Remaining: {steps_left}/{horizon}**
         """)
         st.markdown("---")
@@ -578,21 +611,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
 
     
     # Display available objects
-    st.markdown("### Available Objects")
-    
-    # Button styling is handled at the top of the function
-    
     if use_text_version:
-        st.markdown("""
-        **How to use the interface:**
-        - Click on an object button to **place** it on the blicket detector
-        - A checkbox will appear **below** the button when the object is placed
-        - Click the button again to **remove** the object from the detector
-        - The checkbox will disappear when the object is removed
-        - Try different combinations to figure out which objects are blickets!
-        """)
+        st.markdown("### Available Objects")
         
-        # Text-only version: Simple button grid
+        # Text-only version: Simple button grid with selection mode
+        
         cols = st.columns(4)
         for i in range(round_config['num_objects']):
             with cols[i % 4]:
@@ -602,70 +625,99 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 steps_left = horizon - st.session_state.steps_taken
                 interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                 
-                # Button always uses secondary (gray) styling
+                # Use neutral styling - status will be shown in box below
+                # Button click only toggles selection, does NOT record an action
                 if st.button(f"Object {i + 1}", 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
-                           type="secondary",
                            help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
-                    # Record the action before making changes
-                    action_time = datetime.datetime.now()
-                    action_type = "remove" if is_selected else "place"
-                    
-                    # Capture machine state BEFORE making changes
-                    machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
-                    
-                    # Update object selection
+                    # Just toggle selection without recording action
                     if is_selected:
                         st.session_state.selected_objects.remove(object_id)
                     else:
                         st.session_state.selected_objects.add(object_id)
                     
-                    # Update environment state (convert back to 0-based for internal state)
+                    # Update environment state TEMPORARILY to show visual feedback
                     env._state[i] = (object_id in st.session_state.selected_objects)
                     env._update_machine_state()
-                    game_state = env.step("look")[0]  # Get updated state
+                    game_state = env.step("look")[0]
                     st.session_state.game_state = game_state
-                    
-                    # Add to action history
-                    action_text = f"You {'removed' if action_type == 'remove' else 'put'} Object {object_id + 1} {'from' if action_type == 'remove' else 'on'} the machine. The blicket detector is {'LIT' if game_state['true_state'][-1] else 'NOT LIT'}."
-                    st.session_state.action_history.append(action_text)
-                    
-                    # Add to state history
-                    state_data = {
-                        "objects_on_machine": set(st.session_state.selected_objects),
-                        "machine_lit": bool(game_state['true_state'][-1]),
-                        "step_number": st.session_state.steps_taken + 1
-                    }
-                    st.session_state.state_history.append(state_data)
-                    
-                    # Record the action for Firebase
-                    action_data = {
-                        "timestamp": action_time.isoformat(),
-                        "action_type": action_type,
-                        "object_index": object_id,
-                        "object_id": f"object_{object_id}",
-                        "machine_state_before": machine_state_before,  # Machine state before this action
-                        "machine_state_after": bool(game_state['true_state'][-1]),  # New state
-                        "objects_on_machine": list(st.session_state.selected_objects),
-                        "step_number": st.session_state.steps_taken + 1
-                    }
-                    st.session_state.user_actions.append(action_data)
-                    
-                    # Increment step counter
-                    st.session_state.steps_taken += 1
-                    
-                    # Save intermediate progress after each action (only for comprehension phase)
-                    if is_practice:
-                        save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
                     
                     st.rerun()
                 
-                # Display checkbox underneath the button to show selection state
-                if is_selected:
-                    st.markdown(f"<div style='text-align: center; margin-top: 5px;'><input type='checkbox' checked disabled style='cursor: default; width: 20px; height: 20px;'></div>", unsafe_allow_html=True)
-                else:
-                    st.markdown(f"<div style='text-align: center; margin-top: 5px;'><input type='checkbox' disabled style='cursor: default; width: 20px; height: 20px;'></div>", unsafe_allow_html=True)
+                # Show status box underneath button
+                status_text = "ON PLATFORM" if is_selected else "NOT ON PLATFORM"
+                box_border_color = "#333333"
+                st.markdown(f"""
+                <div style="
+                    text-align: center;
+                    padding: 6px;
+                    margin-top: 5px;
+                    border: 1px solid {box_border_color};
+                    border-radius: 4px;
+                    background-color: #f5f5f5;
+                    font-size: 14px;
+                    color: #333;
+                ">
+                {status_text}
+                </div>
+                """, unsafe_allow_html=True)
+        
+        # Show the Test button after object selection area
+        st.markdown("---")        
+        current_selection = list(st.session_state.selected_objects)
+        if current_selection:
+            selection_text = ", ".join([f"Object {obj + 1}" for obj in sorted(current_selection)])
+            st.markdown(f"**Current selection: {selection_text}**")
+        else:
+            st.markdown("**No objects selected yet.** Click on objects to select them.")
+        
+        # Test button - only appears if objects are selected
+        col1, col2, col3 = st.columns([1, 2, 1])
+        with col2:
+            if st.button(" Test Combination", type="primary", use_container_width=True, disabled=not current_selection or interaction_disabled):
+                # NOW record the test action
+                action_time = datetime.datetime.now()
+                
+                # Capture machine state BEFORE this test
+                machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
+                
+                # Get final result of this test combination
+                # (environment is already updated, just get the state)
+                final_machine_state = bool(game_state['true_state'][-1])
+                
+                # Add to action history
+                objects_list = ", ".join([f"Object {obj + 1}" for obj in sorted(current_selection)])
+                action_text = f"You tested: {objects_list}. The blicket detector is {'ON' if final_machine_state else 'OFF'}."
+                st.session_state.action_history.append(action_text)
+                
+                # Add to state history (only on Test button click)
+                state_data = {
+                    "objects_on_machine": set(st.session_state.selected_objects),
+                    "machine_lit": final_machine_state,
+                    "step_number": st.session_state.steps_taken + 1
+                }
+                st.session_state.state_history.append(state_data)
+                
+                # Record the action for Firebase
+                action_data = {
+                    "timestamp": action_time.isoformat(),
+                    "action_type": "test",
+                    "objects_tested": list(st.session_state.selected_objects),
+                    "machine_state_before": machine_state_before,
+                    "machine_state_after": final_machine_state,
+                    "step_number": st.session_state.steps_taken + 1
+                }
+                st.session_state.user_actions.append(action_data)
+                
+                # Increment step counter only on test
+                st.session_state.steps_taken += 1
+                
+                # Save intermediate progress after each test (only for comprehension phase)
+                if is_practice:
+                    save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
+                
+                st.rerun()
     else:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
@@ -694,7 +746,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Disable interaction if no steps left or if in questionnaire phase
                     interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                     
-                    # Create clickable image with improved styling
+                    # Create clickable image with improved styling (neutral colors, no green)
                     if interaction_disabled:
                         # Disabled state - gray out the image
                         opacity = "0.5"
@@ -703,7 +755,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     else:
                         opacity = "1.0"
                         cursor = "pointer"
-                        border_color = "#00ff00" if is_selected else "#ffffff"
+                        border_color = "#666666" if is_selected else "#ffffff"
                     
                     # Create clickable image container
                     if interaction_disabled:
@@ -715,13 +767,13 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                 padding: 15px; 
                                 border: 3px solid {border_color}; 
                                 border-radius: 15px; 
-                                background: {'rgba(0, 255, 0, 0.2)' if is_selected else 'transparent'};
+                                background: {'#e8e8e8' if is_selected else 'transparent'};
                                 box-shadow: 0 4px 15px rgba(0,0,0,0.1);
                                 opacity: {opacity};
                             ">
                                 <img src="data:image/png;base64,{shape_images[obj_idx]}" style="width: 80px; height: auto; margin-bottom: 10px;">
                                 <br>
-                                <div style="font-weight: bold; color: {'#00ff00' if is_selected else '#333'}; font-size: 16px;">
+                                <div style="font-weight: bold; color: #333; font-size: 16px;">
                                     Object {obj_idx + 1}
                                 </div>
                             </div>
@@ -738,7 +790,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                 padding: 15px; 
                                 border: 3px solid {border_color}; 
                                 border-radius: 15px; 
-                                background: {'rgba(0, 255, 0)' if is_selected else 'transparent'};
+                                background: {'#d0d0d0' if is_selected else 'transparent'};
                                 box-shadow: 0 4px 15px rgba(0,0,0,0.1);
                                 transition: all 0.2s ease;
                                 position: relative;
@@ -805,7 +857,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Phase transition buttons
     st.markdown("---")
-    st.markdown("### 🎯 Game Controls")
+    st.markdown("### Game Controls")
     
     if st.session_state.visual_game_state == "exploration":
         horizon = round_config.get('horizon', 32)
@@ -813,24 +865,33 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Show different buttons based on steps remaining
         if steps_left <= 0:
-            if is_practice:
-                # Comprehension phase - no questions, just show completion message
-                st.markdown("""
-                <div style="background: rgba(40, 167, 69, 0.8); border: 2px solid #28a745; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h3 style="color: #155724; margin: 0;">⏰ No Remaining Actions</h3>
-                    <p style="color: #155724; margin: 10px 0;">Now that the comprehension phase is over, you can play the main game!</p>
-                </div>
-                """, unsafe_allow_html=True)
+            if is_practice:                # Comprehension phase - show practice test on same page
+                st.markdown("---")
+                st.markdown("### Practice Test")
+                st.markdown("Which object do you think is a blicket?")
                 
-                if st.button("🚀 Start Main Game", type="primary", key="complete_btn", use_container_width=True):
-                    # Return to main app for completion
+                # Create options for the practice test
+                num_objects_in_round = round_config['num_objects']
+                practice_options = [f"Object {i + 1} is a blicket" for i in range(num_objects_in_round)]
+                practice_options.append("I don't know")
+                
+                # Show single question with all options
+                practice_answer = st.radio(
+                    "Select your answer:",
+                    practice_options,
+                    key="practice_blicket_answer_inline",
+                    index=None
+                )
+                
+                if st.button("Complete Comprehension Phase", type="primary", use_container_width=True, disabled=(practice_answer is None)):
+                    # Move to practice completion page
                     st.session_state.phase = "practice_complete"
                     st.rerun()
             else:
                 # Main experiment - show questionnaire
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h3 style="color: #856404; margin: 0;">⏰ No Actions Remaining!</h3>
+                    <h3 style="color: #856404; margin: 0;">No Actions Remaining!</h3>
                     <p style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</p>
                 </div>
                 """, unsafe_allow_html=True)
@@ -850,7 +911,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         else:
             st.markdown(f"""
             <div style="background: rgba(13, 202, 240, 0.1); border: 2px solid #0dcaf0; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                <h3 style="color: #0dcaf0; margin: 0;">📊 You have {steps_left} steps remaining</h3>
+                <h3 style="color: #0dcaf0; margin: 0;"> You have {steps_left} steps remaining</h3>
                 <p style="color: #0dcaf0; margin: 10px 0;">You can continue exploring or proceed to answer questions about blickets.</p>
             </div>
             """, unsafe_allow_html=True)
@@ -859,14 +920,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             col1, col2, col3 = st.columns([1, 2, 1])
             with col2:
                 if is_practice:
-                    # Comprehension phase - no questions, just show completion option
-                    if st.button("🚀 Start Main Game", type="primary", key="complete_ready_btn", use_container_width=True):
-                        # Return to main app for completion
-                        st.session_state.phase = "practice_complete"
+                    # Comprehension phase - show practice test inline
+                    if st.button("Practice Test", type="primary", key="complete_ready_btn", use_container_width=True):
+                        # Set flag to show practice test inline
+                        st.session_state.show_practice_test = True
                         st.rerun()
                 else:
                     # Main experiment - show questionnaire button
-                    if st.button("🎯 READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
+                    if st.button("READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
                         # Clear any previous blicket answers to ensure fresh start
                         for i in range(round_config['num_objects']):
                             if f"blicket_q_{i}" in st.session_state:
@@ -875,6 +936,31 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         st.rerun()
             
             st.markdown(f"**Steps remaining: {steps_left}/{horizon}**")
+            
+            # Show practice test inline if flag is set
+            if is_practice and st.session_state.get("show_practice_test", False):
+                st.markdown("---")
+                st.markdown("### Practice Test")
+                st.markdown("Which object do you think is a blicket?")
+                
+                # Create options for the practice test
+                num_objects_in_round = round_config['num_objects']
+                practice_options = [f"Object {i + 1} is a blicket" for i in range(num_objects_in_round)]
+                practice_options.append("I don't know")
+                
+                # Show single question with all options
+                practice_answer = st.radio(
+                    "Select your answer:",
+                    practice_options,
+                    key="practice_blicket_answer_steps_remaining",
+                    index=None
+                )
+                
+                if st.button("Complete Comprehension Phase", type="primary", use_container_width=True, disabled=(practice_answer is None), key="complete_from_steps"):
+                    # Move to practice completion page
+                    st.session_state.phase = "practice_complete"
+                    st.session_state.pop("show_practice_test", None)
+                    st.rerun()
     
     elif st.session_state.visual_game_state == "questionnaire" and not is_practice:
         st.markdown("""

@@ -27,210 +27,6 @@ print = _safe_print
 import env.blicket_text as blicket_text
 from textual_blicket_game import textual_blicket_game_page
 
-
-# Comprehension check environment - simpler machine for learning
-class DummyComprehensionEnv:
-    """
-    Simple deterministic machine for comprehension (3 objects):
-    - Machine is ON only when all 3 objects are on.
-      (So: [1,1,1] -> ON; [1,0,0] -> OFF)
-    This is for the comprehension check only.
-    """
-    def __init__(self, num_objects=3):
-        self.num_objects = num_objects
-        self.item_states = [0] * self.num_objects  # 0=off, 1=on
-
-    def set_item(self, idx, state):
-        self.item_states[idx] = 1 if state else 0
-
-    def get_states(self):
-        return list(self.item_states)
-
-    def test_machine(self):
-        # ON only if all objects are ON
-        return all(self.item_states)
-
-
-def run_comprehension_quiz():
-    st.title("🧠 Comprehension Check")
-
-    # CSS styling for buttons
-    st.markdown("""
-    <style>
-    .stApp .stButton button[kind="secondary"] {
-        background-color: #6c757d !important;
-        border-color: #6c757d !important;
-        color: white !important;
-        border-radius: 8px !important;
-        padding: 8px 16px !important;
-        margin: 5px !important;
-        font-weight: bold !important;
-    }
-    
-    .stApp .stButton button[kind="secondary"]:hover {
-        background-color: #5a6268 !important;
-        border-color: #545b62 !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-    # Initialize quiz state
-    if "comp_env" not in st.session_state:
-        st.session_state.comp_env = DummyComprehensionEnv(num_objects=3)
-        st.session_state.comp_selected = set()
-        st.session_state.comp_history = []
-        st.session_state.comp_step = 0  # 0: Instruction 1, 1: Q1, 2: Instruction 2, 3: Q2, 4: Done
-        st.session_state.comp_attempts = 0
-        st.session_state.comp_action_feedback = None
-
-    env = st.session_state.comp_env
-    step = st.session_state.comp_step
-    history = st.session_state.comp_history
-
-    # Sidebar: State History
-    with st.sidebar:
-        st.subheader("### 📜 State History")
-        if not history:
-            st.write("No tests yet. Your tests will appear here.")
-        else:
-            for i, entry in enumerate(history):
-                objs = entry["objects"]
-                lit = entry["lit"]
-                
-                objects_text = ""
-                for obj_idx in range(len(objs)):
-                    display_id = obj_idx + 1
-                    if objs[obj_idx] == 1:
-                        objects_text += f"<span style='background-color: #28a745; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{display_id}</span>"
-                    else:
-                        objects_text += f"<span style='background-color: #6c757d; color: white; padding: 1px 4px; margin: 1px; border-radius: 2px; font-size: 14px;'>{display_id}</span>"
-
-                machine_status = "LIT" if lit else "NOT LIT"
-                st.markdown(f"<div style='margin: 4px 0; font-size: 14px;'><strong>{i + 1}:</strong> {objects_text} <span style='padding-left:6px;'>{machine_status}</span></div>", unsafe_allow_html=True)
-
-    # Quiz logic
-    if step == 0:
-        st.info("""
-        **Instruction 1**
-        
-        1.  Turn **all 3 objects ON** (checkboxes should appear below each button).
-        2.  Click **Completed Instruction** to check your action.
-        """)
-        st.session_state.comp_action_feedback = None
-    
-    elif step == 1:
-        st.success("Correct! You put all 3 objects on the machine.")
-        st.markdown("Now, based on the **last test** in the State History panel:")
-        ans = st.radio(
-            "Does the machine light up in the last test?",
-            ["Yes", "No"],
-            key="comp_q1",
-            index=None
-        )
-        if st.button("Submit Answer 1", key="comp_submit1"):
-            if ans == "Yes":
-                st.success("Correct! The machine lights up when all 3 objects are on.")
-                st.session_state.comp_step = 2
-                st.session_state.comp_action_feedback = None
-                st.rerun()
-            elif ans is None:
-                st.warning("Please select an answer.")
-            else:
-                st.warning("That's not correct. Look at the last entry in the State History. It should show '🟢 LIT'.")
-                st.session_state.comp_attempts += 1
-
-    elif step == 2:
-        st.info("""
-        **Instruction 2**
-        
-        1.  Turn **only Object 1 ON** (Object 1 checkbox shown, Objects 2 & 3 not checked).
-        2.  Click **Completed Instruction** to check your action.
-        """)
-        st.session_state.comp_action_feedback = None
-
-    elif step == 3:
-        st.success("Correct! You put only Object 1 on the machine.")
-        st.markdown("Now, based on the **last test** in the State History panel:")
-        ans = st.radio(
-            "Does the machine light up in the last test?",
-            ["Yes", "No"],
-            key="comp_q2",
-            index=None
-        )
-        if st.button("Submit Answer 2", key="comp_submit2"):
-            if ans == "No":
-                st.success("Correct! The machine does NOT light up with only Object 1.")
-                st.session_state.comp_step = 4
-                st.session_state.comp_action_feedback = None
-                st.rerun()
-            elif ans is None:
-                st.warning("Please select an answer.")
-            else:
-                st.warning("That's not correct. Look at the last entry in the State History. It should show '🔴 NOT LIT'.")
-                st.session_state.comp_attempts += 1
-    
-    elif step == 4:
-        st.success("✅ You passed the comprehension check!")
-        st.markdown("You will now move on to a short **practice round**.")
-        if st.button("Continue to Practice", type="primary"):
-            st.session_state.comprehension_completed = True
-            st.session_state.phase = "practice"
-            st.rerun()
-
-    # Object & Test Buttons (only show if not done)
-    if step in [0, 2]:
-        st.markdown("### Available Objects")
-        obj_cols = st.columns(3)
-        
-        for i in range(3):
-            selected = i in st.session_state.comp_selected
-            label = f"Object {i+1}"
-            
-            with obj_cols[i]:
-                if st.button(label, key=f"comp_obj_btn_{i}", type="secondary"):
-                    # Toggle selection
-                    if selected:
-                        st.session_state.comp_selected.remove(i)
-                        env.set_item(i, 0)
-                    else:
-                        st.session_state.comp_selected.add(i)
-                        env.set_item(i, 1)
-                    
-                    # Run machine and update history
-                    lit = env.test_machine()
-                    states = env.get_states()
-                    st.session_state.comp_history.append({"objects": states, "lit": lit})
-                    st.rerun()
-                
-                # Show checkbox below button
-                if selected:
-                    st.markdown(f"<div style='text-align: center; margin-top: 5px;'><input type='checkbox' checked disabled style='cursor: default; width: 20px; height: 20px;'></div>", unsafe_allow_html=True)
-                else:
-                    st.markdown(f"<div style='text-align: center; margin-top: 5px;'><input type='checkbox' disabled style='cursor: default; width: 20px; height: 20px;'></div>", unsafe_allow_html=True)
-
-        if st.button("Completed Instruction"):
-            states = env.get_states()
-
-            if step == 0:
-                if states == [1, 1, 1]:
-                    st.session_state.comp_step = 1
-                    st.session_state.comp_action_feedback = None
-                    st.rerun()
-                else:
-                    st.warning("Not quite. Please make sure **all 3** objects are ON (checkboxes shown) and try again.")
-            elif step == 2:
-                if states == [1, 0, 0]:
-                    st.session_state.comp_step = 3
-                    st.session_state.comp_action_feedback = None
-                    st.rerun()
-                else:
-                    st.warning("That's not the right combination. Please make sure **only Object 1** is ON and try again.")
-    
-    # Too many failed attempts
-    if st.session_state.comp_attempts >= 5 and st.session_state.comp_step < 4:
-        st.error("You seem to be having trouble with the controls. The study will now end.")
-        st.stop()
-
 # Optional: IRB protocol number can be provided via environment
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 
@@ -781,52 +577,86 @@ Please enter your Prolific ID to begin and provide your age and gender.
     
     st.stop()
 
-# 2) COMPREHENSION INSTRUCTIONS
+# 2) COMPREHENSION PHASE
 elif st.session_state.phase == "comprehension":
-    st.title("🧙 Game Instructions")
+    # Show title
+    st.title("🧙 Blicket Text Adventure")
+    
+    if not st.session_state.comprehension_completed:
+        st.markdown("## 🧠 Comprehension Phase")
+        st.markdown(f"**Hello {st.session_state.current_participant_id}!**")
+        
+        st.markdown("""
+        This is the comprehension phase to help you understand the interface.
 
-    st.markdown("""
-In this game, you will place objects on a machine and test whether the machine lights up.
-Your tests will be recorded in the **State History** panel on the left.
+        **Instructions:**
+        - You will see 4 objects. Click to place them on the machine.
+        - You can place one or more objects on the machine and click "Test."
+        - If the machine lights up, the combination works.
+        - Your goal is to figure out which object(s) turn the machine on and how it works.
+        - Your tests and outcomes will appear in the State History panel on the left-hand side.
 
--   Click an object to select it (checkbox will appear below).
--   The machine will respond by lighting up or staying off based on the objects you place.
-
-Before we start, we need to make sure you fully understand the interface.
-Click below to begin the comprehension check.
-""")
-
-    if st.button("Start Comprehension Check", type="primary"):
-        st.session_state.phase = "comprehension_quiz"
-        st.rerun()
+        When you're ready, click the button below to start the comprehension phase.
+        """)
+        
+        if st.button("Start Comprehension Phase", type="primary"):
+            # Create a simple practice configuration
+            practice_config = {
+                'num_objects': 4,
+                'num_blickets': 2,
+                'blicket_indices': [1, 2],  # Objects 1 and 2 are blickets in comprehension phase
+                'rule': 'conjunctive',
+                'init_prob': 0.2,
+                'transition_noise': 0.0,
+                'horizon': 5  # Practice round limited to 5 actions only
+            }
+            
+            # Create practice game
+            env, first_obs = create_new_game(
+                seed=999,  # Fixed seed for practice
+                num_objects=practice_config['num_objects'],
+                num_blickets=practice_config['num_blickets'],
+                rule=practice_config['rule'],
+                blicket_indices=practice_config['blicket_indices']
+            )
+            
+            st.session_state.env = env
+            st.session_state.start_time = datetime.datetime.now()
+            st.session_state.log = [first_obs]
+            st.session_state.times = [datetime.datetime.now()]
+            st.session_state.comprehension_completed = True
+            st.session_state.phase = "practice_game"
+            
+            # Save intermediate progress - starting comprehension game
+            save_intermediate_progress_app(st.session_state.current_participant_id, "comprehension_game_start", 1, 1, 0)
+            
+            st.rerun()
+    
     st.stop()
 
-# 2b) COMPREHENSION QUIZ
-elif st.session_state.phase == "comprehension_quiz":
-    run_comprehension_quiz()
-    st.stop()
-
-# 3) PRACTICE ROUND (with single blicket and immediate feedback)
-elif st.session_state.phase == "practice":
-    if "practice_blicket_idx" not in st.session_state:
-        # 3 objects → indices 0,1,2; pick one random blicket
-        st.session_state.practice_blicket_idx = random.randint(0, 2)
- 
-    # Create a simple practice configuration with ONLY 1 BLICKET
+# 3) PRACTICE GAME
+elif st.session_state.phase == "practice_game":
+    # Show title
+    st.title("🧙 Blicket Text Adventure")
+    
+    st.markdown("## Comprehension Phase - Round 1")
+    st.markdown("**This is the comprehension phase to help you understand the interface.**")
+    
+    # Create a simple practice configuration
     practice_config = {
-        'num_objects': 3,
-        'num_blickets': 1,
-        'blicket_indices': [st.session_state.practice_blicket_idx],  # ONLY 1 blicket
-        'rule': 'conjunctive',  # With 1 blicket, conjunctive and disjunctive are the same
-        'init_prob': 0.0,
+        'num_objects': 4,
+        'num_blickets': 2,
+        'blicket_indices': [1, 2],  # Objects 1 and 2 are blickets in comprehension phase
+        'rule': 'conjunctive',
+        'init_prob': 0.2,
         'transition_noise': 0.0,
         'horizon': 5
     }
     
-    # Use the visual game page with data saving for practice phase
-    def practice_save_func(participant_id, game_data):
-        # Add phase identifier to distinguish practice data
-        game_data['phase'] = 'practice'
+    # Use the visual game page with data saving for comprehension phase
+    def comprehension_save_func(participant_id, game_data):
+        # Add phase identifier to distinguish comprehension data
+        game_data['phase'] = 'comprehension'
         game_data['interface_type'] = st.session_state.interface_type
         save_game_data(participant_id, game_data)
     
@@ -835,12 +665,12 @@ elif st.session_state.phase == "practice":
         practice_config,
         0,  # Single practice round
         1,  # Total rounds = 1
-        practice_save_func,
+        comprehension_save_func,
         use_visual_mode=False,
         is_practice=True
     )
 
-# 4) PRACTICE COMPLETION & FEEDBACK
+# 4) PRACTICE COMPLETION
 elif st.session_state.phase == "practice_complete":
     # Show title
     st.title("🧙 Blicket Text Adventure")
@@ -850,23 +680,11 @@ elif st.session_state.phase == "practice_complete":
     
     # Progress indicator removed as requested
     
-    st.markdown("""
-    ### Ready for the Main Experiment?
+    st.markdown("---")
     
-    Now that you've practiced with the interface, you're ready for the main experiment.
-    
-    **Main Experiment Structure:**
-    - 3 rounds total
-    - 4 objects in each round
-    - The rule for when the machine light up may change between rounds. 
-    - Each round is independent, what you learn in one round may not apply to the next.
-    - You must complete all three rounds to finish the experiment.
-    - You will receive bonus payment for correctly answering the questions after exploration.
-
-
-    """)
-    
-    if st.button("Start Main Experiment", type="primary"):
+    if st.button("Start Main Experiment", type="primary", use_container_width=True):
+        # Answer submitted (no need to validate - they can answer anything)
+        # Move to main experiment
         # Create random configuration for actual experiment (3 rounds with 4 objects)
         import random
         
@@ -888,15 +706,6 @@ elif st.session_state.phase == "practice_complete":
             [2, 3],  # Objects 2, 3
             [0, 3],  # Objects 0, 3
             [1, 3],  # Objects 1, 3
-            # [0],     # Object 0 only
-            # [1],     # Object 1 only
-            # [2],     # Object 2 only
-            # [3],     # Object 3 only
-            # [0, 1, 2],  # Objects 0, 1, 2
-            # [1, 2, 3],  # Objects 1, 2, 3
-            # [0, 2, 3],  # Objects 0, 2, 3
-            # [0, 1, 3],  # Objects 0, 1, 3
-            # [0, 1, 2, 3]  # All objects
         ]
         
         # Shuffle combinations for variety
