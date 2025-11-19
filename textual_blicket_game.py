@@ -586,10 +586,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("""
         **How to use the interface:**
         - Click on an object button to **place** it on the blicket detector
-        - The button will turn **green** when the object is placed
+        - A checkbox will appear **below** the button when the object is placed
         - Click the button again to **remove** the object from the detector
-        - The button will turn **gray** when the object is removed
-        - Each button shows the current state: **green = placed**, **gray = not placed**
+        - The checkbox will disappear when the object is removed
         - Try different combinations to figure out which objects are blickets!
         """)
         
@@ -603,13 +602,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 steps_left = horizon - st.session_state.steps_taken
                 interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                 
-                # Single button that toggles between green (selected) and gray (unselected)
-                button_type = "primary" if is_selected else "secondary"
-                
+                # Button always uses secondary (gray) styling
                 if st.button(f"Object {i + 1}", 
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
-                           type=button_type,
+                           type="secondary",
                            help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
                     # Record the action before making changes
                     action_time = datetime.datetime.now()
@@ -663,6 +660,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
                     
                     st.rerun()
+                
+                # Display checkbox underneath the button to show selection state
+                if is_selected:
+                    st.markdown(f"<div style='text-align: center; margin-top: 5px;'><input type='checkbox' checked disabled style='cursor: default; width: 20px; height: 20px;'></div>", unsafe_allow_html=True)
+                else:
+                    st.markdown(f"<div style='text-align: center; margin-top: 5px;'><input type='checkbox' disabled style='cursor: default; width: 20px; height: 20px;'></div>", unsafe_allow_html=True)
     else:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
