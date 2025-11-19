@@ -399,8 +399,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Create sidebar for state history
     with st.sidebar:
         st.markdown("""
-        <div style="background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); padding: 8px; border-radius: 2px; margin-bottom: 4px;">
-            <h2 style="margin: 0; color: white; text-align: center; font-size: 16px;">📜 Test History</h2>
+        <div style="background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); padding: 10px; border-radius: 4px; margin-bottom: 6px;">
+            <h2 style="margin: 0; color: white; text-align: center; font-size: 20px;">Test History</h2>
         </div>
         """, unsafe_allow_html=True)
         
@@ -409,7 +409,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         <style>
         [data-testid="stSidebarContent"] {
             min-height: 1000px;
-            min-width: 300px;
+            min-width: 360px;
         }
         </style>
         """, unsafe_allow_html=True)
@@ -418,7 +418,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         with history_container:
             if st.session_state.state_history:
-                st.markdown(f"<div style='text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 10px; padding: 14px; background-color: #f0f0f0; border-radius: 5px;'>Total Tests: {len(st.session_state.state_history)}</div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 10px; padding: 14px; background-color: #f0f0f0; border-radius: 5px;'>Total Tests: {len(st.session_state.state_history)}</div>", unsafe_allow_html=True)
                 
                 for i, state in enumerate(st.session_state.state_history):
                     if use_text_version:
@@ -431,7 +431,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             yes_no = "Yes" if is_on_platform else "No"
                             bg_color = "#d0d0d0" if is_on_platform else "#f5f5f5"
                             border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
-                            objects_text += f"<span style='display: inline-flex; align-items: center; justify-content: center; background-color: {bg_color}; color: black; padding: 4px 8px; margin: 1px 1px; border-radius: 3px; font-size: 14px; font-weight: bold; border: {border_style}; min-width: 45px; flex-shrink: 0;'><div style='font-size: 11px; margin-bottom: 1px; font-weight: bold; color: #333; margin-right: 3px;'>{display_id}</div><div style='font-size: 13px; font-weight: bold;'>{yes_no}</div></span>"
+                            objects_text += f"<span style='display: inline-flex; align-items: center; justify-content: center; background-color: {bg_color}; color: black; padding: 4px 8px; margin: 1px 1px; border-radius: 2px; font-size: 16px; font-weight: bold; border: {border_style}; min-width: 45px; flex-shrink: 0;'><div style='font-size: 11px; margin-bottom: 1px; font-weight: bold; color: #333; margin-right: 3px;'>{display_id}</div><div style='font-size: 13px; font-weight: bold;'>{yes_no}</div></span>"
                         
                         # Show machine state on same row
                         machine_status = "ON" if state['machine_lit'] else "OFF"
@@ -439,15 +439,15 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         st.markdown(f"""
                         <div style='
                             margin: 6px 0; 
-                            padding: 8px 12px; 
+                            padding: 8px 10px; 
                             background-color: #fafafa; 
-                            border-left: 3px solid #2196f3;
-                            border-radius: 4px;
-                            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+                            border-left: 2px solid #2196f3;
+                            border-radius: 2px;
+                            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
                         '>
-                            <div style='font-size: 14px; font-weight: bold; margin-bottom: 4px; color: #1976d2;'>Test {i + 1}</div>
-                            <div style='margin-bottom: 4px; font-size: 12px; white-space: nowrap; overflow: hidden; display: flex; flex-wrap: nowrap; justify-content: center;'>{objects_text}</div>
-                            <div style='font-size: 12px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
+                            <div style='font-size: 14px; font-weight: bold; margin-bottom: 2px; color: #1976d2;'>Test {i + 1}</div>
+                            <div style='margin-bottom: 2px; font-size: 14px; white-space: nowrap; overflow: hidden; display: flex; flex-wrap: nowrap; justify-content: center;'>{objects_text}</div>
+                            <div style='font-size: 14px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
                         </div>
                         """, unsafe_allow_html=True)
                     else:
