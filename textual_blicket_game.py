@@ -438,14 +438,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         machine_color = "#000000"  # Always black
                         st.markdown(f"""
                         <div style='
-                            margin: 6px 0; 
-                            padding: 8px 10px; 
+                            margin: 4px 0; 
+                            padding: 6px 10px; 
                             background-color: #fafafa; 
-                            border-left: 2px solid #2196f3;
+                            border-left: 1px solid #2196f3;
                             border-radius: 2px;
                             box-shadow: 0 1px 1px rgba(0,0,0,0.05);
                         '>
-                            <div style='font-size: 14px; font-weight: bold; margin-bottom: 2px; color: #1976d2;'>Test {i + 1}</div>
+                            <div style='font-size: 14px; font-weight: bold; margin-bottom: 1px; color: #1976d2;'>Test {i + 1}</div>
                             <div style='margin-bottom: 2px; font-size: 14px; white-space: nowrap; overflow: hidden; display: flex; flex-wrap: nowrap; justify-content: center;'>{objects_text}</div>
                             <div style='font-size: 14px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
                         </div>
@@ -581,7 +581,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     </div>
                 </div>
                 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
-                    <div style="font-size: 14px; margin-bottom: 5px;">Steps Remaining</div>
+                    <div style="font-size: 14px; margin-bottom: 5px;">Number of Remaining Tests</div>
                     <div style="font-size: 24px;">{steps_left}</div>
                 </div>
             </div>
@@ -596,7 +596,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         st.markdown(f"""
         ### Blicket Detector Status: {machine_status}
-        **Steps Remaining: {steps_left}/{horizon}**
+        **Tests Remaining: {steps_left}/{horizon}**
         """)
         st.markdown("---")
     
@@ -604,7 +604,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     if steps_left <= 0:
         st.markdown("""
         <div style="background: rgba(220, 53, 69, 0.8); border: 1px solid rgba(220, 53, 69, 0.9); border-radius: 10px; padding: 15px; margin: 10px 0; text-align: center;">
-            <strong>No steps remaining!</strong>
+            <strong>No Tests remaining!</strong>
         </div>
         """, unsafe_allow_html=True)
     
@@ -856,8 +856,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
 
     
     # Phase transition buttons
-    st.markdown("---")
-    st.markdown("### Game Controls")
     
     if st.session_state.visual_game_state == "exploration":
         horizon = round_config.get('horizon', 32)
@@ -911,7 +909,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         else:
             st.markdown(f"""
             <div style="background: rgba(13, 202, 240, 0.1); border: 2px solid #0dcaf0; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                <h3 style="color: #0dcaf0; margin: 0;"> You have {steps_left} steps remaining</h3>
+                <h3 style="color: #0dcaf0; margin: 0;"> You have {steps_left} Tests remaining</h3>
                 <p style="color: #0dcaf0; margin: 10px 0;">You can continue exploring or proceed to answer questions about blickets.</p>
             </div>
             """, unsafe_allow_html=True)
@@ -935,7 +933,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         st.session_state.visual_game_state = "questionnaire"
                         st.rerun()
             
-            st.markdown(f"**Steps remaining: {steps_left}/{horizon}**")
+            st.markdown(f"**Tests remaining: {steps_left}/{horizon}**")
             
             # Show practice test inline if flag is set
             if is_practice and st.session_state.get("show_practice_test", False):
@@ -981,14 +979,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         for i in range(round_config['num_objects']):
             if use_text_version:
                 # Text-only version: Simple text-based questionnaire
-                st.markdown(f"**Object {i + 1}**")
                 st.radio(
                     f"Is Object {i + 1} a blicket?",
                     ["Yes", "No"],
                     key=f"blicket_q_{i}",
                     index=None
                 )
-                st.markdown("---")
             else:
                 # Visual version: Questionnaire with images
                 st.markdown(f"""
@@ -1029,81 +1025,89 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         col1, col2, col3 = st.columns([1, 2, 1])
         with col2:
-            # Always show the button, but check inside the callback
-            if st.button("➡️ NEXT: Rule Type Classification", type="primary", use_container_width=True):
-                # Check if rule hypothesis is provided
-                current_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            # Check if all blicket questions are answered
+            all_blicket_answered = True
+            for i in range(round_config['num_objects']):
+                if st.session_state.get(f"blicket_q_{i}", None) is None:
+                    all_blicket_answered = False
+                    break
+            
+            # Check if rule hypothesis is provided
+            current_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+            
+            # Disable button if not all questions are answered or hypothesis is missing
+            button_disabled = not all_blicket_answered or not current_hypothesis
+            
+            if st.button("➡️ NEXT: Rule Type Classification", type="primary", use_container_width=True, disabled=button_disabled):
+                # All validations passed (button would not have been clicked if validations failed)
                 print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
                 print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
                 
-                if current_hypothesis:
-                    # Save blicket classifications before moving to rule type
-                    blicket_classifications = {}
-                    print(f"🔍 DEBUG: About to collect blicket answers, num_objects = {round_config['num_objects']}")
-                    for i in range(round_config['num_objects']):
-                        raw_answer = st.session_state.get(f"blicket_q_{i}", None)
-                        print(f"🔍 DEBUG: Raw blicket_q_{i} from session state: {raw_answer}")
-                        # Only save actual values from the user, don't default to "No"
-                        if raw_answer is not None:
-                            blicket_classifications[f"object_{i}"] = raw_answer
-                            print(f"🔍 Saving intermediate - blicket_q_{i} = {raw_answer}")
-                        else:
-                            print(f"⚠️  WARNING: blicket_q_{i} is None - user didn't select an answer!")
-                    
-                    # Get objects that were on the machine before Q&A
-                    objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
-                    
-                    # Note: We don't save intermediate progress for main_game rounds anymore
-                    # All data including hypothesis and rule_type will be saved in the final round data
-                    # Only save for comprehension phase if needed
-                    if is_practice:
-                        save_intermediate_progress(
-                            participant_id, 
-                            round_config, 
-                            current_round, 
-                            total_rounds, 
-                            is_practice,
-                            blicket_classifications=blicket_classifications,
-                            rule_hypothesis=current_hypothesis,
-                            objects_on_machine=objects_on_machine_before_qa
-                        )
-                        print(f"✅ Saved intermediate progress for comprehension phase")
-                    
-                    print(f"📝 Preparing to save hypothesis for round {current_round + 1}")
-                    print(f"   - Objects on machine: {objects_on_machine_before_qa}")
-                    print(f"   - Blicket classifications: {blicket_classifications}")
-                    print(f"   - Hypothesis: {current_hypothesis[:50]}...")
-                    
-                    # Debug: Check session state before transition
-                    print(f"🔍 DEBUG: Before transitioning to rule_type, checking session state:")
-                    print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
-                    for i in range(round_config['num_objects']):
-                        key = f"blicket_q_{i}"
-                        if key in st.session_state:
-                            print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
-                    
-                    # Save blicket classifications to a tracked key that won't be affected by widget lifecycle
-                    st.session_state["saved_blicket_classifications"] = blicket_classifications
-                    print(f"🔍 DEBUG: Saving blicket_classifications to tracked key")
-                    print(f"🔍 DEBUG: blicket_classifications dict: {blicket_classifications}")
-                    for obj, ans in blicket_classifications.items():
-                        print(f"   - {obj}: {ans}")
-                    print(f"🔍 DEBUG: Verified saved_blicket_classifications in session state: {st.session_state.get('saved_blicket_classifications')}")
-                    
-                    # Keep blicket answers in session state for the rule type classification phase
-                    for i in range(round_config['num_objects']):
-                        if f"blicket_q_{i}" not in st.session_state:
-                            st.session_state[f"blicket_q_{i}"] = blicket_classifications.get(f"object_{i}", "No")
-                    
-                    # Preserve hypothesis in a separate key that won't be cleared by widget lifecycle
-                    # The widget key "rule_hypothesis" won't persist once we leave this screen
-                    st.session_state["saved_rule_hypothesis"] = current_hypothesis
-                    print(f"🔍 DEBUG: Saved rule_hypothesis to saved_rule_hypothesis key: {current_hypothesis[:50]}...")
-                    
-                    st.session_state.visual_game_state = "rule_type_classification"
-                    st.rerun()
-                else:
-                    st.warning("Please enter a rule hypothesis before proceeding.")
+                # Save blicket classifications before moving to rule type
+                blicket_classifications = {}
+                print(f"🔍 DEBUG: About to collect blicket answers, num_objects = {round_config['num_objects']}")
+                for i in range(round_config['num_objects']):
+                    raw_answer = st.session_state.get(f"blicket_q_{i}", None)
+                    print(f"🔍 DEBUG: Raw blicket_q_{i} from session state: {raw_answer}")
+                    # Only save actual values from the user, don't default to "No"
+                    if raw_answer is not None:
+                        blicket_classifications[f"object_{i}"] = raw_answer
+                        print(f"🔍 Saving intermediate - blicket_q_{i} = {raw_answer}")
+                    else:
+                        print(f"⚠️  WARNING: blicket_q_{i} is None - user didn't select an answer!")
+                
+                # Get objects that were on the machine before Q&A
+                objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
+                
+                # Note: We don't save intermediate progress for main_game rounds anymore
+                # All data including hypothesis and rule_type will be saved in the final round data
+                # Only save for comprehension phase if needed
+                if is_practice:
+                    save_intermediate_progress(
+                        participant_id, 
+                        round_config, 
+                        current_round, 
+                        total_rounds, 
+                        is_practice,
+                        blicket_classifications=blicket_classifications,
+                        rule_hypothesis=current_hypothesis,
+                        objects_on_machine=objects_on_machine_before_qa
+                    )
+                    print(f"✅ Saved intermediate progress for comprehension phase")
+                
+                print(f"📝 Preparing to save hypothesis for round {current_round + 1}")
+                print(f"   - Objects on machine: {objects_on_machine_before_qa}")
+                print(f"   - Blicket classifications: {blicket_classifications}")
+                print(f"   - Hypothesis: {current_hypothesis[:50]}...")
+                
+                # Debug: Check session state before transition
+                print(f"🔍 DEBUG: Before transitioning to rule_type, checking session state:")
+                print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
+                for i in range(round_config['num_objects']):
+                    key = f"blicket_q_{i}"
+                    if key in st.session_state:
+                        print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
+                
+                # Save blicket classifications to a tracked key that won't be affected by widget lifecycle
+                st.session_state["saved_blicket_classifications"] = blicket_classifications
+                print(f"🔍 DEBUG: Saving blicket_classifications to tracked key")
+                print(f"🔍 DEBUG: blicket_classifications dict: {blicket_classifications}")
+                for obj, ans in blicket_classifications.items():
+                    print(f"   - {obj}: {ans}")
+                print(f"🔍 DEBUG: Verified saved_blicket_classifications in session state: {st.session_state.get('saved_blicket_classifications')}")
+                
+                # Keep blicket answers in session state for the rule type classification phase
+                for i in range(round_config['num_objects']):
+                    if f"blicket_q_{i}" not in st.session_state:
+                        st.session_state[f"blicket_q_{i}"] = blicket_classifications.get(f"object_{i}", "No")
+                
+                # Preserve hypothesis in a separate key that won't be cleared by widget lifecycle
+                # The widget key "rule_hypothesis" won't persist once we leave this screen
+                st.session_state["saved_rule_hypothesis"] = current_hypothesis
+                print(f"🔍 DEBUG: Saved rule_hypothesis to saved_rule_hypothesis key: {current_hypothesis[:50]}...")
+                
+                st.session_state.visual_game_state = "rule_type_classification"
+                st.rerun()
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
