@@ -471,7 +471,8 @@ if st.session_state.phase == "consent":
     st.markdown("### Questions")
     st.markdown(
         """
-        If you have any questions now, please contact the lab at 643-2172 or Professor Alison Gopnik (642-2752), or email us at the addresses listed at the end of this form. If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu.
+        If you have any questions, please contact the lab at gopniklab@berkeley.edu or the project lead, Eunice Yiu, at ey242@berkeley.edu.If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu. 
+        If you have questions about the software or analysis, please contact Mandana Samiei, at samieima@mila.quebec. 
         """
     )
 
@@ -675,13 +676,11 @@ elif st.session_state.phase == "practice_complete":
     # Show title
     st.title("🧙 Blicket Text Adventure")
     
-    st.markdown("## 🎉 Comprehension Phase Complete!")
+    st.markdown("## Comprehension Phase Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
     
     # Progress indicator removed as requested
-    
-    st.markdown("---")
-    
+        
     if st.button("Start Main Experiment", type="primary", use_container_width=True):
         # Answer submitted (no need to validate - they can answer anything)
         # Move to main experiment
