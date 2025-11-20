@@ -405,6 +405,24 @@ if "round_rule_type" not in st.session_state:
     st.session_state.round_rule_type = ""  # Store rule type for current round (string)
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+# Global CSS styling
+st.markdown("""
+<style>
+/* Global styling for primary buttons */
+button[data-testid="stBaseButton-primary"] {
+    background-color: #0d47a1 !important;
+    border-color: #0d47a1 !important;
+    color: white !important;
+}
+
+button[data-testid="stBaseButton-primary"]:hover {
+    background-color: #1565c0 !important;
+    border-color: #1565c0 !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 # 0) CONSENT SCREEN
 if st.session_state.phase == "consent":
@@ -531,23 +549,6 @@ if st.session_state.phase == "intro":
         print("✅ Firebase connected - Data saving enabled")
     else:
         print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
-    
-    # Add CSS styling for the Start Comprehension Phase button (blue)
-    st.markdown("""
-    <style>
-    /* Blue styling for Start Comprehension Phase button in demographics section */
-    button[data-testid="stBaseButton-primary"] {
-        background-color: #0d47a1 !important;
-        border-color: #0d47a1 !important;
-        color: white !important;
-    }
-    
-    button[data-testid="stBaseButton-primary"]:hover {
-        background-color: #1565c0 !important;
-        border-color: #1565c0 !important;
-    }
-    </style>
-    """, unsafe_allow_html=True)
     
     if not st.session_state.participant_id_entered:
         # Ask for Prolific ID and demographics, then start comprehension phase
