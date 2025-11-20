@@ -1309,6 +1309,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Return to main app for next round
                 st.session_state.phase = "next_round"
                 st.rerun()
+            
+            # Show message if button is disabled
+            if not rule_type:
+                st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type (Conjunctive or Disjunctive)</p>", unsafe_allow_html=True)
         else:
             # Show Finish Task button only on the last round
             # Check if rule type is provided
