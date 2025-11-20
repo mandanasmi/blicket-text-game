@@ -622,11 +622,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
                            help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
-                    # Just toggle selection without recording action
+                    # Toggle selection and record action
                     if is_selected:
                         st.session_state.selected_objects.remove(object_id)
+                        action_text = f"Removed Object {i + 1} from machine"
                     else:
                         st.session_state.selected_objects.add(object_id)
+                        action_text = f"Placed Object {i + 1} on machine"
+                    
+                    # Add to action history
+                    st.session_state.action_history.append(action_text)
                     
                     # Update environment state TEMPORARILY to show visual feedback
                     env._state[i] = (object_id in st.session_state.selected_objects)
@@ -677,9 +682,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # (environment is already updated, just get the state)
             final_machine_state = bool(game_state['true_state'][-1])
             
-            # Add to action history
-            objects_list = ", ".join([f"Object {obj + 1}" for obj in sorted(current_selection)])
-            action_text = f"You tested: {objects_list}. The blicket detector is {'ON' if final_machine_state else 'OFF'}."
+            # Add to action history - show test result
+            action_text = f"Test Result: Blicket detector is {'ON' if final_machine_state else 'OFF'}"
             st.session_state.action_history.append(action_text)
             
             # Add to state history (only on Test button click)
