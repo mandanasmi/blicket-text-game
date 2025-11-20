@@ -592,14 +592,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     if use_text_version:
         horizon = round_config.get('horizon', 32)
         steps_left = horizon - st.session_state.steps_taken
-        machine_status = "ON" if machine_lit else "OFF"
-        status_color = "#66bb6a" if machine_lit else "#000000"  # Green when ON, black when OFF
-        
-        st.markdown(f"""
-        ### Blicket Detector Status: <span style='color: {status_color};'>{machine_status}</span>
-        **Tests Remaining: {steps_left}/{horizon}**
-        """, unsafe_allow_html=True)
-        st.markdown("---")
     
     # Show warning if no steps left
     if steps_left <= 0:
@@ -676,51 +668,58 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.markdown("**No objects selected yet.** Click on objects to select them.")
         
         # Test button - only appears if objects are selected
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            if st.button(" Test Combination", type="primary", use_container_width=True, disabled=not current_selection or interaction_disabled):
-                # NOW record the test action
-                action_time = datetime.datetime.now()
-                
-                # Capture machine state BEFORE this test
-                machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
-                
-                # Get final result of this test combination
-                # (environment is already updated, just get the state)
-                final_machine_state = bool(game_state['true_state'][-1])
-                
-                # Add to action history
-                objects_list = ", ".join([f"Object {obj + 1}" for obj in sorted(current_selection)])
-                action_text = f"You tested: {objects_list}. The blicket detector is {'ON' if final_machine_state else 'OFF'}."
-                st.session_state.action_history.append(action_text)
-                
-                # Add to state history (only on Test button click)
-                state_data = {
-                    "objects_on_machine": set(st.session_state.selected_objects),
-                    "machine_lit": final_machine_state,
-                    "step_number": st.session_state.steps_taken + 1
-                }
-                st.session_state.state_history.append(state_data)
-                
-                # Record the action for Firebase
-                action_data = {
-                    "timestamp": action_time.isoformat(),
-                    "action_type": "test",
-                    "objects_tested": list(st.session_state.selected_objects),
-                    "machine_state_before": machine_state_before,
-                    "machine_state_after": final_machine_state,
-                    "step_number": st.session_state.steps_taken + 1
-                }
-                st.session_state.user_actions.append(action_data)
-                
-                # Increment step counter only on test
-                st.session_state.steps_taken += 1
-                
-                # Save intermediate progress after each test (only for comprehension phase)
-                if is_practice:
-                    save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
-                
-                st.rerun()
+        if st.button(" Test Combination", type="primary", use_container_width=True, disabled=not current_selection or interaction_disabled):
+            # NOW record the test action
+            action_time = datetime.datetime.now()
+            
+            # Capture machine state BEFORE this test
+            machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
+            
+            # Get final result of this test combination
+            # (environment is already updated, just get the state)
+            final_machine_state = bool(game_state['true_state'][-1])
+            
+            # Add to action history
+            objects_list = ", ".join([f"Object {obj + 1}" for obj in sorted(current_selection)])
+            action_text = f"You tested: {objects_list}. The blicket detector is {'ON' if final_machine_state else 'OFF'}."
+            st.session_state.action_history.append(action_text)
+            
+            # Add to state history (only on Test button click)
+            state_data = {
+                "objects_on_machine": set(st.session_state.selected_objects),
+                "machine_lit": final_machine_state,
+                "step_number": st.session_state.steps_taken + 1
+            }
+            st.session_state.state_history.append(state_data)
+            
+            # Record the action for Firebase
+            action_data = {
+                "timestamp": action_time.isoformat(),
+                "action_type": "test",
+                "objects_tested": list(st.session_state.selected_objects),
+                "machine_state_before": machine_state_before,
+                "machine_state_after": final_machine_state,
+                "step_number": st.session_state.steps_taken + 1
+            }
+            st.session_state.user_actions.append(action_data)
+            
+            # Increment step counter only on test
+            st.session_state.steps_taken += 1
+            
+            # Save intermediate progress after each test (only for comprehension phase)
+            if is_practice:
+                save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
+            
+            st.rerun()
+        
+        # Show Blicket Detector Status below Test Combination button (only after at least one test)
+        if st.session_state.state_history:
+            machine_status = "ON" if machine_lit else "OFF"
+            status_color = "#66bb6a" if machine_lit else "#000000"  # Green when ON, black when OFF
+            st.markdown(f"""
+            ### Blicket Detector Status: <span style='color: {status_color};'>{machine_status}</span>
+            **Tests Remaining: {steps_left}/{horizon}**
+            """, unsafe_allow_html=True)
     else:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
@@ -918,23 +917,21 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             """, unsafe_allow_html=True)
             
             # Show different button based on phase
-            col1, col2, col3 = st.columns([1, 2, 1])
-            with col2:
-                if is_practice:
-                    # Comprehension phase - show practice test inline
-                    if st.button("Practice Test", type="primary", key="complete_ready_btn", use_container_width=True):
-                        # Set flag to show practice test inline
-                        st.session_state.show_practice_test = True
-                        st.rerun()
-                else:
-                    # Main experiment - show questionnaire button
-                    if st.button("READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
-                        # Clear any previous blicket answers to ensure fresh start
-                        for i in range(round_config['num_objects']):
-                            if f"blicket_q_{i}" in st.session_state:
-                                del st.session_state[f"blicket_q_{i}"]
-                        st.session_state.visual_game_state = "questionnaire"
-                        st.rerun()
+            if is_practice:
+                # Comprehension phase - show practice test inline
+                if st.button("Practice Test", type="primary", key="complete_ready_btn", use_container_width=True):
+                    # Set flag to show practice test inline
+                    st.session_state.show_practice_test = True
+                    st.rerun()
+            else:
+                # Main experiment - show questionnaire button
+                if st.button("READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
+                    # Clear any previous blicket answers to ensure fresh start
+                    for i in range(round_config['num_objects']):
+                        if f"blicket_q_{i}" in st.session_state:
+                            del st.session_state[f"blicket_q_{i}"]
+                    st.session_state.visual_game_state = "questionnaire"
+                    st.rerun()
             
             st.markdown(f"**Tests remaining: {steps_left}/{horizon}**")
             
