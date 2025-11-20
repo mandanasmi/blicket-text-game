@@ -739,11 +739,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             
             # Show warning if no steps left
             if steps_left <= 0:
-                st.markdown("""
-                <div style="background: rgba(220, 53, 69, 0.8); border: 1px solid rgba(220, 53, 69, 0.9); border-radius: 10px; padding: 15px; margin: 10px 0; text-align: center;">
-                    <strong>No Tests remaining!</strong>
-                </div>
-                """, unsafe_allow_html=True)
+                st.markdown("<p style='color: #dc3545; font-weight: bold; font-size: 16px;'>No Tests remaining!</p>", unsafe_allow_html=True)
     else:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
