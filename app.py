@@ -595,7 +595,7 @@ elif st.session_state.phase == "comprehension":
         - You can place one or more objects on the machine and click "Test."
         - If the machine lights up, the combination works.
         - Your goal is to figure out which object(s) turn the machine on and how it works.
-        - Your tests and outcomes will appear in the State History panel on the left-hand side.
+        - Your tests and outcomes will appear in the Test History panel on the left-hand side.
 
         When you're ready, click the button below to start the comprehension phase.
         """)
@@ -744,7 +744,7 @@ elif st.session_state.phase == "practice_complete":
                 'rule': rule,
                 'init_prob': init_prob,
                 'transition_noise': transition_noise,
-                'horizon': 32  # Default step limit
+                'horizon': 16  # Default step limit
             }
             round_configs.append(round_config)
         
