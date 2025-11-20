@@ -399,7 +399,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Create sidebar for state history
     with st.sidebar:
         st.markdown("""
-        <div style="background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%); padding: 10px; border-radius: 4px; margin-bottom: 6px;">
+        <div style="background: #424242; padding: 10px; border-radius: 4px; margin-bottom: 6px;">
             <h2 style="margin: 0; color: white; text-align: center; font-size: 20px;">Test History</h2>
         </div>
         """, unsafe_allow_html=True)
@@ -435,7 +435,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         
                         # Show machine state on same row
                         machine_status = "ON" if state['machine_lit'] else "OFF"
-                        machine_color = "#000000"  # Always black
+                        machine_color = "#66bb6a" if state['machine_lit'] else "#000000"  # Green when ON, black when OFF
                         st.markdown(f"""
                         <div style='
                             margin: 4px 0; 
@@ -593,11 +593,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         horizon = round_config.get('horizon', 32)
         steps_left = horizon - st.session_state.steps_taken
         machine_status = "ON" if machine_lit else "OFF"
+        status_color = "#66bb6a" if machine_lit else "#000000"  # Green when ON, black when OFF
         
         st.markdown(f"""
-        ### Blicket Detector Status: {machine_status}
+        ### Blicket Detector Status: <span style='color: {status_color};'>{machine_status}</span>
         **Tests Remaining: {steps_left}/{horizon}**
-        """)
+        """, unsafe_allow_html=True)
         st.markdown("---")
     
     # Show warning if no steps left
@@ -648,6 +649,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Show status box underneath button
                 status_text = "ON PLATFORM" if is_selected else "NOT ON PLATFORM"
                 box_border_color = "#333333"
+                status_color = "#66bb6a" if is_selected else "#333"  # Green when on platform, dark gray otherwise
                 st.markdown(f"""
                 <div style="
                     text-align: center;
@@ -657,7 +659,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     border-radius: 4px;
                     background-color: #f5f5f5;
                     font-size: 14px;
-                    color: #333;
+                    color: {status_color};
+                    font-weight: bold;
                 ">
                 {status_text}
                 </div>
