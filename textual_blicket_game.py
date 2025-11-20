@@ -892,8 +892,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Main experiment - show questionnaire
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h3 style="color: #856404; margin: 0;">No Actions Remaining!</h3>
-                    <p style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</p>
+                    <h4 style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</h4>
                 </div>
                 """, unsafe_allow_html=True)
                 
