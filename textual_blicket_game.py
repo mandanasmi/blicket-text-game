@@ -1175,7 +1175,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Navigation buttons
         st.markdown("---")
-        st.markdown("### 🚀 Submit Your Answers")
+        st.markdown("### Submit Your Answers")
         
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
@@ -1314,7 +1314,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Check if rule type is provided
             rule_type = st.session_state.get("rule_type", "")
             
-            if st.button("🏁 FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
+            if st.button("FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
                 # Get blicket classifications directly from saved tracked key
                 blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
                 print(f"🔍 DEBUG (FINAL): Using saved_blicket_classifications directly: {blicket_classifications}")
@@ -1415,6 +1415,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 else:
                     st.session_state.phase = "end"
                 st.rerun()
+            
+            # Show message if button is disabled
+            if not rule_type:
+                st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type (Conjunctive or Disjunctive)</p>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
     # Test the textual game
