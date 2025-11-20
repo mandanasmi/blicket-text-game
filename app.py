@@ -408,6 +408,22 @@ if "round_rule_type" not in st.session_state:
 
 # 0) CONSENT SCREEN
 if st.session_state.phase == "consent":
+    # Add CSS styling for the Accept button (green)
+    st.markdown("""
+    <style>
+    /* Green styling for Accept button in consent form */
+    .stApp .stButton button[kind="primary"]:nth-of-type(1) {
+        background-color: #28a745 !important;
+        border-color: #28a745 !important;
+    }
+    
+    .stApp .stButton button[kind="primary"]:nth-of-type(1):hover {
+        background-color: #218838 !important;
+        border-color: #218838 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     st.title("Research Consent")
     st.markdown("**Please read the consent information below carefully. Participation is voluntary.**")
 
@@ -472,7 +488,7 @@ if st.session_state.phase == "consent":
     st.markdown(
         """
         If you have any questions, please contact the lab at gopniklab@berkeley.edu or the project lead, Eunice Yiu, at ey242@berkeley.edu.If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu. 
-        If you have questions about the software or analysis, please contact Mandana Samiei, at samieima@mila.quebec. 
+        If you have questions about the software or analysis, please contact Mandana Samiei, at mandanas.samiei@mail.mcgill.ca. 
         """
     )
 
