@@ -307,6 +307,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         background-color: #6a6a6a !important;
         border-color: #5a5a5a !important;
     }
+    
+    /* Progress bar styling - dark blue */
+    .stProgress > div > div > div > div {
+        background-color: #0d47a1 !important;
+    }
     </style>
     """, unsafe_allow_html=True)
     
@@ -896,7 +901,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 </div>
                 """, unsafe_allow_html=True)
                 
-                if st.button("🚀 PROCEED TO ANSWER QUESTIONS", type="primary", key="proceed_btn", use_container_width=True):
+                if st.button("PROCEED TO ANSWER QUESTIONS", type="primary", key="proceed_btn", use_container_width=True):
                     # Clear any previous answers to ensure fresh start
                     for i in range(round_config['num_objects']):
                         if f"blicket_q_{i}" in st.session_state:
@@ -1018,7 +1023,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Navigation buttons - allow users to save and continue or finish
         st.markdown("---")
-        st.markdown("### 🚀 Continue to Rule Type Classification")
+        st.markdown("### Continue to Rule Type Classification")
         
         # Check if rule hypothesis is provided (read from session state)
         rule_hypothesis = st.session_state.get("rule_hypothesis", "")
@@ -1038,7 +1043,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Disable button if not all questions are answered or hypothesis is missing
             button_disabled = not all_blicket_answered or not current_hypothesis
             
-            if st.button("➡️ NEXT: Rule Type Classification", type="primary", use_container_width=True, disabled=button_disabled):
+            if st.button("NEXT: Rule Type Classification", type="primary", use_container_width=True, disabled=button_disabled):
                 # All validations passed (button would not have been clicked if validations failed)
                 print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
                 print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
