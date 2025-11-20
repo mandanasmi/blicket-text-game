@@ -647,12 +647,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Add to action history
                     st.session_state.action_history.append(action_text)
                     
-                    # Update environment state TEMPORARILY to show visual feedback
-                    env._state[i] = (object_id in st.session_state.selected_objects)
-                    env._update_machine_state()
-                    game_state = env.step("look")[0]
-                    st.session_state.game_state = game_state
-                    
                     st.rerun()
                 
                 # Show status box underneath button
@@ -692,8 +686,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Capture machine state BEFORE this test
             machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
             
+            # Update environment state with current object selections
+            for i in range(round_config['num_objects']):
+                env._state[i] = (i in st.session_state.selected_objects)
+            env._update_machine_state()
+            game_state = env.step("look")[0]
+            st.session_state.game_state = game_state
+            
             # Get final result of this test combination
-            # (environment is already updated, just get the state)
             final_machine_state = bool(game_state['true_state'][-1])
             
             # Add to action history - show test result
