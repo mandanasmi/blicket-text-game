@@ -705,6 +705,22 @@ elif st.session_state.phase == "practice_game":
 
 # 4) PRACTICE COMPLETION
 elif st.session_state.phase == "practice_complete":
+    # Add CSS styling for the Start Main Experiment button (blue)
+    st.markdown("""
+    <style>
+    /* Blue styling for Start Main Experiment button */
+    .stApp .stButton button[kind="primary"] {
+        background-color: #0d47a1 !important;
+        border-color: #0d47a1 !important;
+    }
+    
+    .stApp .stButton button[kind="primary"]:hover {
+        background-color: #1565c0 !important;
+        border-color: #1565c0 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     # Show title
     st.title("🧙 Blicket Text Adventure")
     
