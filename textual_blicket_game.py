@@ -428,7 +428,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         <style>
         [data-testid="stSidebarContent"] {
             min-height: 1000px;
-            min-width: 550px;
+            min-width: 700px;
         }
         </style>
         """, unsafe_allow_html=True)
