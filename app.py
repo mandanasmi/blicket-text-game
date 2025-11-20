@@ -536,13 +536,13 @@ if st.session_state.phase == "intro":
     st.markdown("""
     <style>
     /* Blue styling for Start Comprehension Phase button in demographics section */
-    button[kind="primary"] {
+    .stApp button[kind="primary"] {
         background-color: #0d47a1 !important;
         border-color: #0d47a1 !important;
         color: white !important;
     }
     
-    button[kind="primary"]:hover {
+    .stApp button[kind="primary"]:hover {
         background-color: #1565c0 !important;
         border-color: #1565c0 !important;
     }
