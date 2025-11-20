@@ -458,7 +458,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         st.markdown(f"""
                         <div style='
                             margin: 4px 0; 
-                            padding: 6px 10px; 
+                            padding: 8px 20px; 
                             background-color: #fafafa; 
                             border-left: 1px solid #2196f3;
                             border-radius: 2px;
