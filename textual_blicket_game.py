@@ -457,15 +457,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         machine_color = "#66bb6a" if state['machine_lit'] else "#000000"  # Green when ON, black when OFF
                         st.markdown(f"""
                         <div style='
+                            width: 100%;
                             margin: 4px 0; 
                             padding: 8px 20px; 
                             background-color: #fafafa; 
                             border-left: 1px solid #2196f3;
                             border-radius: 2px;
                             box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+                            box-sizing: border-box;
                         '>
                             <div style='font-size: 14px; font-weight: bold; margin-bottom: 1px; color: #1976d2;'>Test {i + 1}</div>
-                            <div style='margin-bottom: 2px; font-size: 14px; white-space: nowrap; overflow: hidden; display: flex; flex-wrap: nowrap; justify-content: center;'>{objects_text}</div>
+                            <div style='margin-bottom: 2px; font-size: 14px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;'>{objects_text}</div>
                             <div style='font-size: 14px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
                         </div>
                         """, unsafe_allow_html=True)
