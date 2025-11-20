@@ -532,6 +532,22 @@ if st.session_state.phase == "intro":
     else:
         print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
     
+    # Add CSS styling for the Start Comprehension Phase button (blue)
+    st.markdown("""
+    <style>
+    /* Blue styling for Start Comprehension Phase button in demographics section */
+    .stApp .stButton button[kind="primary"] {
+        background-color: #0d47a1 !important;
+        border-color: #0d47a1 !important;
+    }
+    
+    .stApp .stButton button[kind="primary"]:hover {
+        background-color: #1565c0 !important;
+        border-color: #1565c0 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     if not st.session_state.participant_id_entered:
         # Ask for Prolific ID and demographics, then start comprehension phase
         st.markdown(
