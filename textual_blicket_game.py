@@ -933,9 +933,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     st.rerun()
         else:
             st.markdown(f"""
-            <div style="background: rgba(13, 202, 240, 0.1); border: 2px solid #0dcaf0; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                <h3 style="color: #0dcaf0; margin: 0;"> You have {steps_left} Tests remaining</h3>
-                <p style="color: #0dcaf0; margin: 10px 0;">You can continue exploring or proceed to answer questions about blickets.</p>
+            <div style="background: rgba(29, 161, 242, 0.1); border: 2px solid #1DA1F2; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
+                <h3 style="color: #1DA1F2; margin: 0;"> You have {steps_left} Tests remaining</h3>
+                <p style="color: #1DA1F2; margin: 10px 0;">You can continue exploring or proceed to answer questions about blickets.</p>
             </div>
             """, unsafe_allow_html=True)
             
