@@ -290,8 +290,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Simple CSS for neutral button styling
     st.markdown("""
     <style>
-    /* Neutral button styling - no color-based feedback */
-    .stApp .stButton button[kind="primary"],
+    /* Secondary button styling - neutral gray */
     .stApp .stButton button[kind="secondary"] {
         background-color: #5a5a5a !important;
         border-color: #4a4a4a !important;
@@ -302,7 +301,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         font-weight: bold !important;
     }
     
-    .stApp .stButton button[kind="primary"]:hover,
     .stApp .stButton button[kind="secondary"]:hover {
         background-color: #6a6a6a !important;
         border-color: #5a5a5a !important;
@@ -311,6 +309,22 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     /* Progress bar styling - dark blue */
     .stProgress > div > div > div > div {
         background-color: #0d47a1 !important;
+    }
+    
+    /* Dark blue styling for primary action buttons */
+    .stApp .stButton button[kind="primary"] {
+        background-color: #0d47a1 !important;
+        border-color: #0d47a1 !important;
+        color: white !important;
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        margin: 5px !important;
+        font-weight: bold !important;
+    }
+    
+    .stApp .stButton button[kind="primary"]:hover {
+        background-color: #1565c0 !important;
+        border-color: #1565c0 !important;
     }
     </style>
     """, unsafe_allow_html=True)
