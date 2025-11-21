@@ -10,6 +10,9 @@ import firebase_admin
 from firebase_admin import credentials, db
 from dotenv import load_dotenv
 
+# Ensure app uses the browser width by default
+st.set_page_config(layout="wide")
+
 # Guard print against BrokenPipeError in Streamlit teardown
 import builtins as _builtins
 
@@ -408,6 +411,21 @@ if "round_rule_type" not in st.session_state:
 # Global CSS styling
 st.markdown("""
 <style>
+html, body, [data-testid="stAppViewContainer"], [data-testid="stAppViewContainer"] > div, [data-testid="stMain"] {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+}
+
+.block-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: clamp(1rem, 3vw, 3rem) !important;
+    padding-right: clamp(1rem, 3vw, 3rem) !important;
+    box-sizing: border-box;
+}
+
 /* Global styling for primary buttons */
 button[data-testid="stBaseButton-primary"] {
     background-color: #0d47a1 !important;

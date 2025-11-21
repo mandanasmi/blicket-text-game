@@ -280,6 +280,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - text-only interface"""
     
+
     # Determine which mode to use - this is the LOCAL variable for this function
     if use_visual_mode is not None:
         use_text_version = not use_visual_mode
@@ -290,112 +291,64 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Simple CSS for neutral button styling
     st.markdown("""
     <style>
-    /* Secondary button styling - neutral gray */
-    .stApp .stButton button[kind="secondary"] {
-        background-color: #5a5a5a !important;
-        border-color: #4a4a4a !important;
-        color: white !important;
-        border-radius: 8px !important;
-        padding: 8px 16px !important;
-        margin: 5px !important;
-        font-weight: bold !important;
-    }
-    
-    .stApp .stButton button[kind="secondary"]:hover {
-        background-color: #6a6a6a !important;
-        border-color: #5a5a5a !important;
-    }
-    
-    /* Progress bar styling - dark blue */
-    .stProgress > div > div > div > div {
-        background-color: #0d47a1 !important;
-    }
-    
-    /* Dark blue styling for primary action buttons */
-    .stApp .stButton button[kind="primary"] {
-        background-color: #0d47a1 !important;
-        border-color: #0d47a1 !important;
-        color: white !important;
-        border-radius: 8px !important;
-        padding: 8px 16px !important;
-        margin: 5px !important;
-        font-weight: bold !important;
-    }
-    
-    .stApp .stButton button[kind="primary"]:hover {
-        background-color: #1565c0 !important;
-        border-color: #1565c0 !important;
-    }
-    
-    /* Ensure full width and height on all screens */
-    .block-container {
-        max-width: 100% !important;
-        width: 100% !important;
-    }
-    
-    [data-testid="stAppViewContainer"] {
-        height: auto !important;
-    }
-    
-    [data-testid="stMain"] {
-        height: auto !important;
-    }
-    
-    .stApp {
-        height: auto !important;
-    }
-    
-    /* Responsive design for mobile screens */
+    /* ===== Desktop / default: leave Streamlit alone ===== */
+    /* (no forced sidebar width, no forced scrolling) */
+
+
+    /* ===== Phones / small tablets ONLY ===== */
     @media (max-width: 768px) {
+
+        /* Give the main area full width on phones */
         .block-container {
+            max-width: 100% !important;
+            width: 100% !important;
             padding-left: 0.5rem !important;
             padding-right: 0.5rem !important;
         }
-        
-        h1, h2, h3 {
-            margin-top: 0.5rem !important;
-            margin-bottom: 0.5rem !important;
-        }
-        
-        /* Sidebar responsive */
-        section[data-testid="stSidebar"] {
+
+        /* Make sidebar take full width on phones */
+        section[data-testid="stSidebar"],
+        section[data-testid="stSidebar"] > div {
             width: 100% !important;
-            min-width: auto !important;
+            min-width: 100% !important;
             max-width: 100% !important;
         }
-        
-        /* Game content responsive */
+
+        /* Phone-only scrolling sidebar */
+        [data-testid="stSidebarContent"] {
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            padding-bottom: 1rem;
+        }
+
+        /* Stack columns vertically on phones */
         .stApp [data-testid="stColumn"] {
             width: 100% !important;
+            flex: 1 1 100% !important;
         }
     }
-    
+
     @media (max-width: 480px) {
         .block-container {
             padding-left: 0.25rem !important;
             padding-right: 0.25rem !important;
         }
-        
+
         button {
             font-size: 0.85rem !important;
             padding: 0.3rem 0.6rem !important;
             min-height: 36px !important;
         }
-        
-        h1 {
-            font-size: 1rem !important;
-        }
-        
-        h2 {
-            font-size: 0.9rem !important;
-        }
-        
-        h3 {
-            font-size: 0.8rem !important;
-        }
+
+        h1 { font-size: 1rem !important; }
+        h2 { font-size: 0.9rem !important; }
+        h3 { font-size: 0.8rem !important; }
     }
     </style>
     """, unsafe_allow_html=True)
+
     
     # Initialize or reset session state for this page based on round
     # Check if we need to reinitialize (first time or new round)
@@ -486,51 +439,18 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Create sidebar for state history
     with st.sidebar:
         st.markdown("""
-            <style>
-            section[data-testid="stSidebar"] {
-                width: 320px !important;
-                min-width: 320px !important;
-                max-width: 320px !important;
-            }
-            section[data-testid="stSidebar"] > div {
-                width: 320px !important;
-                min-width: 320px !important;
-                max-width: 320px !important;
-            }
-            </style>
-        """, unsafe_allow_html=True)
-        st.markdown("""
         <div style="background: #424242; padding: 8px; border-radius: 4px; margin-bottom: 6px;">
             <h2 style="margin: 0; color: white; text-align: center; font-size: 16px;">Test History</h2>
         </div>
         """, unsafe_allow_html=True)
         
-        # Create a container for history entries with increased height
-        st.markdown("""
-        <style>
-        [data-testid="stSidebarContent"] {
-            max-height: calc(100vh - 80px);
-            overflow-y: auto;
-            overflow-x: hidden;
-            box-sizing: border-box;
-            padding-bottom: 1rem;
-        }
-        </style>
-        """, unsafe_allow_html=True)
-        # st.markdown("""
-        # <style>
-        # [data-testid="stSidebarContent"] {
-        #     min-height: 1000px;
-        #     min-width: 700px;
-        # }
-        # </style>
-        # """, unsafe_allow_html=True)
-        
         history_container = st.container()
-        
         with history_container:
             if st.session_state.state_history:
-                st.markdown(f"<div style='text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0; border-radius: 5px;'>Total Tests: {len(st.session_state.state_history)}</div>", unsafe_allow_html=True)
+                st.markdown(
+                    f"<div style='text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0; border-radius: 5px;'>Total Tests: {len(st.session_state.state_history)}</div>",
+                    unsafe_allow_html=True,
+                )
                 
                 for i, state in enumerate(st.session_state.state_history):
                     if use_text_version:
@@ -543,12 +463,19 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             yes_no = "Yes" if is_on_platform else "No"
                             bg_color = "#d0d0d0" if is_on_platform else "#f5f5f5"
                             border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
-                            objects_text += f"<span style='display: inline-flex; align-items: center; justify-content: center; background-color: {bg_color}; color: black; padding: 4px 8px; margin: 1px 1px; border-radius: 2px; font-size: 16px; font-weight: bold; border: {border_style}; min-width: 45px; flex-shrink: 0;'><div style='font-size: 11px; margin-bottom: 1px; font-weight: bold; color: #333; margin-right: 3px;'>{display_id}</div><div style='font-size: 13px; font-weight: bold;'>{yes_no}</div></span>"
+                            objects_text += (
+                                "<span style='display: inline-flex; align-items: center; justify-content: center; "
+                                f"background-color: {bg_color}; color: black; padding: 4px 8px; margin: 1px 1px; border-radius: 2px; "
+                                f"font-size: 16px; font-weight: bold; border: {border_style}; min-width: 45px; flex-shrink: 0;'>"
+                                f"<div style='font-size: 11px; margin-bottom: 1px; font-weight: bold; color: #333; margin-right: 3px;'>{display_id}</div>"
+                                f"<div style='font-size: 13px; font-weight: bold;'>{yes_no}</div></span>"
+                            )
                         
                         # Show machine state on same row
                         machine_status = "ON" if state['machine_lit'] else "OFF"
                         machine_color = "#66bb6a" if state['machine_lit'] else "#000000"  # Green when ON, black when OFF
-                        st.markdown(f"""
+                        st.markdown(
+                            f"""
                         <div style='
                             width: 100%;
                             margin: 5px 0; 
@@ -563,7 +490,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             <div style='margin-bottom: 2px; font-size: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;'>{objects_text}</div>
                             <div style='font-size: 12px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
                         </div>
-                        """, unsafe_allow_html=True)
+                        """,
+                            unsafe_allow_html=True,
+                        )
                     else:
                         # Visual version: show object numbers with colored backgrounds
                         cols = st.columns(round_config['num_objects'] + 2)
@@ -579,7 +508,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                 yes_no = "Yes" if is_on_platform else "No"
                                 bg_color = "#d0d0d0" if is_on_platform else "#f5f5f5"
                                 border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
-                                st.markdown(f"""
+                                st.markdown(
+                                    f"""
                                 <div style="
                                     background-color: {bg_color}; 
                                     border: {border_style}; 
@@ -598,7 +528,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                         {yes_no}
                                     </div>
                                 </div>
-                                """, unsafe_allow_html=True)
+                                """,
+                                    unsafe_allow_html=True,
+                                )
                         
                         # Show machine status
                         with cols[-1]:
@@ -606,7 +538,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             machine_color = "#000000"  # Always black
                             st.markdown(f"<div style='font-size: 16px; margin: 8px 0; font-weight: bold; color: {machine_color};'>{machine_status}</div>", unsafe_allow_html=True)
             else:
-                st.markdown("""
+                st.markdown(
+                    """
                 <div style='
                     padding: 20px; 
                     text-align: center; 
@@ -617,7 +550,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 '>
                 No tests recorded yet. Click TEST COMBINATION to begin.
                 </div>
-                """, unsafe_allow_html=True)
+                """,
+                    unsafe_allow_html=True,
+                )
     
     # Main content area
     # Display round info and progress
