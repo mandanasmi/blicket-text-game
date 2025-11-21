@@ -418,8 +418,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Create sidebar for state history
     with st.sidebar:
         st.markdown("""
-        <div style="background: #424242; padding: 10px; border-radius: 4px; margin-bottom: 6px;">
-            <h2 style="margin: 0; color: white; text-align: center; font-size: 20px;">Test History</h2>
+        <div style="background: #424242; padding: 8px; border-radius: 4px; margin-bottom: 6px;">
+            <h2 style="margin: 0; color: white; text-align: center; font-size: 16px;">Test History</h2>
         </div>
         """, unsafe_allow_html=True)
         
@@ -437,7 +437,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         with history_container:
             if st.session_state.state_history:
-                st.markdown(f"<div style='text-align: center; font-size: 18px; font-weight: bold; margin-bottom: 10px; padding: 14px; background-color: #f0f0f0; border-radius: 5px;'>Total Tests: {len(st.session_state.state_history)}</div>", unsafe_allow_html=True)
+                st.markdown(f"<div style='text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0; border-radius: 5px;'>Total Tests: {len(st.session_state.state_history)}</div>", unsafe_allow_html=True)
                 
                 for i, state in enumerate(st.session_state.state_history):
                     if use_text_version:
@@ -458,17 +458,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         st.markdown(f"""
                         <div style='
                             width: 100%;
-                            margin: 4px 0; 
-                            padding: 8px 20px; 
+                            margin: 6px 0; 
+                            padding: 12px 24px; 
                             background-color: #fafafa; 
                             border-left: 1px solid #2196f3;
                             border-radius: 2px;
                             box-shadow: 0 1px 1px rgba(0,0,0,0.05);
                             box-sizing: border-box;
                         '>
-                            <div style='font-size: 14px; font-weight: bold; margin-bottom: 1px; color: #1976d2;'>Test {i + 1}</div>
-                            <div style='margin-bottom: 2px; font-size: 14px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;'>{objects_text}</div>
-                            <div style='font-size: 14px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
+                            <div style='font-size: 13px; font-weight: bold; margin-bottom: 2px; color: #1976d2;'>Test {i + 1}</div>
+                            <div style='margin-bottom: 3px; font-size: 13px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;'>{objects_text}</div>
+                            <div style='font-size: 13px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
                         </div>
                         """, unsafe_allow_html=True)
                     else:
