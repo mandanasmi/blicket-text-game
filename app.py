@@ -419,6 +419,81 @@ button[data-testid="stBaseButton-primary"]:hover {
     background-color: #1565c0 !important;
     border-color: #1565c0 !important;
 }
+
+/* Responsive design for mobile screens */
+@media (max-width: 768px) {
+    /* Main content area */
+    .block-container {
+        max-width: 100% !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+    
+    /* Text sizing for mobile */
+    h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    h2 {
+        font-size: 1.2rem !important;
+    }
+    
+    h3 {
+        font-size: 1rem !important;
+    }
+    
+    p {
+        font-size: 0.9rem !important;
+    }
+    
+    /* Button sizing for mobile */
+    button {
+        font-size: 0.95rem !important;
+        padding: 0.5rem 1rem !important;
+        min-height: 44px !important;
+    }
+    
+    /* Input sizing */
+    input, select, textarea {
+        font-size: 1rem !important;
+        min-height: 44px !important;
+    }
+    
+    /* Columns on mobile - stack vertically */
+    [data-testid="column"] {
+        width: 100% !important;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra small screens */
+    h1 {
+        font-size: 1.2rem !important;
+    }
+    
+    h2 {
+        font-size: 1rem !important;
+    }
+    
+    h3 {
+        font-size: 0.9rem !important;
+    }
+    
+    p, li {
+        font-size: 0.85rem !important;
+    }
+    
+    button {
+        font-size: 0.9rem !important;
+        padding: 0.4rem 0.8rem !important;
+        min-height: 40px !important;
+    }
+    
+    input, select, textarea {
+        font-size: 0.95rem !important;
+        min-height: 40px !important;
+    }
+}
 </style>
 """, unsafe_allow_html=True)
 

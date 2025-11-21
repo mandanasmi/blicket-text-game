@@ -326,6 +326,57 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         background-color: #1565c0 !important;
         border-color: #1565c0 !important;
     }
+    
+    /* Responsive design for mobile screens */
+    @media (max-width: 768px) {
+        .block-container {
+            max-width: 100% !important;
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+        }
+        
+        h1, h2, h3 {
+            margin-top: 0.5rem !important;
+            margin-bottom: 0.5rem !important;
+        }
+        
+        /* Sidebar responsive */
+        section[data-testid="stSidebar"] {
+            width: 100% !important;
+            min-width: auto !important;
+            max-width: 100% !important;
+        }
+        
+        /* Game content responsive */
+        .stApp [data-testid="stColumn"] {
+            width: 100% !important;
+        }
+    }
+    
+    @media (max-width: 480px) {
+        .block-container {
+            padding-left: 0.25rem !important;
+            padding-right: 0.25rem !important;
+        }
+        
+        button {
+            font-size: 0.85rem !important;
+            padding: 0.3rem 0.6rem !important;
+            min-height: 36px !important;
+        }
+        
+        h1 {
+            font-size: 1rem !important;
+        }
+        
+        h2 {
+            font-size: 0.9rem !important;
+        }
+        
+        h3 {
+            font-size: 0.8rem !important;
+        }
+    }
     </style>
     """, unsafe_allow_html=True)
     
