@@ -458,17 +458,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         st.markdown(f"""
                         <div style='
                             width: 100%;
-                            margin: 6px 0; 
-                            padding: 12px 24px; 
+                            margin: 5px 0; 
+                            padding: 8px 12px; 
                             background-color: #fafafa; 
-                            border-left: 1px solid #2196f3;
+                            border-left: 2px solid #2196f3;
                             border-radius: 2px;
                             box-shadow: 0 1px 1px rgba(0,0,0,0.05);
                             box-sizing: border-box;
                         '>
-                            <div style='font-size: 13px; font-weight: bold; margin-bottom: 2px; color: #1976d2;'>Test {i + 1}</div>
-                            <div style='margin-bottom: 3px; font-size: 13px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;'>{objects_text}</div>
-                            <div style='font-size: 13px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
+                            <div style='font-size: 12px; font-weight: bold; margin-bottom: 2px; color: #1976d2;'>Test {i + 1}</div>
+                            <div style='margin-bottom: 2px; font-size: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;'>{objects_text}</div>
+                            <div style='font-size: 12px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
                         </div>
                         """, unsafe_allow_html=True)
                     else:
