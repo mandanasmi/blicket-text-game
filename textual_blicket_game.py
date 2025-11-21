@@ -327,10 +327,27 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         border-color: #1565c0 !important;
     }
     
+    /* Ensure full width and height on all screens */
+    .block-container {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+    
+    [data-testid="stAppViewContainer"] {
+        height: auto !important;
+    }
+    
+    [data-testid="stMain"] {
+        height: auto !important;
+    }
+    
+    .stApp {
+        height: auto !important;
+    }
+    
     /* Responsive design for mobile screens */
     @media (max-width: 768px) {
         .block-container {
-            max-width: 100% !important;
             padding-left: 0.5rem !important;
             padding-right: 0.5rem !important;
         }
