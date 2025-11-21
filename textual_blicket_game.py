@@ -418,6 +418,20 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Create sidebar for state history
     with st.sidebar:
         st.markdown("""
+            <style>
+            section[data-testid="stSidebar"] {
+                width: 320px !important;
+                min-width: 320px !important;
+                max-width: 320px !important;
+            }
+            section[data-testid="stSidebar"] > div {
+                width: 320px !important;
+                min-width: 320px !important;
+                max-width: 320px !important;
+            }
+            </style>
+        """, unsafe_allow_html=True)
+        st.markdown("""
         <div style="background: #424242; padding: 8px; border-radius: 4px; margin-bottom: 6px;">
             <h2 style="margin: 0; color: white; text-align: center; font-size: 16px;">Test History</h2>
         </div>
@@ -427,11 +441,22 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("""
         <style>
         [data-testid="stSidebarContent"] {
-            min-height: 1000px;
-            min-width: 700px;
+            max-height: calc(100vh - 80px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            box-sizing: border-box;
+            padding-bottom: 1rem;
         }
         </style>
         """, unsafe_allow_html=True)
+        # st.markdown("""
+        # <style>
+        # [data-testid="stSidebarContent"] {
+        #     min-height: 1000px;
+        #     min-width: 700px;
+        # }
+        # </style>
+        # """, unsafe_allow_html=True)
         
         history_container = st.container()
         
