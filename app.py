@@ -814,8 +814,8 @@ elif st.session_state.phase == "comprehension":
         if st.button("Start Comprehension Phase", type="primary"):
             practice_config = {
                 'num_objects': 4,
-                'num_blickets': 2,
-                'blicket_indices': [1, 2],
+                'num_blickets': 1,
+                'blicket_indices': [1],
                 'rule': 'conjunctive',
                 'init_prob': 0.2,
                 'transition_noise': 0.0,
@@ -888,8 +888,8 @@ elif st.session_state.phase == "practice_game":
 
     practice_config = {
         'num_objects': 4,
-        'num_blickets': 2,
-        'blicket_indices': [1, 2],
+        'num_blickets': 1,
+        'blicket_indices': [1],
         'rule': 'conjunctive',
         'init_prob': 0.2,
         'transition_noise': 0.0,
