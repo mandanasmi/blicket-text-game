@@ -22,7 +22,6 @@ def _safe_print(*args, **kwargs):
     except BrokenPipeError:
         pass
     except Exception:
-        # Swallow any unexpected stdout errors to avoid crashing the app
         pass
 
 print = _safe_print
@@ -30,27 +29,21 @@ print = _safe_print
 import env.blicket_text as blicket_text
 from textual_blicket_game import textual_blicket_game_page
 
-# Optional: IRB protocol number can be provided via environment
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 
-# Load environment variables
 load_dotenv()
-
-# Firebase initialization
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# Initialize Firebase - with fallback for deployment issues
 firebase_initialized = False
 db_ref = None
 
 if not firebase_admin._apps:
     try:
         print("🔍 Attempting Firebase initialization...")
-        
-        # Try Streamlit secrets first (for both local and cloud deployment)
+
         if hasattr(st, 'secrets') and hasattr(st.secrets, 'firebase') and 'firebase' in st.secrets:
             print("✅ Found Streamlit secrets - using secrets.toml")
             firebase_credentials = {
@@ -67,14 +60,14 @@ if not firebase_admin._apps:
                 "universe_domain": "googleapis.com"
             }
             database_url = st.secrets["firebase"]["database_url"]
-            
+
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
             print("✅ Firebase initialized successfully using Streamlit secrets")
-            
-        elif os.getenv("FIREBASE_PROJECT_ID"):  # Fallback to environment variables
+
+        elif os.getenv("FIREBASE_PROJECT_ID"):
             print("⚠️ Using environment variables as fallback")
             firebase_credentials = {
                 "type": "service_account",
@@ -90,18 +83,18 @@ if not firebase_admin._apps:
                 "universe_domain": "googleapis.com"
             }
             database_url = os.getenv("FIREBASE_DATABASE_URL")
-            
+
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
             print("✅ Firebase initialized successfully using environment variables")
+
         else:
             print("❌ No Firebase credentials found in secrets or environment variables")
             firebase_initialized = False
-            
+
     except Exception as e:
-        # Firebase initialization failed - app will run without data saving
         firebase_initialized = False
         print(f"❌ Firebase initialization failed: {e}")
         import traceback
@@ -111,6 +104,7 @@ else:
     firebase_initialized = True
     db_ref = db.reference()
 
+
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", blicket_indices=None):
     """Initialize a fresh BlicketTextEnv and return it plus the first feedback."""
     random.seed(seed)
@@ -118,7 +112,7 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", 
     env = blicket_text.BlicketTextEnv(
         num_objects=num_objects,
         num_blickets=num_blickets,
-        init_prob=0.0,  # Start with all objects OFF the machine
+        init_prob=0.0,
         rule=rule,
         transition_noise=0.0,
         seed=seed,
@@ -127,9 +121,9 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", 
     game_state = env.reset()
     return env, game_state["feedback"]
 
+
 def save_participant_config(participant_id, config):
     """Save participant configuration to Firebase"""
-    # Save participant config
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
@@ -140,95 +134,70 @@ def save_participant_config(participant_id, config):
             })
         except Exception as e:
             print(f"Failed to save participant config: {e}")
-    else:
-        pass  # Firebase not available - config not saved
+
 
 def save_game_data(participant_id, game_data):
     """Save game data to Firebase with enhanced tracking"""
-    # Save game data
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
-            
-            # Determine which key to use based on phase
+
             phase = game_data.get('phase', 'unknown')
             if phase == 'main_experiment':
                 games_ref = participant_ref.child('main_game')
             else:
-                games_ref = participant_ref.child('games')  # Keep comprehension phase data in 'games'
-            
-            # Create a new game entry with detailed timestamp
+                games_ref = participant_ref.child('games')
+
             now = datetime.datetime.now()
-            game_id = now.strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Include milliseconds
-            
-            # Debug: Print what we're about to save
-            print(f"🔥 save_game_data called - Round: {game_data.get('round_number', 'unknown')}")
-            print(f"🔥 rule_type in game_data: '{game_data.get('rule_type', 'MISSING')}'")
-            print(f"🔥 rule_hypothesis in game_data: '{game_data.get('rule_hypothesis', 'MISSING')[:50] if game_data.get('rule_hypothesis') else 'EMPTY'}...'")
-            print(f"🔥 blicket_classifications in game_data: {game_data.get('blicket_classifications', 'MISSING')}")
-            
-            # Enhance game_data with additional metadata
+            game_id = now.strftime("%Y%m%d_%H%M%S_%f")[:-3]
+
             enhanced_game_data = {
                 **game_data,
                 "saved_at": now.isoformat(),
                 "game_id": game_id,
                 "session_timestamp": now.timestamp()
             }
-            
-            # Debug: Verify rule_type is in enhanced data
-            print(f"🔥 rule_type in enhanced_game_data: '{enhanced_game_data.get('rule_type', 'MISSING')}'")
-            
+
             games_ref.child(game_id).set(enhanced_game_data)
             print(f"✅ Successfully saved {phase} data for {participant_id} - Game ID: {game_id}")
         except Exception as e:
             print(f"❌ Failed to save game data: {e}")
-            import traceback
-            print(f"Traceback: {traceback.format_exc()}")
     else:
         print("⚠️ Firebase not available - game data not saved")
 
+
 def save_intermediate_progress_app(participant_id, phase, round_number=None, total_rounds=None, action_count=0):
-    """Save intermediate progress - update entry with action history based on phase"""
+    """Save intermediate progress - comprehension only"""
     if firebase_initialized and db_ref:
         try:
-            # Skip intermediate progress saves for main_experiment
-            if phase == "main_experiment" or phase == "main_experiment_start":
+            if phase in ("main_experiment", "main_experiment_start"):
                 print(f"⚠️ Skipping intermediate progress save for main_experiment")
                 return
-            
+
             participant_ref = db_ref.child(participant_id)
-            
-            # Only save comprehension phase progress
             progress_ref = participant_ref.child('comprehension')
             entry_id = "action_history"
-            
-            # Create or update the entry
+
             now = datetime.datetime.now()
-            
-            # Get existing data or create new
             existing_data = progress_ref.child(entry_id).get() or {}
-            
-            # Update with current action history
+
             updated_data = {
                 **existing_data,
                 "last_updated": now.isoformat(),
-                "user_actions": st.session_state.get('user_actions', []) if hasattr(st, 'session_state') else [],
+                "user_actions": st.session_state.get('user_actions', []),
                 "total_actions": action_count,
                 "phase": phase,
                 "round_number": round_number,
                 "total_rounds": total_rounds
             }
-            
+
             progress_ref.child(entry_id).set(updated_data)
             print(f"💾 {phase} progress updated for {participant_id} - Round {round_number} - {action_count} actions")
-            
+
         except Exception as e:
             print(f"❌ Failed to save {phase} progress for {participant_id}: {e}")
     else:
         print("⚠️ Firebase not available - progress not saved")
-
-
-
 
 
 def handle_enter():
@@ -237,11 +206,10 @@ def handle_enter():
     if not cmd:
         return
     now = datetime.datetime.now()
-    # record user command
+
     st.session_state.log.append(f"```{cmd}```")
     st.session_state.times.append(now)
 
-    # step the environment
     game_state, reward, done = st.session_state.env.step(cmd)
     feedback = game_state["feedback"]
 
@@ -253,36 +221,30 @@ def handle_enter():
     if done:
         st.session_state.phase = "qa"
 
+
 def submit_qa():
-    """Callback when the user clicks 'Submit Q&A'—saves to Firebase and continues or ends."""
+    """Callback when user clicks 'Submit Q&A' (legacy text QA)."""
     qa_time = datetime.datetime.now()
     binary_answers = {
         question: st.session_state.get(f"qa_{i}", "No")
         for i, question in enumerate(BINARY_QUESTIONS)
     }
 
-    # Calculate total time spent on this round
     total_time_seconds = (qa_time - st.session_state.start_time).total_seconds()
-    
-    # Extract user actions (commands) from the log
+
     user_actions = []
     action_timestamps = []
-    for i, (time, entry) in enumerate(zip(st.session_state.times, st.session_state.log)):
+    for time, entry in zip(st.session_state.times, st.session_state.log):
         if entry.startswith("```") and entry.endswith("```"):
-            # This is a user command
-            command = entry[3:-3]  # Remove the backticks
+            command = entry[3:-3]
             user_actions.append(command)
             action_timestamps.append(time.isoformat())
 
-    # Generate unique round ID
     round_id = f"qa_round_{st.session_state.current_round + 1}_{qa_time.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
-    
-    # Get current round config
     current_round_config = st.session_state.round_configs[st.session_state.current_round]
-    
-    # Save current round data with enhanced tracking
+
     round_data = {
-        "round_id": round_id,  # Unique identifier for this round
+        "round_id": round_id,
         "start_time": st.session_state.start_time.isoformat(),
         "end_time": qa_time.isoformat(),
         "total_time_seconds": total_time_seconds,
@@ -293,64 +255,55 @@ def submit_qa():
         "user_actions": user_actions,
         "action_timestamps": action_timestamps,
         "total_actions": len(user_actions),
-        "action_history_length": len(user_actions),  # Length of action history
+        "action_history_length": len(user_actions),
         "binary_answers": binary_answers,
         "qa_time": qa_time.isoformat(),
         "round_config": current_round_config,
         "round_number": st.session_state.current_round + 1,
-        "true_rule": current_round_config.get('rule', 'unknown'),  # True rule for this round
-        "true_blicket_indices": current_round_config.get('blicket_indices', []),  # True blickets (0-based)
+        "true_rule": current_round_config.get('rule', 'unknown'),
+        "true_blicket_indices": current_round_config.get('blicket_indices', []),
         "phase": "main_experiment",
         "interface_type": "text"
     }
-    
+
     save_game_data(st.session_state.current_participant_id, round_data)
-    
-    # Check if there are more rounds
+
     if st.session_state.current_round + 1 < len(st.session_state.round_configs):
-        # Move to next round
         st.session_state.current_round += 1
         next_round_config = st.session_state.round_configs[st.session_state.current_round]
-        
-        # Create new game for next round
+
         env, first_obs = create_new_game(
-            seed=42 + st.session_state.current_round,  # Different seed for each round
+            seed=42 + st.session_state.current_round,
             num_objects=next_round_config['num_objects'],
             num_blickets=next_round_config['num_blickets'],
             rule=next_round_config['rule'],
             blicket_indices=next_round_config.get('blicket_indices', None)
         )
-        
+
         now = datetime.datetime.now()
         st.session_state.env = env
         st.session_state.start_time = now
         st.session_state.log = [first_obs]
         st.session_state.times = [now]
-        
-        # Reset action history for next round
+
         st.session_state.steps_taken = 0
         st.session_state.user_actions = []
         st.session_state.action_history = []
         st.session_state.state_history = []
-        st.session_state.selected_objects = set()  # Ensure all buttons start gray
-        
-        # Clear any remaining game state variables
+        st.session_state.selected_objects = set()
+
         st.session_state.pop("visual_game_state", None)
         st.session_state.pop("rule_hypothesis", None)
         st.session_state.pop("rule_type", None)
-        
-        # Clear blicket question answers
-        for i in range(10):  # Clear up to 10 possible blicket questions
+        for i in range(10):
             st.session_state.pop(f"blicket_q_{i}", None)
-        
+
         st.session_state.phase = "game"
-        
-        # Clear Q&A state
         for i in range(len(BINARY_QUESTIONS)):
             st.session_state.pop(f"qa_{i}", None)
     else:
-        # All rounds completed
         st.session_state.phase = "end"
+
 
 def reset_all():
     """Clears all session_state so we go back to the intro screen cleanly."""
@@ -366,6 +319,7 @@ def reset_all():
     st.session_state.round_configs = []
     st.session_state.num_objects_selected = None
     st.session_state.participant_id_entered = False
+
 
 BINARY_QUESTIONS = [
     "Did you test each object at least once?",
@@ -401,76 +355,168 @@ if "participant_id_entered" not in st.session_state:
 if "comprehension_completed" not in st.session_state:
     st.session_state.comprehension_completed = False
 if "interface_type" not in st.session_state:
-    st.session_state.interface_type = "text"  # Fixed to text mode
+    st.session_state.interface_type = "text"
 if "round_hypothesis" not in st.session_state:
-    st.session_state.round_hypothesis = ""  # Store hypothesis for current round (string)
+    st.session_state.round_hypothesis = ""
 if "round_rule_type" not in st.session_state:
-    st.session_state.round_rule_type = ""  # Store rule type for current round (string)
+    st.session_state.round_rule_type = ""
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-# Global CSS styling
+# Global CSS for desktop screens
 st.markdown("""
 <style>
-html, body, [data-testid="stAppViewContainer"], [data-testid="stAppViewContainer"] > div, [data-testid="stMain"] {
+html, body,
+[data-testid="stAppViewContainer"],
+[data-testid="stAppViewContainer"] > div,
+[data-testid="stMain"] {
     width: 100% !important;
     max-width: 100% !important;
+    min-height: 100vh !important;
     padding: 0 !important;
+    margin: 0 !important;
+    position: relative !important;
+}
+
+body {
+    overflow-x: hidden !important;
+    background: #cfcfcf !important;
+}
+
+[data-testid="stMarkdown"] h1,
+h1:first-of-type {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+
+/* Hide right sidebar on phone screens only */
+@media (max-width: 576px) {
+    [data-testid="block-container"]::after {
+        display: none !important;
+    }
+}
+
+[data-testid="block-container"],
+.block-container {
+    width: clamp(360px, 44vw, 840px) !important;
+    max-width: clamp(360px, 44vw, 840px) !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 2.5rem !important;
+    margin-bottom: 2.5rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+    background-color: #ececec !important;
+    border-radius: 26px !important;
+    min-height: calc(100vh - 6rem) !important;
+    overflow: visible !important;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important;
+    box-sizing: border-box !important;
+    position: relative !important;
+}
+
+@media (max-width: 1200px) {
+    [data-testid="block-container"],
+    .block-container {
+        width: min(620px, calc(100vw - 2rem)) !important;
+        max-width: min(620px, calc(100vw - 2rem)) !important;
+        margin-right: auto !important;
+    }
+}
+
+.object-grid-wrapper {
+    max-width: 440px;
+    margin: 0 auto;
+}
+
+.comprehension-layout {
+    max-width: 720px;
     margin: 0 auto !important;
 }
 
-.block-container {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding-left: clamp(1rem, 3vw, 3rem) !important;
-    padding-right: clamp(1rem, 3vw, 3rem) !important;
-    box-sizing: border-box;
+.comprehension-layout [data-testid="column"] {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+    margin: 0.5rem 0 !important;
 }
 
-/* Global styling for primary buttons */
-button[data-testid="stBaseButton-primary"] {
-    background-color: #0d47a1 !important;
-    border-color: #0d47a1 !important;
-    color: white !important;
+.comprehension-layout [data-testid="column"] > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    width: 100%;
 }
 
-button[data-testid="stBaseButton-primary"]:hover {
-    background-color: #1565c0 !important;
-    border-color: #1565c0 !important;
+.comprehension-layout [data-testid="stButton"] button {
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 200px !important;
+    min-width: 200px !important;
+    border-radius: 18px !important;
+    border: 2px solid #0d47a1 !important;
+    box-shadow: 0 4px 10px rgba(13,71,161,0.25) !important;
+    background-color: #f5f5f5 !important;
+    color: #333 !important;
+    font-weight: 700 !important;
+    font-size: clamp(14px, 1.2vw, 18px) !important;
+    padding: clamp(4px, 0.6vw, 8px) clamp(10px, 1.2vw, 18px) !important;
+    margin: 0 auto !important;
+    transition: transform 0.1s ease, box-shadow 0.1s ease !important;
+    cursor: pointer !important;
 }
 
-/* Responsive design - only for very small phone screens */
-@media (max-width: 480px) {
-    /* Only scale down on extra small screens */
-    .block-container {
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
-    }
-    
-    h1 {
-        font-size: 1.3rem !important;
-    }
-    
-    h2 {
-        font-size: 1.1rem !important;
-    }
-    
-    h3 {
-        font-size: 0.95rem !important;
-    }
-    
-    p, li {
-        font-size: 0.9rem !important;
-    }
-    
-    button {
-        font-size: 0.9rem !important;
-        min-height: 40px !important;
-    }
-    
-    input, select, textarea {
-        font-size: 0.95rem !important;
-        min-height: 40px !important;
-    }
+.comprehension-layout [data-testid="stButton"] button:hover {
+    background-color: #e0f0ff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 6px 12px rgba(13,71,161,0.35) !important;
+}
+
+.object-grid-wrapper [data-testid="column"] {
+    padding-left: 0.2rem !important;
+    padding-right: 0.2rem !important;
+    margin: 0.1rem !important;
+}
+
+.object-grid-wrapper [data-testid="stButton"] {
+    margin-bottom: 0.25rem !important;
+}
+
+section[data-testid="stSidebar"] {
+    min-width: 300px !important;
+    width: 320px !important;
+    max-width: 320px !important;
+    max-height: 100vh !important;
+    overflow-y: auto !important;
+}
+
+button, .stButton > button {
+    font-size: 1.15rem !important;
+    min-height: 2.4rem !important;
+    border-radius: 0.5rem !important;
+}
+img { max-width: 100% !important; height: auto !important; }
+
+button[data-testid="stBaseButton-primary"],
+button[data-testid="stBaseButton-secondary"] {
+    border-radius: 999px !important;
+    border: 2px solid #0d47a1 !important;
+    background: linear-gradient(135deg, #1e88e5 0%, #0d47a1 100%) !important;
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    font-size: 1.15rem !important;
+    box-shadow: 0 6px 14px rgba(13, 71, 161, 0.35) !important;
+    transition: transform 0.12s ease, box-shadow 0.12s ease !important;
+    cursor: pointer !important;
+}
+button[data-testid="stBaseButton-primary"]:hover,
+button[data-testid="stBaseButton-secondary"]:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 8px 20px rgba(13, 71, 161, 0.45) !important;
+    font-size: 1.2rem !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -479,51 +525,84 @@ button[data-testid="stBaseButton-primary"]:hover {
 
 # 0) CONSENT SCREEN
 if st.session_state.phase == "consent":
-    # Add CSS styling for the Accept button (green)
     st.markdown("""
     <style>
-    /* Green styling for Accept button in consent form */
     .stApp .stButton button[kind="primary"]:nth-of-type(1) {
         background-color: #28a745 !important;
         border-color: #28a745 !important;
     }
-    
     .stApp .stButton button[kind="primary"]:nth-of-type(1):hover {
         background-color: #218838 !important;
         border-color: #218838 !important;
     }
     </style>
     """, unsafe_allow_html=True)
-    
+
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    body {
+        background: #ffffff !important;
+        font-size: 18px !important;
+        line-height: 1.6 !important;
+    }
+    [data-testid="stMarkdown"] p,
+    [data-testid="stMarkdown"] li,
+    [data-testid="stMarkdown"] span,
+    [data-testid="stMarkdown"] div,
+    [data-testid="stMarkdown"] h1,
+    [data-testid="stMarkdown"] h2,
+    [data-testid="stMarkdown"] h3,
+    [data-testid="stMarkdown"] h4,
+    [data-testid="stMarkdown"] h5,
+    [data-testid="stMarkdown"] h6 {
+        font-size: 1.125rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <style>
+    .stApp div[data-testid="stButton"] button[data-testid="stBaseButton-primary"],
+    .stApp div[data-testid="stButton"] button[data-testid="stBaseButton-secondary"] {
+        margin-bottom: 1.25rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     st.title("Research Consent")
     st.markdown("**Please read the consent information below carefully. Participation is voluntary.**")
 
     with st.expander("Key Information", expanded=True):
-        st.markdown(
-            """
+        st.markdown("""
             - You are being invited to participate in a research study. Participation is completely voluntary.
             - Purpose: to examine how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
             - Sessions: 1–4 testing sessions (usually one), each ≤ 30 minutes. You will play interactive games; sometimes you may receive payment incentives based on your choices. You may view short clips, images, or music and answer related questions.
             - Risks: primarily the risk of breach of confidentiality.
             - Benefits: no direct benefits. Results may improve our understanding of causal reasoning and social cognition.
-            """
-        )
+        """)
 
     st.markdown("### Purpose of the Study")
-    st.markdown(
-        """
+    st.markdown("""
         This study is conducted by Alison Gopnik (UC Berkeley) and research staff.
         It investigates how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
         Participation is entirely voluntary.
-        """
-    )
+    """)
 
     st.markdown("### Study Procedures")
-    st.markdown(
-        """
+    st.markdown("""
         Up to 4 testing sessions (usually one), each ≤ 30 minutes. Tasks may include causal learning, linguistic, imagination, categorization/association, and general cognitive tasks. You may be asked to make judgments, answer questions, observe events, and perform actions (e.g., grouping objects or activating machines). You can skip any question and withdraw at any time without penalty. Attention checks ensure data quality; failure may result in rejection and no compensation.
-        """
-    )
+    """)
 
     st.markdown("### Benefits")
     st.markdown("While there is no direct benefit, you may enjoy the interactive displays and contribute to science.")
@@ -532,42 +611,35 @@ if st.session_state.phase == "consent":
     st.markdown("We do not expect foreseeable risks beyond a minimal risk of confidentiality breach; safeguards are in place to minimize this risk.")
 
     st.markdown("### Confidentiality")
-    st.markdown(
-        """
+    st.markdown("""
         Your identity will be separated from your data and a random code used for tracking. Data are kept indefinitely and stored securely (encrypted, restricted access). Identifiers may be removed for future research use without additional consent. Your personal information may be released if required by law. Authorized representatives (e.g., sponsors such as NSF, Mind Science Foundation, Princeton University, Defense Advanced Research) may review data for study oversight.
-        """
-    )
+    """)
 
     st.markdown("### Costs of Study Participation")
     st.markdown("There are no costs associated with study participation.")
 
     st.markdown("### Compensation")
-    st.markdown(
-        """
-        For your participation in our research, you will receive a maximum rate of \$8 per hour. Payment ranges from \$0.54 to \$0.67 for a 5-minute task and from \$3.25 to \$4.00 for a 30-minute task, depending on the time it takes to complete the type of task you've been assigned. For studies on Prolific, you will receive a minimum rate of \$6.50 per hour. For experiments with a differential bonus payment system you may have the opportunity to earn "points" that are worth up to 5 cents each, with a total bonus of no more than 30 cents paid on top of the flat fee paid for the task completion. Your online account will be credited directly.
-        """
-    )
+    st.markdown("""
+        For your participation in our research, you will receive a maximum rate of 8 per hour. Payment ranges from 0.54 to 0.67 for a 5-minute task and from 3.25 to 4.00 for a 30-minute task, depending on the time it takes to complete the type of task you've been assigned. For studies on Prolific, you will receive a minimum rate of 6.50 per hour. For experiments with a differential bonus payment system you may have the opportunity to earn "points" that are worth up to 5 cents each, with a total bonus of no more than 30 cents paid on top of the flat fee paid for the task completion. Your online account will be credited directly.
+    """)
 
     st.markdown("### Rights")
-    st.markdown(
-        """
+    st.markdown("""
         Participation is voluntary. You are free to withdraw your consent and discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled.
-        """
-    )
+    """)
 
     st.markdown("### Questions")
-    st.markdown(
-        """
-        If you have any questions, please contact the lab at gopniklab@berkeley.edu or the project lead, Eunice Yiu, at ey242@berkeley.edu.If you have questions regarding your treatment or rights as a participant in this research project, contact the Committee for the Protection of Human Subjects at the University of California, Berkeley at (510) 642-7461 or subjects@berkeley.edu. 
-        If you have questions about the software or analysis, please contact Mandana Samiei, at mandanas.samiei@mail.mcgill.ca. 
-        """
-    )
+    st.markdown("""
+        If you have any questions, please contact the lab at gopniklab@berkeley.edu or the project lead, Eunice Yiu, at ey242@berkeley.edu.
+        If you have questions regarding your treatment or rights as a participant, contact the Committee for the Protection of Human Subjects at UC Berkeley at (510) 642-7461 or subjects@berkeley.edu.
+        If you have questions about the software, please contact Mandana Samiei, at mandanas.samiei@mail.mcgill.ca.
+    """)
 
     if IRB_PROTOCOL_NUMBER:
         st.markdown(f"**IRB Protocol Number:** {IRB_PROTOCOL_NUMBER}")
 
     st.markdown(
-        "> By selecting the \"Accept\" button below, I acknowledge that I am 18 or older, have read this consent form, and I agree to take part in the research. If you do NOT agree to participate in this study, please click the \"Decline\" button below."
+        '> By selecting the "Accept" button below, I acknowledge that I am 18 or older, have read this consent form, and I agree to take part in the research. If you do NOT agree, click "Decline".'
     )
 
     col1, col2 = st.columns(2)
@@ -586,7 +658,6 @@ if st.session_state.phase == "consent":
 
     st.stop()
 
-# 0b) NO CONSENT SCREEN
 elif st.session_state.phase == "no_consent":
     st.title("Thanks for your response")
     st.markdown("## You did not consent. The study will now close.")
@@ -594,30 +665,57 @@ elif st.session_state.phase == "no_consent":
 
 # 1) PARTICIPANT ID ENTRY SCREEN
 if st.session_state.phase == "intro":
-    # Show title
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    body {
+        background: #ffffff !important;
+        font-size: 18px !important;
+        line-height: 1.6 !important;
+    }
+    [data-testid="stMarkdown"] p,
+    [data-testid="stMarkdown"] li,
+    [data-testid="stMarkdown"] span,
+    [data-testid="stMarkdown"] div,
+    [data-testid="stMarkdown"] h1,
+    [data-testid="stMarkdown"] h2,
+    [data-testid="stMarkdown"] h3,
+    [data-testid="stMarkdown"] h4,
+    [data-testid="stMarkdown"] h5,
+    [data-testid="stMarkdown"] h6 {
+        font-size: 1.1rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     st.title("🧙 Blicket Text Adventure")
-    
-    # Show Firebase connection status
+
     if firebase_initialized:
         print("✅ Firebase connected - Data saving enabled")
     else:
-        print("⚠️ Firebase not connected - Running in demo mode (data will not be saved)")
-    
+        print("⚠️ Firebase not connected - Running in demo mode")
+
     if not st.session_state.participant_id_entered:
-        # Ask for Prolific ID and demographics, then start comprehension phase
-        st.markdown(
-            """
+        st.markdown("""
 **Welcome to the Blicket Text Adventure!**
 
-This is a text-only interface with 4 objects. 
+This is a text-only interface with 4 objects.
 
 **The study has two phases:**
 1. **Comprehension Phase**: Learn the interface
 2. **Main Experiment**: Actual experiment with data collection
 
 Please enter your Prolific ID to begin and provide your age and gender.
-"""
-        )
+""")
         participant_id = st.text_input("Prolific ID:", key="participant_id")
         col_a, col_b = st.columns(2)
         with col_a:
@@ -626,13 +724,7 @@ Please enter your Prolific ID to begin and provide your age and gender.
         with col_b:
             gender = st.selectbox(
                 "Gender:",
-                [
-                    "Prefer not to say",
-                    "Female",
-                    "Male",
-                    "Non-binary",
-                    "Other",
-                ],
+                ["Prefer not to say", "Female", "Male", "Non-binary", "Other"],
                 index=0,
                 key="participant_gender",
             )
@@ -644,7 +736,7 @@ Please enter your Prolific ID to begin and provide your age and gender.
 
             st.session_state.current_participant_id = participant_id.strip()
             st.session_state.participant_id_entered = True
-            # Persist consent information alongside config as soon as ID is available
+
             if firebase_initialized and db_ref and st.session_state.consent:
                 try:
                     participant_ref = db_ref.child(st.session_state.current_participant_id)
@@ -655,220 +747,255 @@ Please enter your Prolific ID to begin and provide your age and gender.
                     })
                     participant_ref.child('demographics').set({
                         'prolific_id': st.session_state.current_participant_id,
-                        'age': int(st.session_state.participant_age) if st.session_state.get('participant_age') is not None else None,
-                        'gender': st.session_state.participant_gender,
+                        'age': int(st.session_state.get('participant_age', 25)),
+                        'gender': st.session_state.get('participant_gender', 'Prefer not to say'),
                     })
                 except Exception:
                     pass
+
             st.session_state.phase = "comprehension"
             st.rerun()
-    
+
     st.stop()
 
 # 2) COMPREHENSION PHASE
 elif st.session_state.phase == "comprehension":
-    # Show title
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        width: clamp(360px, 42vw, 780px) !important;
+        max-width: clamp(360px, 42vw, 780px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding: 1.5rem !important;
+    }
+    body {
+        background: #ffffff !important;
+        font-size: 18px !important;
+        line-height: 1.6 !important;
+    }
+    [data-testid="stMarkdown"] p,
+    [data-testid="stMarkdown"] li,
+    [data-testid="stMarkdown"] span,
+    [data-testid="stMarkdown"] div,
+    [data-testid="stMarkdown"] h1,
+    [data-testid="stMarkdown"] h2,
+    [data-testid="stMarkdown"] h3,
+    [data-testid="stMarkdown"] h4,
+    [data-testid="stMarkdown"] h5,
+    [data-testid="stMarkdown"] h6 {
+        font-size: 1.1rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     st.title("🧙 Blicket Text Adventure")
-    
+
     if not st.session_state.comprehension_completed:
         st.markdown("## 🧠 Comprehension Phase")
         st.markdown(f"**Hello {st.session_state.current_participant_id}!**")
-        
         st.markdown("""
-        This is the comprehension phase to help you understand the interface.
+        This phase helps you learn the interface.
 
         **Instructions:**
         - You will see 4 objects. Click to place them on the machine.
-        - You can place one or more objects on the machine and click "Test."
-        - If the machine lights up, the combination works.
-        - Your goal is to figure out which object(s) turn the machine on and how it works.
-        - Your tests and outcomes will appear in the Test History panel on the left-hand side.
+        - Select one or more objects, then click "TEST COMBINATION".
+        - If the machine lights up, that combination works.
+        - Your tests and outcomes appear in the Test History (left sidebar).
 
-        When you're ready, click the button below to start the comprehension phase.
+        Click below when ready.
         """)
-        
+
         if st.button("Start Comprehension Phase", type="primary"):
-            # Create a simple practice configuration
             practice_config = {
                 'num_objects': 4,
                 'num_blickets': 2,
-                'blicket_indices': [1, 2],  # Objects 1 and 2 are blickets in comprehension phase
+                'blicket_indices': [1, 2],
                 'rule': 'conjunctive',
                 'init_prob': 0.2,
                 'transition_noise': 0.0,
-                'horizon': 5  # Practice round limited to 5 actions only
+                'horizon': 5
             }
-            
-            # Create practice game
+
             env, first_obs = create_new_game(
-                seed=999,  # Fixed seed for practice
+                seed=999,
                 num_objects=practice_config['num_objects'],
                 num_blickets=practice_config['num_blickets'],
                 rule=practice_config['rule'],
                 blicket_indices=practice_config['blicket_indices']
             )
-            
+
             st.session_state.env = env
             st.session_state.start_time = datetime.datetime.now()
             st.session_state.log = [first_obs]
             st.session_state.times = [datetime.datetime.now()]
             st.session_state.comprehension_completed = True
             st.session_state.phase = "practice_game"
-            
-            # Save intermediate progress - starting comprehension game
-            save_intermediate_progress_app(st.session_state.current_participant_id, "comprehension_game_start", 1, 1, 0)
-            
+
+            save_intermediate_progress_app(
+                st.session_state.current_participant_id,
+                "comprehension_game_start",
+                1, 1, 0
+            )
+
             st.rerun()
-    
+
     st.stop()
 
 # 3) PRACTICE GAME
 elif st.session_state.phase == "practice_game":
-    # Show title
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        width: clamp(360px, 42vw, 780px) !important;
+        max-width: clamp(360px, 42vw, 780px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding: 1.5rem !important;
+    }
+    body {
+        background: #ffffff !important;
+        font-size: 18px !important;
+        line-height: 1.6 !important;
+    }
+    [data-testid="stMarkdown"] p,
+    [data-testid="stMarkdown"] li,
+    [data-testid="stMarkdown"] span,
+    [data-testid="stMarkdown"] div,
+    [data-testid="stMarkdown"] h1,
+    [data-testid="stMarkdown"] h2,
+    [data-testid="stMarkdown"] h3,
+    [data-testid="stMarkdown"] h4,
+    [data-testid="stMarkdown"] h5,
+    [data-testid="stMarkdown"] h6 {
+        font-size: 1.1rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     st.title("🧙 Blicket Text Adventure")
-    
     st.markdown("## Comprehension Phase - Round 1")
-    st.markdown("**This is the comprehension phase to help you understand the interface.**")
-    
-    # Create a simple practice configuration
+
     practice_config = {
         'num_objects': 4,
         'num_blickets': 2,
-        'blicket_indices': [1, 2],  # Objects 1 and 2 are blickets in comprehension phase
+        'blicket_indices': [1, 2],
         'rule': 'conjunctive',
         'init_prob': 0.2,
         'transition_noise': 0.0,
         'horizon': 5
     }
-    
-    # Use the visual game page with data saving for comprehension phase
+
     def comprehension_save_func(participant_id, game_data):
-        # Add phase identifier to distinguish comprehension data
         game_data['phase'] = 'comprehension'
         game_data['interface_type'] = st.session_state.interface_type
         save_game_data(participant_id, game_data)
-    
+
     textual_blicket_game_page(
         st.session_state.current_participant_id,
         practice_config,
-        0,  # Single practice round
-        1,  # Total rounds = 1
+        0,
+        1,
         comprehension_save_func,
         use_visual_mode=False,
         is_practice=True
     )
 
-# 4) PRACTICE COMPLETION
+# 4) PRACTICE COMPLETE
 elif st.session_state.phase == "practice_complete":
-    # Add CSS styling for the Start Main Experiment button (blue)
     st.markdown("""
     <style>
-    /* Blue styling for Start Main Experiment button */
-    .stApp .stButton button[kind="primary"] {
-        background-color: #0d47a1 !important;
-        border-color: #0d47a1 !important;
+    [data-testid="block-container"],
+    .block-container {
+        width: clamp(360px, 42vw, 780px) !important;
+        max-width: clamp(360px, 42vw, 780px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding: 1.5rem !important;
     }
-    
-    .stApp .stButton button[kind="primary"]:hover {
-        background-color: #1565c0 !important;
-        border-color: #1565c0 !important;
+    body {
+        background: #ffffff !important;
     }
     </style>
     """, unsafe_allow_html=True)
-    
-    # Show title
+
     st.title("🧙 Blicket Text Adventure")
-    
     st.markdown("## Comprehension Phase Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
-    
-    # Progress indicator removed as requested
-        
+
     if st.button("Start Main Experiment", type="primary", use_container_width=True):
-        # Answer submitted (no need to validate - they can answer anything)
-        # Move to main experiment
-        # Create random configuration for actual experiment (3 rounds with 4 objects)
-        import random
-        
-        # Set random seed based on participant ID for reproducibility
         random.seed(hash(st.session_state.current_participant_id) % 2**32)
-        
+
         num_rounds = 3
         round_configs = []
-        
-        # Initialize rule generation
         current_rule = random.choice(['conjunctive', 'disjunctive'])
-        rule_change_probability = 0.4  # 40% chance to change rule each round
-        
-        # Define diverse blicket combinations (0-based object indices 0-3)
+        rule_change_probability = 0.4
+
         blicket_combinations = [
-            [0, 1],  # Objects 0, 1
-            [1, 2],  # Objects 1, 2
-            [0, 2],  # Objects 0, 2
-            [2, 3],  # Objects 2, 3
-            [0, 3],  # Objects 0, 3
-            [1, 3],  # Objects 1, 3
+            [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
         ]
-        
-        # Shuffle combinations for variety
         random.shuffle(blicket_combinations)
-        
+
         for i in range(num_rounds):
-            # Always use 4 objects
             num_objects = 4
-            # Select diverse blicket combination
             blicket_indices = blicket_combinations[i % len(blicket_combinations)]
             num_blickets = len(blicket_indices)
-            
-            # Rule logic: sometimes change, sometimes stay the same
+
             if i == 0:
-                # First round: use initial rule
                 rule = current_rule
             else:
-                # Subsequent rounds: decide whether to change
                 if random.random() < rule_change_probability:
-                    # Change the rule
                     available_rules = ['conjunctive', 'disjunctive']
                     available_rules.remove(current_rule)
                     rule = random.choice(available_rules)
                     current_rule = rule
                 else:
-                    # Keep the same rule
                     rule = current_rule
-            # Random initial probability
+
             init_prob = random.uniform(0.1, 0.3)
-            # Random transition noise
             transition_noise = 0.0
-            
-            round_config = {
+
+            round_configs.append({
                 'num_objects': num_objects,
                 'num_blickets': num_blickets,
-                'blicket_indices': blicket_indices,  # Specific objects that are blickets
+                'blicket_indices': blicket_indices,
                 'rule': rule,
                 'init_prob': init_prob,
                 'transition_noise': transition_noise,
-                'horizon': 16  # Default step limit
-            }
-            round_configs.append(round_config)
-        
-        # Save configuration
+                'horizon': 16
+            })
+
         config = {
             'num_rounds': num_rounds,
-            'user_selected_objects': 4,  # Fixed to 4 objects
+            'user_selected_objects': 4,
             'rounds': round_configs,
-            'interface_type': 'text',  # Fixed to text mode
+            'interface_type': 'text',
             'demographics': {
                 'prolific_id': st.session_state.get('current_participant_id', ''),
-                'age': int(st.session_state.participant_age) if 'participant_age' in st.session_state else None,
+                'age': int(st.session_state.get('participant_age', 25)),
                 'gender': st.session_state.get('participant_gender', 'Prefer not to say'),
             }
         }
         save_participant_config(st.session_state.current_participant_id, config)
-        
-        # Initialize first round
+
         st.session_state.current_round = 0
         st.session_state.round_configs = round_configs
         round_config = round_configs[0]
+
         env, first_obs = create_new_game(
             seed=42,
             num_objects=round_config['num_objects'],
@@ -876,119 +1003,163 @@ elif st.session_state.phase == "practice_complete":
             rule=round_config['rule'],
             blicket_indices=round_config.get('blicket_indices', None)
         )
-        
+
         now = datetime.datetime.now()
         st.session_state.env = env
         st.session_state.start_time = now
         st.session_state.log = [first_obs]
         st.session_state.times = [now]
-        
-        # Save final comprehension phase data before clearing session state
-        save_intermediate_progress_app(st.session_state.current_participant_id, "comprehension", 0, 1, len(st.session_state.get('user_actions', [])))
-        
-        # Reset action history for main game (clear comprehension phase history)
+
+        save_intermediate_progress_app(
+            st.session_state.current_participant_id,
+            "comprehension",
+            0, 1, len(st.session_state.get('user_actions', []))
+        )
+
         st.session_state.steps_taken = 0
         st.session_state.user_actions = []
         st.session_state.action_history = []
         st.session_state.state_history = []
-        st.session_state.selected_objects = set()  # Ensure all buttons start gray
-        
-        # Clear any remaining game state variables
+        st.session_state.selected_objects = set()
+
         st.session_state.pop("visual_game_state", None)
         st.session_state.pop("rule_hypothesis", None)
         st.session_state.pop("rule_type", None)
-        
-        # Clear blicket question answers
-        for i in range(10):  # Clear up to 10 possible blicket questions
+        for i in range(10):
             st.session_state.pop(f"blicket_q_{i}", None)
-        
-        # Save intermediate progress - starting main experiment
-        save_intermediate_progress_app(st.session_state.current_participant_id, "main_experiment_start", 1, num_rounds, 0)
-        
+
+        save_intermediate_progress_app(
+            st.session_state.current_participant_id,
+            "main_experiment_start",
+            1, num_rounds, 0
+        )
+
         st.session_state.phase = "game"
         st.rerun()
 
-# 5) MAIN GAME RUN
+# 5) MAIN GAME
 elif st.session_state.phase == "game":
-    # Show title
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        width: clamp(360px, 46vw, 860px) !important;
+        max-width: clamp(360px, 46vw, 860px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding: 1.5rem !important;
+    }
+    body {
+        background: #ffffff !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     st.title("🧙 Blicket Text Adventure")
-    
-    # Use visual blicket game interface
+
     round_config = st.session_state.round_configs[st.session_state.current_round]
-    
-    # Pass the save_game_data function to avoid circular imports
+
     def save_visual_game_data(participant_id, game_data):
         game_data['phase'] = 'main_experiment'
         game_data['interface_type'] = st.session_state.interface_type
         save_game_data(participant_id, game_data)
-    
-    # Always use text mode
-    use_visual_mode = False
-    
+
     textual_blicket_game_page(
         st.session_state.current_participant_id,
         round_config,
         st.session_state.current_round,
         len(st.session_state.round_configs),
         save_visual_game_data,
-        use_visual_mode=use_visual_mode
+        use_visual_mode=False
     )
 
-# 3) NEXT ROUND HANDLING
+# NEXT ROUND
 elif st.session_state.phase == "next_round":
-    # Move to next round
     st.session_state.current_round += 1
-    
-    # Capture hypothesis and rule from the previous round before clearing
-    # These are set by the textual_blicket_game_page when user completes Q&A
-    previous_hypothesis = st.session_state.get("rule_hypothesis", "")
-    previous_rule_type = st.session_state.get("rule_type", "")
-    
-    print(f"💾 Captured for round {st.session_state.current_round}:")
-    print(f"   - Hypothesis: {previous_hypothesis[:50] if previous_hypothesis else 'EMPTY'}...")
-    print(f"   - Rule Type: {previous_rule_type}")
-    
-    # Reset action history for next round
+
     st.session_state.steps_taken = 0
     st.session_state.user_actions = []
     st.session_state.action_history = []
     st.session_state.state_history = []
-    st.session_state.selected_objects = set()  # Ensure all buttons start gray
-    
-    # Reset hypothesis and rule for next round (they're strings, not lists)
+    st.session_state.selected_objects = set()
+
     st.session_state.round_hypothesis = ""
     st.session_state.round_rule_type = ""
-    
-    # Clear Q&A variables for next round
+
     st.session_state.pop("rule_hypothesis", None)
     st.session_state.pop("rule_type", None)
-    
+
     st.session_state.phase = "game"
     st.rerun()
 
-# 4) Q&A (keeping for compatibility but not used in visual version)
+# LEGACY QA
 elif st.session_state.phase == "qa":
     st.markdown(f"## 📝 Round {st.session_state.current_round + 1} Q&A")
     for i, question in enumerate(BINARY_QUESTIONS):
         st.radio(question, ("Yes", "No"), key=f"qa_{i}")
-    
+
     if st.session_state.current_round + 1 < len(st.session_state.round_configs):
         st.button("Submit & Continue to Next Round", on_click=submit_qa)
     else:
         st.button("Submit & Finish", on_click=submit_qa)
 
-# 5) END-OF-GAME SCREEN
+# END SCREEN
 elif st.session_state.phase == "end":
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        width: clamp(360px, 42vw, 780px) !important;
+        max-width: clamp(360px, 42vw, 780px) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding: 1.5rem !important;
+    }
+    body {
+        background: #ffffff !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     st.markdown("## 🎉 All done!")
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
-    
-    # Progress indicator removed as requested
-    
     st.markdown("""
     ### 🎯 Experiment Complete!
-    
-    
+
     Thank you for participating in our blicket research study!
     """)
-    
     st.button("Start Over", on_click=reset_all)
+
+    # Add right sidebar HTML element - only on desktop
+    import streamlit.components.v1 as components
+    components.html("""
+    <div id="right-sidebar" style="
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 320px;
+        height: 100vh;
+        background-color: #f0f2f6;
+        border-left: 1px solid #e0e0e0;
+        z-index: 1000;
+        display: block;
+    "></div>
+    <script>
+        function checkScreenSize() {
+            if (window.innerWidth <= 768) {
+                document.getElementById('right-sidebar').style.display = 'none';
+            } else {
+                document.getElementById('right-sidebar').style.display = 'block';
+            }
+        }
+        window.addEventListener('resize', checkScreenSize);
+        checkScreenSize(); // Check on load
+    </script>
+    """, height=0)

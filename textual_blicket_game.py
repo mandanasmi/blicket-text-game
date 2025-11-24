@@ -291,60 +291,30 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Simple CSS for neutral button styling
     st.markdown("""
     <style>
-    /* ===== Desktop / default: leave Streamlit alone ===== */
-    /* (no forced sidebar width, no forced scrolling) */
-
-
-    /* ===== Phones / small tablets ONLY ===== */
-    @media (max-width: 768px) {
-
-        /* Give the main area full width on phones */
-        .block-container {
-            max-width: 100% !important;
-            width: 100% !important;
-            padding-left: 0.5rem !important;
-            padding-right: 0.5rem !important;
-        }
-
-        /* Make sidebar take full width on phones */
-        section[data-testid="stSidebar"],
-        section[data-testid="stSidebar"] > div {
-            width: 100% !important;
-            min-width: 100% !important;
-            max-width: 100% !important;
-        }
-
-        /* Phone-only scrolling sidebar */
-        [data-testid="stSidebarContent"] {
-            max-height: calc(100vh - 80px);
-            overflow-y: auto;
-            overflow-x: hidden;
-            box-sizing: border-box;
-            padding-bottom: 1rem;
-        }
-
-        /* Stack columns vertically on phones */
-        .stApp [data-testid="stColumn"] {
-            width: 100% !important;
-            flex: 1 1 100% !important;
-        }
+    /* ===== DESKTOP / DEFAULT BEHAVIOUR ===== */
+    html, body, [data-testid="stAppViewContainer"], [data-testid="stAppViewContainer"] > div, [data-testid="stMain"] {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 100vh !important;
+        padding: 0 !important;
+        margin: 0 !important;
     }
 
-    @media (max-width: 480px) {
-        .block-container {
-            padding-left: 0.25rem !important;
-            padding-right: 0.25rem !important;
-        }
+    .block-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+        box-sizing: border-box;
+    }
 
-        button {
-            font-size: 0.85rem !important;
-            padding: 0.3rem 0.6rem !important;
-            min-height: 36px !important;
-        }
-
-        h1 { font-size: 1rem !important; }
-        h2 { font-size: 0.9rem !important; }
-        h3 { font-size: 0.8rem !important; }
+    /* Fixed sidebar width for desktop */
+    section[data-testid="stSidebar"] {
+        width: 320px !important;
+        min-width: 320px !important;
+        max-width: 320px !important;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -436,11 +406,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         shape_images_small = st.session_state.shape_images_small
     
-    # Create sidebar for state history
+    # Create sidebar for state history - matching right sidebar style
     with st.sidebar:
         st.markdown("""
-        <div style="background: #424242; padding: 8px; border-radius: 4px; margin-bottom: 6px;">
-            <h2 style="margin: 0; color: white; text-align: center; font-size: 16px;">Test History</h2>
+        <div style="background: #0d47a1; padding: 12px; border-radius: 6px; margin-bottom: 8px; border: 1px solid #0b3779; color: #ffffff; text-align: center; font-size: 16px; font-weight: bold;">
+            Test History
         </div>
         """, unsafe_allow_html=True)
         
@@ -448,7 +418,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         with history_container:
             if st.session_state.state_history:
                 st.markdown(
-                    f"<div style='text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 10px; padding: 10px; background-color: #f0f0f0; border-radius: 5px;'>Total Tests: {len(st.session_state.state_history)}</div>",
+                    f"<div style='text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 12px; padding: 10px; background-color: #555555; color: #ffffff; border-radius: 6px; border: 1px solid #3a3a3a;'>Total Tests: {len(st.session_state.state_history)}</div>",
                     unsafe_allow_html=True,
                 )
                 
@@ -465,30 +435,31 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
                             objects_text += (
                                 "<span style='display: inline-flex; align-items: center; justify-content: center; "
-                                f"background-color: {bg_color}; color: black; padding: 4px 8px; margin: 1px 1px; border-radius: 2px; "
-                                f"font-size: 16px; font-weight: bold; border: {border_style}; min-width: 45px; flex-shrink: 0;'>"
-                                f"<div style='font-size: 11px; margin-bottom: 1px; font-weight: bold; color: #333; margin-right: 3px;'>{display_id}</div>"
-                                f"<div style='font-size: 13px; font-weight: bold;'>{yes_no}</div></span>"
+                                f"background-color: {bg_color}; color: black; padding: 3px 5px; margin: 2px 2px; border-radius: 4px; "
+                                f"font-size: 15px; font-weight: bold; border: {border_style}; min-width: 48px; flex-shrink: 0;'>"
+                                f"<div style='font-size: 15px; margin-right: 3px; font-weight: bold;'>{display_id}</div>"
+                                f"<div style='font-size: 15px; font-weight: bold;'>{yes_no}</div></span>"
                             )
                         
                         # Show machine state on same row
                         machine_status = "ON" if state['machine_lit'] else "OFF"
-                        machine_color = "#66bb6a" if state['machine_lit'] else "#000000"  # Green when ON, black when OFF
+                        machine_color = "#388e3c" if state['machine_lit'] else "#333333"
                         st.markdown(
                             f"""
                         <div style='
                             width: 100%;
-                            margin: 5px 0; 
-                            padding: 8px 12px; 
-                            background-color: #fafafa; 
-                            border-left: 2px solid #2196f3;
-                            border-radius: 2px;
-                            box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+                            margin: 8px 0;
+                            padding: 12px 16px;
+                            background-color: #a9a9a9;
+                            color: #1f1f1f;
+                            border: 1px solid #7f7f7f;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
                             box-sizing: border-box;
                         '>
-                            <div style='font-size: 12px; font-weight: bold; margin-bottom: 2px; color: #1976d2;'>Test {i + 1}</div>
-                            <div style='margin-bottom: 2px; font-size: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;'>{objects_text}</div>
-                            <div style='font-size: 12px; font-weight: bold; color: {machine_color};'>Detector: {machine_status}</div>
+                            <div style='font-size: 14px; font-weight: bold; margin-bottom: 6px;'>Test {i + 1}</div>
+                            <div style='margin-bottom: 6px; font-size: 14px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;'>{objects_text}</div>
+                            <div style='font-size: 16px; font-weight: bold; color: {("#79ff4d" if state["machine_lit"] else "#000000")}'>Detector: {machine_status}</div>
                         </div>
                         """,
                             unsafe_allow_html=True,
@@ -498,7 +469,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         cols = st.columns(round_config['num_objects'] + 2)
                         
                         with cols[0]:
-                            st.markdown(f"<div style='font-size: 18px; font-weight: bold; margin: 8px 0;'>Test {i + 1}</div>", unsafe_allow_html=True)
+                            st.markdown(f"<div style='font-size: 14px; font-weight: bold; margin: 8px 0;'>Test {i + 1}</div>", unsafe_allow_html=True)
                         
                         # Show each object
                         for obj_idx in range(round_config['num_objects']):
@@ -553,14 +524,18 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 """,
                     unsafe_allow_html=True,
                 )
-    
+
+
     # Main content area
     # Display round info and progress
-    st.markdown(f"## Round {current_round + 1} of {total_rounds}")
-    
-    # Progress bar
+    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-bottom: 4px;'>Round {current_round + 1} of {total_rounds}</div>", unsafe_allow_html=True)
     progress = (current_round + 1) / total_rounds
-    st.progress(progress)
+    st.markdown(
+        f"<div style='width: 100%; height: 10px; background: #d0e2ff; border-radius: 999px; overflow: hidden; margin-bottom: 16px;'>"
+        f"<div style='width: {progress * 100}%; height: 100%; background: #0d47a1;'></div>"
+        f"</div>",
+        unsafe_allow_html=True,
+    )
     
     # Collapsible instruction section
     with st.expander("📋 Game Instructions", expanded=False):
@@ -650,8 +625,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("### Available Objects")
         
         # Text-only version: Simple button grid with selection mode
-        
-        cols = st.columns(4)
+        st.markdown('<div class="object-grid-wrapper comprehension-layout">', unsafe_allow_html=True)
+        cols = st.columns([1,1,1,1], gap="medium")
         for i in range(round_config['num_objects']):
             with cols[i % 4]:
                 object_id = i  # 0-based object ID
@@ -661,11 +636,20 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
                 
                 # Use neutral styling - status will be shown in box below
-                # Button click only toggles selection, does NOT record an action
-                if st.button(f"Object {i + 1}", 
-                           key=f"obj_{i}", 
-                           disabled=interaction_disabled,
-                           help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"):
+                # Wrap button + status box for styling
+                st.markdown(
+                    '<div style="display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 210px;">',
+                    unsafe_allow_html=True,
+                )
+                button_clicked = st.button(
+                    f"Object {i + 1}",
+                    key=f"obj_{i}",
+                    disabled=interaction_disabled,
+                    help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}",
+                    type="secondary",
+                )
+
+                if button_clicked:
                     # Toggle selection and record action
                     if is_selected:
                         st.session_state.selected_objects.remove(object_id)
@@ -681,35 +665,46 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 
                 # Show status box underneath button
                 status_text = "ON PLATFORM" if is_selected else "NOT ON PLATFORM"
-                box_border_color = "#333333"
-                status_color = "#66bb6a" if is_selected else "#333"  # Green when on platform, dark gray otherwise
-                st.markdown(f"""
+                box_border_color = "#4a4a4a"
+                status_color = "#388e3c" if is_selected else "#333"  # Green when on platform, dark gray otherwise
+                background_color = "#dfeee0" if is_selected else "#f5f5f5"  # Slightly lighter background shades
+                st.markdown(
+                    f"""
                 <div style="
-                    text-align: center;
-                    padding: 6px;
-                    margin-top: 5px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 210px;
+                    min-width: 210px;
+                    max-width: 210px;
+                    min-height: 50px;
+                    padding: clamp(6px, 0.8vw, 10px);
                     border: 1px solid {box_border_color};
-                    border-radius: 4px;
-                    background-color: #f5f5f5;
-                    font-size: 14px;
+                    border-radius: 10px;
+                    background-color: {background_color};
+                    font-size: clamp(15px, 1.3vw, 19px);
                     color: {status_color};
-                    font-weight: bold;
-                ">
-                {status_text}
-                </div>
-                """, unsafe_allow_html=True)
-        
+                    font-weight: 700;
+                ">{status_text}</div>
+                """,
+                    unsafe_allow_html=True,
+                )
+                st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
         # Show the Test button after object selection area
         st.markdown("---")        
         current_selection = list(st.session_state.selected_objects)
         if current_selection:
             selection_text = ", ".join([f"Object {obj + 1}" for obj in sorted(current_selection)])
-            st.markdown(f"**Current selection: {selection_text}**")
+            st.markdown(
+                f"<strong>Current selection:</strong> {selection_text}",
+                unsafe_allow_html=True,
+            )
         else:
             st.markdown("**No objects selected yet.** Click on objects to select them.")
         
         # Test button - only appears if objects are selected
-        if st.button(" Test Combination", type="primary", use_container_width=True, disabled=not current_selection or interaction_disabled):
+        if st.button(" Test Combination", type="primary", disabled=not current_selection or interaction_disabled):
             # NOW record the test action
             action_time = datetime.datetime.now()
             
@@ -933,7 +928,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     index=None
                 )
                 
-                if st.button("Complete Comprehension Phase", type="primary", use_container_width=True, disabled=(practice_answer is None)):
+                if st.button("Complete Comprehension Phase", type="primary", disabled=(practice_answer is None)):
                     # Move to practice completion page
                     st.session_state.phase = "practice_complete"
                     st.rerun()
@@ -945,7 +940,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 </div>
                 """, unsafe_allow_html=True)
                 
-                if st.button("PROCEED TO ANSWER QUESTIONS", type="primary", key="proceed_btn", use_container_width=True):
+                if st.button("PROCEED TO ANSWER QUESTIONS", type="primary", key="proceed_btn"):
                     # Clear any previous answers to ensure fresh start
                     for i in range(round_config['num_objects']):
                         if f"blicket_q_{i}" in st.session_state:
@@ -968,13 +963,13 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Show different button based on phase
             if is_practice:
                 # Comprehension phase - show practice test inline
-                if st.button("Practice Test", type="primary", key="complete_ready_btn", use_container_width=True):
+                if st.button("Practice Test", type="primary", key="complete_ready_btn"):
                     # Set flag to show practice test inline
                     st.session_state.show_practice_test = True
                     st.rerun()
             else:
                 # Main experiment - show questionnaire button
-                if st.button("READY TO ANSWER QUESTIONS", type="primary", key="ready_btn", use_container_width=True):
+                if st.button("READY TO ANSWER QUESTIONS", type="primary", key="ready_btn"):
                     # Clear any previous blicket answers to ensure fresh start
                     for i in range(round_config['num_objects']):
                         if f"blicket_q_{i}" in st.session_state:
@@ -1003,7 +998,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     index=None
                 )
                 
-                if st.button("Complete Comprehension Phase", type="primary", use_container_width=True, disabled=(practice_answer is None), key="complete_from_steps"):
+                if st.button("Complete Comprehension Phase", type="primary", disabled=(practice_answer is None), key="complete_from_steps"):
                     # Move to practice completion page
                     st.session_state.phase = "practice_complete"
                     st.session_state.pop("show_practice_test", None)
