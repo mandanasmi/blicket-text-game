@@ -277,6 +277,52 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         print(f"Failed to save {phase} progress for {participant_id}: {e}")
         print(f"Full traceback: {traceback.format_exc()}")
 
+def save_practice_question_answer(participant_id, answer_text):
+    """Persist the comprehension practice question response into Firebase."""
+    if not answer_text:
+        return
+    
+    try:
+        # Ensure Firebase is initialized before attempting to save
+        if not firebase_admin._apps:
+            print(f"⚠️ Firebase not initialized - skipping practice question save for {participant_id}")
+            return
+        
+        db_ref = db.reference()
+        participant_ref = db_ref.child(participant_id)
+        progress_ref = participant_ref.child('comprehension')
+        entry_id = "action_history"
+        
+        existing_data = progress_ref.child(entry_id).get() or {}
+        now = datetime.datetime.now()
+        
+        # Attempt to extract a numeric object id from the answer text when possible
+        selected_object = None
+        lower_text = answer_text.lower()
+        if lower_text.startswith("object"):
+            try:
+                # Expected format: "Object X is a blicket"
+                selected_object = int(answer_text.split()[1])
+            except (ValueError, IndexError):
+                selected_object = None
+        
+        updated_data = {
+            **existing_data,
+            "practice_blicket_question": {
+                "question": "Which object do you think is a blicket?",
+                "answer_text": answer_text,
+                "selected_object_one_based": selected_object,
+                "saved_at": now.isoformat()
+            }
+        }
+        
+        progress_ref.child(entry_id).set(convert_numpy_types(updated_data))
+        print(f"💾 Practice question answer saved for {participant_id}: {answer_text}")
+    except Exception as e:
+        import traceback
+        print(f"Failed to save practice question answer for {participant_id}: {e}")
+        print(f"Full traceback: {traceback.format_exc()}")
+
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - text-only interface"""
     
@@ -519,7 +565,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     color: #666;
                     font-size: 16px;
                 '>
-                No tests recorded yet. Click TEST COMBINATION to begin.
+                No tests recorded yet. Click Test Combination to begin.
                 </div>
                 """,
                     unsafe_allow_html=True,
@@ -539,7 +585,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Collapsible instruction section
     with st.expander("📋 Game Instructions", expanded=False):
-        horizon = round_config.get('horizon', 32)  # Default to 32 actions
+        horizon = round_config.get('horizon', 32)  # Default to 32 tests
         st.markdown(f"""
 
         **Your goals are:**
@@ -550,12 +596,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         - All objects can be either on the machine or on the floor.
         - You should think about how to efficiently explore the relationship between the objects and the machine.
 
-        You have **{horizon} actions** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
+        You have **{horizon} tests** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
 
-        You will be prompted at each turn to choose actions.
+        You will be prompted at each turn to choose tests.
 
-        **Understanding the State History:**
-        - The **State History** panel on the left shows a record of each test you perform.
+        **Understanding the Test History:**
+        - The **Test History** panel on the left shows a record of each test you perform.
         - For each object, it shows **Yes** if the object was **ON the platform**, or **No** if it was **NOT on the platform**.
         - Each row also shows whether the detector was **ON** or **OFF** after that test.
 
@@ -563,8 +609,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         1. Click on object buttons to **select** the objects you want to test
         2. A status box below each button shows: **ON PLATFORM** or **NOT ON PLATFORM**
         3. Click an object again to **deselect** it
-        4. Once you have selected your combination, click the **TEST COMBINATION** button
-        5. The test will be recorded, and you'll see the result in the State History
+        4. Once you have selected your combination, click the **Test Combination** button
+        5. The test will be recorded, and you'll see the result in the Test History
         6. Repeat: select new objects and test again as needed
         """)
 
@@ -573,10 +619,23 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Text-only version: Display action history
     if use_text_version:
-        st.markdown("### Action History")
+        st.markdown("<div style='font-size: 25px !important; font-weight: 700; margin-bottom: 0.4rem;'>Action History</div>", unsafe_allow_html=True)
         if st.session_state.action_history:
-            for action_text in st.session_state.action_history:
-                st.markdown(f"<div style='font-size: 14px;'>• {action_text}</div>", unsafe_allow_html=True)
+            # Limit visible entries to roughly eight before scrolling
+            entries_html = "".join(
+                f"<div style='font-size: 14px; margin-bottom: 0.15rem;'>• {action_text}</div>"
+                for action_text in st.session_state.action_history
+            )
+            st.markdown(
+                f"""
+                <div style='max-height: 12.5rem; overflow-y: auto; padding-right: 18px; margin-bottom: 0.5rem; border: 2px solid #0d47a1; border-radius: 10px; padding: 0.5rem 0.2rem; box-shadow: inset 0 0 6px rgba(0,0,0,0.08); direction: rtl;'>
+                    <div style='direction: ltr; padding: 0 0.9rem 0 0.65rem;'>
+                        {entries_html}
+                    </div>
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
         else:
             st.markdown("*No actions taken yet.*")
         st.markdown("---")
@@ -622,7 +681,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Display available objects
     if use_text_version:
-        st.markdown("### Available Objects")
+        st.markdown("<div style='font-size: 25px !important; font-weight: 700; margin-bottom: 0.4rem;'>Available Objects</div>", unsafe_allow_html=True)
         
         # Text-only version: Simple button grid with selection mode
         st.markdown('<div class="object-grid-wrapper comprehension-layout">', unsafe_allow_html=True)
@@ -694,12 +753,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Show the Test button after object selection area
         st.markdown("---")        
         current_selection = list(st.session_state.selected_objects)
+        if steps_left <= 0:
+            st.markdown("<p style='color: #d32f2f; font-weight: 700; margin-bottom: 0.5rem;'>No Tests remaining! You need to answer the question below.</p>", unsafe_allow_html=True)
+
         if current_selection:
             selection_text = ", ".join([f"Object {obj + 1}" for obj in sorted(current_selection)])
-            st.markdown(
-                f"<strong>Current selection:</strong> {selection_text}",
-                unsafe_allow_html=True,
-            )
+            st.markdown(f"<strong>Current selection:</strong> {selection_text}", unsafe_allow_html=True)
         else:
             st.markdown("**No objects selected yet.** Click on objects to select them.")
         
@@ -757,14 +816,18 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         if st.session_state.state_history:
             machine_status = "ON" if machine_lit else "OFF"
             status_color = "#66bb6a" if machine_lit else "#000000"  # Green when ON, black when OFF
-            st.markdown(f"""
-            ### Blicket Detector Status: <span style='color: {status_color};'>{machine_status}</span>
-            **Tests Remaining: {steps_left}/{horizon}**
-            """, unsafe_allow_html=True)
+            st.markdown(
+                f"""
+                <div style='font-size: 20px; font-weight: 700; margin-bottom: 0.35rem;'>
+                    Blicket Detector Status: <span style='color: {status_color};'>{machine_status}</span>
+                </div>
+                <div style='font-size: 15px; font-weight: 600;'>
+                    Tests Remaining: {steps_left}/{horizon}
+                </div>
+                """,
+                unsafe_allow_html=True,
+            )
             
-            # Show warning if no steps left
-            if steps_left <= 0:
-                st.markdown("<p style='color: #dc3545; font-weight: bold; font-size: 16px;'>No Tests remaining!</p>", unsafe_allow_html=True)
     else:
         st.markdown("Click on an object to place it on the machine. Click again to remove it.")
         
@@ -929,6 +992,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 )
                 
                 if st.button("Complete Comprehension Phase", type="primary", disabled=(practice_answer is None)):
+                    # Save response before moving on
+                    save_practice_question_answer(participant_id, practice_answer)
                     # Move to practice completion page
                     st.session_state.phase = "practice_complete"
                     st.rerun()
@@ -999,6 +1064,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 )
                 
                 if st.button("Complete Comprehension Phase", type="primary", disabled=(practice_answer is None), key="complete_from_steps"):
+                    # Save response before moving on
+                    save_practice_question_answer(participant_id, practice_answer)
                     # Move to practice completion page
                     st.session_state.phase = "practice_complete"
                     st.session_state.pop("show_practice_test", None)
@@ -1053,7 +1120,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("---")
         st.markdown("### Rule Inference")
         st.markdown("Based on your observations, what do you think is the rule for how the blicket detector works?")
-        st.text_area(
+        rule_input_value = st.text_area(
             "What do you think is the rule?",
             placeholder="Describe your hypothesis about how the blicket detector determines when to light up...",
             height=100,
@@ -1064,9 +1131,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("---")
         st.markdown("### Continue to Rule Type Classification")
         
-        # Check if rule hypothesis is provided (read from session state)
-        rule_hypothesis = st.session_state.get("rule_hypothesis", "")
-        
         # Check if all blicket questions are answered
         all_blicket_answered = True
         for i in range(round_config['num_objects']):
@@ -1075,12 +1139,13 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 break
         
         # Check if rule hypothesis is provided
-        current_hypothesis = st.session_state.get("rule_hypothesis", "").strip()
+        current_hypothesis = rule_input_value.strip()
         
         # Disable button if not all questions are answered or hypothesis is missing
         button_disabled = not all_blicket_answered or not current_hypothesis
+        next_button_clicked = st.button("NEXT: Rule Type Classification", type="primary", use_container_width=True)
         
-        if st.button("NEXT: Rule Type Classification", type="primary", use_container_width=True, disabled=button_disabled):
+        if next_button_clicked and not button_disabled:
             # All validations passed (button would not have been clicked if validations failed)
             print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
             print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
@@ -1151,7 +1216,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.session_state.visual_game_state = "rule_type_classification"
             st.rerun()
         
-        # Show message if button is disabled
+        # Show message if requirements are not yet met
         if button_disabled:
             error_reasons = []
             if not all_blicket_answered:
