@@ -697,7 +697,7 @@ if st.session_state.phase == "intro":
     }
     </style>
     """, unsafe_allow_html=True)
-    st.title("🧙 Blicket Text Adventure")
+    st.title("Welcome to the Experiment")
 
     if firebase_initialized:
         print("✅ Firebase connected - Data saving enabled")
@@ -706,13 +706,18 @@ if st.session_state.phase == "intro":
 
     if not st.session_state.participant_id_entered:
         st.markdown("""
-**Welcome to the Blicket Text Adventure!**
+**Welcome!**
 
-**The study has two phases:**
-1. **Comprehension Phase**: Learn the interface
-2. **Main Experiment**: Actual experiment with data collection
+In this experiment, you’ll see a machine that can light up when certain objects are placed on it.
+Your task is to figure out **which object or combination of objects** makes the machine turn on.
 
-Please enter your Prolific ID to begin and provide your age and gender.
+You’ll complete several rounds:
+1.  **A brief comprehension check** to make sure you understand the controls.
+2.  **A short practice round** with a simple rule.
+3.  **Three main rounds**, each with a new machine and new objects.
+
+Click **“Continue”** to begin.
+
 """)
         participant_id = st.text_input("Prolific ID:", key="participant_id")
         col_a, col_b = st.columns(2)
@@ -727,7 +732,7 @@ Please enter your Prolific ID to begin and provide your age and gender.
                 key="participant_gender",
             )
 
-        if st.button("Next Step", type="primary"):
+        if st.button("Continue", type="primary"):
             if not participant_id.strip():
                 st.warning("Please enter your Prolific ID to continue.")
                 st.stop()
