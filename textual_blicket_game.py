@@ -309,7 +309,7 @@ def save_practice_question_answer(participant_id, answer_text):
         updated_data = {
             **existing_data,
             "practice_blicket_question": {
-                "question": "Which object do you think is a blicket?",
+                "question": "Which object do you think is a blicket? **Remember, only blickets can turn on the blicket machine**.",
                 "answer_text": answer_text,
                 "selected_object_one_based": selected_object,
                 "saved_at": now.isoformat()
@@ -989,7 +989,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if is_practice:                # Comprehension phase - show practice test on same page
                 st.markdown("---")
                 st.markdown("### Practice Q&A")
-                st.markdown("Which object do you think is a blicket?")
+                st.markdown("Which object do you think is a blicket? Remember, only blickets can turn on the blicket machine.")
                 
                 # Create options for the practice test
                 num_objects_in_round = round_config['num_objects']
@@ -1061,8 +1061,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if is_practice and st.session_state.get("show_practice_test", False):
                 st.markdown("---")
                 st.markdown("### Practice Q&A")
-                st.markdown("Which object do you think is a blicket? Remember, only blickets can turn on the blicket machine.
-")
+                st.markdown("Which object do you think is a blicket? Remember, only blickets can turn on the blicket machine.")
                 
                 # Create options for the practice test
                 num_objects_in_round = round_config['num_objects']
