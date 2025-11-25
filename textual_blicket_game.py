@@ -419,6 +419,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     env = st.session_state.env
     game_state = st.session_state.game_state
     
+    
     # Load images
     blicket_img = get_image_base64("images/blicket.png")
     blicket_lit_img = get_image_base64("images/blicket_lit.png")
@@ -473,8 +474,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         # Text version: show object yes/no format with ID on top
                         objects_text = ""
                         for obj_idx in range(round_config['num_objects']):
+                            label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
                             object_id = obj_idx  # 0-based object ID
-                            display_id = object_id + 1  # 1-based for display
+                            display_id = label_prefix[obj_idx] if is_practice else object_id + 1  # 1-based or letter
                             is_on_platform = object_id in state['objects_on_machine']
                             yes_no = "Yes" if is_on_platform else "No"
                             bg_color = "#d0d0d0" if is_on_platform else "#f5f5f5"
@@ -520,6 +522,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         # Show each object
                         for obj_idx in range(round_config['num_objects']):
                             object_id = obj_idx
+                            display_label = label_prefix[obj_idx] if is_practice else obj_idx + 1
                             with cols[obj_idx + 1]:
                                 is_on_platform = object_id in state['objects_on_machine']
                                 yes_no = "Yes" if is_on_platform else "No"
@@ -539,7 +542,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                     min-width: 45px;
                                     ">
                                          <div style="font-size: 14px; margin-bottom: 4px; color: #333;">
-                                        {obj_idx + 1}
+                                        {display_label}
                                     </div>
                                          <div style="font-size: 16px;">
                                         {yes_no}
@@ -619,16 +622,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Decide label prefix (letters for practice, numbers otherwise)
     label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-
+    
     # Text-only version: Display action history
     if use_text_version:
         st.markdown("<div style='font-size: 30px !important; font-weight: 700; margin-bottom: 0.5rem;'>Action History</div>", unsafe_allow_html=True)
         if st.session_state.action_history:
             # Limit visible entries to roughly eight before scrolling
-            entries_html = "".join(
-                f"<div style='font-size: 14px; margin-bottom: 0.15rem;'>• {action_text}</div>"
-                for action_text in st.session_state.action_history
-            )
+            def format_action(entry: str) -> str:
+                if is_practice:
+                    entry = entry.replace("Object 1", "Object A").replace("Object 2", "Object B").replace("Object 3", "Object C")
+                return f"<div style='font-size: 14px; margin-bottom: 0.15rem;'>• {entry}</div>"
+            entries_html = "".join(format_action(action_text) for action_text in st.session_state.action_history)
             st.markdown(
                 f"""
                 <div style='max-height: 12.5rem; overflow-y: auto; padding-right: 18px; margin-bottom: 0.5rem; border: 2px solid #0d47a1; border-radius: 10px; padding: 0.5rem 0.2rem; box-shadow: inset 0 0 6px rgba(0,0,0,0.08); direction: rtl;'>
@@ -768,7 +772,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.markdown("<p style='color: #d32f2f; font-weight: 700; margin-bottom: 0.5rem;'>No Tests remaining! You need to answer the question below.</p>", unsafe_allow_html=True)
 
         if current_selection:
-            selection_text = ", ".join([f"Object {obj + 1}" for obj in sorted(current_selection)])
+            selection_text = ", ".join(
+                [f"Object {label_prefix[obj] if is_practice else obj + 1}" for obj in sorted(current_selection)]
+            )
             st.markdown(f"<strong>Current selection:</strong> {selection_text}", unsafe_allow_html=True)
         else:
             st.markdown("**No objects selected yet.** Click on objects to select them.")
@@ -783,8 +789,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
             
             # Update environment state with current object selections
-            for i in range(round_config['num_objects']):
-                env._state[i] = (i in st.session_state.selected_objects)
+            for idx in range(round_config['num_objects']):
+                env._state[idx] = (idx in st.session_state.selected_objects)
             env._update_machine_state()
             game_state = env.step("look")[0]
             st.session_state.game_state = game_state
@@ -993,7 +999,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 
                 # Create options for the practice test
                 num_objects_in_round = round_config['num_objects']
-                practice_options = [f"Object {i + 1} is a blicket" for i in range(num_objects_in_round)]
+                practice_options = [
+                    f"Object {label_prefix[i]} is a blicket" if is_practice else f"Object {i + 1} is a blicket"
+                    for i in range(num_objects_in_round)
+                ]
                 practice_options.append("I don't know")
                 
                 # Show single question with all options
@@ -1065,7 +1074,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 
                 # Create options for the practice test
                 num_objects_in_round = round_config['num_objects']
-                practice_options = [f"Object {i + 1} is a blicket" for i in range(num_objects_in_round)]
+                practice_options = [
+                    f"Object {label_prefix[i]} is a blicket" if is_practice else f"Object {i + 1} is a blicket"
+                    for i in range(num_objects_in_round)
+                ]
                 practice_options.append("I don't know")
                 
                 # Show single question with all options
@@ -1221,13 +1233,13 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 key = f"blicket_q_{i}"
                 if key in st.session_state:
                     print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
-                    
+            
             # Persist data needed for rule-type classification stage
-                    st.session_state["saved_blicket_classifications"] = blicket_classifications
-                    st.session_state["saved_rule_hypothesis"] = current_hypothesis
-                    
-                    st.session_state.visual_game_state = "rule_type_classification"
-                    st.rerun()
+            st.session_state["saved_blicket_classifications"] = blicket_classifications
+            st.session_state["saved_rule_hypothesis"] = current_hypothesis
+            
+            st.session_state.visual_game_state = "rule_type_classification"
+            st.rerun()
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""

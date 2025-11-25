@@ -952,8 +952,10 @@ elif st.session_state.phase == "practice_complete":
     # Reveal the true blicket from the practice round
     practice_blicket = st.session_state.get("practice_blicket_index")
     if practice_blicket is not None:
-        st.markdown(f"The true blicket in the practice round was **Object {practice_blicket + 1}**. This is because only Object B can turn on the blicket machine.")
-        st.markdown(f"You will now move on to the Main Experiment, where you will see 4 new objects and a different blicket machine. Please note that the rules may be completely different from the practice round: which object(s) count as blickets can change entirely, and the machine may behave differently as well.")
+        label_map = ["A", "B", "C"]
+        display_label = label_map[practice_blicket] if practice_blicket < len(label_map) else str(practice_blicket + 1)
+        st.markdown(f"The true blicket in the practice round was **Object {display_label}**. This is because only Object { 'ABC'[practice_blicket] if practice_blicket < 3 else practice_blicket + 1 } can turn on the blicket machine.")
+        st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different blicket machine. Please note that the rules may be completely different from the practice round: which object(s) count as blickets can change entirely, and the machine may behave differently as well.")
 
     if st.button("Start Main Experiment", type="primary", use_container_width=True):
         random.seed(hash(st.session_state.current_participant_id) % 2**32)
