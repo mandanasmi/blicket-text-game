@@ -816,7 +816,6 @@ elif st.session_state.phase == "comprehension":
 
         if st.button("Start Comprehension Phase", type="primary"):
             random_blicket = random.randint(0, 2)
-            random_blicket = random.randint(0, 2)
             st.session_state.practice_blicket_index = random_blicket
             practice_config = {
                 'num_objects': 3,
