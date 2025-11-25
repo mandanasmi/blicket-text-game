@@ -693,7 +693,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 is_selected = object_id in st.session_state.selected_objects
                 horizon = round_config.get('horizon', 32)
                 steps_left = horizon - st.session_state.steps_taken
-                interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
+                interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state != "exploration")
                 
                 # Use neutral styling - status will be shown in box below
                 # Wrap button + status box for styling
@@ -855,7 +855,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     steps_left = horizon - st.session_state.steps_taken
                     
                     # Disable interaction if no steps left or if in questionnaire phase
-                    interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state == "questionnaire")
+                    interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state != "exploration")
                     
                     # Create clickable image with improved styling (neutral colors, no green)
                     if interaction_disabled:
