@@ -3,6 +3,7 @@ import os
 import json
 import random
 import datetime
+import time
 
 import numpy as np
 import streamlit as st
@@ -815,6 +816,7 @@ elif st.session_state.phase == "comprehension":
         """)
 
         if st.button("Start Comprehension Phase", type="primary"):
+            random.seed(time.time())
             random_blicket = random.randint(0, 2)
             st.session_state.practice_blicket_index = random_blicket
             practice_config = {
@@ -893,6 +895,7 @@ elif st.session_state.phase == "practice_game":
 
     practice_blicket = st.session_state.get("practice_blicket_index")
     if practice_blicket is None:
+        random.seed(time.time())
         practice_blicket = random.randint(0, 2)
         st.session_state.practice_blicket_index = practice_blicket
     practice_config = {
