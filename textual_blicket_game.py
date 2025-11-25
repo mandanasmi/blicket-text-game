@@ -617,6 +617,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
 
     
+    # Decide label prefix (letters for practice, numbers otherwise)
+    label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
     # Text-only version: Display action history
     if use_text_version:
         st.markdown("<div style='font-size: 30px !important; font-weight: 700; margin-bottom: 0.5rem;'>Action History</div>", unsafe_allow_html=True)
@@ -684,7 +687,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     qna_locked = (st.session_state.visual_game_state != "exploration") or practice_locked
     
     if use_text_version:
-        st.markdown("<div style='font-size: 30px !important; font-weight: 700; margin-bottom: 0.5rem;'>Available Objects</div>", unsafe_allow_html=True)
+        header = "Available Objects (A, B, C)" if is_practice else "Available Objects"
+        st.markdown(f"<div style='font-size: 30px !important; font-weight: 700; margin-bottom: 0.5rem;'>{header}</div>", unsafe_allow_html=True)
         
         # Text-only version: Simple button grid with selection mode
         st.markdown('<div class="object-grid-wrapper comprehension-layout">', unsafe_allow_html=True)
@@ -693,6 +697,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             col_index = i % (2 if st.session_state.get("screen_is_small") else 4)
             with cols[col_index]:
                 object_id = i  # 0-based object ID
+                display_label = label_prefix[i] if is_practice else f"{i + 1}"
                 is_selected = object_id in st.session_state.selected_objects
                 horizon = round_config.get('horizon', 32)
                 steps_left = horizon - st.session_state.steps_taken
@@ -705,9 +710,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     f'<div style="display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 100%; max-width: 210px; min-width: 0;" title="{container_title}">',
                     unsafe_allow_html=True,
                 )
-                button_help = "Interaction disabled during Q&A." if qna_locked else f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"
+                button_help = "Interaction disabled during Q&A." if qna_locked else f"Click to {'remove' if is_selected else 'place'} Object {display_label}"
                 button_clicked = st.button(
-                    f"Object {i + 1}",
+                    f"Object {display_label}",
                            key=f"obj_{i}", 
                            disabled=interaction_disabled,
                     help=button_help,
@@ -1056,7 +1061,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if is_practice and st.session_state.get("show_practice_test", False):
                 st.markdown("---")
                 st.markdown("### Practice Q&A")
-                st.markdown("Which object do you think is a blicket?")
+                st.markdown("Which object do you think is a blicket? Remember, only blickets can turn on the blicket machine.
+")
                 
                 # Create options for the practice test
                 num_objects_in_round = round_config['num_objects']

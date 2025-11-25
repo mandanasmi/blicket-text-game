@@ -709,8 +709,7 @@ if st.session_state.phase == "intro":
         st.markdown("""
 **Welcome!**
 
-In this experiment, you’ll see a machine that can light up when certain objects are placed on it.
-Your task is to figure out **which object or combination of objects** makes the machine turn on.
+n this experiment, you’ll see a "blicket" machine that can light up when certain objects are placed on it. Your task is to figure out which object or combination of objects makes the blicket machine turn on. The object(s) that can turn on the blicket machine are called "blickets."
 
 You’ll complete several rounds:
 1.  **A brief comprehension check** to make sure you understand the controls.
@@ -807,10 +806,12 @@ elif st.session_state.phase == "comprehension":
         This phase helps you learn the interface.
 
         **Instructions:**
-        - You will see 3 objects. Click to place them on the machine.
-        - Select one or more objects, then click "Test".
-        - If the machine lights up, that combination works.
-        - Your tests and outcomes appear in the Test History (left sidebar).
+        - You will see 3 objects that may or may not be "blickets." To test if they are blickets, click to place them on the blicket machine.
+        - You can select one or more objects, then click "Test".
+        - If the blicket machine lights up, it means that at least one of the objects you put on the machine is a blicket. It could be just one of them, some of them, or all of them.
+        - Your tests and outcomes will appear in the Test History (left sidebar).
+
+
 
         Click below when ready.
         """)
@@ -947,12 +948,12 @@ elif st.session_state.phase == "practice_complete":
 
     st.title("🧙 Blicket Text Adventure")
     st.markdown("## Comprehension Phase Complete!")
-    st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
     
     # Reveal the true blicket from the practice round
     practice_blicket = st.session_state.get("practice_blicket_index")
     if practice_blicket is not None:
-        st.markdown(f"The true blicket in the practice round was **Object {practice_blicket + 1}**.")
+        st.markdown(f"The true blicket in the practice round was **Object {practice_blicket + 1}**. This is because only Object B can turn on the blicket machine.")
+        st.markdown(f"You will now move on to the Main Experiment, where you will see 4 new objects and a different blicket machine. Please note that the rules may be completely different from the practice round: which object(s) count as blickets can change entirely, and the machine may behave differently as well.")
 
     if st.button("Start Main Experiment", type="primary", use_container_width=True):
         random.seed(hash(st.session_state.current_participant_id) % 2**32)
