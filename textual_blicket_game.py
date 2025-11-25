@@ -584,7 +584,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     )
     
     # Collapsible instruction section
-    with st.expander("📋 Game Instructions", expanded=False):
+    with st.expander("Click to read game instructions", expanded=False):
         horizon = round_config.get('horizon', 32)  # Default to 32 tests
         st.markdown(f"""
 
