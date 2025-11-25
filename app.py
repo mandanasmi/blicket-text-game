@@ -807,7 +807,7 @@ elif st.session_state.phase == "comprehension":
 
         **Instructions:**
         - You will see 4 objects. Click to place them on the machine.
-        - Select one or more objects, then click "Test Combination".
+        - Select one or more objects, then click "Test".
         - If the machine lights up, that combination works.
         - Your tests and outcomes appear in the Test History (left sidebar).
 

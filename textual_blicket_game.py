@@ -565,7 +565,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     color: #666;
                     font-size: 16px;
                 '>
-                No tests recorded yet. Click Test Combination to begin.
+                No tests recorded yet. Click Test to begin.
                 </div>
                 """,
                     unsafe_allow_html=True,
@@ -609,7 +609,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         1. Click on object buttons to **select** the objects you want to test
         2. A status box below each button shows: **ON PLATFORM** or **NOT ON PLATFORM**
         3. Click an object again to **deselect** it
-        4. Once you have selected your combination, click the **Test Combination** button
+        4. Once you have selected your combination, click the **Test** button
         5. The test will be recorded, and you'll see the result in the Test History
         6. Repeat: select new objects and test again as needed
         """)
@@ -764,7 +764,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.markdown("**No objects selected yet.** Click on objects to select them.")
         
         # Test button - only appears if objects are selected
-        if st.button(" Test Combination", type="primary", disabled=not current_selection or interaction_disabled):
+        if st.button("Test", type="primary", disabled=not current_selection or interaction_disabled):
             # NOW record the test action
             action_time = datetime.datetime.now()
             
