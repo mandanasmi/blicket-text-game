@@ -806,7 +806,7 @@ elif st.session_state.phase == "comprehension":
         This phase helps you learn the interface.
 
         **Instructions:**
-        - You will see 4 objects. Click to place them on the machine.
+        - You will see 3 objects. Click to place them on the machine.
         - Select one or more objects, then click "Test".
         - If the machine lights up, that combination works.
         - Your tests and outcomes appear in the Test History (left sidebar).
@@ -815,10 +815,13 @@ elif st.session_state.phase == "comprehension":
         """)
 
         if st.button("Start Comprehension Phase", type="primary"):
+            random_blicket = random.randint(0, 2)
+            random_blicket = random.randint(0, 2)
+            st.session_state.practice_blicket_index = random_blicket
             practice_config = {
-                'num_objects': 4,
+                'num_objects': 3,
                 'num_blickets': 1,
-                'blicket_indices': [1],
+                'blicket_indices': [random_blicket],
                 'rule': 'conjunctive',
                 'init_prob': 0.2,
                 'transition_noise': 0.0,
@@ -889,10 +892,12 @@ elif st.session_state.phase == "practice_game":
     st.title("🧙 Blicket Text Adventure")
     st.markdown("## Comprehension Phase - Round 1")
 
+    random_blicket = random.randint(0, 2)
+    st.session_state.practice_blicket_index = random_blicket
     practice_config = {
-        'num_objects': 4,
+        'num_objects': 3,
         'num_blickets': 1,
-        'blicket_indices': [1],
+        'blicket_indices': [random_blicket],
         'rule': 'conjunctive',
         'init_prob': 0.2,
         'transition_noise': 0.0,
@@ -939,6 +944,11 @@ elif st.session_state.phase == "practice_complete":
     st.title("🧙 Blicket Text Adventure")
     st.markdown("## Comprehension Phase Complete!")
     st.markdown(f"**Great job, {st.session_state.current_participant_id}!**")
+    
+    # Reveal the true blicket from the practice round
+    practice_blicket = st.session_state.get("practice_blicket_index")
+    if practice_blicket is not None:
+        st.markdown(f"The true blicket in the practice round was **Object {practice_blicket + 1}**.")
 
     if st.button("Start Main Experiment", type="primary", use_container_width=True):
         random.seed(hash(st.session_state.current_participant_id) % 2**32)
