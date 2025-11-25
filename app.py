@@ -891,12 +891,14 @@ elif st.session_state.phase == "practice_game":
     st.title("🧙 Blicket Text Adventure")
     st.markdown("## Comprehension Phase - Round 1")
 
-    random_blicket = random.randint(0, 2)
-    st.session_state.practice_blicket_index = random_blicket
+    practice_blicket = st.session_state.get("practice_blicket_index")
+    if practice_blicket is None:
+        practice_blicket = random.randint(0, 2)
+        st.session_state.practice_blicket_index = practice_blicket
     practice_config = {
         'num_objects': 3,
         'num_blickets': 1,
-        'blicket_indices': [random_blicket],
+        'blicket_indices': [practice_blicket],
         'rule': 'conjunctive',
         'init_prob': 0.2,
         'transition_noise': 0.0,
