@@ -326,7 +326,7 @@ def save_practice_question_answer(participant_id, answer_text):
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - text-only interface"""
     
-
+    
     # Determine which mode to use - this is the LOCAL variable for this function
     if use_visual_mode is not None:
         use_text_version = not use_visual_mode
@@ -527,17 +527,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                 border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
                                 st.markdown(
                                     f"""
-                                     <div style="
+                                    <div style="
                                     background-color: {bg_color}; 
                                     border: {border_style}; 
                                     border-radius: 5px; 
                                     padding: 8px; 
                                     margin: 2px; 
-                                    text-align: center;
-                                    color: black;
-                                    font-weight: bold;
+                                        text-align: center;
+                                        color: black;
+                                        font-weight: bold;
                                     min-width: 45px;
-                                ">
+                                    ">
                                          <div style="font-size: 14px; margin-bottom: 4px; color: #333;">
                                         {obj_idx + 1}
                                     </div>
@@ -571,7 +571,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     unsafe_allow_html=True,
                 )
 
-
+    
     # Main content area
     # Display round info and progress
     st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-bottom: 4px;'>Round {current_round + 1} of {total_rounds}</div>", unsafe_allow_html=True)
@@ -680,6 +680,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
 
     
     # Display available objects
+    practice_locked = is_practice and st.session_state.get("show_practice_test", False)
+    qna_locked = (st.session_state.visual_game_state != "exploration") or practice_locked
+    
     if use_text_version:
         st.markdown("<div style='font-size: 30px !important; font-weight: 700; margin-bottom: 0.5rem;'>Available Objects</div>", unsafe_allow_html=True)
         
@@ -697,15 +700,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 
                 # Use neutral styling - status will be shown in box below
                 # Wrap button + status box for styling
+                container_title = "Interaction disabled during Q&A." if qna_locked else ""
                 st.markdown(
-                    '<div style="display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 100%; max-width: 210px; min-width: 0;">',
+                    f'<div style="display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 100%; max-width: 210px; min-width: 0;" title="{container_title}">',
                     unsafe_allow_html=True,
                 )
+                button_help = "Interaction disabled during Q&A." if qna_locked else f"Click to {'remove' if is_selected else 'place'} Object {i + 1}"
                 button_clicked = st.button(
                     f"Object {i + 1}",
-                    key=f"obj_{i}",
-                    disabled=interaction_disabled,
-                    help=f"Click to {'remove' if is_selected else 'place'} Object {i + 1}",
+                           key=f"obj_{i}", 
+                           disabled=interaction_disabled,
+                    help=button_help,
                     type="secondary",
                 )
 
@@ -764,7 +769,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.markdown("**No objects selected yet.** Click on objects to select them.")
         
         # Test button - only appears if objects are selected
-        if st.button("Test", type="primary", disabled=not current_selection or interaction_disabled):
+        test_help = "Interaction disabled during Q&A." if qna_locked else None
+        if st.button("Test", type="primary", disabled=not current_selection or interaction_disabled, help=test_help):
             # NOW record the test action
             action_time = datetime.datetime.now()
             
@@ -830,7 +836,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             )
             
     else:
-        st.markdown("Click on an object to place it on the machine. Click again to remove it.")
+        instructions = "Interaction is disabled during Q&A." if qna_locked else "Click on an object to place it on the machine. Click again to remove it."
+        st.markdown(instructions)
         
         # Visual version: Create grid of objects with clickable images
         for i in range(0, round_config['num_objects'], 4):
@@ -976,7 +983,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         if steps_left <= 0:
             if is_practice:                # Comprehension phase - show practice test on same page
                 st.markdown("---")
-                st.markdown("### Practice Test")
+                st.markdown("### Practice Q&A")
                 st.markdown("Which object do you think is a blicket?")
                 
                 # Create options for the practice test
@@ -1029,7 +1036,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Show different button based on phase
             if is_practice:
                 # Comprehension phase - show practice test inline
-                if st.button("Practice Test", type="primary", key="complete_ready_btn"):
+                if st.button("Practice Q&A", type="primary", key="complete_ready_btn"):
                     # Set flag to show practice test inline
                     st.session_state.show_practice_test = True
                     st.rerun()
@@ -1048,7 +1055,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Show practice test inline if flag is set
             if is_practice and st.session_state.get("show_practice_test", False):
                 st.markdown("---")
-                st.markdown("### Practice Test")
+                st.markdown("### Practice Q&A")
                 st.markdown("Which object do you think is a blicket?")
                 
                 # Create options for the practice test
@@ -1139,7 +1146,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 all_blicket_answered = False
                 break
         
-        # Check if rule hypothesis is provided
+                # Check if rule hypothesis is provided
         current_hypothesis = rule_input_value.strip()
         
         # Determine what is still missing and show inline guidance
@@ -1162,75 +1169,60 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         if next_button_clicked and not button_disabled:
             # All validations passed
-                print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
-                print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
-                
-                # Save blicket classifications before moving to rule type
-                blicket_classifications = {}
-                print(f"🔍 DEBUG: About to collect blicket answers, num_objects = {round_config['num_objects']}")
-                for i in range(round_config['num_objects']):
-                    raw_answer = st.session_state.get(f"blicket_q_{i}", None)
-                    print(f"🔍 DEBUG: Raw blicket_q_{i} from session state: {raw_answer}")
-                    # Only save actual values from the user, don't default to "No"
-                    if raw_answer is not None:
-                        blicket_classifications[f"object_{i}"] = raw_answer
-                        print(f"🔍 Saving intermediate - blicket_q_{i} = {raw_answer}")
-                    else:
-                        print(f"⚠️  WARNING: blicket_q_{i} is None - user didn't select an answer!")
-                
-                # Get objects that were on the machine before Q&A
-                objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
-                
-                # Note: We don't save intermediate progress for main_game rounds anymore
-                # All data including hypothesis and rule_type will be saved in the final round data
-                # Only save for comprehension phase if needed
-                if is_practice:
-                    save_intermediate_progress(
-                        participant_id, 
-                        round_config, 
-                        current_round, 
-                        total_rounds, 
-                        is_practice,
-                        blicket_classifications=blicket_classifications,
-                        rule_hypothesis=current_hypothesis,
-                        objects_on_machine=objects_on_machine_before_qa
-                    )
+            print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
+            print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
+            
+            # Save blicket classifications before moving to rule type
+            blicket_classifications = {}
+            print(f"🔍 DEBUG: About to collect blicket answers, num_objects = {round_config['num_objects']}")
+            for i in range(round_config['num_objects']):
+                raw_answer = st.session_state.get(f"blicket_q_{i}", None)
+                print(f"🔍 DEBUG: Raw blicket_q_{i} from session state: {raw_answer}")
+                # Only save actual values from the user, don't default to "No"
+                if raw_answer is not None:
+                    blicket_classifications[f"object_{i}"] = raw_answer
+                    print(f"🔍 Saving intermediate - blicket_q_{i} = {raw_answer}")
+                else:
+                    print(f"⚠️  WARNING: blicket_q_{i} is None - user didn't select an answer!")
+            
+            # Get objects that were on the machine before Q&A
+            objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
+            
+            # Note: We don't save intermediate progress for main_game rounds anymore
+            # All data including hypothesis and rule_type will be saved in the final round data
+            # Only save for comprehension phase if needed
+            if is_practice:
+                save_intermediate_progress(
+                    participant_id, 
+                    round_config, 
+                    current_round, 
+                    total_rounds, 
+                    is_practice,
+                    blicket_classifications=blicket_classifications,
+                    rule_hypothesis=current_hypothesis,
+                    objects_on_machine=objects_on_machine_before_qa
+                )
                 print(f"✅ Saved intermediate progress for comprehension phase")
             
-                print(f"📝 Preparing to save hypothesis for round {current_round + 1}")
-                print(f"   - Objects on machine: {objects_on_machine_before_qa}")
-                print(f"   - Blicket classifications: {blicket_classifications}")
-                print(f"   - Hypothesis: {current_hypothesis[:50]}...")
-                
-                # Debug: Check session state before transition
-                print(f"🔍 DEBUG: Before transitioning to rule_type, checking session state:")
-                print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
-                for i in range(round_config['num_objects']):
-                    key = f"blicket_q_{i}"
-                    if key in st.session_state:
-                        print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
-                
-                # Save blicket classifications to a tracked key that won't be affected by widget lifecycle
-                st.session_state["saved_blicket_classifications"] = blicket_classifications
-                print(f"🔍 DEBUG: Saving blicket_classifications to tracked key")
-                print(f"🔍 DEBUG: blicket_classifications dict: {blicket_classifications}")
-                for obj, ans in blicket_classifications.items():
-                    print(f"   - {obj}: {ans}")
-                print(f"🔍 DEBUG: Verified saved_blicket_classifications in session state: {st.session_state.get('saved_blicket_classifications')}")
-                
-                # Keep blicket answers in session state for the rule type classification phase
-                for i in range(round_config['num_objects']):
-                    if f"blicket_q_{i}" not in st.session_state:
-                        st.session_state[f"blicket_q_{i}"] = blicket_classifications.get(f"object_{i}", "No")
-                
-                # Preserve hypothesis in a separate key that won't be cleared by widget lifecycle
-                # The widget key "rule_hypothesis" won't persist once we leave this screen
-                st.session_state["saved_rule_hypothesis"] = current_hypothesis
-                print(f"🔍 DEBUG: Saved rule_hypothesis to saved_rule_hypothesis key: {current_hypothesis[:50]}...")
-                
-                st.session_state.visual_game_state = "rule_type_classification"
-                st.rerun()
-        
+            print(f"📝 Preparing to save hypothesis for round {current_round + 1}")
+            print(f"   - Objects on machine: {objects_on_machine_before_qa}")
+            print(f"   - Blicket classifications: {blicket_classifications}")
+            print(f"   - Hypothesis: {current_hypothesis[:50]}...")
+            
+            # Debug: Check session state before transition
+            print(f"🔍 DEBUG: Before transitioning to rule_type, checking session state:")
+            print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
+            for i in range(round_config['num_objects']):
+                key = f"blicket_q_{i}"
+                if key in st.session_state:
+                    print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
+                    
+            # Persist data needed for rule-type classification stage
+                    st.session_state["saved_blicket_classifications"] = blicket_classifications
+                    st.session_state["saved_rule_hypothesis"] = current_hypothesis
+                    
+                    st.session_state.visual_game_state = "rule_type_classification"
+                    st.rerun()
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
@@ -1283,126 +1275,126 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         if current_round + 1 < total_rounds:
             if st.button(" NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
                     # Get blicket classifications directly from saved tracked key
-                blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
-                print(f"🔍 DEBUG: Using saved_blicket_classifications directly: {blicket_classifications}")
+                    blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
+                    print(f"🔍 DEBUG: Using saved_blicket_classifications directly: {blicket_classifications}")
                 
-                # Get rule hypothesis and rule type from session state
-                # Use saved_rule_hypothesis which was saved when leaving the text_area screen
-                saved_hypothesis = st.session_state.get("saved_rule_hypothesis", "")
-                widget_hypothesis = st.session_state.get("rule_hypothesis", "")
-                rule_hypothesis = saved_hypothesis if saved_hypothesis else widget_hypothesis
-                rule_type = st.session_state.get("rule_type", "")
-                
-                # Debug: Check all hypothesis sources
-                print(f"🔍 DEBUG: saved_rule_hypothesis = '{saved_hypothesis[:50] if saved_hypothesis else 'EMPTY'}...'")
-                print(f"🔍 DEBUG: widget rule_hypothesis = '{widget_hypothesis[:50] if widget_hypothesis else 'EMPTY'}...'")
-                print(f"🔍 DEBUG: final rule_hypothesis = '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
-                
-                # Debug: Print rule hypothesis and rule type
-                print(f"🔍 Round {current_round + 1}: rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
-                print(f"🔍 Round {current_round + 1}: rule_type = '{rule_type}'")
-                print(f"🔍 Round {current_round + 1}: rule_type type = {type(rule_type)}")
-                print(f"🔍 Round {current_round + 1}: rule_type bool = {bool(rule_type)}")
-                print(f"🔍 Round {current_round + 1}: rule_type length = {len(rule_type) if rule_type else 0}")
-                
-                # Extract user's chosen blickets (objects marked as "Yes")
-                user_chosen_blickets = []
-                for i in range(round_config['num_objects']):
-                    classification = blicket_classifications.get(f"object_{i}", "No")
-                    print(f"🔍 Checking object_{i}: classification = '{classification}'")
-                    if classification == "Yes":
-                        user_chosen_blickets.append(i)  # 0-based index
-                        print(f"   ✅ Added {i} to user_chosen_blickets")
-                
-                print(f"🔍 Final user_chosen_blickets: {user_chosen_blickets}")
-                
-                # Calculate total time spent on this round
-                end_time = datetime.datetime.now()
-                total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
-                
-                # Generate unique round ID
-                now = datetime.datetime.now()
-                round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
-                
-                # Save current round data with detailed action tracking
-                round_data = {
-                    "round_id": round_id,  # Unique identifier for this round
-                    "start_time": st.session_state.game_start_time.isoformat(),
-                    "end_time": end_time.isoformat(),
-                    "total_time_seconds": total_time_seconds,
-                    "round_number": current_round + 1,
-                    "round_config": round_config,
-                    "user_actions": st.session_state.user_actions,  # All place/remove actions
-                    "action_history": st.session_state.action_history,  # Detailed action history
-                    "state_history": st.session_state.state_history,  # State changes
-                    "total_actions": len(st.session_state.user_actions),
-                    "action_history_length": len(st.session_state.action_history),  # Length of action history
-                    "total_steps_taken": st.session_state.steps_taken,
-                    "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
-                    "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
-                    "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
-                    "rule_type": rule_type if rule_type else "",  # Hypothesis chosen in the last question (conjunctive vs disjunctive) - FORCE string
-                    "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Ground truth blicket indices
-                    "true_rule": round_config['rule'],  # Ground truth rule for this round
-                    "final_machine_state": bool(game_state['true_state'][-1]),
-                    "final_objects_on_machine": list(st.session_state.selected_objects),
-                    "rule": round_config['rule'],  # Keep for compatibility
-                    "phase": "comprehension" if is_practice else "main_experiment",
-                    "interface_type": "text"
-                }
-                
-                # Debug: Print what will be saved to Firebase
-                print(f"💾 Saving to Firebase - Round {current_round + 1}:")
-                print(f"   - rule_type in dict: '{round_data.get('rule_type', 'MISSING')}'")
-                print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
-                print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
-                print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
-                
-                # Convert numpy types to ensure Firebase compatibility
-                round_data = convert_numpy_types(round_data)
-                print(f"💾 After convert_numpy_types - rule_type: '{round_data.get('rule_type', 'MISSING')}'")
-                
-                # Use the provided save function or default Firebase function
-                if save_data_func:
-                    save_data_func(participant_id, round_data)
-                else:
-                    save_game_data(participant_id, round_data)
-                
-                # Clean up old round_X_progress entries for main_game (if they exist)
-                if not is_practice:
-                    try:
-                        from firebase_admin import db
-                        participant_ref = db.reference(f'participants/{participant_id}')
-                        main_game_ref = participant_ref.child('main_game')
-                        progress_key = f"round_{current_round + 1}_progress"
-                        if main_game_ref.child(progress_key).get():
-                            main_game_ref.child(progress_key).delete()
-                            print(f"🗑️ Deleted old {progress_key} entry")
-                    except Exception as e:
-                        print(f"⚠️ Could not delete old progress entry: {e}")
-                
-                # Clear session state for next round (but NOT the round counter or phase management)
-                # Only clear game-specific variables, not phase control variables
-                st.session_state.pop("visual_game_state", None)
-                st.session_state.pop("env", None)
-                st.session_state.pop("game_state", None)
-                st.session_state.pop("object_positions", None)
-                st.session_state.pop("shape_images", None)
-                st.session_state.pop("blicket_answers", None)
-                st.session_state.pop("game_start_time", None)
-                
-                # Clear Q&A variables
-                st.session_state.pop("rule_hypothesis", None)
-                st.session_state.pop("rule_type", None)
-                for i in range(10):
-                    st.session_state.pop(f"blicket_q_{i}", None)
-                
-                # Note: Don't clear selected_objects, user_actions, action_history, state_history, steps_taken
-                # These will be reset by app.py's next_round handler
-                
-                # Return to main app for next round
-                st.session_state.phase = "next_round"
-                st.rerun()
+                    # Get rule hypothesis and rule type from session state
+                    # Use saved_rule_hypothesis which was saved when leaving the text_area screen
+                    saved_hypothesis = st.session_state.get("saved_rule_hypothesis", "")
+                    widget_hypothesis = st.session_state.get("rule_hypothesis", "")
+                    rule_hypothesis = saved_hypothesis if saved_hypothesis else widget_hypothesis
+                    rule_type = st.session_state.get("rule_type", "")
+                    
+                    # Debug: Check all hypothesis sources
+                    print(f"🔍 DEBUG: saved_rule_hypothesis = '{saved_hypothesis[:50] if saved_hypothesis else 'EMPTY'}...'")
+                    print(f"🔍 DEBUG: widget rule_hypothesis = '{widget_hypothesis[:50] if widget_hypothesis else 'EMPTY'}...'")
+                    print(f"🔍 DEBUG: final rule_hypothesis = '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
+                    
+                    # Debug: Print rule hypothesis and rule type
+                    print(f"🔍 Round {current_round + 1}: rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
+                    print(f"🔍 Round {current_round + 1}: rule_type = '{rule_type}'")
+                    print(f"🔍 Round {current_round + 1}: rule_type type = {type(rule_type)}")
+                    print(f"🔍 Round {current_round + 1}: rule_type bool = {bool(rule_type)}")
+                    print(f"🔍 Round {current_round + 1}: rule_type length = {len(rule_type) if rule_type else 0}")
+                    
+                    # Extract user's chosen blickets (objects marked as "Yes")
+                    user_chosen_blickets = []
+                    for i in range(round_config['num_objects']):
+                        classification = blicket_classifications.get(f"object_{i}", "No")
+                        print(f"🔍 Checking object_{i}: classification = '{classification}'")
+                        if classification == "Yes":
+                            user_chosen_blickets.append(i)  # 0-based index
+                            print(f"   ✅ Added {i} to user_chosen_blickets")
+                    
+                    print(f"🔍 Final user_chosen_blickets: {user_chosen_blickets}")
+                    
+                    # Calculate total time spent on this round
+                    end_time = datetime.datetime.now()
+                    total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
+                    
+                    # Generate unique round ID
+                    now = datetime.datetime.now()
+                    round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+                    
+                    # Save current round data with detailed action tracking
+                    round_data = {
+                        "round_id": round_id,  # Unique identifier for this round
+                        "start_time": st.session_state.game_start_time.isoformat(),
+                        "end_time": end_time.isoformat(),
+                        "total_time_seconds": total_time_seconds,
+                        "round_number": current_round + 1,
+                        "round_config": round_config,
+                        "user_actions": st.session_state.user_actions,  # All place/remove actions
+                        "action_history": st.session_state.action_history,  # Detailed action history
+                        "state_history": st.session_state.state_history,  # State changes
+                        "total_actions": len(st.session_state.user_actions),
+                        "action_history_length": len(st.session_state.action_history),  # Length of action history
+                        "total_steps_taken": st.session_state.steps_taken,
+                        "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
+                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
+                        "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
+                        "rule_type": rule_type if rule_type else "",  # Hypothesis chosen in the last question (conjunctive vs disjunctive) - FORCE string
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Ground truth blicket indices
+                        "true_rule": round_config['rule'],  # Ground truth rule for this round
+                        "final_machine_state": bool(game_state['true_state'][-1]),
+                        "final_objects_on_machine": list(st.session_state.selected_objects),
+                        "rule": round_config['rule'],  # Keep for compatibility
+                        "phase": "comprehension" if is_practice else "main_experiment",
+                        "interface_type": "text"
+                    }
+                    
+                    # Debug: Print what will be saved to Firebase
+                    print(f"💾 Saving to Firebase - Round {current_round + 1}:")
+                    print(f"   - rule_type in dict: '{round_data.get('rule_type', 'MISSING')}'")
+                    print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
+                    print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
+                    print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
+                    
+                    # Convert numpy types to ensure Firebase compatibility
+                    round_data = convert_numpy_types(round_data)
+                    print(f"💾 After convert_numpy_types - rule_type: '{round_data.get('rule_type', 'MISSING')}'")
+                    
+                    # Use the provided save function or default Firebase function
+                    if save_data_func:
+                        save_data_func(participant_id, round_data)
+                    else:
+                        save_game_data(participant_id, round_data)
+                    
+                    # Clean up old round_X_progress entries for main_game (if they exist)
+                    if not is_practice:
+                        try:
+                            from firebase_admin import db
+                            participant_ref = db.reference(f'participants/{participant_id}')
+                            main_game_ref = participant_ref.child('main_game')
+                            progress_key = f"round_{current_round + 1}_progress"
+                            if main_game_ref.child(progress_key).get():
+                                main_game_ref.child(progress_key).delete()
+                                print(f"🗑️ Deleted old {progress_key} entry")
+                        except Exception as e:
+                            print(f"⚠️ Could not delete old progress entry: {e}")
+                    
+                    # Clear session state for next round (but NOT the round counter or phase management)
+                    # Only clear game-specific variables, not phase control variables
+                    st.session_state.pop("visual_game_state", None)
+                    st.session_state.pop("env", None)
+                    st.session_state.pop("game_state", None)
+                    st.session_state.pop("object_positions", None)
+                    st.session_state.pop("shape_images", None)
+                    st.session_state.pop("blicket_answers", None)
+                    st.session_state.pop("game_start_time", None)
+                    
+                    # Clear Q&A variables
+                    st.session_state.pop("rule_hypothesis", None)
+                    st.session_state.pop("rule_type", None)
+                    for i in range(10):
+                        st.session_state.pop(f"blicket_q_{i}", None)
+                    
+                    # Note: Don't clear selected_objects, user_actions, action_history, state_history, steps_taken
+                    # These will be reset by app.py's next_round handler
+                    
+                    # Return to main app for next round
+                    st.session_state.phase = "next_round"
+                    st.rerun()
             
             # Show message if button is disabled
             if not rule_type:
@@ -1413,106 +1405,106 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             rule_type = st.session_state.get("rule_type", "")
             
             if st.button("FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
-                # Get blicket classifications directly from saved tracked key
-                blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
-                print(f"🔍 DEBUG (FINAL): Using saved_blicket_classifications directly: {blicket_classifications}")
+                    # Get blicket classifications directly from saved tracked key
+                    blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
+                    print(f"🔍 DEBUG (FINAL): Using saved_blicket_classifications directly: {blicket_classifications}")
                 
-                # Get rule hypothesis and rule type from session state
-                # Use saved_rule_hypothesis which was saved when leaving the text_area screen
-                rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
-                rule_type = st.session_state.get("rule_type", "")
-                
-                # Debug: Print rule hypothesis
-                print(f"🔍 Round {current_round + 1} (FINAL): rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
-                print(f"🔍 Round {current_round + 1} (FINAL): rule_type = {rule_type}")
-                
-                # Extract user's chosen blickets (objects marked as "Yes")
-                user_chosen_blickets = []
-                for i in range(round_config['num_objects']):
-                    classification = blicket_classifications.get(f"object_{i}", "No")
-                    print(f"🔍 Checking object_{i} (FINAL): classification = '{classification}'")
-                    if classification == "Yes":
-                        user_chosen_blickets.append(i)  # 0-based index
-                        print(f"   ✅ Added {i} to user_chosen_blickets")
-                
-                print(f"🔍 Final user_chosen_blickets: {user_chosen_blickets}")
-                
-                # Get current game state from session state (ensure we have the latest)
-                current_game_state = st.session_state.get("game_state", game_state)
-                
-                # Calculate total time spent on this round
-                end_time = datetime.datetime.now()
-                total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
-                
-                # Generate unique round ID for main phase
-                now = datetime.datetime.now()
-                round_id = f"main_round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
-                
-                # Save final round data with detailed action tracking
-                round_data = {
-                "round_id": round_id,  # Unique identifier for this round
-                "start_time": st.session_state.game_start_time.isoformat(),
-                    "end_time": end_time.isoformat(),
-                    "total_time_seconds": total_time_seconds,
-                    "round_number": current_round + 1,
-                    "round_config": round_config,
-                    "user_actions": st.session_state.get("user_actions", []),  # All place/remove actions
-                    "action_history": st.session_state.get("action_history", []),  # Detailed action history
-                    "state_history": st.session_state.get("state_history", []),  # State changes
-                    "total_actions": len(st.session_state.get("user_actions", [])),
-                    "action_history_length": len(st.session_state.get("action_history", [])),  # Length of action history
-                    "total_steps_taken": st.session_state.get("steps_taken", 0),
-                    "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
-                    "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
-                    "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
-                    "rule_type": rule_type if rule_type else "",  # Hypothesis chosen in the last question (conjunctive vs disjunctive) - FORCE string
-                    "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # Ground truth blicket indices
-                    "true_rule": round_config['rule'],  # Ground truth rule for this round
-                    "final_machine_state": bool(current_game_state.get('true_state', [False])[-1]) if current_game_state else False,
-                    "final_objects_on_machine": list(st.session_state.get("selected_objects", set())),
-                    "rule": round_config['rule'],  # Keep for compatibility
-                    "phase": "main_experiment",
-                    "interface_type": "text"
-                }
-                
-                # Debug: Print what will be saved to Firebase
-                print(f"💾 Saving to Firebase - Round {current_round + 1} (FINAL):")
-                print(f"   - rule_type in dict: '{round_data.get('rule_type', 'MISSING')}'")
-                print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
-                print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
-                print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
-                
-                # Convert numpy types to ensure Firebase compatibility
-                round_data = convert_numpy_types(round_data)
-                print(f"💾 After convert_numpy_types (FINAL) - rule_type: '{round_data.get('rule_type', 'MISSING')}'")
-                
-                # Use the provided save function or default Firebase function
-                if save_data_func:
-                    save_data_func(participant_id, round_data)
-                else:
-                    save_game_data(participant_id, round_data)
-                
-                # Clean up old round_X_progress entries for this round (if they exist)
-                try:
-                    from firebase_admin import db
-                    participant_ref = db.reference(f'participants/{participant_id}')
-                    main_game_ref = participant_ref.child('main_game')
-                    progress_key = f"round_{current_round + 1}_progress"
-                    if main_game_ref.child(progress_key).get():
-                        main_game_ref.child(progress_key).delete()
-                        print(f"🗑️ Deleted old {progress_key} entry (FINAL)")
-                except Exception as e:
-                    print(f"⚠️ Could not delete old progress entry: {e}")
-                
-                # Clear session state completely for phase transition
-                reset_game_session_state()
-                
-                # Return to main app for completion
-                if is_practice:
-                    st.session_state.phase = "practice_complete"
-                else:
-                    st.session_state.phase = "end"
-                st.rerun()
+                    # Get rule hypothesis and rule type from session state
+                    # Use saved_rule_hypothesis which was saved when leaving the text_area screen
+                    rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
+                    rule_type = st.session_state.get("rule_type", "")
+                    
+                    # Debug: Print rule hypothesis
+                    print(f"🔍 Round {current_round + 1} (FINAL): rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
+                    print(f"🔍 Round {current_round + 1} (FINAL): rule_type = {rule_type}")
+                    
+                    # Extract user's chosen blickets (objects marked as "Yes")
+                    user_chosen_blickets = []
+                    for i in range(round_config['num_objects']):
+                        classification = blicket_classifications.get(f"object_{i}", "No")
+                        print(f"🔍 Checking object_{i} (FINAL): classification = '{classification}'")
+                        if classification == "Yes":
+                            user_chosen_blickets.append(i)  # 0-based index
+                            print(f"   ✅ Added {i} to user_chosen_blickets")
+                    
+                    print(f"🔍 Final user_chosen_blickets: {user_chosen_blickets}")
+                    
+                    # Get current game state from session state (ensure we have the latest)
+                    current_game_state = st.session_state.get("game_state", game_state)
+                    
+                    # Calculate total time spent on this round
+                    end_time = datetime.datetime.now()
+                    total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
+                    
+                    # Generate unique round ID for main phase
+                    now = datetime.datetime.now()
+                    round_id = f"main_round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+                    
+                    # Save final round data with detailed action tracking
+                    round_data = {
+                        "round_id": round_id,  # Unique identifier for this round
+                        "start_time": st.session_state.game_start_time.isoformat(),
+                        "end_time": end_time.isoformat(),
+                        "total_time_seconds": total_time_seconds,
+                        "round_number": current_round + 1,
+                        "round_config": round_config,
+                        "user_actions": st.session_state.get("user_actions", []),  # All place/remove actions
+                        "action_history": st.session_state.get("action_history", []),  # Detailed action history
+                        "state_history": st.session_state.get("state_history", []),  # State changes
+                        "total_actions": len(st.session_state.get("user_actions", [])),
+                        "action_history_length": len(st.session_state.get("action_history", [])),  # Length of action history
+                        "total_steps_taken": st.session_state.get("steps_taken", 0),
+                        "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
+                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
+                        "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
+                        "rule_type": rule_type if rule_type else "",  # Hypothesis chosen in the last question (conjunctive vs disjunctive) - FORCE string
+                        "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # Ground truth blicket indices
+                        "true_rule": round_config['rule'],  # Ground truth rule for this round
+                        "final_machine_state": bool(current_game_state.get('true_state', [False])[-1]) if current_game_state else False,
+                        "final_objects_on_machine": list(st.session_state.get("selected_objects", set())),
+                        "rule": round_config['rule'],  # Keep for compatibility
+                        "phase": "main_experiment",
+                        "interface_type": "text"
+                    }
+                    
+                    # Debug: Print what will be saved to Firebase
+                    print(f"💾 Saving to Firebase - Round {current_round + 1} (FINAL):")
+                    print(f"   - rule_type in dict: '{round_data.get('rule_type', 'MISSING')}'")
+                    print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
+                    print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
+                    print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
+                    
+                    # Convert numpy types to ensure Firebase compatibility
+                    round_data = convert_numpy_types(round_data)
+                    print(f"💾 After convert_numpy_types (FINAL) - rule_type: '{round_data.get('rule_type', 'MISSING')}'")
+                    
+                    # Use the provided save function or default Firebase function
+                    if save_data_func:
+                        save_data_func(participant_id, round_data)
+                    else:
+                        save_game_data(participant_id, round_data)
+                    
+                    # Clean up old round_X_progress entries for this round (if they exist)
+                    try:
+                        from firebase_admin import db
+                        participant_ref = db.reference(f'participants/{participant_id}')
+                        main_game_ref = participant_ref.child('main_game')
+                        progress_key = f"round_{current_round + 1}_progress"
+                        if main_game_ref.child(progress_key).get():
+                            main_game_ref.child(progress_key).delete()
+                            print(f"🗑️ Deleted old {progress_key} entry (FINAL)")
+                    except Exception as e:
+                        print(f"⚠️ Could not delete old progress entry: {e}")
+                    
+                    # Clear session state completely for phase transition
+                    reset_game_session_state()
+                    
+                    # Return to main app for completion
+                    if is_practice:
+                        st.session_state.phase = "practice_complete"
+                    else:
+                        st.session_state.phase = "end"
+                    st.rerun()
             
             # Show message if button is disabled
             if not rule_type:
