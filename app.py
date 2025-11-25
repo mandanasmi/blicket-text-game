@@ -632,7 +632,7 @@ if st.session_state.phase == "consent":
     st.markdown("""
         If you have any questions, please contact the lab at gopniklab@berkeley.edu or the project lead, Eunice Yiu, at ey242@berkeley.edu.
         If you have questions regarding your treatment or rights as a participant, contact the Committee for the Protection of Human Subjects at UC Berkeley at (510) 642-7461 or subjects@berkeley.edu.
-        If you have questions about the software, please contact Mandana Samiei, at mandanas.samiei@mail.mcgill.ca.
+        If you have questions about the software, please contact Mandana Samiei, at mandana.samiei@mail.mcgill.ca.
     """)
 
     if IRB_PROTOCOL_NUMBER:
