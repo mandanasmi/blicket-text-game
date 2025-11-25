@@ -1156,10 +1156,9 @@ elif st.session_state.phase == "end":
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
     st.markdown("""
     ### 🎯 Experiment Complete!
-
+    
     Thank you for participating in our blicket research study!
     """)
-    st.button("Start Over", on_click=reset_all)
 
     # Add right sidebar HTML element - only on desktop
     import streamlit.components.v1 as components
