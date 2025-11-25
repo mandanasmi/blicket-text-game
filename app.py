@@ -708,8 +708,6 @@ if st.session_state.phase == "intro":
         st.markdown("""
 **Welcome to the Blicket Text Adventure!**
 
-This is a text-only interface with 4 objects.
-
 **The study has two phases:**
 1. **Comprehension Phase**: Learn the interface
 2. **Main Experiment**: Actual experiment with data collection
