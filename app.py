@@ -979,6 +979,13 @@ elif st.session_state.phase == "practice_complete":
                 'horizon': 16
             })
 
+        # Ensure there is at least one conjunctive and one disjunctive round
+        rules_present = {cfg['rule'] for cfg in round_configs}
+        if len(rules_present) == 1:
+            # Flip the rule of the final round to introduce variety
+            alternate_rule = 'disjunctive' if round_configs[-1]['rule'] == 'conjunctive' else 'conjunctive'
+            round_configs[-1]['rule'] = alternate_rule
+
         config = {
             'num_rounds': num_rounds,
             'user_selected_objects': 4,

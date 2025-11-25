@@ -685,9 +685,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         # Text-only version: Simple button grid with selection mode
         st.markdown('<div class="object-grid-wrapper comprehension-layout">', unsafe_allow_html=True)
-        cols = st.columns([1,1,1,1], gap="medium")
+        cols = st.columns(2, gap="large") if st.session_state.get("screen_is_small") else st.columns(4, gap="medium")
         for i in range(round_config['num_objects']):
-            with cols[i % 4]:
+            col_index = i % (2 if st.session_state.get("screen_is_small") else 4)
+            with cols[col_index]:
                 object_id = i  # 0-based object ID
                 is_selected = object_id in st.session_state.selected_objects
                 horizon = round_config.get('horizon', 32)
@@ -697,7 +698,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Use neutral styling - status will be shown in box below
                 # Wrap button + status box for styling
                 st.markdown(
-                    '<div style="display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 210px;">',
+                    '<div style="display: flex; flex-direction: column; align-items: center; gap: 0.35rem; width: 100%; max-width: 210px; min-width: 0;">',
                     unsafe_allow_html=True,
                 )
                 button_clicked = st.button(
@@ -733,9 +734,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    width: 210px;
-                    min-width: 210px;
+                    width: 100%;
                     max-width: 210px;
+                    min-width: 0;
                     min-height: 50px;
                     padding: clamp(6px, 0.8vw, 10px);
                     border: 1px solid {box_border_color};
