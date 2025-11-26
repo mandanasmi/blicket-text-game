@@ -301,7 +301,7 @@ def save_practice_question_answer(participant_id, answer_text):
         lower_text = answer_text.lower()
         if lower_text.startswith("object"):
             try:
-                # Expected format: "Object X is a blicket"
+                # Expected format: "Object X is a Nexiom"
                 selected_object = int(answer_text.split()[1])
             except (ValueError, IndexError):
                 selected_object = None
@@ -647,7 +647,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.markdown("*No actions taken yet.*")
         st.markdown("---")
     
-    # Display the blicket machine (only in visual version)
+    # Display the Nexiom machine (only in visual version)
     if not use_text_version:
         st.markdown("### The Nexiom Machine")
     
