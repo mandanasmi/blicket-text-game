@@ -707,18 +707,18 @@ if st.session_state.phase == "intro":
 
     if not st.session_state.participant_id_entered:
         st.markdown("""
-**Welcome!**
+        **Welcome!**
 
-n this experiment, you’ll see a "blicket" machine that can light up when certain objects are placed on it. Your task is to figure out which object or combination of objects makes the blicket machine turn on. The object(s) that can turn on the blicket machine are called "blickets."
+        In this experiment, you’ll see a "Nexiom" machine that can light up when certain objects are placed on it. Your task is to figure out which object or combination of objects makes the Nexiom machine turn on. The object(s) that can turn on the Nexiom machine are called "Nexioms."
 
-You’ll complete several rounds:
-1.  **A brief comprehension check** to make sure you understand the controls.
-2.  **A short practice round** with a simple rule.
-3.  **Three main rounds**, each with a new machine and new objects.
+        You’ll complete several rounds:
+        1.  **A brief comprehension check** to make sure you understand the controls.
+        2.  **A short practice round** with a simple rule.
+        3.  **Three main rounds**, each with a new machine and new objects.
 
-Click **“Continue”** to begin.
+        Click **“Continue”** to begin.
 
-""")
+        """)
         participant_id = st.text_input("Prolific ID:", key="participant_id")
         col_a, col_b = st.columns(2)
         with col_a:
@@ -797,7 +797,7 @@ elif st.session_state.phase == "comprehension":
     </style>
     """, unsafe_allow_html=True)
 
-    st.title("🧙 Blicket Text Adventure")
+    st.title("🧙 Nexiom Text Adventure")
 
     if not st.session_state.comprehension_completed:
         st.markdown("## 🧠 Comprehension Phase")
@@ -806,9 +806,9 @@ elif st.session_state.phase == "comprehension":
         This phase helps you learn the interface.
 
         **Instructions:**
-        - You will see 3 objects that may or may not be "blickets." To test if they are blickets, click to place them on the blicket machine.
+        - You will see 3 objects that may or may not be Nexioms. To test if they are Nexioms, click to place them on the Nexiom machine.
         - You can select one or more objects, then click "Test".
-        - If the blicket machine lights up, it means that at least one of the objects you put on the machine is a blicket. It could be just one of them, some of them, or all of them.
+        - If the Nexiom machine lights up, it means that at least one of the objects you put on the machine is a Nexiom. It could be just one of them, some of them, or all of them.
         - Your tests and outcomes will appear in the Test History (left sidebar).
 
 
@@ -891,7 +891,7 @@ elif st.session_state.phase == "practice_game":
     </style>
     """, unsafe_allow_html=True)
 
-    st.title("🧙 Blicket Text Adventure")
+    st.title("🧙 Nexiom Text Adventure")
     st.markdown("## Comprehension Phase - Round 1")
 
     practice_blicket = st.session_state.get("practice_blicket_index")
@@ -946,16 +946,16 @@ elif st.session_state.phase == "practice_complete":
     </style>
     """, unsafe_allow_html=True)
 
-    st.title("🧙 Blicket Text Adventure")
+    st.title("🧙 Nexiom Text Adventure")
     st.markdown("## Comprehension Phase Complete!")
     
-    # Reveal the true blicket from the practice round
+    # Reveal the true Nexiom from the practice round
     practice_blicket = st.session_state.get("practice_blicket_index")
     if practice_blicket is not None:
         label_map = ["A", "B", "C"]
         display_label = label_map[practice_blicket] if practice_blicket < len(label_map) else str(practice_blicket + 1)
-        st.markdown(f"The true blicket in the practice round was **Object {display_label}**. This is because only Object { 'ABC'[practice_blicket] if practice_blicket < 3 else practice_blicket + 1 } can turn on the blicket machine.")
-        st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different blicket machine. Please note that the rules may be completely different from the practice round: which object(s) count as blickets can change entirely, and the machine may behave differently as well!")
+        st.markdown(f"The true Nexiom in the practice round was **Object {display_label}**. This is because only Object { 'ABC'[practice_blicket] if practice_blicket < 3 else practice_blicket + 1 } can turn on the Nexiom machine.")
+        st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different Nexiom machine. Please note that the rules may be completely different from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well!")
 
     if st.button("Start Main Experiment", type="primary", use_container_width=True):
         random.seed(hash(st.session_state.current_participant_id) % 2**32)
@@ -1086,7 +1086,7 @@ elif st.session_state.phase == "game":
     </style>
     """, unsafe_allow_html=True)
 
-    st.title("🧙 Blicket Text Adventure")
+    st.title("🧙 Nexiom Text Adventure")
 
     round_config = st.session_state.round_configs[st.session_state.current_round]
 
@@ -1160,7 +1160,7 @@ elif st.session_state.phase == "end":
     st.markdown("""
     ### 🎯 Experiment Complete!
     
-    Thank you for participating in our blicket research study!
+    Thank you for participating in our Nexiom research study!
     """)
 
     # Add right sidebar HTML element - only on desktop

@@ -1,18 +1,18 @@
-# Blicket Text Game
+# Nexiom Text Game
 
-A text-based interactive experiment for understanding causal reasoning through the blicket detector paradigm. Participants interact with a machine that activates based on specific rules, and their learning process is tracked in real-time.
+A text-based interactive experiment for understanding causal reasoning through the Nexiom detector paradigm. Participants interact with a machine that activates based on specific rules, and their learning process is tracked in real-time.
 
 ## Overview
 
-This application presents a causal learning task where participants must discover which objects (blickets) cause a machine to activate under different rule conditions (conjunctive vs. disjunctive). The experiment consists of two phases:
+This application presents a causal learning task where participants must discover which objects (Nexioms) cause a machine to activate under different rule conditions (conjunctive vs. disjunctive). The experiment consists of two phases:
 
 1. **Comprehension Phase**: Practice round to familiarize participants with the interface
-2. **Main Experiment**: Three rounds with different blicket configurations and rules
+2. **Main Experiment**: Three rounds with different Nexiom configurations and rules
 
 ## Features
 
 ### Interactive Gameplay
-- **Text-based interface** for placing/removing objects on the blicket machine
+- **Text-based interface** for placing/removing objects on the Nexiom machine
 - **0-based object indexing**: Objects are labeled as "Object 0", "Object 1", "Object 2", "Object 3"
 - **Step-by-step visualization** of machine state changes showing before/after states
 - **Action history tracking** showing all player actions, timestamps, and resulting states
@@ -89,13 +89,13 @@ Each round captures:
 - **Actions**: All place/remove actions with timestamps and machine state changes
 - **Action History**: Detailed history showing `machine_state_before`, `machine_state_after`, and `objects_on_machine` for each action
 - **State History**: Complete machine state transitions throughout the round
-- **Blicket Classifications**: Yes/No responses for each object (0-based indexing)
-- **User Chosen Blickets**: 0-based indices of objects the participant identified as blickets
+- **Nexiom Classifications**: Yes/No responses for each object (0-based indexing)
+- **User Chosen Nexioms**: 0-based indices of objects the participant identified as Nexioms
 - **Rule Hypothesis**: Free-text description of the participant's hypothesis
 - **Rule Type**: Selected rule classification (Conjunctive vs. Disjunctive)
 - **Objects on Machine Before Q&A**: 0-based indices of objects on machine when Q&A phase started
 - **Round Config**: The true configuration including `blicket_indices` (0-based) and `rule`
-- **True Blicket Indices**: 0-based ground truth indices of actual blickets
+- **True Nexiom Indices**: 0-based ground truth indices of actual Nexioms
 - **True Rule**: Ground truth rule (conjunctive or disjunctive)
 - **Time Metrics**: Start time, end time, and total duration in seconds
 - **Phase**: Always "main_experiment" for main game rounds
@@ -106,11 +106,11 @@ Each round captures:
 ### Question & Answer Phase
 
 After each round, participants complete:
-1. **Blicket Classification**: For each object (Object 0, 1, 2, 3), indicate "Yes" or "No" - whether it's a blicket
+1. **Nexiom Classification**: For each object (Object 0, 1, 2, 3), indicate "Yes" or "No" - whether it's a Nexiom
 2. **Rule Hypothesis**: Write a free-text description of the hypothesized rule in a text area
 3. **Rule Type Selection**: Choose between:
-   - **Conjunctive**: ALL blickets must be on the machine (AND rule)
-   - **Disjunctive**: ANY blicket on the machine activates it (OR rule)
+   - **Conjunctive**: ALL Nexioms must be on the machine (AND rule)
+   - **Disjunctive**: ANY Nexiom on the machine activates it (OR rule)
 
 All responses are automatically saved and cannot be skipped.
 
@@ -191,12 +191,12 @@ Data is stored in Firebase Realtime Database with the following structure:
 
 Each round entry (keyed by timestamp) includes:
 - Complete action history with timestamps and machine state changes
-- All Q&A responses (blicket classifications, hypothesis, rule type)
-- User-chosen blicket indices vs. ground truth blicket indices
+- All Q&A responses (Nexiom classifications, hypothesis, rule type)
+- User-chosen Nexiom indices vs. ground truth Nexiom indices
 - Complete state transitions showing machine activation for each action
 - Objects on machine before Q&A phase
 - Time-to-completion metrics (start, end, total duration)
-- Round configuration with true blickets and true rule
+- Round configuration with true Nexioms and true rule
 
 ### Data Integrity
 

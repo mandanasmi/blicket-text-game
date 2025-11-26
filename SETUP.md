@@ -1,4 +1,4 @@
-# Blicket Text Game - Setup Instructions
+# Nexiom Text Game - Setup Instructions
 
 ## Virtual Environment Setup
 

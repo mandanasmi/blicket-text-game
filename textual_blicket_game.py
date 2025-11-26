@@ -309,7 +309,7 @@ def save_practice_question_answer(participant_id, answer_text):
         updated_data = {
             **existing_data,
             "practice_blicket_question": {
-                "question": "Which object do you think is a blicket? **Remember, only blickets can turn on the blicket machine**.",
+                "question": "Which object do you think is a Nexiom? **Remember, only Nexioms can turn on the Nexiom machine**.",
                 "answer_text": answer_text,
                 "selected_object_one_based": selected_object,
                 "saved_at": now.isoformat()
@@ -397,9 +397,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         
         print(f"🔄 New round initialized - Round {current_round + 1}/{total_rounds}")
         print(f"   - Objects: {round_config['num_objects']}")
-        print(f"   - Blickets: {round_config['num_blickets']}")
+        print(f"   - Nexioms: {round_config['num_blickets']}")
         print(f"   - Rule: {round_config['rule']}")
-        print(f"   - Blicket indices: {round_config.get('blicket_indices', 'None')}")
+        print(f"   - Nexiom indices: {round_config.get('blicket_indices', 'None')}")
         
         # Initialize fixed shape images for this round (ensure different images)
         if not use_text_version:
@@ -599,7 +599,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         - All objects can be either on the machine or on the floor.
         - You should think about how to efficiently explore the relationship between the objects and the machine.
 
-        You have **{horizon} tests** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are blickets, and the rule for turning on the machine.
+        You have **{horizon} tests** to complete the task. You can also exit the task early if you think you understand the relationship between the objects and the machine. After the task is done, you will be asked which objects are Nexioms, and the rule for turning on the machine.
 
         You will be prompted at each turn to choose tests.
 
@@ -649,7 +649,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
     # Display the blicket machine (only in visual version)
     if not use_text_version:
-        st.markdown("### The Blicket Machine")
+        st.markdown("### The Nexiom Machine")
     
     # Determine if machine should be lit
     machine_lit = game_state['true_state'][-1]
@@ -667,7 +667,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 <div>
                     <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
                     <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: #333;">
-                        Blicket Detector: {'ON' if machine_lit else 'OFF'}
+                        Nexiom Detector: {'ON' if machine_lit else 'OFF'}
                     </div>
                 </div>
                 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
@@ -799,7 +799,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             final_machine_state = bool(game_state['true_state'][-1])
             
             # Add to action history - show test result
-            action_text = f"Test Result: Blicket detector is {'ON' if final_machine_state else 'OFF'}"
+            action_text = f"Test Result: Nexiom detector is {'ON' if final_machine_state else 'OFF'}"
             st.session_state.action_history.append(action_text)
             
             # Add to state history (only on Test button click)
@@ -830,14 +830,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             
             st.rerun()
         
-        # Show Blicket Detector Status below Test Combination button (only after at least one test)
+        # Show Nexiom Detector Status below Test Combination button (only after at least one test)
         if st.session_state.state_history:
             machine_status = "ON" if machine_lit else "OFF"
             status_color = "#66bb6a" if machine_lit else "#000000"  # Green when ON, black when OFF
             st.markdown(
                 f"""
                 <div style='font-size: 20px; font-weight: 700; margin-bottom: 0.35rem;'>
-                    Blicket Detector Status: <span style='color: {status_color};'>{machine_status}</span>
+                    Nexiom Detector Status: <span style='color: {status_color};'>{machine_status}</span>
                 </div>
                 <div style='font-size: 15px; font-weight: 600;'>
                     Tests Remaining: {steps_left}/{horizon}
@@ -995,12 +995,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if is_practice:                # Comprehension phase - show practice test on same page
                 st.markdown("---")
                 st.markdown("### Practice Q&A")
-                st.markdown("Which object do you think is a blicket? Remember, only blickets can turn on the blicket machine.")
+                st.markdown("Which object do you think is a Nexiom? Remember, only Nexioms can turn on the Nexiom machine.")
                 
                 # Create options for the practice test
                 num_objects_in_round = round_config['num_objects']
                 practice_options = [
-                    f"Object {label_prefix[i]} is a blicket" if is_practice else f"Object {i + 1} is a blicket"
+                    f"Object {label_prefix[i]} is a Nexiom" if is_practice else f"Object {i + 1} is a Nexiom"
                     for i in range(num_objects_in_round)
                 ]
                 practice_options.append("I don't know")
@@ -1023,7 +1023,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 # Main experiment - show questionnaire
                 st.markdown("""
                 <div style="background: rgba(255, 193, 7, 0.8); border: 2px solid #ffc107; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                    <h4 style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are blickets.</h4>
+                    <h4 style="color: #856404; margin: 10px 0;">Please proceed to answer questions about which objects are Nexioms.</h4>
                 </div>
                 """, unsafe_allow_html=True)
                 
@@ -1043,7 +1043,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.markdown(f"""
             <div style="background: rgba(29, 161, 242, 0.1); border: 2px solid #1DA1F2; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
                 <h3 style="color: #1DA1F2; margin: 0;"> You have {steps_left} Tests remaining</h3>
-                <p style="color: #1DA1F2; margin: 10px 0;">You can continue exploring or proceed to answer questions about blickets.</p>
+                <p style="color: #1DA1F2; margin: 10px 0;">You can continue exploring or proceed to answer questions about Nexioms.</p>
             </div>
             """, unsafe_allow_html=True)
             
@@ -1057,7 +1057,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             else:
                 # Main experiment - show questionnaire button
                 if st.button("READY TO ANSWER QUESTIONS", type="primary", key="ready_btn"):
-                    # Clear any previous blicket answers to ensure fresh start
+                    # Clear any previous Nexiom answers to ensure fresh start
                     for i in range(round_config['num_objects']):
                         if f"blicket_q_{i}" in st.session_state:
                             del st.session_state[f"blicket_q_{i}"]
@@ -1070,12 +1070,12 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if is_practice and st.session_state.get("show_practice_test", False):
                 st.markdown("---")
                 st.markdown("### Practice Q&A")
-                st.markdown("Which object do you think is a blicket? Remember, only blickets can turn on the blicket machine.")
+                st.markdown("Which object do you think is a Nexiom? Remember, only Nexioms can turn on the Nexiom machine.")
                 
                 # Create options for the practice test
                 num_objects_in_round = round_config['num_objects']
                 practice_options = [
-                    f"Object {label_prefix[i]} is a blicket" if is_practice else f"Object {i + 1} is a blicket"
+                    f"Object {label_prefix[i]} is a Nexiom" if is_practice else f"Object {i + 1} is a Nexiom"
                     for i in range(num_objects_in_round)
                 ]
                 practice_options.append("I don't know")
@@ -1099,8 +1099,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     elif st.session_state.visual_game_state == "questionnaire" and not is_practice:
         st.markdown("""
         <div style="padding: 20px; border-radius: 15px; background-color: #e3f2fd; border: 2px solid #2196f3; margin: 20px 0;">
-            <h3 style="margin: 0; text-align: center; color: #1565c0;">🎯 Blicket Classification</h3>
-            <p style="margin: 10px 0 0 0; text-align: center; color: #1976d2;">For each object, indicate whether you think it is a blicket or not:</p>
+            <h3 style="margin: 0; text-align: center; color: #1565c0;">🎯 Nexiom Classification</h3>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #1976d2;">For each object, indicate whether you think it is a Nexiom or not:</p>
         </div>
         """, unsafe_allow_html=True)
         
@@ -1116,7 +1116,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             if use_text_version:
                 # Text-only version: Simple text-based questionnaire
                 st.radio(
-                    f"Is Object {i + 1} a blicket?",
+                    f"Is Object {i + 1} a Nexiom?",
                     ["Yes", "No"],
                     key=f"blicket_q_{i}",
                     index=None
@@ -1133,7 +1133,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 """, unsafe_allow_html=True)
                 
                 st.radio(
-                    f"Is Object {i + 1} a blicket?",
+                    f"Is Object {i + 1} a Nexiom?",
                     ["Yes", "No"],
                     key=f"blicket_q_{i}",
                     index=None
@@ -1144,10 +1144,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Add rule question
         st.markdown("---")
         st.markdown("### Rule Inference")
-        st.markdown("Based on your observations, what do you think is the rule for how the blicket detector works?")
+        st.markdown("Based on your observations, what do you think is the rule for how the Nexiom detector works?")
         rule_input_value = st.text_area(
             "What do you think is the rule?",
-            placeholder="Describe your hypothesis about how the blicket detector determines when to light up...",
+            placeholder="Describe your hypothesis about how the Nexiom detector determines when to light up...",
             height=100,
             key="rule_hypothesis"
         )
@@ -1169,7 +1169,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Determine what is still missing and show inline guidance
         missing_messages = []
         if not all_blicket_answered:
-            missing_messages.append("Please answer all blicket questions.")
+            missing_messages.append("Please answer all Nexiom questions.")
         if not current_hypothesis:
             missing_messages.append("Please enter a rule hypothesis.")
         
@@ -1188,10 +1188,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # All validations passed
             print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
             print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
-            
-            # Save blicket classifications before moving to rule type
+
+            # Save Nexiom classifications before moving to rule type
             blicket_classifications = {}
-            print(f"🔍 DEBUG: About to collect blicket answers, num_objects = {round_config['num_objects']}")
+            print(f"🔍 DEBUG: About to collect Nexiom answers, num_objects = {round_config['num_objects']}")
             for i in range(round_config['num_objects']):
                 raw_answer = st.session_state.get(f"blicket_q_{i}", None)
                 print(f"🔍 DEBUG: Raw blicket_q_{i} from session state: {raw_answer}")
@@ -1201,51 +1201,52 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     print(f"🔍 Saving intermediate - blicket_q_{i} = {raw_answer}")
                 else:
                     print(f"⚠️  WARNING: blicket_q_{i} is None - user didn't select an answer!")
-            
+
             # Get objects that were on the machine before Q&A
             objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
-            
+
             # Note: We don't save intermediate progress for main_game rounds anymore
             # All data including hypothesis and rule_type will be saved in the final round data
             # Only save for comprehension phase if needed
             if is_practice:
                 save_intermediate_progress(
-                    participant_id, 
-                    round_config, 
-                    current_round, 
-                    total_rounds, 
+                    participant_id,
+                    round_config,
+                    current_round,
+                    total_rounds,
                     is_practice,
                     blicket_classifications=blicket_classifications,
                     rule_hypothesis=current_hypothesis,
                     objects_on_machine=objects_on_machine_before_qa
                 )
-                print(f"✅ Saved intermediate progress for comprehension phase")
-            
+                print("✅ Saved intermediate progress for comprehension phase")
+
             print(f"📝 Preparing to save hypothesis for round {current_round + 1}")
             print(f"   - Objects on machine: {objects_on_machine_before_qa}")
-            print(f"   - Blicket classifications: {blicket_classifications}")
+            print(f"   - Nexiom classifications: {blicket_classifications}")
             print(f"   - Hypothesis: {current_hypothesis[:50]}...")
-            
+
             # Debug: Check session state before transition
-            print(f"🔍 DEBUG: Before transitioning to rule_type, checking session state:")
+            print("🔍 DEBUG: Before transitioning to rule_type, checking session state:")
             print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
             for i in range(round_config['num_objects']):
                 key = f"blicket_q_{i}"
                 if key in st.session_state:
                     print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
-            
+
             # Persist data needed for rule-type classification stage
             st.session_state["saved_blicket_classifications"] = blicket_classifications
             st.session_state["saved_rule_hypothesis"] = current_hypothesis
-            
+
             st.session_state.visual_game_state = "rule_type_classification"
             st.rerun()
+
 
     elif st.session_state.visual_game_state == "rule_type_classification" and not is_practice:
         st.markdown("""
         <div style="padding: 20px; border-radius: 15px; background-color: #f3e5f5; border: 2px solid #9c27b0; margin: 20px 0;">
             <h3 style="margin: 0; text-align: center; color: #4a148c;">🎯 Rule Type Classification</h3>
-            <p style="margin: 10px 0 0 0; text-align: center; color: #6a1b9a;">Based on your observations, what type of rule do you think governs the blicket detector?</p>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #6a1b9a;">Based on your observations, what type of rule do you think governs the Nexiom detector?</p>
         </div>
         """, unsafe_allow_html=True)
         
@@ -1255,23 +1256,23 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.markdown("""
             **Conjunctive Rule**
             
-            The machine lights up when **ALL** of the blickets are present on the machine.
+            The machine lights up when **ALL** of the Nexioms are present on the machine.
             
-            *Example: If Objects 1 and 3 are blickets, the machine only lights up when BOTH Object 1 AND Object 3 are on the machine.*
+            *Example: If Objects 1 and 3 are Nexioms, the machine only lights up when BOTH Object 1 AND Object 3 are on the machine.*
             """)
         
         with col2:
             st.markdown("""
             **Disjunctive Rule**
             
-            The machine lights up when **ANY** of the blickets are present on the machine.
+            The machine lights up when **ANY** of the Nexioms are present on the machine.
             
-            *Example: If Objects 1 and 3 are blickets, the machine lights up when EITHER Object 1 OR Object 3 (or both) are on the machine.*
+            *Example: If Objects 1 and 3 are Nexioms, the machine lights up when EITHER Object 1 OR Object 3 (or both) are on the machine.*
             """)
         
         rule_type = st.radio(
             "What type of rule do you think applies?",
-            ["Conjunctive (ALL blickets must be present)", "Disjunctive (ANY blicket can activate)"],
+            ["Conjunctive (ALL Nexioms must be present)", "Disjunctive (ANY Nexiom can activate)"],
             key="rule_type",
             index=None
         )
