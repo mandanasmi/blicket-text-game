@@ -479,7 +479,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             display_id = label_prefix[obj_idx] if is_practice else object_id + 1  # 1-based or letter
                             is_on_platform = object_id in state['objects_on_machine']
                             yes_no = "Yes" if is_on_platform else "No"
-                            bg_color = "#d0d0d0" if is_on_platform else "#f5f5f5"
+                            bg_color = "#ffffff" if is_on_platform else "#d0d0d0"
                             border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
                             objects_text += (
                                 "<span style='display: inline-flex; align-items: center; justify-content: center; "
@@ -526,7 +526,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             with cols[obj_idx + 1]:
                                 is_on_platform = object_id in state['objects_on_machine']
                                 yes_no = "Yes" if is_on_platform else "No"
-                                bg_color = "#d0d0d0" if is_on_platform else "#f5f5f5"
+                                bg_color = "#ffffff" if is_on_platform else "#d0d0d0"
                                 border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
                                 st.markdown(
                                     f"""
@@ -801,7 +801,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Add to action history - show test result
             action_text = f"Test Result: Nexiom detector is {'ON' if final_machine_state else 'OFF'}"
             st.session_state.action_history.append(action_text)
-            
+                    
             # Add to state history (only on Test button click)
             state_data = {
                 "objects_on_machine": set(st.session_state.selected_objects),
