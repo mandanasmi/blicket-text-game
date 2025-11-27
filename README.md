@@ -1,6 +1,6 @@
 # Nexiom Text Game
 
-A text-based interactive experiment for understanding causal reasoning through the Nexiom detector paradigm. Participants interact with a machine that activates based on specific rules, and their learning process is tracked in real-time.
+A text-based interactive experiment for understanding causal reasoning through the Nexiom machine paradigm. Participants interact with a machine that activates based on specific rules, and their learning process is tracked in real-time.
 
 ## Overview
 

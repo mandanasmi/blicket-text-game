@@ -479,7 +479,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             display_id = label_prefix[obj_idx] if is_practice else object_id + 1  # 1-based or letter
                             is_on_platform = object_id in state['objects_on_machine']
                             yes_no = "Yes" if is_on_platform else "No"
-                            bg_color = "#ffffff" if is_on_platform else "#d0d0d0"
+                            # Yes = white background, No = gray background (always consistent)
+                            bg_color = "#ffffff" if is_on_platform else "#d0d0d0"  # white for Yes, gray for No
                             border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
                             objects_text += (
                                 "<span style='display: inline-flex; align-items: center; justify-content: center; "
@@ -507,7 +508,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         '>
                             <div style='font-size: 16px; font-weight: bold; margin-bottom: 6px;'>Test {i + 1}</div>
                             <div style='margin-bottom: 6px; font-size: 16px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;'>{objects_text}</div>
-                            <div style='font-size: 16px; font-weight: bold; color: {("#79ff4d" if state["machine_lit"] else "#000000")}'>Detector: {machine_status}</div>
+                            <div style='font-size: 16px; font-weight: bold; color: {("#79ff4d" if state["machine_lit"] else "#000000")}'>Machine: {machine_status}</div>
                         </div>
                         """,
                             unsafe_allow_html=True,
@@ -526,7 +527,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             with cols[obj_idx + 1]:
                                 is_on_platform = object_id in state['objects_on_machine']
                                 yes_no = "Yes" if is_on_platform else "No"
-                                bg_color = "#ffffff" if is_on_platform else "#d0d0d0"
+                                # Yes = white background, No = gray background (always consistent)
+                                bg_color = "#ffffff" if is_on_platform else "#d0d0d0"  # white for Yes, gray for No
                                 border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
                                 st.markdown(
                                     f"""
@@ -592,7 +594,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown(f"""
 
         **Your goals are:**
-        - Identify which objects will turn on the detector.
+        - Identify which objects will turn on the machine.
         - Infer the underlying rule for how the machine turns on. 
 
         **Tips:**
@@ -606,7 +608,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         **Understanding the Test History:**
         - The **Test History** panel on the left shows a record of each test you perform.
         - For each object, it shows **Yes** if the object was **ON the platform**, or **No** if it was **NOT on the platform**.
-        - Each row also shows whether the detector was **ON** or **OFF** after that test.
+        - Each row also shows whether the machine was **ON** or **OFF** after that test.
 
         **How to use the interface:**
         1. Click on object buttons to **select** the objects you want to test
@@ -667,7 +669,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 <div>
                     <img src="data:image/png;base64,{machine_img}" style="width: 200px; height: auto;">
                     <div style="margin-top: 10px; font-size: 18px; font-weight: bold; color: #333;">
-                        Nexiom Detector: {'ON' if machine_lit else 'OFF'}
+                        Nexiom Machine: {'ON' if machine_lit else 'OFF'}
                     </div>
                 </div>
                 <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 15px 25px; border-radius: 15px; color: white; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
@@ -799,7 +801,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             final_machine_state = bool(game_state['true_state'][-1])
             
             # Add to action history - show test result
-            action_text = f"Test Result: Nexiom detector is {'ON' if final_machine_state else 'OFF'}"
+            action_text = f"Test Result: Nexiom machine is {'ON' if final_machine_state else 'OFF'}"
             st.session_state.action_history.append(action_text)
                     
             # Add to state history (only on Test button click)
@@ -830,14 +832,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             
             st.rerun()
         
-        # Show Nexiom Detector Status below Test Combination button (only after at least one test)
+        # Show Nexiom Machine Status below Test Combination button (only after at least one test)
         if st.session_state.state_history:
             machine_status = "ON" if machine_lit else "OFF"
             status_color = "#66bb6a" if machine_lit else "#000000"  # Green when ON, black when OFF
             st.markdown(
                 f"""
                 <div style='font-size: 20px; font-weight: 700; margin-bottom: 0.35rem;'>
-                    Nexiom Detector Status: <span style='color: {status_color};'>{machine_status}</span>
+                    Nexiom Machine Status: <span style='color: {status_color};'>{machine_status}</span>
                 </div>
                 <div style='font-size: 15px; font-weight: 600;'>
                     Tests Remaining: {steps_left}/{horizon}
@@ -1144,10 +1146,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Add rule question
         st.markdown("---")
         st.markdown("### Rule Inference")
-        st.markdown("Based on your observations, what do you think is the rule for how the Nexiom detector works?")
+        st.markdown("Based on your observations, what do you think is the rule for how the Nexiom machine works?")
         rule_input_value = st.text_area(
             "What do you think is the rule?",
-            placeholder="Describe your hypothesis about how the Nexiom detector determines when to light up...",
+            placeholder="Describe your hypothesis about how the Nexiom machine determines when to light up...",
             height=100,
             key="rule_hypothesis"
         )
@@ -1246,7 +1248,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("""
         <div style="padding: 20px; border-radius: 15px; background-color: #f3e5f5; border: 2px solid #9c27b0; margin: 20px 0;">
             <h3 style="margin: 0; text-align: center; color: #4a148c;">🎯 Rule Type Classification</h3>
-            <p style="margin: 10px 0 0 0; text-align: center; color: #6a1b9a;">Based on your observations, what type of rule do you think governs the Nexiom detector?</p>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #6a1b9a;">Based on your observations, what type of rule do you think governs the Nexiom machine?</p>
         </div>
         """, unsafe_allow_html=True)
         
