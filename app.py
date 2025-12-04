@@ -44,7 +44,7 @@ db_ref = None
 if not firebase_admin._apps:
     try:
         print("🔍 Attempting Firebase initialization...")
-
+        
         if hasattr(st, 'secrets') and hasattr(st.secrets, 'firebase') and 'firebase' in st.secrets:
             print("✅ Found Streamlit secrets - using secrets.toml")
             firebase_credentials = {
@@ -61,13 +61,13 @@ if not firebase_admin._apps:
                 "universe_domain": "googleapis.com"
             }
             database_url = st.secrets["firebase"]["database_url"]
-
+            
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
             print("✅ Firebase initialized successfully using Streamlit secrets")
-
+            
         elif os.getenv("FIREBASE_PROJECT_ID"):
             print("⚠️ Using environment variables as fallback")
             firebase_credentials = {
@@ -84,7 +84,7 @@ if not firebase_admin._apps:
                 "universe_domain": "googleapis.com"
             }
             database_url = os.getenv("FIREBASE_DATABASE_URL")
-
+            
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
@@ -94,7 +94,7 @@ if not firebase_admin._apps:
         else:
             print("❌ No Firebase credentials found in secrets or environment variables")
             firebase_initialized = False
-
+            
     except Exception as e:
         firebase_initialized = False
         print(f"❌ Firebase initialization failed: {e}")
@@ -142,13 +142,13 @@ def save_game_data(participant_id, game_data):
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
-
+            
             phase = game_data.get('phase', 'unknown')
             if phase == 'main_experiment':
                 games_ref = participant_ref.child('main_game')
             else:
                 games_ref = participant_ref.child('games')
-
+            
             now = datetime.datetime.now()
             game_id = now.strftime("%Y%m%d_%H%M%S_%f")[:-3]
 
@@ -158,7 +158,7 @@ def save_game_data(participant_id, game_data):
                 "game_id": game_id,
                 "session_timestamp": now.timestamp()
             }
-
+            
             games_ref.child(game_id).set(enhanced_game_data)
             print(f"✅ Successfully saved {phase} data for {participant_id} - Game ID: {game_id}")
         except Exception as e:
@@ -174,14 +174,14 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
             if phase in ("main_experiment", "main_experiment_start"):
                 print(f"⚠️ Skipping intermediate progress save for main_experiment")
                 return
-
+            
             participant_ref = db_ref.child(participant_id)
             progress_ref = participant_ref.child('comprehension')
             entry_id = "action_history"
-
+            
             now = datetime.datetime.now()
             existing_data = progress_ref.child(entry_id).get() or {}
-
+            
             updated_data = {
                 **existing_data,
                 "last_updated": now.isoformat(),
@@ -191,10 +191,10 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
                 "round_number": round_number,
                 "total_rounds": total_rounds
             }
-
+            
             progress_ref.child(entry_id).set(updated_data)
             print(f"💾 {phase} progress updated for {participant_id} - Round {round_number} - {action_count} actions")
-
+            
         except Exception as e:
             print(f"❌ Failed to save {phase} progress for {participant_id}: {e}")
     else:
@@ -232,7 +232,7 @@ def submit_qa():
     }
 
     total_time_seconds = (qa_time - st.session_state.start_time).total_seconds()
-
+    
     user_actions = []
     action_timestamps = []
     for time, entry in zip(st.session_state.times, st.session_state.log):
@@ -243,7 +243,7 @@ def submit_qa():
 
     round_id = f"qa_round_{st.session_state.current_round + 1}_{qa_time.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
     current_round_config = st.session_state.round_configs[st.session_state.current_round]
-
+    
     round_data = {
         "round_id": round_id,
         "start_time": st.session_state.start_time.isoformat(),
@@ -266,13 +266,13 @@ def submit_qa():
         "phase": "main_experiment",
         "interface_type": "text"
     }
-
+    
     save_game_data(st.session_state.current_participant_id, round_data)
-
+    
     if st.session_state.current_round + 1 < len(st.session_state.round_configs):
         st.session_state.current_round += 1
         next_round_config = st.session_state.round_configs[st.session_state.current_round]
-
+        
         env, first_obs = create_new_game(
             seed=42 + st.session_state.current_round,
             num_objects=next_round_config['num_objects'],
@@ -280,25 +280,25 @@ def submit_qa():
             rule=next_round_config['rule'],
             blicket_indices=next_round_config.get('blicket_indices', None)
         )
-
+        
         now = datetime.datetime.now()
         st.session_state.env = env
         st.session_state.start_time = now
         st.session_state.log = [first_obs]
         st.session_state.times = [now]
-
+        
         st.session_state.steps_taken = 0
         st.session_state.user_actions = []
         st.session_state.action_history = []
         st.session_state.state_history = []
         st.session_state.selected_objects = set()
-
+        
         st.session_state.pop("visual_game_state", None)
         st.session_state.pop("rule_hypothesis", None)
         st.session_state.pop("rule_type", None)
         for i in range(10):
             st.session_state.pop(f"blicket_q_{i}", None)
-
+        
         st.session_state.phase = "game"
         for i in range(len(BINARY_QUESTIONS)):
             st.session_state.pop(f"qa_{i}", None)
@@ -704,7 +704,7 @@ if st.session_state.phase == "intro":
         print("✅ Firebase connected - Data saving enabled")
     else:
         print("⚠️ Firebase not connected - Running in demo mode")
-
+    
     if not st.session_state.participant_id_entered:
         st.markdown("""
         **Welcome!**
@@ -758,7 +758,7 @@ if st.session_state.phase == "intro":
 
             st.session_state.phase = "comprehension"
             st.rerun()
-
+    
     st.stop()
 
 # 2) COMPREHENSION PHASE
@@ -798,24 +798,26 @@ elif st.session_state.phase == "comprehension":
     """, unsafe_allow_html=True)
 
     st.title("🧙 Nexiom Text Adventure")
-
+    
     if not st.session_state.comprehension_completed:
-        st.markdown("## 🧠 Comprehension Phase")
+        st.markdown("<h2 style='font-size: 1.5em;'>🧠 Comprehension Phase</h2>", unsafe_allow_html=True)
         st.markdown(f"**Hello {st.session_state.current_participant_id}!**")
         st.markdown("""
         This phase helps you learn the interface.
 
         **Instructions:**
         - You will see 3 objects that may or may not be Nexioms. To test if they are Nexioms, click to place them on the Nexiom machine.
-        - You can select one or more objects, then click "Test".
+        - You can select one or more objects, then click "Test Machine".
         - If the Nexiom machine lights up, it means that at least one of the objects you put on the machine is a Nexiom. It could be just one of them, some of them, or all of them.
         - Your tests and outcomes will appear in the Test History (left sidebar).
+        - You have a limited number of times to interact with the objects and the machine.
+        - Each game has an exploration phase and a Q&A phase. Once you enter Q&A, you no longer can explore the objects or test the machine.
 
 
 
         Click below when ready.
         """)
-
+        
         if st.button("Start Comprehension Phase", type="primary"):
             random.seed(time.time())
             random_blicket = random.randint(0, 2)
@@ -829,7 +831,7 @@ elif st.session_state.phase == "comprehension":
                 'transition_noise': 0.0,
                 'horizon': 5
             }
-
+            
             env, first_obs = create_new_game(
                 seed=999,
                 num_objects=practice_config['num_objects'],
@@ -837,22 +839,22 @@ elif st.session_state.phase == "comprehension":
                 rule=practice_config['rule'],
                 blicket_indices=practice_config['blicket_indices']
             )
-
+            
             st.session_state.env = env
             st.session_state.start_time = datetime.datetime.now()
             st.session_state.log = [first_obs]
             st.session_state.times = [datetime.datetime.now()]
             st.session_state.comprehension_completed = True
             st.session_state.phase = "practice_game"
-
+            
             save_intermediate_progress_app(
                 st.session_state.current_participant_id,
                 "comprehension_game_start",
                 1, 1, 0
             )
-
+            
             st.rerun()
-
+    
     st.stop()
 
 # 3) PRACTICE GAME
@@ -908,12 +910,12 @@ elif st.session_state.phase == "practice_game":
         'transition_noise': 0.0,
         'horizon': 5
     }
-
+    
     def comprehension_save_func(participant_id, game_data):
         game_data['phase'] = 'comprehension'
         game_data['interface_type'] = st.session_state.interface_type
         save_game_data(participant_id, game_data)
-
+    
     textual_blicket_game_page(
         st.session_state.current_participant_id,
         practice_config,
@@ -955,26 +957,26 @@ elif st.session_state.phase == "practice_complete":
         label_map = ["A", "B", "C"]
         display_label = label_map[practice_blicket] if practice_blicket < len(label_map) else str(practice_blicket + 1)
         st.markdown(f"The true Nexiom in the practice round was **Object {display_label}**. This is because only Object { 'ABC'[practice_blicket] if practice_blicket < 3 else practice_blicket + 1 } can turn on the Nexiom machine.")
-        st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different Nexiom machine. Please note that the rules may be completely different from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well!")
+        st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different Nexiom machine. Please note that the rules may be <strong><span style='font-size: 1.05em;'>completely different</span></strong> from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well!", unsafe_allow_html=True)
 
     if st.button("Start Main Experiment", type="primary", use_container_width=True):
         random.seed(hash(st.session_state.current_participant_id) % 2**32)
-
+        
         num_rounds = 3
         round_configs = []
         current_rule = random.choice(['conjunctive', 'disjunctive'])
         rule_change_probability = 0.4
-
+        
         blicket_combinations = [
             [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
         ]
         random.shuffle(blicket_combinations)
-
+        
         for i in range(num_rounds):
             num_objects = 4
             blicket_indices = blicket_combinations[i % len(blicket_combinations)]
             num_blickets = len(blicket_indices)
-
+            
             if i == 0:
                 rule = current_rule
             else:
@@ -988,7 +990,7 @@ elif st.session_state.phase == "practice_complete":
 
             init_prob = random.uniform(0.1, 0.3)
             transition_noise = 0.0
-
+            
             round_configs.append({
                 'num_objects': num_objects,
                 'num_blickets': num_blickets,
@@ -1018,7 +1020,7 @@ elif st.session_state.phase == "practice_complete":
             }
         }
         save_participant_config(st.session_state.current_participant_id, config)
-
+        
         st.session_state.current_round = 0
         st.session_state.round_configs = round_configs
         round_config = round_configs[0]
@@ -1030,13 +1032,13 @@ elif st.session_state.phase == "practice_complete":
             rule=round_config['rule'],
             blicket_indices=round_config.get('blicket_indices', None)
         )
-
+        
         now = datetime.datetime.now()
         st.session_state.env = env
         st.session_state.start_time = now
         st.session_state.log = [first_obs]
         st.session_state.times = [now]
-
+        
         save_intermediate_progress_app(
             st.session_state.current_participant_id,
             "comprehension",
@@ -1048,19 +1050,19 @@ elif st.session_state.phase == "practice_complete":
         st.session_state.action_history = []
         st.session_state.state_history = []
         st.session_state.selected_objects = set()
-
+        
         st.session_state.pop("visual_game_state", None)
         st.session_state.pop("rule_hypothesis", None)
         st.session_state.pop("rule_type", None)
         for i in range(10):
             st.session_state.pop(f"blicket_q_{i}", None)
-
+        
         save_intermediate_progress_app(
             st.session_state.current_participant_id,
             "main_experiment_start",
             1, num_rounds, 0
         )
-
+        
         st.session_state.phase = "game"
         st.rerun()
 
@@ -1089,12 +1091,12 @@ elif st.session_state.phase == "game":
     st.title("🧙 Nexiom Text Adventure")
 
     round_config = st.session_state.round_configs[st.session_state.current_round]
-
+    
     def save_visual_game_data(participant_id, game_data):
         game_data['phase'] = 'main_experiment'
         game_data['interface_type'] = st.session_state.interface_type
         save_game_data(participant_id, game_data)
-
+    
     textual_blicket_game_page(
         st.session_state.current_participant_id,
         round_config,
@@ -1107,19 +1109,19 @@ elif st.session_state.phase == "game":
 # NEXT ROUND
 elif st.session_state.phase == "next_round":
     st.session_state.current_round += 1
-
+    
     st.session_state.steps_taken = 0
     st.session_state.user_actions = []
     st.session_state.action_history = []
     st.session_state.state_history = []
     st.session_state.selected_objects = set()
-
+    
     st.session_state.round_hypothesis = ""
     st.session_state.round_rule_type = ""
-
+    
     st.session_state.pop("rule_hypothesis", None)
     st.session_state.pop("rule_type", None)
-
+    
     st.session_state.phase = "game"
     st.rerun()
 
@@ -1128,7 +1130,7 @@ elif st.session_state.phase == "qa":
     st.markdown(f"## 📝 Round {st.session_state.current_round + 1} Q&A")
     for i, question in enumerate(BINARY_QUESTIONS):
         st.radio(question, ("Yes", "No"), key=f"qa_{i}")
-
+    
     if st.session_state.current_round + 1 < len(st.session_state.round_configs):
         st.button("Submit & Continue to Next Round", on_click=submit_qa)
     else:

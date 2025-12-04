@@ -594,7 +594,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown(f"""
 
         **Your goals are:**
-        - Identify which objects will turn on the machine.
+        - Identify which objects will turn on the machine. **It could be one or multiple objects.**
         - Infer the underlying rule for how the machine turns on. 
 
         **Tips:**
@@ -614,7 +614,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         1. Click on object buttons to **select** the objects you want to test
         2. A status box below each button shows: **ON PLATFORM** or **NOT ON PLATFORM**
         3. Click an object again to **deselect** it
-        4. Once you have selected your combination, click the **Test** button
+        4. Once you have selected your combination, click the **Test Machine** button
         5. The test will be recorded, and you'll see the result in the Test History
         6. Repeat: select new objects and test again as needed
         """)
@@ -707,7 +707,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 is_selected = object_id in st.session_state.selected_objects
                 horizon = round_config.get('horizon', 32)
                 steps_left = horizon - st.session_state.steps_taken
-                interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state != "exploration")
+                interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state != "exploration") or qna_locked
                 
                 # Use neutral styling - status will be shown in box below
                 # Wrap button + status box for styling
@@ -767,7 +767,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 )
                 st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
-        # Show the Test button after object selection area
+        # Show the Test Machine button after object selection area
         st.markdown("---")        
         current_selection = list(st.session_state.selected_objects)
         if steps_left <= 0:
@@ -781,9 +781,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         else:
             st.markdown("**No objects selected yet.** Click on objects to select them.")
         
-        # Test button - only appears if objects are selected
+        # Test Machine button - only appears if objects are selected
         test_help = "Interaction disabled during Q&A." if qna_locked else None
-        if st.button("Test", type="primary", disabled=not current_selection or interaction_disabled, help=test_help):
+        if st.button("Test Machine", type="primary", disabled=not current_selection or interaction_disabled, help=test_help):
             # NOW record the test action
             action_time = datetime.datetime.now()
             
@@ -804,14 +804,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             action_text = f"Test Result: Nexiom machine is {'ON' if final_machine_state else 'OFF'}"
             st.session_state.action_history.append(action_text)
                     
-            # Add to state history (only on Test button click)
+            # Add to state history (only on Test Machine button click)
             state_data = {
                 "objects_on_machine": set(st.session_state.selected_objects),
                 "machine_lit": final_machine_state,
                 "step_number": st.session_state.steps_taken + 1
             }
             st.session_state.state_history.append(state_data)
-            
+                    
             # Record the action for Firebase
             action_data = {
                 "timestamp": action_time.isoformat(),
@@ -822,16 +822,15 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 "step_number": st.session_state.steps_taken + 1
             }
             st.session_state.user_actions.append(action_data)
-            
+                    
             # Increment step counter only on test
             st.session_state.steps_taken += 1
-            
+                    
             # Save intermediate progress after each test (only for comprehension phase)
             if is_practice:
                 save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
-            
+                    
             st.rerun()
-        
         # Show Nexiom Machine Status below Test Combination button (only after at least one test)
         if st.session_state.state_history:
             machine_status = "ON" if machine_lit else "OFF"
@@ -875,7 +874,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     steps_left = horizon - st.session_state.steps_taken
                     
                     # Disable interaction if no steps left or if in questionnaire phase
-                    interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state != "exploration")
+                    interaction_disabled = (steps_left <= 0 or st.session_state.visual_game_state != "exploration") or qna_locked
                     
                     # Create clickable image with improved styling (neutral colors, no green)
                     if interaction_disabled:
@@ -1042,17 +1041,33 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     st.session_state.visual_game_state = "questionnaire"
                     st.rerun()
         else:
+            # Check if practice Q&A has started
+            practice_qa_started = is_practice and st.session_state.get("show_practice_test", False)
+            
+            # Update message based on whether Q&A has started
+            if practice_qa_started:
+                message_text = "Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine."
+            else:
+                if is_practice:
+                    message_text = "You can continue testing the machine or hit Ready to Answer Questions to answer questions about Nexioms. <strong>Note: Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine.</strong>"
+                else:
+                    message_text = "You can continue testing the machine or hit Ready to Answer Questions to answer questions about Nexioms. <strong>Note: Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine.</strong>"
+            
             st.markdown(f"""
             <div style="background: rgba(29, 161, 242, 0.1); border: 2px solid #1DA1F2; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
                 <h3 style="color: #1DA1F2; margin: 0;"> You have {steps_left} Tests remaining</h3>
-                <p style="color: #1DA1F2; margin: 10px 0;">You can continue exploring or proceed to answer questions about Nexioms.</p>
+                <p style="color: #1DA1F2; margin: 10px 0;">{message_text}</p>
             </div>
             """, unsafe_allow_html=True)
             
             # Show different button based on phase
             if is_practice:
                 # Comprehension phase - show practice test inline
-                if st.button("Practice Q&A", type="primary", key="complete_ready_btn"):
+                # Guardrail: Must test at least once before proceeding
+                has_tested = len(st.session_state.get('state_history', [])) > 0
+                button_disabled = not has_tested
+                button_help = "You must test the machine at least once before answering questions." if button_disabled else None
+                if st.button("READY TO ANSWER QUESTIONS", type="primary", key="complete_ready_btn", disabled=button_disabled, help=button_help):
                     # Set flag to show practice test inline
                     st.session_state.show_practice_test = True
                     st.rerun()
@@ -1146,7 +1161,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Add rule question
         st.markdown("---")
         st.markdown("### Rule Inference")
-        st.markdown("Based on your observations, what do you think is the rule for how the Nexiom machine works?")
+        st.markdown("Based on your observations for this round only, describe how the objects turn on this Nexiom machine.")
         rule_input_value = st.text_area(
             "What do you think is the rule?",
             placeholder="Describe your hypothesis about how the Nexiom machine determines when to light up...",
@@ -1190,7 +1205,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # All validations passed
             print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
             print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
-
+                
             # Save Nexiom classifications before moving to rule type
             blicket_classifications = {}
             print(f"🔍 DEBUG: About to collect Nexiom answers, num_objects = {round_config['num_objects']}")
@@ -1203,31 +1218,31 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     print(f"🔍 Saving intermediate - blicket_q_{i} = {raw_answer}")
                 else:
                     print(f"⚠️  WARNING: blicket_q_{i} is None - user didn't select an answer!")
-
+                    
             # Get objects that were on the machine before Q&A
             objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
-
+                    
             # Note: We don't save intermediate progress for main_game rounds anymore
             # All data including hypothesis and rule_type will be saved in the final round data
             # Only save for comprehension phase if needed
             if is_practice:
                 save_intermediate_progress(
-                    participant_id,
-                    round_config,
-                    current_round,
-                    total_rounds,
+                    participant_id, 
+                    round_config, 
+                    current_round, 
+                    total_rounds, 
                     is_practice,
                     blicket_classifications=blicket_classifications,
                     rule_hypothesis=current_hypothesis,
                     objects_on_machine=objects_on_machine_before_qa
                 )
                 print("✅ Saved intermediate progress for comprehension phase")
-
+                    
             print(f"📝 Preparing to save hypothesis for round {current_round + 1}")
             print(f"   - Objects on machine: {objects_on_machine_before_qa}")
             print(f"   - Nexiom classifications: {blicket_classifications}")
             print(f"   - Hypothesis: {current_hypothesis[:50]}...")
-
+                    
             # Debug: Check session state before transition
             print("🔍 DEBUG: Before transitioning to rule_type, checking session state:")
             print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
@@ -1235,11 +1250,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 key = f"blicket_q_{i}"
                 if key in st.session_state:
                     print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
-
+                    
             # Persist data needed for rule-type classification stage
             st.session_state["saved_blicket_classifications"] = blicket_classifications
             st.session_state["saved_rule_hypothesis"] = current_hypothesis
-
+                    
             st.session_state.visual_game_state = "rule_type_classification"
             st.rerun()
 
@@ -1248,7 +1263,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("""
         <div style="padding: 20px; border-radius: 15px; background-color: #f3e5f5; border: 2px solid #9c27b0; margin: 20px 0;">
             <h3 style="margin: 0; text-align: center; color: #4a148c;">🎯 Rule Type Classification</h3>
-            <p style="margin: 10px 0 0 0; text-align: center; color: #6a1b9a;">Based on your observations, what type of rule do you think governs the Nexiom machine?</p>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #6a1b9a;">Based on your observations, what type of rule do you think governs this Nexiom machine?</p>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #6a1b9a; font-size: 0.9em;">Note: Since you are in the Q&A phase, you cannot interact with the objects or test the machine.</p>
         </div>
         """, unsafe_allow_html=True)
         
