@@ -149,13 +149,35 @@ def save_participant_config(participant_id, config):
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
-            participant_ref.set({
-                'config': config,
-                'created_at': datetime.datetime.now().isoformat(),
-                'status': 'configured'
-            })
+            print(f"💾 Saving config to path: {participant_id}/config")
+            print(f"   Config keys: {list(config.keys())}")
+            print(f"   Demographics in config: {config.get('demographics', {})}")
+            print(f"   Firebase initialized: {firebase_initialized}, db_ref exists: {db_ref is not None}")
+            # Save config as a child node
+            participant_ref.child('config').set(config)
+            participant_ref.child('created_at').set(datetime.datetime.now().isoformat())
+            participant_ref.child('status').set('configured')
+            print(f"✅ Successfully saved config for {participant_id}")
+            # Also ensure demographics are saved at root level for easy access
+            if 'demographics' in config:
+                print(f"💾 Also saving demographics to root level: {participant_id}/demographics")
+                participant_ref.child('demographics').set(config['demographics'])
+                print(f"✅ Successfully saved demographics to root level")
+            # Verify by reading back
+            try:
+                saved_config = participant_ref.child('config').get()
+                print(f"✅ Verified: Config saved successfully. Keys: {list(saved_config.keys()) if saved_config else 'None'}")
+                if saved_config and 'demographics' in saved_config:
+                    print(f"✅ Verified: Demographics in config - Age: {saved_config['demographics'].get('age')}, Gender: {saved_config['demographics'].get('gender')}")
+                saved_demographics = participant_ref.child('demographics').get()
+                if saved_demographics:
+                    print(f"✅ Verified: Demographics at root level - Age: {saved_demographics.get('age')}, Gender: {saved_demographics.get('gender')}")
+            except Exception as verify_error:
+                print(f"⚠️ Could not verify config save: {verify_error}")
         except Exception as e:
-            print(f"Failed to save participant config: {e}")
+            print(f"❌ Failed to save participant config: {e}")
+            import traceback
+            print(f"Full traceback: {traceback.format_exc()}")
 
 
 def save_game_data(participant_id, game_data):
@@ -165,25 +187,44 @@ def save_game_data(participant_id, game_data):
             participant_ref = db_ref.child(participant_id)
             
             phase = game_data.get('phase', 'unknown')
-            if phase == 'main_experiment':
-                games_ref = participant_ref.child('main_game')
-            else:
-                games_ref = participant_ref.child('games')
-            
             now = datetime.datetime.now()
-            game_id = now.strftime("%Y%m%d_%H%M%S_%f")[:-3]
+            
+            if phase == 'main_experiment':
+                # For main game: save under main_game/round_X
+                games_ref = participant_ref.child('main_game')
+                round_number = game_data.get('round_number', 1)
+                round_key = f"round_{round_number}"
+                games_ref = games_ref.child(round_key)
+            elif phase == 'comprehension':
+                # For comprehension: save under comprehension key
+                games_ref = participant_ref.child('comprehension')
+            else:
+                games_ref = participant_ref.child('games')  # Fallback
 
             enhanced_game_data = {
                 **game_data,
                 "saved_at": now.isoformat(),
-                "game_id": game_id,
                 "session_timestamp": now.timestamp()
             }
             
-            games_ref.child(game_id).set(enhanced_game_data)
-            print(f"✅ Successfully saved {phase} data for {participant_id} - Game ID: {game_id}")
+            # For main game rounds, save directly (overwrite if exists)
+            # For comprehension, use a specific key
+            if phase == 'comprehension':
+                print(f"💾 Saving comprehension data to path: {participant_id}/comprehension")
+                print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
+                games_ref.set(enhanced_game_data)
+                print(f"✅ Successfully saved {phase} data for {participant_id}")
+            else:
+                print(f"💾 Saving main game data to path: {participant_id}/main_game/{round_key}")
+                print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
+                games_ref.set(enhanced_game_data)
+                print(f"✅ Successfully saved {phase} data for {participant_id} - Round {round_number}")
         except Exception as e:
             print(f"❌ Failed to save game data: {e}")
+            import traceback
+            print(f"Full traceback: {traceback.format_exc()}")
+            import traceback
+            print(f"Full traceback: {traceback.format_exc()}")
     else:
         print("⚠️ Firebase not available - game data not saved")
 
@@ -769,13 +810,19 @@ if st.session_state.phase == "intro":
                         'timestamp': st.session_state.consent_timestamp,
                         'irb_protocol_number': IRB_PROTOCOL_NUMBER
                     })
-                    participant_ref.child('demographics').set({
+                    demographics_data = {
                         'prolific_id': st.session_state.current_participant_id,
                         'age': int(st.session_state.get('participant_age', 25)),
-                        'gender': st.session_state.get('participant_gender', 'Prefer not to say'),
-                    })
-                except Exception:
-                    pass
+                        'gender': str(st.session_state.get('participant_gender', 'Prefer not to say')),
+                    }
+                    print(f"💾 Saving demographics to path: {st.session_state.current_participant_id}/demographics")
+                    print(f"   Demographics: {demographics_data}")
+                    participant_ref.child('demographics').set(demographics_data)
+                    print(f"✅ Successfully saved demographics for {st.session_state.current_participant_id}")
+                except Exception as e:
+                    print(f"❌ Failed to save demographics: {e}")
+                    import traceback
+                    print(f"Full traceback: {traceback.format_exc()}")
 
             st.session_state.phase = "comprehension"
             st.rerun()
@@ -1030,15 +1077,25 @@ elif st.session_state.phase == "practice_complete":
             alternate_rule = 'disjunctive' if round_configs[-1]['rule'] == 'conjunctive' else 'conjunctive'
             round_configs[-1]['rule'] = alternate_rule
 
+        # Get comprehension phase config
+        practice_blicket = st.session_state.get("practice_blicket_index")
+        comprehension_config = {
+            'num_objects': 3,
+            'num_blickets': 1,
+            'blicket_indices': [practice_blicket] if practice_blicket is not None else [],
+            'rule': 'conjunctive',
+        }
+        
         config = {
             'num_rounds': num_rounds,
             'user_selected_objects': 4,
-            'rounds': round_configs,
+            'comprehension': comprehension_config,  # Add comprehension phase config
+            'rounds': round_configs,  # Main game rounds config
             'interface_type': 'text',
             'demographics': {
-                'prolific_id': st.session_state.get('current_participant_id', ''),
+                'prolific_id': str(st.session_state.get('current_participant_id', '')),
                 'age': int(st.session_state.get('participant_age', 25)),
-                'gender': st.session_state.get('participant_gender', 'Prefer not to say'),
+                'gender': str(st.session_state.get('participant_gender', 'Prefer not to say')),
             }
         }
         save_participant_config(st.session_state.current_participant_id, config)

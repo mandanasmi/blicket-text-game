@@ -100,27 +100,43 @@ def save_game_data(participant_id, game_data):
         
         # Determine which key to use based on phase
         phase = game_data.get('phase', 'unknown')
-        if phase == 'main_experiment':
-            games_ref = participant_ref.child('main_game')
-        else:
-            games_ref = participant_ref.child('games')  # Keep comprehension phase data in 'games'
-        
-        # Create a new game entry with detailed timestamp
         now = datetime.datetime.now()
-        game_id = now.strftime("%Y%m%d_%H%M%S_%f")[:-3]  # Include milliseconds
+        
+        if phase == 'main_experiment':
+            # For main game: save under main_game/round_X
+            games_ref = participant_ref.child('main_game')
+            round_number = game_data.get('round_number', 1)
+            round_key = f"round_{round_number}"
+            games_ref = games_ref.child(round_key)
+        elif phase == 'comprehension':
+            # For comprehension: save under comprehension key
+            games_ref = participant_ref.child('comprehension')
+        else:
+            games_ref = participant_ref.child('games')  # Fallback
         
         # Enhance game_data with additional metadata
         enhanced_game_data = {
             **game_data,
             "saved_at": now.isoformat(),
-            "game_id": game_id,
             "session_timestamp": now.timestamp()
         }
         
-        games_ref.child(game_id).set(enhanced_game_data)
-        print(f"✅ Successfully saved {phase} data for {participant_id} - Game ID: {game_id}")
+        # For main game rounds, save directly (overwrite if exists)
+        # For comprehension, use a specific key
+        if phase == 'comprehension':
+            print(f"💾 Saving comprehension data to path: {participant_id}/comprehension")
+            print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
+            games_ref.set(enhanced_game_data)
+            print(f"✅ Successfully saved {phase} data for {participant_id}")
+        else:
+            print(f"💾 Saving main game data to path: {participant_id}/main_game/{round_key}")
+            print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
+            games_ref.set(enhanced_game_data)
+            print(f"✅ Successfully saved {phase} data for {participant_id} - Round {round_number}")
     except Exception as e:
         print(f"❌ Failed to save game data for {participant_id}: {e}")
+        import traceback
+        print(f"Full traceback: {traceback.format_exc()}")
         print("Game data (not saved):", game_data)
 
 def save_qa_data_immediately(participant_id, round_config, current_round, total_rounds, is_practice, rule_hypothesis, rule_type):
@@ -243,22 +259,42 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         # Update with current action history and Q&A data
         # Note: We don't save round_config here - it's already in the final round data
         now = datetime.datetime.now()
+        
+        # Create object labels mapping (A/B/C for comprehension)
+        label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        object_labels_mapping = {}
+        for obj_idx in range(round_config['num_objects']):
+            label = label_prefix[obj_idx]  # A/B/C
+            object_labels_mapping[obj_idx] = label
+        
         updated_data = {
             **existing_data,
             "last_updated": now.isoformat(),
             "user_actions": st.session_state.user_actions.copy() if 'user_actions' in st.session_state else [],
             "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
             "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
+            "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],  # New: Include test history
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
             "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
             "phase": phase,
-            "round_number": current_round + 1
+            "round_number": current_round + 1,
+            "object_labels_mapping": object_labels_mapping  # New: Object labels mapping
         }
         
         # Add Q&A data if provided
         if blicket_classifications is not None:
+            # Map blicket_classifications to labels (A/B/C)
+            blicket_classifications_with_labels = {}
+            for obj_idx in range(round_config['num_objects']):
+                label = label_prefix[obj_idx]
+                classification = blicket_classifications.get(f"object_{obj_idx}", "No")
+                blicket_classifications_with_labels[label] = {
+                    "index": obj_idx,
+                    "classification": classification
+                }
             updated_data["blicket_classifications"] = blicket_classifications
+            updated_data["blicket_classifications_with_labels"] = blicket_classifications_with_labels
         if rule_hypothesis is not None:
             updated_data["rule_hypothesis"] = rule_hypothesis
         if rule_type is not None:
@@ -623,7 +659,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
 
     
     # Decide label prefix (letters for practice, numbers otherwise)
-    label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
     
     # Text-only version: Display action history
     if use_text_version:
@@ -631,8 +667,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         if st.session_state.action_history:
             # Limit visible entries to roughly eight before scrolling
             def format_action(entry: str) -> str:
-                if is_practice:
-                    entry = entry.replace("Object 1", "Object A").replace("Object 2", "Object B").replace("Object 3", "Object C")
+                # Labels are already correct (A/B/C for comprehension, 1/2/3/4 for main game)
                 return f"<div style='font-size: 16px; margin-bottom: 0.15rem;'>• {entry}</div>"
             entries_html = "".join(format_action(action_text) for action_text in st.session_state.action_history)
             st.markdown(
@@ -729,10 +764,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Toggle selection and record action
                     if is_selected:
                         st.session_state.selected_objects.remove(object_id)
-                        action_text = f"Removed Object {i + 1} from machine"
+                        action_text = f"Removed Object {display_label} from machine"
                     else:
                         st.session_state.selected_objects.add(object_id)
-                        action_text = f"Placed Object {i + 1} on machine"
+                        action_text = f"Placed Object {display_label} on machine"
                     
                     # Add to action history
                     st.session_state.action_history.append(action_text)
@@ -805,18 +840,39 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.session_state.action_history.append(action_text)
                     
             # Add to state history (only on Test Machine button click)
+            # Create object labels mapping (A/B/C for comprehension, 1/2/3/4 for main game)
+            label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
+            objects_with_labels = {}
+            for obj_idx in range(round_config['num_objects']):
+                object_id = obj_idx  # 0-based
+                label = label_prefix[obj_idx] if is_practice else str(object_id + 1)  # A/B/C or 1/2/3/4
+                is_on_machine = object_id in st.session_state.selected_objects
+                objects_with_labels[label] = {
+                    "index": object_id,
+                    "on_machine": is_on_machine,
+                    "status": "Yes" if is_on_machine else "No"
+                }
+            
             state_data = {
-                "objects_on_machine": set(st.session_state.selected_objects),
+                "objects_on_machine": set(st.session_state.selected_objects),  # Keep for compatibility (0-based indices)
+                "objects_with_labels": objects_with_labels,  # New: object labels with status
                 "machine_lit": final_machine_state,
                 "step_number": st.session_state.steps_taken + 1
             }
             st.session_state.state_history.append(state_data)
                     
             # Record the action for Firebase
+            # Create objects_tested with labels
+            objects_tested_with_labels = {}
+            for obj_idx in st.session_state.selected_objects:
+                label = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)
+                objects_tested_with_labels[label] = obj_idx  # Store label -> index mapping
+            
             action_data = {
                 "timestamp": action_time.isoformat(),
                 "action_type": "test",
-                "objects_tested": list(st.session_state.selected_objects),
+                "objects_tested": list(st.session_state.selected_objects),  # Keep for compatibility (0-based indices)
+                "objects_tested_with_labels": objects_tested_with_labels,  # New: object labels
                 "machine_state_before": machine_state_before,
                 "machine_state_after": final_machine_state,
                 "step_number": st.session_state.steps_taken + 1
@@ -952,18 +1008,35 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             st.session_state.game_state = game_state
                             
                             # Add to state history
+                            # Create object labels mapping (A/B/C for comprehension, 1/2/3/4 for main game)
+                            label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
+                            objects_with_labels = {}
+                            for obj_idx_range in range(round_config['num_objects']):
+                                object_id = obj_idx_range  # 0-based
+                                label = label_prefix[obj_idx_range] if is_practice else str(object_id + 1)  # A/B/C or 1/2/3/4
+                                is_on_machine = object_id in st.session_state.selected_objects
+                                objects_with_labels[label] = {
+                                    "index": object_id,
+                                    "on_machine": is_on_machine,
+                                    "status": "Yes" if is_on_machine else "No"
+                                }
+                            
                             state_data = {
-                                "objects_on_machine": set(st.session_state.selected_objects),
+                                "objects_on_machine": set(st.session_state.selected_objects),  # Keep for compatibility (0-based indices)
+                                "objects_with_labels": objects_with_labels,  # New: object labels with status
                                 "machine_lit": bool(game_state['true_state'][-1]),
                                 "step_number": st.session_state.steps_taken + 1
                             }
                             st.session_state.state_history.append(state_data)
                             
                             # Record the action for Firebase
+                            # Create objects with labels for action
+                            obj_label = label_prefix[obj_idx - 1] if is_practice else str(obj_idx)  # obj_idx is 1-based in visual mode
                             action_data = {
                                 "timestamp": action_time.isoformat(),
                                 "action_type": action_type,
-                                "object_index": obj_idx - 1,
+                                "object_index": obj_idx - 1,  # Convert to 0-based for consistency
+                                "object_label": obj_label,  # New: object label (A/B/C or 1/2/3/4)
                                 "object_id": f"object_{obj_idx}",
                                 "machine_state_before": machine_state_before,  # Machine state before this action
                                 "machine_state_after": bool(game_state['true_state'][-1]),  # New state
@@ -1354,6 +1427,29 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     now = datetime.datetime.now()
                     round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
                     
+                    # Create object labels mapping for this round
+                    label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
+                    object_labels_mapping = {}
+                    for obj_idx in range(round_config['num_objects']):
+                        label = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)  # A/B/C or 1/2/3/4
+                        object_labels_mapping[obj_idx] = label  # Map 0-based index to label
+                    
+                    # Map user_chosen_blickets to labels
+                    user_chosen_blickets_with_labels = {}
+                    for blicket_idx in user_chosen_blickets:
+                        label = label_prefix[blicket_idx] if is_practice else str(blicket_idx + 1)
+                        user_chosen_blickets_with_labels[label] = blicket_idx
+                    
+                    # Map blicket_classifications to labels
+                    blicket_classifications_with_labels = {}
+                    for obj_idx in range(round_config['num_objects']):
+                        label = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)
+                        classification = blicket_classifications.get(f"object_{obj_idx}", "No")
+                        blicket_classifications_with_labels[label] = {
+                            "index": obj_idx,
+                            "classification": classification
+                        }
+                    
                     # Save current round data with detailed action tracking
                     round_data = {
                         "round_id": round_id,  # Unique identifier for this round
@@ -1362,17 +1458,20 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "total_time_seconds": total_time_seconds,
                         "round_number": current_round + 1,
                         "round_config": round_config,
-                        "user_actions": st.session_state.user_actions,  # All place/remove actions
+                        "user_actions": st.session_state.user_actions,  # All place/remove/test actions with labels
                         "action_history": st.session_state.action_history,  # Detailed action history
-                        "state_history": st.session_state.state_history,  # State changes
+                        "state_history": st.session_state.state_history,  # State changes with object labels
                         "total_actions": len(st.session_state.user_actions),
-                        "action_history_length": len(st.session_state.action_history),  # Length of action history
+                        "action_history_length": len(st.session_state.action_history),
                         "total_steps_taken": st.session_state.steps_taken,
-                        "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
-                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
-                        "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
-                        "rule_type": rule_type if rule_type else "",  # Hypothesis chosen in the last question (conjunctive vs disjunctive) - FORCE string
-                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Ground truth blicket indices
+                        "object_labels_mapping": object_labels_mapping,  # New: Mapping of indices to labels
+                        "blicket_classifications": blicket_classifications,  # Objects picked as blickets (object_0, object_1, etc. with Yes/No answers)
+                        "blicket_classifications_with_labels": blicket_classifications_with_labels,  # New: Classifications with labels
+                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] (0-based)
+                        "user_chosen_blickets_with_labels": user_chosen_blickets_with_labels,  # New: Chosen blickets with labels
+                        "rule_hypothesis": rule_hypothesis,  # Rule inference input from user
+                        "rule_type": rule_type if rule_type else "",  # Rule classification (conjunctive vs disjunctive)
+                        "true_blicket_indices": convert_numpy_types(game_state['blicket_indices']),  # Ground truth blicket indices (0-based)
                         "true_rule": round_config['rule'],  # Ground truth rule for this round
                         "final_machine_state": bool(game_state['true_state'][-1]),
                         "final_objects_on_machine": list(st.session_state.selected_objects),
@@ -1478,6 +1577,29 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     now = datetime.datetime.now()
                     round_id = f"main_round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
                     
+                    # Create object labels mapping for this round
+                    label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
+                    object_labels_mapping = {}
+                    for obj_idx in range(round_config['num_objects']):
+                        label = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)  # A/B/C or 1/2/3/4
+                        object_labels_mapping[obj_idx] = label  # Map 0-based index to label
+                    
+                    # Map user_chosen_blickets to labels
+                    user_chosen_blickets_with_labels = {}
+                    for blicket_idx in user_chosen_blickets:
+                        label = label_prefix[blicket_idx] if is_practice else str(blicket_idx + 1)
+                        user_chosen_blickets_with_labels[label] = blicket_idx
+                    
+                    # Map blicket_classifications to labels
+                    blicket_classifications_with_labels = {}
+                    for obj_idx in range(round_config['num_objects']):
+                        label = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)
+                        classification = blicket_classifications.get(f"object_{obj_idx}", "No")
+                        blicket_classifications_with_labels[label] = {
+                            "index": obj_idx,
+                            "classification": classification
+                        }
+                    
                     # Save final round data with detailed action tracking
                     round_data = {
                         "round_id": round_id,  # Unique identifier for this round
@@ -1486,17 +1608,20 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "total_time_seconds": total_time_seconds,
                         "round_number": current_round + 1,
                         "round_config": round_config,
-                        "user_actions": st.session_state.get("user_actions", []),  # All place/remove actions
+                        "user_actions": st.session_state.get("user_actions", []),  # All place/remove/test actions with labels
                         "action_history": st.session_state.get("action_history", []),  # Detailed action history
-                        "state_history": st.session_state.get("state_history", []),  # State changes
+                        "state_history": st.session_state.get("state_history", []),  # State changes with object labels
                         "total_actions": len(st.session_state.get("user_actions", [])),
-                        "action_history_length": len(st.session_state.get("action_history", [])),  # Length of action history
+                        "action_history_length": len(st.session_state.get("action_history", [])),
                         "total_steps_taken": st.session_state.get("steps_taken", 0),
-                        "blicket_classifications": blicket_classifications,  # Objects picked as blickets during question-answering (object_0, object_1, etc. with Yes/No answers)
-                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] for objects 0 and 2 marked as Yes
-                        "rule_hypothesis": rule_hypothesis,  # Hypothesis written in the text box
-                        "rule_type": rule_type if rule_type else "",  # Hypothesis chosen in the last question (conjunctive vs disjunctive) - FORCE string
-                        "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # Ground truth blicket indices
+                        "object_labels_mapping": object_labels_mapping,  # New: Mapping of indices to labels
+                        "blicket_classifications": blicket_classifications,  # Objects picked as blickets (object_0, object_1, etc. with Yes/No answers)
+                        "blicket_classifications_with_labels": blicket_classifications_with_labels,  # New: Classifications with labels
+                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] (0-based)
+                        "user_chosen_blickets_with_labels": user_chosen_blickets_with_labels,  # New: Chosen blickets with labels
+                        "rule_hypothesis": rule_hypothesis,  # Rule inference input from user
+                        "rule_type": rule_type if rule_type else "",  # Rule classification (conjunctive vs disjunctive)
+                        "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # Ground truth blicket indices (0-based)
                         "true_rule": round_config['rule'],  # Ground truth rule for this round
                         "final_machine_state": bool(current_game_state.get('true_state', [False])[-1]) if current_game_state else False,
                         "final_objects_on_machine": list(st.session_state.get("selected_objects", set())),
