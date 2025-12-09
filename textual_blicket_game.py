@@ -543,7 +543,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                         font-weight: bold;
                                     min-width: 45px;
                                     ">
-                                         <div style="font-size: 14px; margin-bottom: 4px; color: #333;">
+                                         <div style="font-size: 16px; margin-bottom: 4px; color: #333;">
                                         {display_label}
                                     </div>
                                          <div style="font-size: 16px;">
@@ -570,7 +570,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     color: #666;
                     font-size: 16px;
                 '>
-                No tests recorded yet. Click Test to begin.
+                No tests recorded yet. Click "Test Machine" to begin.
                 </div>
                 """,
                     unsafe_allow_html=True,
@@ -633,7 +633,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             def format_action(entry: str) -> str:
                 if is_practice:
                     entry = entry.replace("Object 1", "Object A").replace("Object 2", "Object B").replace("Object 3", "Object C")
-                return f"<div style='font-size: 14px; margin-bottom: 0.15rem;'>• {entry}</div>"
+                return f"<div style='font-size: 16px; margin-bottom: 0.15rem;'>• {entry}</div>"
             entries_html = "".join(format_action(action_text) for action_text in st.session_state.action_history)
             st.markdown(
                 f"""
@@ -796,7 +796,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             env._update_machine_state()
             game_state = env.step("look")[0]
             st.session_state.game_state = game_state
-            
+                    
             # Get final result of this test combination
             final_machine_state = bool(game_state['true_state'][-1])
             
@@ -829,7 +829,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Save intermediate progress after each test (only for comprehension phase)
             if is_practice:
                 save_intermediate_progress(participant_id, round_config, current_round, total_rounds, is_practice)
-                    
+            
             st.rerun()
         # Show Nexiom Machine Status below Test Combination button (only after at least one test)
         if st.session_state.state_history:
@@ -1044,44 +1044,46 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Check if practice Q&A has started
             practice_qa_started = is_practice and st.session_state.get("show_practice_test", False)
             
-            # Update message based on whether Q&A has started
-            if practice_qa_started:
-                message_text = "Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine."
-            else:
-                if is_practice:
-                    message_text = "You can continue testing the machine or hit Ready to Answer Questions to answer questions about Nexioms. <strong>Note: Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine.</strong>"
+            # Check if participant has tested at least once or twice (to ensure they've explored)
+            num_tests = len(st.session_state.get('state_history', []))
+            has_tested_at_least_once = num_tests >= 1
+            
+            # Only show message box if participant has tested at least once
+            if has_tested_at_least_once:
+                # Update message based on whether Q&A has started
+                if practice_qa_started:
+                    message_text = "Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine."
                 else:
-                    message_text = "You can continue testing the machine or hit Ready to Answer Questions to answer questions about Nexioms. <strong>Note: Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine.</strong>"
+                    if is_practice:
+                        message_text = "You can continue testing the machine or hit Ready to Answer Questions to answer questions about Nexioms. <strong>Note: Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine.</strong>"
+                    else:
+                        message_text = "You can continue testing the machine or hit Ready to Answer Questions to answer questions about Nexioms. <strong>Note: Once you press 'Ready to Answer Questions', you cannot go back to explore objects and test the machine.</strong>"
+                
+                st.markdown(f"""
+                    <div style="background: rgba(29, 161, 242, 0.1); border: 2px solid #1DA1F2; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
+                        <h3 style="color: #1DA1F2; margin: 0;"> You have {steps_left} Tests remaining</h3>
+                        <p style="color: #1DA1F2; margin: 10px 0;">{message_text}</p>
+                    </div>
+                """, unsafe_allow_html=True)
             
-            st.markdown(f"""
-            <div style="background: rgba(29, 161, 242, 0.1); border: 2px solid #1DA1F2; border-radius: 10px; padding: 20px; margin: 20px 0; text-align: center;">
-                <h3 style="color: #1DA1F2; margin: 0;"> You have {steps_left} Tests remaining</h3>
-                <p style="color: #1DA1F2; margin: 10px 0;">{message_text}</p>
-            </div>
-            """, unsafe_allow_html=True)
+                # Show different button based on phase (only after at least one test)
+                if is_practice:
+                    # Comprehension phase - show practice test inline
+                    if st.button("Ready to Answer Questions", type="primary", key="complete_ready_btn"):
+                        # Set flag to show practice test inline
+                        st.session_state.show_practice_test = True
+                        st.rerun()
+                else:
+                    # Main experiment - show questionnaire button
+                    if st.button("Ready to Answer Questions", type="primary", key="ready_btn"):
+                        # Clear any previous Nexiom answers to ensure fresh start
+                        for i in range(round_config['num_objects']):
+                            if f"blicket_q_{i}" in st.session_state:
+                                del st.session_state[f"blicket_q_{i}"]
+                        st.session_state.visual_game_state = "questionnaire"
+                        st.rerun()
             
-            # Show different button based on phase
-            if is_practice:
-                # Comprehension phase - show practice test inline
-                # Guardrail: Must test at least once before proceeding
-                has_tested = len(st.session_state.get('state_history', [])) > 0
-                button_disabled = not has_tested
-                button_help = "You must test the machine at least once before answering questions." if button_disabled else None
-                if st.button("READY TO ANSWER QUESTIONS", type="primary", key="complete_ready_btn", disabled=button_disabled, help=button_help):
-                    # Set flag to show practice test inline
-                    st.session_state.show_practice_test = True
-                    st.rerun()
-            else:
-                # Main experiment - show questionnaire button
-                if st.button("READY TO ANSWER QUESTIONS", type="primary", key="ready_btn"):
-                    # Clear any previous Nexiom answers to ensure fresh start
-                    for i in range(round_config['num_objects']):
-                        if f"blicket_q_{i}" in st.session_state:
-                            del st.session_state[f"blicket_q_{i}"]
-                    st.session_state.visual_game_state = "questionnaire"
-                    st.rerun()
-            
-            st.markdown(f"**Tests remaining: {steps_left}/{horizon}**")
+                st.markdown(f"**Tests remaining: {steps_left}/{horizon}**")
             
             # Show practice test inline if flag is set
             if is_practice and st.session_state.get("show_practice_test", False):

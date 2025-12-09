@@ -4,6 +4,7 @@ import json
 import random
 import datetime
 import time
+import hashlib
 
 import numpy as np
 import streamlit as st
@@ -104,6 +105,26 @@ else:
     print("✅ Firebase already initialized")
     firebase_initialized = True
     db_ref = db.reference()
+
+
+def generate_completion_code(participant_id):
+    """Generate a unique 7-character completion code for a participant.
+    Uses hash of participant_id to ensure same participant always gets same code.
+    """
+    # Create a hash from participant_id
+    hash_obj = hashlib.sha256(participant_id.encode())
+    hash_hex = hash_obj.hexdigest()
+    
+    # Use first 7 characters and convert to uppercase alphanumeric
+    # Use a combination of uppercase letters and digits
+    chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"  # Excludes ambiguous characters like I, O, 0, 1
+    code_chars = []
+    for i in range(7):
+        # Use hash bytes to select character
+        byte_val = int(hash_hex[i*2:(i+1)*2], 16)
+        code_chars.append(chars[byte_val % len(chars)])
+    
+    return ''.join(code_chars)
 
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", blicket_indices=None):
@@ -811,6 +832,7 @@ elif st.session_state.phase == "comprehension":
         - If the Nexiom machine lights up, it means that at least one of the objects you put on the machine is a Nexiom. It could be just one of them, some of them, or all of them.
         - Your tests and outcomes will appear in the Test History (left sidebar).
         - You have a limited number of times to interact with the objects and the machine.
+        - You won't be able to start Q&A phase until you explore, and interact with the objects and the machine at least once.
         - Each game has an exploration phase and a Q&A phase. Once you enter Q&A, you no longer can explore the objects or test the machine.
 
 
@@ -1159,10 +1181,15 @@ elif st.session_state.phase == "end":
     """, unsafe_allow_html=True)
     st.markdown("## 🎉 All done!")
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
-    st.markdown("""
+    
+    # Generate unique completion code for this participant
+    participant_id = st.session_state.current_participant_id
+    completion_code = generate_completion_code(participant_id)
+    
+    st.markdown(f"""
     ### 🎯 Experiment Complete!
     
-    Thank you for participating in our Nexiom research study!
+    Thank you for participating in our Nexiom research study! Your completion code is **{completion_code}**.
     """)
 
     # Add right sidebar HTML element - only on desktop
