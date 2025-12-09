@@ -29,7 +29,7 @@ def _safe_print(*args, **kwargs):
 print = _safe_print
 
 import env.blicket_text as blicket_text
-from textual_blicket_game import textual_blicket_game_page
+from textual_nexiom_game import textual_blicket_game_page
 
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 
