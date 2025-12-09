@@ -62,12 +62,17 @@ if not firebase_admin._apps:
                 "universe_domain": "googleapis.com"
             }
             database_url = st.secrets["firebase"]["database_url"]
+            project_id = st.secrets["firebase"]["project_id"]
+            
+            print(f"🔗 Connecting to Firebase database: {database_url}")
+            print(f"📦 Project ID: {project_id}")
             
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
             print("✅ Firebase initialized successfully using Streamlit secrets")
+            print(f"✅ Connected to Nexiom database: {database_url}")
             
         elif os.getenv("FIREBASE_PROJECT_ID"):
             print("⚠️ Using environment variables as fallback")
@@ -85,12 +90,17 @@ if not firebase_admin._apps:
                 "universe_domain": "googleapis.com"
             }
             database_url = os.getenv("FIREBASE_DATABASE_URL")
+            project_id = os.getenv("FIREBASE_PROJECT_ID")
+            
+            print(f"🔗 Connecting to Firebase database: {database_url}")
+            print(f"📦 Project ID: {project_id}")
             
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
             db_ref = db.reference()
             firebase_initialized = True
             print("✅ Firebase initialized successfully using environment variables")
+            print(f"✅ Connected to Nexiom database: {database_url}")
 
         else:
             print("❌ No Firebase credentials found in secrets or environment variables")
@@ -149,6 +159,14 @@ def save_participant_config(participant_id, config):
     if firebase_initialized and db_ref:
         try:
             participant_ref = db_ref.child(participant_id)
+            # Get the database URL for logging
+            try:
+                app = firebase_admin.get_app()
+                db_url = app.project_id if hasattr(app, 'project_id') else 'nexiom-text-game'
+            except:
+                db_url = 'nexiom-text-game'
+            
+            print(f"💾 Saving config to Nexiom database: {db_url}")
             print(f"💾 Saving config to path: {participant_id}/config")
             print(f"   Config keys: {list(config.keys())}")
             print(f"   Demographics in config: {config.get('demographics', {})}")
@@ -210,15 +228,17 @@ def save_game_data(participant_id, game_data):
             # For main game rounds, save directly (overwrite if exists)
             # For comprehension, use a specific key
             if phase == 'comprehension':
+                print(f"💾 Saving comprehension data to Nexiom database")
                 print(f"💾 Saving comprehension data to path: {participant_id}/comprehension")
                 print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
                 games_ref.set(enhanced_game_data)
-                print(f"✅ Successfully saved {phase} data for {participant_id}")
+                print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
             else:
+                print(f"💾 Saving main game data to Nexiom database")
                 print(f"💾 Saving main game data to path: {participant_id}/main_game/{round_key}")
                 print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
                 games_ref.set(enhanced_game_data)
-                print(f"✅ Successfully saved {phase} data for {participant_id} - Round {round_number}")
+                print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id} - Round {round_number}")
         except Exception as e:
             print(f"❌ Failed to save game data: {e}")
             import traceback
@@ -815,10 +835,11 @@ if st.session_state.phase == "intro":
                         'age': int(st.session_state.get('participant_age', 25)),
                         'gender': str(st.session_state.get('participant_gender', 'Prefer not to say')),
                     }
+                    print(f"💾 Saving demographics to Nexiom database")
                     print(f"💾 Saving demographics to path: {st.session_state.current_participant_id}/demographics")
                     print(f"   Demographics: {demographics_data}")
                     participant_ref.child('demographics').set(demographics_data)
-                    print(f"✅ Successfully saved demographics for {st.session_state.current_participant_id}")
+                    print(f"✅ Successfully saved demographics to Nexiom database for {st.session_state.current_participant_id}")
                 except Exception as e:
                     print(f"❌ Failed to save demographics: {e}")
                     import traceback

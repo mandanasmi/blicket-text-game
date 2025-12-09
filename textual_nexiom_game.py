@@ -124,15 +124,17 @@ def save_game_data(participant_id, game_data):
         # For main game rounds, save directly (overwrite if exists)
         # For comprehension, use a specific key
         if phase == 'comprehension':
+            print(f"💾 Saving comprehension data to Nexiom database")
             print(f"💾 Saving comprehension data to path: {participant_id}/comprehension")
             print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
             games_ref.set(enhanced_game_data)
-            print(f"✅ Successfully saved {phase} data for {participant_id}")
+            print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
         else:
+            print(f"💾 Saving main game data to Nexiom database")
             print(f"💾 Saving main game data to path: {participant_id}/main_game/{round_key}")
             print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
             games_ref.set(enhanced_game_data)
-            print(f"✅ Successfully saved {phase} data for {participant_id} - Round {round_number}")
+            print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id} - Round {round_number}")
     except Exception as e:
         print(f"❌ Failed to save game data for {participant_id}: {e}")
         import traceback
