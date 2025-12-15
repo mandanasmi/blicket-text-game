@@ -900,9 +900,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 <div style='font-size: 20px; font-weight: 700; margin-bottom: 0.35rem;'>
                     Nexiom Machine Status: <span style='color: {status_color};'>{machine_status}</span>
                 </div>
-                <div style='font-size: 15px; font-weight: 600;'>
-                    Tests Remaining: {steps_left}/{horizon}
-                </div>
                 """,
                 unsafe_allow_html=True,
             )
