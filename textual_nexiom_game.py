@@ -1241,7 +1241,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown("Based on your observations for this round only, describe how the objects turn on this Nexiom machine.")
         rule_input_value = st.text_area(
             "What do you think is the rule?",
-            placeholder="Describe your hypothesis about how the Nexiom machine determines when to light up...",
+            placeholder="Describe your hypothesis about how the Nexiom machine determines when to switch on...",
             height=100,
             key="rule_hypothesis"
         )
@@ -1351,18 +1351,18 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             st.markdown("""
             **Conjunctive Rule**
             
-            The machine lights up when **ALL** of the Nexioms are present on the machine.
+            The machine switches on when **ALL** of the Nexioms are present on the machine.
             
-            *Example: If Objects 1 and 3 are Nexioms, the machine only lights up when BOTH Object 1 AND Object 3 are on the machine.*
+            *Example: If Objects 1 and 3 are Nexioms, the machine only switches on when BOTH Object 1 AND Object 3 are on the machine.*
             """)
         
         with col2:
             st.markdown("""
             **Disjunctive Rule**
             
-            The machine lights up when **ANY** of the Nexioms are present on the machine.
+            The machine switches on when **ANY** of the Nexioms are present on the machine.
             
-            *Example: If Objects 1 and 3 are Nexioms, the machine lights up when EITHER Object 1 OR Object 3 (or both) are on the machine.*
+            *Example: If Objects 1 and 3 are Nexioms, the machine switches on when EITHER Object 1 OR Object 3 (or both) are on the machine.*
             """)
         
         rule_type = st.radio(

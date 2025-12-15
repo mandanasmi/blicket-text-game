@@ -791,7 +791,9 @@ if st.session_state.phase == "intro":
         st.markdown("""
         **Welcome!**
 
-        In this experiment, you’ll see a "Nexiom" machine that can light up when certain objects are placed on it. Your task is to figure out which object or combination of objects makes the Nexiom machine turn on. The object(s) that can turn on the Nexiom machine are called "Nexioms."
+        In this experiment, you’ll test a “Nexiom” machine to see which object (or combination of objects) makes it turn ON. You will click an object to place it on the machine, then click Test Machine to run a test. 
+        After each test, the result (**ON** or **OFF**) will appear in the **Test History** panel on the left. 
+        Any object(s) that make the machine turn on are called Nexioms.
 
         You’ll complete several rounds:
         1.  **A brief comprehension check** to make sure you understand the controls.
@@ -895,9 +897,9 @@ elif st.session_state.phase == "comprehension":
         This phase helps you learn the interface.
 
         **Instructions:**
-        - You will see 3 objects that may or may not be Nexioms. To test if they are Nexioms, click to place them on the Nexiom machine.
+        - You will see 3 object buttons that may or may not be Nexioms. To test if they are Nexioms, click to place them on the Nexiom machine.
         - You can select one or more objects, then click "Test Machine".
-        - If the Nexiom machine lights up, it means that at least one of the objects you put on the machine is a Nexiom. It could be just one of them, some of them, or all of them.
+        - If the Nexiom machine switches on, it means that at least one of the objects you put on the machine is a Nexiom. It could be just one of them, some of them, or all of them.
         - Your tests and outcomes will appear in the Test History (left sidebar).
         - You have a limited number of times to interact with the objects and the machine.
         - You won't be able to start Q&A phase until you explore, and interact with the objects and the machine at least once.
