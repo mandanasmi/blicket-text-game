@@ -502,8 +502,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         history_container = st.container()
         with history_container:
             if st.session_state.state_history:
+                total_tests = len(st.session_state.state_history)
+                max_tests = 5 if is_practice else 16
                 st.markdown(
-                    f"<div style='text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 12px; padding: 10px; background-color: #555555; color: #ffffff; border-radius: 6px; border: 1px solid #3a3a3a;'>Total Tests: {len(st.session_state.state_history)}</div>",
+                    f"<div style='text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 12px; padding: 10px; background-color: #555555; color: #ffffff; border-radius: 6px; border: 1px solid #3a3a3a;'>Total Test: {total_tests} out of {max_tests}</div>",
                     unsafe_allow_html=True,
                 )
                 
@@ -1158,7 +1160,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         st.session_state.visual_game_state = "questionnaire"
                         st.rerun()
             
-                st.markdown(f"**Tests remaining: {steps_left}/{horizon}**")
             
             # Show practice test inline if flag is set
             if is_practice and st.session_state.get("show_practice_test", False):
