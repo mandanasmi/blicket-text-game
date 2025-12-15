@@ -791,7 +791,7 @@ if st.session_state.phase == "intro":
         st.markdown("""
         **Welcome!**
 
-        In this experiment, you’ll test a “Nexiom” machine to see which object (or combination of objects) makes it turn ON. You will click an object to place it on the machine, then click Test Machine to run a test. 
+        In this experiment, you’ll test a “Nexiom” machine to see which object (or combination of objects) makes it turn **ON**. You will **click** an object to place it on the machine, then click **Test Machine** to run a test. 
         After each test, the result (**ON** or **OFF**) will appear in the **Test History** panel on the left. 
         Any object(s) that make the machine turn on are called Nexioms.
 
