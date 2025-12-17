@@ -248,7 +248,7 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
             updated_data = {
                 **existing_data,
                 "last_updated": now.isoformat(),
-                "user_test_actions": st.session_state.get('user_actions', []),
+                "user_test_actions": st.session_state.get('user_test_actions', []),
                 "total_actions": action_count,
                 "phase": phase,
                 "round_number": round_number,
@@ -296,12 +296,12 @@ def submit_qa():
 
     total_time_seconds = (qa_time - st.session_state.start_time).total_seconds()
     
-    user_actions = []
+    user_test_actions = []
     action_timestamps = []
     for time, entry in zip(st.session_state.times, st.session_state.log):
         if entry.startswith("```") and entry.endswith("```"):
             command = entry[3:-3]
-            user_actions.append(command)
+            user_test_actions.append(command)
             action_timestamps.append(time.isoformat())
 
     round_id = f"qa_round_{st.session_state.current_round + 1}_{qa_time.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
@@ -316,10 +316,10 @@ def submit_qa():
             {"time": t.isoformat(), "entry": e, "event_type": "command" if e.startswith("```") else "feedback"}
             for t, e in zip(st.session_state.times, st.session_state.log)
         ],
-        "user_actions": user_actions,
+        "user_test_actions": user_test_actions,
         "action_timestamps": action_timestamps,
-        "total_actions": len(user_actions),
-        "action_history_length": len(user_actions),
+        "total_actions": len(user_test_actions),
+        "action_history_length": len(user_test_actions),
         "binary_answers": binary_answers,
         "qa_time": qa_time.isoformat(),
         "round_config": current_round_config,
@@ -351,7 +351,7 @@ def submit_qa():
         st.session_state.times = [now]
         
         st.session_state.steps_taken = 0
-        st.session_state.user_actions = []
+        st.session_state.user_test_actions = []
         st.session_state.action_history = []
         st.session_state.state_history = []
         st.session_state.selected_objects = set()
@@ -1120,11 +1120,11 @@ elif st.session_state.phase == "practice_complete":
         save_intermediate_progress_app(
             st.session_state.current_participant_id,
             "comprehension",
-            0, 1, len(st.session_state.get('user_actions', []))
+            0, 1, len(st.session_state.get('user_test_actions', []))
         )
 
         st.session_state.steps_taken = 0
-        st.session_state.user_actions = []
+        st.session_state.user_test_actions = []
         st.session_state.action_history = []
         st.session_state.state_history = []
         st.session_state.selected_objects = set()
@@ -1189,7 +1189,7 @@ elif st.session_state.phase == "next_round":
     st.session_state.current_round += 1
     
     st.session_state.steps_taken = 0
-    st.session_state.user_actions = []
+    st.session_state.user_test_actions = []
     st.session_state.action_history = []
     st.session_state.state_history = []
     st.session_state.selected_objects = set()

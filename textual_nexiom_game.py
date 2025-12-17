@@ -171,7 +171,7 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
         round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
         
         # Save Q&A data
-        user_actions_snapshot = st.session_state.user_actions.copy() if 'user_actions' in st.session_state else []
+        user_test_actions_snapshot = st.session_state.user_test_actions.copy() if 'user_test_actions' in st.session_state else []
         qa_data = {
             "round_id": round_id,
             "start_time": st.session_state.game_start_time.isoformat(),
@@ -180,7 +180,7 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
             "round_number": current_round + 1,
             "round_config": round_config,
             "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],
-            "total_actions": len(user_actions_snapshot),
+            "total_actions": len(user_test_actions_snapshot),
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
             "final_machine_state": bool(st.session_state.game_state['true_state'][-1]) if 'game_state' in st.session_state else False,
             "final_objects_on_machine": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
@@ -195,11 +195,7 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
             "qa_submitted_at": now.isoformat()
         }
         
-        if phase == "main_experiment":
-            qa_data["user_actions"] = user_actions_snapshot
-            qa_data["action_history"] = st.session_state.action_history.copy() if 'action_history' in st.session_state else []
-        else:
-            qa_data["user_test_actions"] = user_actions_snapshot
+        qa_data["user_test_actions"] = user_test_actions_snapshot
         
         # Convert NumPy types to JSON-serializable types
         qa_data = convert_numpy_types(qa_data)
@@ -226,7 +222,7 @@ def reset_game_session_state():
     game_state_vars = [
         "visual_game_state", "env", "game_state", "object_positions", 
         "selected_objects", "blicket_answers", "game_start_time", 
-        "shape_images", "steps_taken", "user_actions", "action_history", 
+        "shape_images", "steps_taken", "user_test_actions", "action_history", 
         "state_history", "rule_hypothesis", "rule_type"
     ]
     
@@ -276,8 +272,9 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         updated_data = {
             **existing_data,
             "last_updated": now.isoformat(),
-            "user_test_actions": st.session_state.user_actions.copy() if 'user_actions' in st.session_state else [],
-            "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
+            "user_test_actions": st.session_state.user_test_actions.copy() if 'user_test_actions' in st.session_state else [],
+            "total_actions": len(st.session_state.user_test_actions) if 'user_test_actions' in st.session_state else 0,
+            "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
             "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],  # New: Include test history
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
             "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
@@ -430,7 +427,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.session_state.blicket_answers = {}  # User's blicket classifications
         st.session_state.game_start_time = datetime.datetime.now()
         st.session_state.steps_taken = 0  # Track number of steps taken
-        st.session_state.user_actions = []  # Track all user actions for Firebase
+        st.session_state.user_test_actions = []  # Track all user test actions for Firebase
         st.session_state.action_history = []  # Track action history for text version
         st.session_state.state_history = []  # Track complete state history
         
@@ -882,7 +879,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 "machine_state_after": final_machine_state,
                 "step_number": st.session_state.steps_taken + 1
             }
-            st.session_state.user_actions.append(action_data)
+            st.session_state.user_test_actions.append(action_data)
                     
             # Increment step counter only on test
             st.session_state.steps_taken += 1
@@ -1045,7 +1042,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                                 "objects_on_machine": list(st.session_state.selected_objects),
                                 "step_number": st.session_state.steps_taken + 1
                             }
-                            st.session_state.user_actions.append(action_data)
+                            st.session_state.user_test_actions.append(action_data)
                             
                             # Increment step counter
                             st.session_state.steps_taken += 1
@@ -1459,10 +1456,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "total_time_seconds": total_time_seconds,
                         "round_number": current_round + 1,
                         "round_config": round_config,
-                        "user_actions": st.session_state.user_actions,  # All place/remove/test actions with labels
+                        "user_test_actions": st.session_state.user_test_actions,  # All place/remove/test actions with labels
                         "action_history": st.session_state.action_history,  # Detailed action history
                         "state_history": st.session_state.state_history,  # State changes with object labels
-                        "total_actions": len(st.session_state.user_actions),
+                        "total_actions": len(st.session_state.user_test_actions),
                         "action_history_length": len(st.session_state.action_history),
                         "total_steps_taken": st.session_state.steps_taken,
                         "object_labels_mapping": object_labels_mapping,  # New: Mapping of indices to labels
@@ -1527,7 +1524,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     for i in range(10):
                         st.session_state.pop(f"blicket_q_{i}", None)
                     
-                    # Note: Don't clear selected_objects, user_actions, action_history, state_history, steps_taken
+                    # Note: Don't clear selected_objects, user_test_actions, action_history, state_history, steps_taken
                     # These will be reset by app.py's next_round handler
                     
                     # Return to main app for next round
@@ -1609,10 +1606,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "total_time_seconds": total_time_seconds,
                         "round_number": current_round + 1,
                         "round_config": round_config,
-                        "user_actions": st.session_state.get("user_actions", []),  # All place/remove/test actions with labels
+                        "user_test_actions": st.session_state.get("user_test_actions", []),  # All place/remove/test actions with labels
                         "action_history": st.session_state.get("action_history", []),  # Detailed action history
                         "state_history": st.session_state.get("state_history", []),  # State changes with object labels
-                        "total_actions": len(st.session_state.get("user_actions", [])),
+                        "total_actions": len(st.session_state.get("user_test_actions", [])),
                         "action_history_length": len(st.session_state.get("action_history", [])),
                         "total_steps_taken": st.session_state.get("steps_taken", 0),
                         "object_labels_mapping": object_labels_mapping,  # New: Mapping of indices to labels
