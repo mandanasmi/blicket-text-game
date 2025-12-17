@@ -253,10 +253,9 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         db_ref = db.reference()
         participant_ref = db_ref.child(participant_id)
         progress_ref = participant_ref.child('comprehension')
-        entry_id = "action_history"
         
         # Get existing data or create new
-        existing_data = progress_ref.child(entry_id).get() or {}
+        existing_data = progress_ref.get() or {}
         
         # Update with current action history and Q&A data
         # Note: We don't save round_config here - it's already in the final round data
@@ -307,7 +306,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         # Convert NumPy types to JSON-serializable types
         updated_data = convert_numpy_types(updated_data)
         
-        progress_ref.child(entry_id).set(updated_data)
+        progress_ref.set(convert_numpy_types(updated_data))
         print(f"💾 {phase} progress updated for {participant_id} - Round {current_round + 1} - Q&A data included")
         
     except Exception as e:
@@ -329,9 +328,7 @@ def save_practice_question_answer(participant_id, answer_text):
         db_ref = db.reference()
         participant_ref = db_ref.child(participant_id)
         progress_ref = participant_ref.child('comprehension')
-        entry_id = "action_history"
-        
-        existing_data = progress_ref.child(entry_id).get() or {}
+        existing_data = progress_ref.get() or {}
         now = datetime.datetime.now()
         
         # Attempt to extract a numeric object id from the answer text when possible
@@ -354,7 +351,7 @@ def save_practice_question_answer(participant_id, answer_text):
             }
         }
         
-        progress_ref.child(entry_id).set(convert_numpy_types(updated_data))
+        progress_ref.set(convert_numpy_types(updated_data))
         print(f"💾 Practice question answer saved for {participant_id}: {answer_text}")
     except Exception as e:
         import traceback

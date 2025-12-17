@@ -49,7 +49,7 @@ if not firebase_admin._apps:
         print("🔍 Attempting Firebase initialization...")
         
         if hasattr(st, 'secrets') and hasattr(st.secrets, 'firebase') and 'firebase' in st.secrets:
-            print("✅ Found Streamlit secrets - using secrets.toml")
+            print("Found Streamlit secrets - using secrets.toml")
             firebase_credentials = {
                 "type": "service_account",
                 "project_id": st.secrets["firebase"]["project_id"],
@@ -241,10 +241,9 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
             
             participant_ref = db_ref.child(participant_id)
             progress_ref = participant_ref.child('comprehension')
-            entry_id = "action_history"
             
             now = datetime.datetime.now()
-            existing_data = progress_ref.child(entry_id).get() or {}
+            existing_data = progress_ref.get() or {}
             
             updated_data = {
                 **existing_data,
@@ -256,7 +255,7 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
                 "total_rounds": total_rounds
             }
             
-            progress_ref.child(entry_id).set(updated_data)
+            progress_ref.set(updated_data)
             print(f"💾 {phase} progress updated for {participant_id} - Round {round_number} - {action_count} actions")
             
         except Exception as e:
@@ -1097,11 +1096,6 @@ elif st.session_state.phase == "practice_complete":
             'comprehension': comprehension_config,  # Add comprehension phase config
             'rounds': round_configs,  # Main game rounds config
             'interface_type': 'text',
-            'demographics': {
-                'prolific_id': str(st.session_state.get('current_participant_id', '')),
-                'age': int(st.session_state.get('participant_age', 25)),
-                'gender': str(st.session_state.get('participant_gender', 'Prefer not to say')),
-            }
         }
         save_participant_config(st.session_state.current_participant_id, config)
         
