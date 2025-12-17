@@ -4,7 +4,6 @@ import json
 import random
 import datetime
 import time
-import hashlib
 
 import numpy as np
 import streamlit as st
@@ -34,6 +33,9 @@ from textual_nexiom_game import textual_blicket_game_page
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 
 load_dotenv()
+
+COMPLETION_CODE = "C1C28QBX"
+PROLIFIC_RETURN_URL = f"https://app.prolific.com/submissions/complete?cc={COMPLETION_CODE}"
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 LOG_DIR = "logs"
@@ -115,26 +117,6 @@ else:
     print("✅ Firebase already initialized")
     firebase_initialized = True
     db_ref = db.reference()
-
-
-def generate_completion_code(participant_id):
-    """Generate a unique 7-character completion code for a participant.
-    Uses hash of participant_id to ensure same participant always gets same code.
-    """
-    # Create a hash from participant_id
-    hash_obj = hashlib.sha256(participant_id.encode())
-    hash_hex = hash_obj.hexdigest()
-    
-    # Use first 7 characters and convert to uppercase alphanumeric
-    # Use a combination of uppercase letters and digits
-    chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"  # Excludes ambiguous characters like I, O, 0, 1
-    code_chars = []
-    for i in range(7):
-        # Use hash bytes to select character
-        byte_val = int(hash_hex[i*2:(i+1)*2], 16)
-        code_chars.append(chars[byte_val % len(chars)])
-    
-    return ''.join(code_chars)
 
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", blicket_indices=None):
@@ -1261,15 +1243,11 @@ elif st.session_state.phase == "end":
     """, unsafe_allow_html=True)
     st.markdown("## 🎉 All done!")
     st.markdown(f"Thanks for playing, {st.session_state.current_participant_id}!")
-    
-    # Generate unique completion code for this participant
-    participant_id = st.session_state.current_participant_id
-    completion_code = generate_completion_code(participant_id)
-    
     st.markdown(f"""
     ### 🎯 Experiment Complete!
-    
-    Thank you for participating in our Nexiom research study! Your completion code is **{completion_code}**.
+
+    Thank you for participating in our Nexiom research study! Your completion code is **{COMPLETION_CODE}**.
+    [Click here to return to Prolific]({PROLIFIC_RETURN_URL}) to confirm your completion and redirect to the payment flow.
     """)
 
     # Add right sidebar HTML element - only on desktop
