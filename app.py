@@ -248,7 +248,7 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
             updated_data = {
                 **existing_data,
                 "last_updated": now.isoformat(),
-                "user_actions": st.session_state.get('user_actions', []),
+                "user_test_actions": st.session_state.get('user_actions', []),
                 "total_actions": action_count,
                 "phase": phase,
                 "round_number": round_number,

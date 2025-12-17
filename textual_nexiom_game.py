@@ -171,6 +171,7 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
         round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
         
         # Save Q&A data
+        user_actions_snapshot = st.session_state.user_actions.copy() if 'user_actions' in st.session_state else []
         qa_data = {
             "round_id": round_id,
             "start_time": st.session_state.game_start_time.isoformat(),
@@ -178,10 +179,8 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
             "total_time_seconds": total_time_seconds,
             "round_number": current_round + 1,
             "round_config": round_config,
-            "user_actions": st.session_state.user_actions.copy() if 'user_actions' in st.session_state else [],
-            "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
             "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],
-            "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
+            "total_actions": len(user_actions_snapshot),
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
             "final_machine_state": bool(st.session_state.game_state['true_state'][-1]) if 'game_state' in st.session_state else False,
             "final_objects_on_machine": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
@@ -195,6 +194,12 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
             "qa_saved_immediately": True,
             "qa_submitted_at": now.isoformat()
         }
+        
+        if phase == "main_experiment":
+            qa_data["user_actions"] = user_actions_snapshot
+            qa_data["action_history"] = st.session_state.action_history.copy() if 'action_history' in st.session_state else []
+        else:
+            qa_data["user_test_actions"] = user_actions_snapshot
         
         # Convert NumPy types to JSON-serializable types
         qa_data = convert_numpy_types(qa_data)
@@ -271,9 +276,8 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         updated_data = {
             **existing_data,
             "last_updated": now.isoformat(),
-            "user_actions": st.session_state.user_actions.copy() if 'user_actions' in st.session_state else [],
+            "user_test_actions": st.session_state.user_actions.copy() if 'user_actions' in st.session_state else [],
             "total_actions": len(st.session_state.user_actions) if 'user_actions' in st.session_state else 0,
-            "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
             "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],  # New: Include test history
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
             "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
