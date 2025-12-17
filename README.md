@@ -47,7 +47,7 @@ The application automatically collects comprehensive behavioral data for each pa
     ],
     "total_actions": 5,
     "total_steps_taken": 10,
-    "user_actions": ["place Object 0", "remove Object 0", ...]
+    "user_test_actions": ["place Object 0", "remove Object 0", ...]
   },
   "main_game": {
     "round_1_20240101_120000_123": {
