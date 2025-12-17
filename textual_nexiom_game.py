@@ -88,11 +88,6 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", 
     game_state = env.reset()
     return env, game_state
 
-def get_participant_ref(participant_id):
-    """Return the Firebase reference for a participant under /participants."""
-    return db.reference(f"participants/{participant_id}")
-
-
 def save_game_data(participant_id, game_data):
     """Save game data to Firebase with enhanced tracking"""
     # Convert NumPy types to JSON-serializable types
@@ -100,7 +95,8 @@ def save_game_data(participant_id, game_data):
     
     try:
         # Get database reference
-        participant_ref = get_participant_ref(participant_id)
+        db_ref = db.reference()
+        participant_ref = db_ref.child(participant_id)
         
         # Determine which key to use based on phase
         phase = game_data.get('phase', 'unknown')
@@ -149,7 +145,8 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
     """Save Q&A data immediately when user provides rule hypothesis"""
     try:
         # Get database reference
-        participant_ref = get_participant_ref(participant_id)
+        db_ref = db.reference()
+        participant_ref = db_ref.child(participant_id)
         
         # Determine which key to use based on phase
         phase = "comprehension" if is_practice else "main_experiment"
@@ -254,7 +251,8 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             return
         
         # Get database reference
-        participant_ref = get_participant_ref(participant_id)
+        db_ref = db.reference()
+        participant_ref = db_ref.child(participant_id)
         progress_ref = participant_ref.child('comprehension')
         
         # Get existing data or create new
@@ -278,13 +276,11 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "total_actions": len(st.session_state.user_test_actions) if 'user_test_actions' in st.session_state else 0,
             "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
             "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],  # New: Include test history
-            "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
             "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
             "phase": phase,
             "round_number": current_round + 1,
             "true_blicket_indices": round_config.get('blicket_indices', []),
-            "true_rule": round_config.get('rule', ''),
             "object_labels_mapping": object_labels_mapping  # New: Object labels mapping
         }
         
@@ -330,7 +326,8 @@ def save_practice_question_answer(participant_id, answer_text):
             print(f"⚠️ Firebase not initialized - skipping practice question save for {participant_id}")
             return
         
-        participant_ref = get_participant_ref(participant_id)
+        db_ref = db.reference()
+        participant_ref = db_ref.child(participant_id)
         progress_ref = participant_ref.child('comprehension')
         existing_data = progress_ref.get() or {}
         now = datetime.datetime.now()
@@ -1506,7 +1503,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     if not is_practice:
                         try:
                             from firebase_admin import db
-                            participant_ref = db.reference(f'participants/{participant_id}')
+                            participant_ref = db.reference(f'{participant_id}')
                             main_game_ref = participant_ref.child('main_game')
                             progress_key = f"round_{current_round + 1}_progress"
                             if main_game_ref.child(progress_key).get():
@@ -1655,7 +1652,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     # Clean up old round_X_progress entries for this round (if they exist)
                     try:
                         from firebase_admin import db
-                        participant_ref = db.reference(f'participants/{participant_id}')
+                        participant_ref = db.reference(f'{participant_id}')
                         main_game_ref = participant_ref.child('main_game')
                         progress_key = f"round_{current_round + 1}_progress"
                         if main_game_ref.child(progress_key).get():

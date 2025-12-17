@@ -71,7 +71,7 @@ if not firebase_admin._apps:
             
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
-            db_ref = db.reference("participants")
+            db_ref = db.reference()
             firebase_initialized = True
             print("✅ Firebase initialized successfully using Streamlit secrets")
             print(f"✅ Connected to Nexiom database: {database_url}")
@@ -99,7 +99,7 @@ if not firebase_admin._apps:
             
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {'databaseURL': database_url})
-            db_ref = db.reference("participants")
+            db_ref = db.reference()
             firebase_initialized = True
             print("✅ Firebase initialized successfully using environment variables")
             print(f"✅ Connected to Nexiom database: {database_url}")
@@ -116,7 +116,7 @@ if not firebase_admin._apps:
 else:
     print("✅ Firebase already initialized")
     firebase_initialized = True
-    db_ref = db.reference("participants")
+    db_ref = db.reference()
 
 
 def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", blicket_indices=None):
