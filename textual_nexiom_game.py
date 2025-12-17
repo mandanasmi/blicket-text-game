@@ -88,6 +88,11 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", 
     game_state = env.reset()
     return env, game_state
 
+def get_participant_ref(participant_id):
+    """Return the Firebase reference for a participant under /participants."""
+    return db.reference(f"participants/{participant_id}")
+
+
 def save_game_data(participant_id, game_data):
     """Save game data to Firebase with enhanced tracking"""
     # Convert NumPy types to JSON-serializable types
@@ -95,8 +100,7 @@ def save_game_data(participant_id, game_data):
     
     try:
         # Get database reference
-        db_ref = db.reference()
-        participant_ref = db_ref.child(participant_id)
+        participant_ref = get_participant_ref(participant_id)
         
         # Determine which key to use based on phase
         phase = game_data.get('phase', 'unknown')
@@ -145,8 +149,7 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
     """Save Q&A data immediately when user provides rule hypothesis"""
     try:
         # Get database reference
-        db_ref = db.reference()
-        participant_ref = db_ref.child(participant_id)
+        participant_ref = get_participant_ref(participant_id)
         
         # Determine which key to use based on phase
         phase = "comprehension" if is_practice else "main_experiment"
@@ -251,8 +254,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             return
         
         # Get database reference
-        db_ref = db.reference()
-        participant_ref = db_ref.child(participant_id)
+        participant_ref = get_participant_ref(participant_id)
         progress_ref = participant_ref.child('comprehension')
         
         # Get existing data or create new
@@ -281,6 +283,8 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
             "phase": phase,
             "round_number": current_round + 1,
+            "true_blicket_indices": round_config.get('blicket_indices', []),
+            "true_rule": round_config.get('rule', ''),
             "object_labels_mapping": object_labels_mapping  # New: Object labels mapping
         }
         
@@ -326,8 +330,7 @@ def save_practice_question_answer(participant_id, answer_text):
             print(f"⚠️ Firebase not initialized - skipping practice question save for {participant_id}")
             return
         
-        db_ref = db.reference()
-        participant_ref = db_ref.child(participant_id)
+        participant_ref = get_participant_ref(participant_id)
         progress_ref = participant_ref.child('comprehension')
         existing_data = progress_ref.get() or {}
         now = datetime.datetime.now()
@@ -1028,6 +1031,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                             }
                             st.session_state.state_history.append(state_data)
                             
+                            display_label = label_prefix[obj_idx] if is_practice else f"{obj_idx + 1}"
+                            selection_text = f"{'Removed' if is_selected else 'Placed'} Object {display_label} on machine"
+                            st.session_state.action_history.append(selection_text)
+
                             # Record the action for Firebase
                             # Create objects with labels for action
                             obj_label = label_prefix[obj_idx - 1] if is_practice else str(obj_idx)  # obj_idx is 1-based in visual mode
