@@ -207,6 +207,17 @@ def save_game_data(participant_id, game_data):
                 "session_timestamp": now.timestamp()
             }
             
+            # Verify we're using the Nexiom database
+            try:
+                app = firebase_admin.get_app()
+                db_url = app.options.get('databaseURL', '') if hasattr(app, 'options') else ''
+                if 'nexiom' in db_url.lower():
+                    print(f"✅ Confirmed: Using Nexiom database: {db_url}")
+                else:
+                    print(f"⚠️ Warning: Database URL does not contain 'nexiom': {db_url}")
+            except Exception as e:
+                print(f"⚠️ Could not verify database URL: {e}")
+            
             # For main game rounds, save directly (overwrite if exists)
             # For comprehension, merge with existing data to preserve similar_game_experience
             if phase == 'comprehension':
@@ -220,12 +231,16 @@ def save_game_data(participant_id, game_data):
                     **enhanced_game_data
                 }
                 print(f"   Data keys: {list(merged_data.keys())[:10]}...")
+                if 'test_timings' in merged_data:
+                    print(f"   💾 test_timings: {len(merged_data['test_timings'])} entries")
                 games_ref.set(merged_data)
                 print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
             else:
                 print(f"💾 Saving main game data to Nexiom database")
                 print(f"💾 Saving main game data to path: {participant_id}/main_game/{round_key}")
                 print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
+                if 'test_timings' in enhanced_game_data:
+                    print(f"   💾 test_timings: {len(enhanced_game_data['test_timings'])} entries")
                 games_ref.set(enhanced_game_data)
                 print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id} - Round {round_number}")
         except Exception as e:
@@ -252,6 +267,15 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
             now = datetime.datetime.now()
             existing_data = progress_ref.get() or {}
             
+            # Verify we're using the Nexiom database
+            try:
+                app = firebase_admin.get_app()
+                db_url = app.options.get('databaseURL', '') if hasattr(app, 'options') else ''
+                if 'nexiom' in db_url.lower():
+                    print(f"✅ Confirmed: Using Nexiom database for intermediate saves: {db_url}")
+            except Exception as e:
+                pass
+            
             updated_data = {
                 **existing_data,
                 "last_updated": now.isoformat(),
@@ -265,6 +289,8 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
             
             progress_ref.set(updated_data)
             print(f"💾 {phase} progress updated for {participant_id} - Round {round_number} - {action_count} actions")
+            if 'test_timings' in updated_data and updated_data['test_timings']:
+                print(f"   💾 test_timings saved to Nexiom database: {len(updated_data['test_timings'])} entries")
             
         except Exception as e:
             print(f"❌ Failed to save {phase} progress for {participant_id}: {e}")

@@ -94,8 +94,16 @@ def save_game_data(participant_id, game_data):
     game_data = convert_numpy_types(game_data)
     
     try:
-        # Get database reference
+        # Get database reference (uses Nexiom database initialized in app.py)
         db_ref = db.reference()
+        # Verify we're using the Nexiom database
+        try:
+            app = firebase_admin.get_app()
+            db_url = app.options.get('databaseURL', '') if hasattr(app, 'options') else ''
+            if 'nexiom' in db_url.lower():
+                print(f"💾 Saving game data with test_timings to Nexiom database: {db_url}")
+        except:
+            pass
         participant_ref = db_ref.child(participant_id)
         
         # Determine which key to use based on phase
@@ -127,12 +135,16 @@ def save_game_data(participant_id, game_data):
             print(f"💾 Saving comprehension data to Nexiom database")
             print(f"💾 Saving comprehension data to path: {participant_id}/comprehension")
             print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
+            if 'test_timings' in enhanced_game_data:
+                print(f"   💾 test_timings: {len(enhanced_game_data['test_timings'])} entries")
             games_ref.set(enhanced_game_data)
             print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
         else:
             print(f"💾 Saving main game data to Nexiom database")
             print(f"💾 Saving main game data to path: {participant_id}/main_game/{round_key}")
             print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
+            if 'test_timings' in enhanced_game_data:
+                print(f"   💾 test_timings: {len(enhanced_game_data['test_timings'])} entries")
             games_ref.set(enhanced_game_data)
             print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id} - Round {round_number}")
     except Exception as e:
@@ -144,8 +156,16 @@ def save_game_data(participant_id, game_data):
 def save_qa_data_immediately(participant_id, round_config, current_round, total_rounds, is_practice, rule_hypothesis, rule_type):
     """Save Q&A data immediately when user provides rule hypothesis"""
     try:
-        # Get database reference
+        # Get database reference (uses Nexiom database initialized in app.py)
         db_ref = db.reference()
+        # Verify we're using the Nexiom database
+        try:
+            app = firebase_admin.get_app()
+            db_url = app.options.get('databaseURL', '') if hasattr(app, 'options') else ''
+            if 'nexiom' in db_url.lower():
+                print(f"💾 Saving Q&A data with test_timings to Nexiom database: {db_url}")
+        except:
+            pass
         participant_ref = db_ref.child(participant_id)
         
         # Determine which key to use based on phase
@@ -203,6 +223,8 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
         
         games_ref.child(entry_id).set(qa_data)
         print(f"✅ Q&A data saved immediately for {participant_id} - Round {current_round + 1}")
+        if 'test_timings' in qa_data and qa_data['test_timings']:
+            print(f"   💾 test_timings saved to Nexiom database: {len(qa_data['test_timings'])} entries")
         
         # Clear session state and finish round
         reset_game_session_state()
@@ -252,8 +274,16 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             print(f"⚠️ Firebase not initialized - skipping {phase} progress save")
             return
         
-        # Get database reference
+        # Get database reference (uses Nexiom database initialized in app.py)
         db_ref = db.reference()
+        # Verify we're using the Nexiom database
+        try:
+            app = firebase_admin.get_app()
+            db_url = app.options.get('databaseURL', '') if hasattr(app, 'options') else ''
+            if 'nexiom' in db_url.lower():
+                print(f"💾 Saving test_timings to Nexiom database: {db_url}")
+        except:
+            pass
         participant_ref = db_ref.child(participant_id)
         progress_ref = participant_ref.child('comprehension')
         
@@ -312,6 +342,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         
         progress_ref.set(convert_numpy_types(updated_data))
         print(f"💾 {phase} progress updated for {participant_id} - Round {current_round + 1} - Q&A data included")
+        print(f"💾 test_timings saved to Nexiom database: {len(updated_data.get('test_timings', []))} entries")
         
     except Exception as e:
         import traceback
