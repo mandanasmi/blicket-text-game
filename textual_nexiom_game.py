@@ -278,6 +278,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "total_actions": len(st.session_state.user_test_actions) if 'user_test_actions' in st.session_state else 0,
             "action_history": st.session_state.action_history.copy() if 'action_history' in st.session_state else [],
             "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],  # New: Include test history
+            "test_timings": st.session_state.get("test_timings", []).copy() if 'test_timings' in st.session_state else [],  # Time for each test button press
             "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
             "phase": phase,

@@ -256,6 +256,7 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
                 **existing_data,
                 "last_updated": now.isoformat(),
                 "user_test_actions": st.session_state.get('user_test_actions', []),
+                "test_timings": st.session_state.get("test_timings", []).copy() if 'test_timings' in st.session_state else [],  # Time for each test button press
                 "total_actions": action_count,
                 "phase": phase,
                 "round_number": round_number,
@@ -290,7 +291,7 @@ def save_similar_game_experience(participant_id, answer, elaboration=None):
         updated_data = {
             **existing_data,
             "similar_game_experience": {
-                "question": "Have you played a similar game before?",
+                "question": "Have you done a study or read about a study like this before, where you have to figure out which objects make a machine, light, or toy turn on?",
                 "answer": answer,
                 "elaboration": elaboration if elaboration else None,
                 "saved_at": now.isoformat()
@@ -1084,11 +1085,12 @@ elif st.session_state.phase == "practice_complete":
     
     # Question about similar game experience
     similar_game_answer = st.radio(
-        "Have you played a similar game before?",
+        "Have you done a study or read about a study like this before, where you have to figure out which objects make a machine, light, or toy turn on?",
         ("Yes", "No"),
         key="similar_game_experience_radio",
         index=None if st.session_state.similar_game_experience is None else (0 if st.session_state.similar_game_experience == "Yes" else 1)
     )
+    st.markdown("*Your answer will not affect your compensation. This question is only to help the researchers better interpret the results.*")
     
     # Update session state when answer changes
     if similar_game_answer != st.session_state.similar_game_experience:
@@ -1108,11 +1110,12 @@ elif st.session_state.phase == "practice_complete":
     # Show elaboration text area if "Yes" is selected
     elaboration_text = ""
     if similar_game_answer == "Yes":
+        st.markdown("**If yes, please elaborate:**")
         elaboration_text = st.text_area(
-            "Please elaborate:",
+            "Please share any details you can recall.",
             value=st.session_state.similar_game_elaboration,
             key="similar_game_elaboration_text",
-            placeholder="Describe the similar game you've played...",
+            placeholder="Please share any details you can recall.",
             height=100
         )
         
