@@ -1512,6 +1512,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         }
                     
                     # Save current round data with detailed action tracking
+                    # Ensure test_timings are captured for comprehension phase
+                    test_timings_data = st.session_state.get("test_timings", []).copy() if 'test_timings' in st.session_state else []
+                    if is_practice:
+                        print(f"💾 Preparing to save comprehension phase data with {len(test_timings_data)} test_timings entries")
+                    
                     round_data = {
                         "round_id": round_id,  # Unique identifier for this round
                         "start_time": st.session_state.game_start_time.isoformat(),
@@ -1522,7 +1527,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "user_test_actions": st.session_state.user_test_actions,  # All place/remove/test actions with labels
                         "action_history": st.session_state.action_history,  # Detailed action history
                         "state_history": st.session_state.state_history,  # State changes with object labels
-                        "test_timings": st.session_state.get("test_timings", []),  # Time for each test button press: [{"test_number": 1, "time_since_start_seconds": 2.5, "time_since_previous_seconds": 2.5}, ...]
+                        "test_timings": test_timings_data,  # Time for each test button press: [{"test_number": 1, "time_since_start_seconds": 2.5, "time_since_previous_seconds": 2.5}, ...]
                         "total_actions": len(st.session_state.user_test_actions),
                         "action_history_length": len(st.session_state.action_history),
                         "total_steps_taken": st.session_state.steps_taken,
@@ -1548,10 +1553,14 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
                     print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
                     print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
+                    print(f"   - test_timings in dict: {len(round_data.get('test_timings', []))} entries")
+                    if round_data.get('test_timings'):
+                        print(f"   - test_timings sample: {round_data['test_timings'][:2] if len(round_data['test_timings']) >= 2 else round_data['test_timings']}")
                     
                     # Convert numpy types to ensure Firebase compatibility
                     round_data = convert_numpy_types(round_data)
                     print(f"💾 After convert_numpy_types - rule_type: '{round_data.get('rule_type', 'MISSING')}'")
+                    print(f"💾 After convert_numpy_types - test_timings: {len(round_data.get('test_timings', []))} entries")
                     
                     # Use the provided save function or default Firebase function
                     if save_data_func:

@@ -231,8 +231,17 @@ def save_game_data(participant_id, game_data):
                     **enhanced_game_data
                 }
                 print(f"   Data keys: {list(merged_data.keys())[:10]}...")
-                if 'test_timings' in merged_data:
+                if 'test_timings' in merged_data and merged_data['test_timings']:
                     print(f"   💾 test_timings: {len(merged_data['test_timings'])} entries")
+                    print(f"   💾 test_timings saved to Nexiom database comprehension phase")
+                    # Log sample of test_timings for debugging
+                    if len(merged_data['test_timings']) > 0:
+                        sample = merged_data['test_timings'][:2] if len(merged_data['test_timings']) >= 2 else merged_data['test_timings']
+                        print(f"   💾 test_timings sample: {sample}")
+                elif 'test_timings' not in merged_data:
+                    print(f"   ⚠️ WARNING: test_timings not found in merged_data for comprehension phase!")
+                else:
+                    print(f"   ℹ️ test_timings is empty (no tests performed yet)")
                 games_ref.set(merged_data)
                 print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
             else:
@@ -1061,6 +1070,12 @@ elif st.session_state.phase == "practice_game":
     def comprehension_save_func(participant_id, game_data):
         game_data['phase'] = 'comprehension'
         game_data['interface_type'] = st.session_state.interface_type
+        # Ensure test_timings are included for comprehension phase
+        if 'test_timings' not in game_data:
+            game_data['test_timings'] = st.session_state.get("test_timings", []).copy() if 'test_timings' in st.session_state else []
+            print(f"💾 Added test_timings to comprehension save: {len(game_data['test_timings'])} entries")
+        else:
+            print(f"💾 test_timings already in game_data: {len(game_data.get('test_timings', []))} entries")
         save_game_data(participant_id, game_data)
     
     textual_blicket_game_page(
