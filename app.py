@@ -1180,6 +1180,13 @@ elif st.session_state.phase == "practice_complete":
         # If No, just need the answer
         button_enabled = True
     
+    # Show error message if "Yes" is selected but no elaboration provided
+    if similar_game_answer == "Yes" and not button_enabled:
+        st.markdown(
+            '<p style="color: #dc3545; font-size: 14px; margin-top: 10px; margin-bottom: 10px;">⚠️ Please provide details about the similar study or game you have seen before continuing.</p>',
+            unsafe_allow_html=True
+        )
+    
     if st.button("Start Main Experiment", type="primary", use_container_width=True, disabled=not button_enabled):
         random.seed(hash(st.session_state.current_participant_id) % 2**32)
         
