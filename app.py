@@ -208,12 +208,19 @@ def save_game_data(participant_id, game_data):
             }
             
             # For main game rounds, save directly (overwrite if exists)
-            # For comprehension, use a specific key
+            # For comprehension, merge with existing data to preserve similar_game_experience
             if phase == 'comprehension':
                 print(f"💾 Saving comprehension data to Nexiom database")
                 print(f"💾 Saving comprehension data to path: {participant_id}/comprehension")
-                print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
-                games_ref.set(enhanced_game_data)
+                # Get existing data to preserve similar_game_experience and other fields
+                existing_comprehension_data = games_ref.get() or {}
+                # Merge existing data with new game data (new data takes precedence for overlapping keys)
+                merged_data = {
+                    **existing_comprehension_data,
+                    **enhanced_game_data
+                }
+                print(f"   Data keys: {list(merged_data.keys())[:10]}...")
+                games_ref.set(merged_data)
                 print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
             else:
                 print(f"💾 Saving main game data to Nexiom database")
@@ -262,6 +269,42 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
             print(f"❌ Failed to save {phase} progress for {participant_id}: {e}")
     else:
         print("⚠️ Firebase not available - progress not saved")
+
+
+def save_similar_game_experience(participant_id, answer, elaboration=None):
+    """Save the similar game experience question response to Firebase."""
+    if not answer:
+        return
+    
+    try:
+        # Ensure Firebase is initialized before attempting to save
+        if not firebase_initialized or not db_ref:
+            print(f"⚠️ Firebase not initialized - skipping similar game experience save for {participant_id}")
+            return
+        
+        participant_ref = db_ref.child(participant_id)
+        progress_ref = participant_ref.child('comprehension')
+        existing_data = progress_ref.get() or {}
+        now = datetime.datetime.now()
+        
+        updated_data = {
+            **existing_data,
+            "similar_game_experience": {
+                "question": "Have you played a similar game before?",
+                "answer": answer,
+                "elaboration": elaboration if elaboration else None,
+                "saved_at": now.isoformat()
+            }
+        }
+        
+        progress_ref.set(updated_data)
+        print(f"💾 Similar game experience answer saved for {participant_id}: {answer}")
+        if elaboration:
+            print(f"💾 Elaboration saved: {elaboration[:50]}...")
+    except Exception as e:
+        import traceback
+        print(f"❌ Failed to save similar game experience for {participant_id}: {e}")
+        print(f"Full traceback: {traceback.format_exc()}")
 
 
 def handle_enter():
@@ -424,6 +467,10 @@ if "round_hypothesis" not in st.session_state:
     st.session_state.round_hypothesis = ""
 if "round_rule_type" not in st.session_state:
     st.session_state.round_rule_type = ""
+if "similar_game_experience" not in st.session_state:
+    st.session_state.similar_game_experience = None
+if "similar_game_elaboration" not in st.session_state:
+    st.session_state.similar_game_elaboration = ""
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 # Global CSS for desktop screens
@@ -1032,7 +1079,64 @@ elif st.session_state.phase == "practice_complete":
         st.markdown(f"The true Nexiom in the practice round was **Object {display_label}**. This is because only Object { 'ABC'[practice_blicket] if practice_blicket < 3 else practice_blicket + 1 } can turn on the Nexiom machine.")
         st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different Nexiom machine. Please note that the rules may be <strong><span style='font-size: 1.05em;'>completely different</span></strong> from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well!", unsafe_allow_html=True)
 
-    if st.button("Start Main Experiment", type="primary", use_container_width=True):
+    st.markdown("---")
+    st.markdown("### Question")
+    
+    # Question about similar game experience
+    similar_game_answer = st.radio(
+        "Have you played a similar game before?",
+        ("Yes", "No"),
+        key="similar_game_experience_radio",
+        index=None if st.session_state.similar_game_experience is None else (0 if st.session_state.similar_game_experience == "Yes" else 1)
+    )
+    
+    # Update session state when answer changes
+    if similar_game_answer != st.session_state.similar_game_experience:
+        st.session_state.similar_game_experience = similar_game_answer
+        # Clear elaboration if switching to "No"
+        if similar_game_answer == "No":
+            st.session_state.similar_game_elaboration = ""
+        # Save immediately when answer is selected
+        if firebase_initialized:
+            current_elaboration = st.session_state.similar_game_elaboration if similar_game_answer == "Yes" else None
+            save_similar_game_experience(
+                st.session_state.current_participant_id,
+                similar_game_answer,
+                current_elaboration.strip() if current_elaboration and current_elaboration.strip() else None
+            )
+    
+    # Show elaboration text area if "Yes" is selected
+    elaboration_text = ""
+    if similar_game_answer == "Yes":
+        elaboration_text = st.text_area(
+            "Please elaborate:",
+            value=st.session_state.similar_game_elaboration,
+            key="similar_game_elaboration_text",
+            placeholder="Describe the similar game you've played...",
+            height=100
+        )
+        
+        # Update session state when elaboration changes
+        if elaboration_text != st.session_state.similar_game_elaboration:
+            st.session_state.similar_game_elaboration = elaboration_text
+            # Save when elaboration is provided (even if empty, to update timestamp)
+            if firebase_initialized:
+                save_similar_game_experience(
+                    st.session_state.current_participant_id,
+                    similar_game_answer,
+                    elaboration_text.strip() if elaboration_text.strip() else None
+                )
+    
+    # Determine if button should be enabled
+    button_enabled = False
+    if similar_game_answer == "Yes":
+        # If Yes, need elaboration text
+        button_enabled = bool(elaboration_text and elaboration_text.strip())
+    elif similar_game_answer == "No":
+        # If No, just need the answer
+        button_enabled = True
+    
+    if st.button("Start Main Experiment", type="primary", use_container_width=True, disabled=not button_enabled):
         random.seed(hash(st.session_state.current_participant_id) % 2**32)
         
         num_rounds = 3

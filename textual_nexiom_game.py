@@ -180,6 +180,7 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
             "round_number": current_round + 1,
             "round_config": round_config,
             "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],
+            "test_timings": st.session_state.get("test_timings", []).copy(),  # Time for each test button press
             "total_actions": len(user_test_actions_snapshot),
             "total_steps_taken": st.session_state.steps_taken if 'steps_taken' in st.session_state else 0,
             "final_machine_state": bool(st.session_state.game_state['true_state'][-1]) if 'game_state' in st.session_state else False,
@@ -223,7 +224,8 @@ def reset_game_session_state():
         "visual_game_state", "env", "game_state", "object_positions", 
         "selected_objects", "blicket_answers", "game_start_time", 
         "shape_images", "steps_taken", "user_test_actions", "action_history", 
-        "state_history", "rule_hypothesis", "rule_type"
+        "state_history", "rule_hypothesis", "rule_type", "test_timings", 
+        "previous_test_time"
     ]
     
     for var in game_state_vars:
@@ -430,6 +432,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.session_state.user_test_actions = []  # Track all user test actions for Firebase
         st.session_state.action_history = []  # Track action history for text version
         st.session_state.state_history = []  # Track complete state history
+        st.session_state.test_timings = []  # Track time for each test button press: [{"test_number": 1, "time_seconds": 2.5}, ...]
+        st.session_state.previous_test_time = None  # Track timestamp of previous test for interval calculation
         
         print(f"🔄 New round initialized - Round {current_round + 1}/{total_rounds}")
         print(f"   - Objects: {round_config['num_objects']}")
@@ -823,6 +827,29 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         if st.button("Test Machine", type="primary", disabled=not current_selection or interaction_disabled, help=test_help):
             # NOW record the test action
             action_time = datetime.datetime.now()
+            
+            # Calculate time for this test
+            test_number = st.session_state.steps_taken + 1
+            if st.session_state.previous_test_time is None:
+                # First test: time since game start
+                time_since_start = (action_time - st.session_state.game_start_time).total_seconds()
+                time_since_previous = time_since_start  # Same as time since start for first test
+            else:
+                # Subsequent tests: time since previous test
+                time_since_previous = (action_time - st.session_state.previous_test_time).total_seconds()
+                time_since_start = (action_time - st.session_state.game_start_time).total_seconds()
+            
+            # Store test timing
+            test_timing = {
+                "test_number": test_number,
+                "time_since_start_seconds": round(time_since_start, 3),  # Time from game start to this test
+                "time_since_previous_seconds": round(time_since_previous, 3),  # Time from previous test to this test
+                "timestamp": action_time.isoformat()
+            }
+            if "test_timings" not in st.session_state:
+                st.session_state.test_timings = []
+            st.session_state.test_timings.append(test_timing)
+            st.session_state.previous_test_time = action_time
             
             # Capture machine state BEFORE this test
             machine_state_before = bool(game_state['true_state'][-1]) if 'game_state' in st.session_state else False
@@ -1463,6 +1490,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "user_test_actions": st.session_state.user_test_actions,  # All place/remove/test actions with labels
                         "action_history": st.session_state.action_history,  # Detailed action history
                         "state_history": st.session_state.state_history,  # State changes with object labels
+                        "test_timings": st.session_state.get("test_timings", []),  # Time for each test button press: [{"test_number": 1, "time_since_start_seconds": 2.5, "time_since_previous_seconds": 2.5}, ...]
                         "total_actions": len(st.session_state.user_test_actions),
                         "action_history_length": len(st.session_state.action_history),
                         "total_steps_taken": st.session_state.steps_taken,
@@ -1613,6 +1641,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         "user_test_actions": st.session_state.get("user_test_actions", []),  # All place/remove/test actions with labels
                         "action_history": st.session_state.get("action_history", []),  # Detailed action history
                         "state_history": st.session_state.get("state_history", []),  # State changes with object labels
+                        "test_timings": st.session_state.get("test_timings", []),  # Time for each test button press
                         "total_actions": len(st.session_state.get("user_test_actions", [])),
                         "action_history_length": len(st.session_state.get("action_history", [])),
                         "total_steps_taken": st.session_state.get("steps_taken", 0),
