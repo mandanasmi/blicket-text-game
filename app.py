@@ -507,6 +507,8 @@ if "similar_game_experience" not in st.session_state:
     st.session_state.similar_game_experience = None
 if "similar_game_elaboration" not in st.session_state:
     st.session_state.similar_game_elaboration = ""
+if "show_elaboration_error" not in st.session_state:
+    st.session_state.show_elaboration_error = False
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 # Global CSS for desktop screens
@@ -1163,6 +1165,9 @@ elif st.session_state.phase == "practice_complete":
         # Update session state when elaboration changes
         if elaboration_text != st.session_state.similar_game_elaboration:
             st.session_state.similar_game_elaboration = elaboration_text
+            # Clear error message if text is provided
+            if elaboration_text and elaboration_text.strip():
+                st.session_state.show_elaboration_error = False
             # Save when elaboration is provided (even if empty, to update timestamp)
             if firebase_initialized:
                 save_similar_game_experience(
@@ -1171,133 +1176,140 @@ elif st.session_state.phase == "practice_complete":
                     elaboration_text.strip() if elaboration_text.strip() else None
                 )
     
-    # Determine if button should be enabled
-    button_enabled = False
-    if similar_game_answer == "Yes":
-        # If Yes, need elaboration text
-        button_enabled = bool(elaboration_text and elaboration_text.strip())
-    elif similar_game_answer == "No":
-        # If No, just need the answer
-        button_enabled = True
+    # Clear error message if "No" is selected
+    if similar_game_answer == "No":
+        st.session_state.show_elaboration_error = False
     
-    # Show error message if "Yes" is selected but no elaboration provided
-    if similar_game_answer == "Yes" and not button_enabled:
+    # Show error message only if button was clicked and elaboration is empty
+    if similar_game_answer == "Yes" and st.session_state.show_elaboration_error:
         st.markdown(
             '<p style="color: #dc3545; font-size: 14px; margin-top: 10px; margin-bottom: 10px;">⚠️ Please provide details about the similar study or game you have seen before continuing.</p>',
             unsafe_allow_html=True
         )
     
-    if st.button("Start Main Experiment", type="primary", use_container_width=True, disabled=not button_enabled):
-        random.seed(hash(st.session_state.current_participant_id) % 2**32)
-        
-        num_rounds = 3
-        round_configs = []
-        current_rule = random.choice(['conjunctive', 'disjunctive'])
-        rule_change_probability = 0.4
-        
-        blicket_combinations = [
-            [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
-        ]
-        random.shuffle(blicket_combinations)
-        
-        for i in range(num_rounds):
-            num_objects = 4
-            blicket_indices = blicket_combinations[i % len(blicket_combinations)]
-            num_blickets = len(blicket_indices)
+    # Button is always enabled so user can click it - validation happens on click
+    button_clicked = st.button("Start Main Experiment", type="primary", use_container_width=True)
+    
+    if button_clicked:
+        # Validate: if "Yes" is selected, elaboration must be provided
+        if similar_game_answer == "Yes" and not (elaboration_text and elaboration_text.strip()):
+            # Show error and don't proceed
+            st.session_state.show_elaboration_error = True
+            st.rerun()
+        else:
+            # Clear error and proceed
+            st.session_state.show_elaboration_error = False
             
-            if i == 0:
-                rule = current_rule
-            else:
-                if random.random() < rule_change_probability:
-                    available_rules = ['conjunctive', 'disjunctive']
-                    available_rules.remove(current_rule)
-                    rule = random.choice(available_rules)
-                    current_rule = rule
-                else:
+            random.seed(hash(st.session_state.current_participant_id) % 2**32)
+            
+            num_rounds = 3
+            round_configs = []
+            current_rule = random.choice(['conjunctive', 'disjunctive'])
+            rule_change_probability = 0.4
+            
+            blicket_combinations = [
+                [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
+            ]
+            random.shuffle(blicket_combinations)
+            
+            for i in range(num_rounds):
+                num_objects = 4
+                blicket_indices = blicket_combinations[i % len(blicket_combinations)]
+                num_blickets = len(blicket_indices)
+                
+                if i == 0:
                     rule = current_rule
+                else:
+                    if random.random() < rule_change_probability:
+                        available_rules = ['conjunctive', 'disjunctive']
+                        available_rules.remove(current_rule)
+                        rule = random.choice(available_rules)
+                        current_rule = rule
+                    else:
+                        rule = current_rule
 
-            init_prob = random.uniform(0.1, 0.3)
-            transition_noise = 0.0
+                init_prob = random.uniform(0.1, 0.3)
+                transition_noise = 0.0
+                
+                round_configs.append({
+                    'num_objects': num_objects,
+                    'num_blickets': num_blickets,
+                    'blicket_indices': blicket_indices,
+                    'rule': rule,
+                    'init_prob': init_prob,
+                    'transition_noise': transition_noise,
+                    'horizon': 16
+                })
+
+            # Ensure there is at least one conjunctive and one disjunctive round
+            rules_present = {cfg['rule'] for cfg in round_configs}
+            if len(rules_present) == 1:
+                # Flip the rule of the final round to introduce variety
+                alternate_rule = 'disjunctive' if round_configs[-1]['rule'] == 'conjunctive' else 'conjunctive'
+                round_configs[-1]['rule'] = alternate_rule
+
+            # Get comprehension phase config
+            practice_blicket = st.session_state.get("practice_blicket_index")
+            comprehension_config = {
+                'num_objects': 3,
+                'num_blickets': 1,
+                'blicket_indices': [practice_blicket] if practice_blicket is not None else [],
+                'rule': 'conjunctive',
+            }
             
-            round_configs.append({
-                'num_objects': num_objects,
-                'num_blickets': num_blickets,
-                'blicket_indices': blicket_indices,
-                'rule': rule,
-                'init_prob': init_prob,
-                'transition_noise': transition_noise,
-                'horizon': 16
-            })
+            config = {
+                'num_rounds': num_rounds,
+                'user_selected_objects': 4,
+                'comprehension': comprehension_config,  # Add comprehension phase config
+                'rounds': round_configs,  # Main game rounds config
+                'interface_type': 'text',
+            }
+            save_participant_config(st.session_state.current_participant_id, config)
+            
+            st.session_state.current_round = 0
+            st.session_state.round_configs = round_configs
+            round_config = round_configs[0]
 
-        # Ensure there is at least one conjunctive and one disjunctive round
-        rules_present = {cfg['rule'] for cfg in round_configs}
-        if len(rules_present) == 1:
-            # Flip the rule of the final round to introduce variety
-            alternate_rule = 'disjunctive' if round_configs[-1]['rule'] == 'conjunctive' else 'conjunctive'
-            round_configs[-1]['rule'] = alternate_rule
+            env, first_obs = create_new_game(
+                seed=42,
+                num_objects=round_config['num_objects'],
+                num_blickets=round_config['num_blickets'],
+                rule=round_config['rule'],
+                blicket_indices=round_config.get('blicket_indices', None)
+            )
+            
+            now = datetime.datetime.now()
+            st.session_state.env = env
+            st.session_state.start_time = now
+            st.session_state.log = [first_obs]
+            st.session_state.times = [now]
+            
+            save_intermediate_progress_app(
+                st.session_state.current_participant_id,
+                "comprehension",
+                0, 1, len(st.session_state.get('user_test_actions', []))
+            )
 
-        # Get comprehension phase config
-        practice_blicket = st.session_state.get("practice_blicket_index")
-        comprehension_config = {
-            'num_objects': 3,
-            'num_blickets': 1,
-            'blicket_indices': [practice_blicket] if practice_blicket is not None else [],
-            'rule': 'conjunctive',
-        }
-        
-        config = {
-            'num_rounds': num_rounds,
-            'user_selected_objects': 4,
-            'comprehension': comprehension_config,  # Add comprehension phase config
-            'rounds': round_configs,  # Main game rounds config
-            'interface_type': 'text',
-        }
-        save_participant_config(st.session_state.current_participant_id, config)
-        
-        st.session_state.current_round = 0
-        st.session_state.round_configs = round_configs
-        round_config = round_configs[0]
-
-        env, first_obs = create_new_game(
-            seed=42,
-            num_objects=round_config['num_objects'],
-            num_blickets=round_config['num_blickets'],
-            rule=round_config['rule'],
-            blicket_indices=round_config.get('blicket_indices', None)
-        )
-        
-        now = datetime.datetime.now()
-        st.session_state.env = env
-        st.session_state.start_time = now
-        st.session_state.log = [first_obs]
-        st.session_state.times = [now]
-        
-        save_intermediate_progress_app(
-            st.session_state.current_participant_id,
-            "comprehension",
-            0, 1, len(st.session_state.get('user_test_actions', []))
-        )
-
-        st.session_state.steps_taken = 0
-        st.session_state.user_test_actions = []
-        st.session_state.action_history = []
-        st.session_state.state_history = []
-        st.session_state.selected_objects = set()
-        
-        st.session_state.pop("visual_game_state", None)
-        st.session_state.pop("rule_hypothesis", None)
-        st.session_state.pop("rule_type", None)
-        for i in range(10):
-            st.session_state.pop(f"blicket_q_{i}", None)
-        
-        save_intermediate_progress_app(
-            st.session_state.current_participant_id,
-            "main_experiment_start",
-            1, num_rounds, 0
-        )
-        
-        st.session_state.phase = "game"
-        st.rerun()
+            st.session_state.steps_taken = 0
+            st.session_state.user_test_actions = []
+            st.session_state.action_history = []
+            st.session_state.state_history = []
+            st.session_state.selected_objects = set()
+            
+            st.session_state.pop("visual_game_state", None)
+            st.session_state.pop("rule_hypothesis", None)
+            st.session_state.pop("rule_type", None)
+            for i in range(10):
+                st.session_state.pop(f"blicket_q_{i}", None)
+            
+            save_intermediate_progress_app(
+                st.session_state.current_participant_id,
+                "main_experiment_start",
+                1, num_rounds, 0
+            )
+            
+            st.session_state.phase = "game"
+            st.rerun()
 
 # 5) MAIN GAME
 elif st.session_state.phase == "game":
