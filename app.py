@@ -493,6 +493,9 @@ if "current_round" not in st.session_state:
     st.session_state.current_round = 0
 if "round_configs" not in st.session_state:
     st.session_state.round_configs = []
+# Ensure existing sessions are limited to 1 round
+if len(st.session_state.round_configs) > 1:
+    st.session_state.round_configs = st.session_state.round_configs[:1]
 if "participant_id_entered" not in st.session_state:
     st.session_state.participant_id_entered = False
 if "comprehension_completed" not in st.session_state:
@@ -1251,6 +1254,9 @@ elif st.session_state.phase == "practice_complete":
             
             st.session_state.current_round = 0
             st.session_state.round_configs = round_configs
+            # Ensure only 1 round is used (safeguard)
+            if len(st.session_state.round_configs) > 1:
+                st.session_state.round_configs = [st.session_state.round_configs[0]]
             round_config = round_configs[0]
 
             env, first_obs = create_new_game(

@@ -1444,6 +1444,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         print(f"🔍 Retrieved rule_type: '{rule_type}'")
         
         # Show Next Round button for all rounds except the last one
+        # With num_rounds = 1, this will always be False, so FINISH TASK will show
         if current_round + 1 < total_rounds:
             if st.button(" NEXT ROUND", type="primary", disabled=not rule_type, use_container_width=True):
                     # Get blicket classifications directly from saved tracked key
