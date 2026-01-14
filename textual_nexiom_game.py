@@ -652,15 +652,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
 
     
     # Main content area
-    # Display round info and progress
-    st.markdown(f"<div style='font-size: 20px; font-weight: bold; margin-bottom: 4px;'>Round {current_round + 1} of {total_rounds}</div>", unsafe_allow_html=True)
-    progress = (current_round + 1) / total_rounds
-    st.markdown(
-        f"<div style='width: 100%; height: 10px; background: #d0e2ff; border-radius: 999px; overflow: hidden; margin-bottom: 16px;'>"
-        f"<div style='width: {progress * 100}%; height: 100%; background: #0d47a1;'></div>"
-        f"</div>",
-        unsafe_allow_html=True,
-    )
+    # Don't display round info for main game (only one game now)
+    # Progress bar removed since there's only one game
     
     # Collapsible instruction section
     with st.expander("Click to read game instructions", expanded=False):
@@ -1297,7 +1290,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         # Add rule question
         st.markdown("---")
         st.markdown("### Rule Inference")
-        st.markdown("Based on your observations for this round only, describe how the objects turn on this Nexiom machine.")
+        st.markdown("Based on your observations, describe how the objects turn on this Nexiom machine.")
         rule_input_value = st.text_area(
             "What do you think is the rule?",
             placeholder="Describe your hypothesis about how the Nexiom machine determines when to switch on...",

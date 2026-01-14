@@ -1124,7 +1124,7 @@ elif st.session_state.phase == "practice_complete":
         label_map = ["A", "B", "C"]
         display_label = label_map[practice_blicket] if practice_blicket < len(label_map) else str(practice_blicket + 1)
         st.markdown(f"The true Nexiom in the practice round was **Object {display_label}**. This is because only Object { 'ABC'[practice_blicket] if practice_blicket < 3 else practice_blicket + 1 } can turn on the Nexiom machine.")
-        st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different Nexiom machine. Please note that the rules may be <strong><span style='font-size: 1.05em;'>completely different</span></strong> from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well!", unsafe_allow_html=True)
+        st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different Nexiom machine. Please note that the rules may be <strong><span style='font-size: 1.05em;'>completely different</span></strong> from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well! You must complete this one game to finish the experiment.", unsafe_allow_html=True)
 
     st.markdown("---")
     st.markdown("### Question")
@@ -1361,14 +1361,12 @@ elif st.session_state.phase == "next_round":
 
 # LEGACY QA
 elif st.session_state.phase == "qa":
-    st.markdown(f"## 📝 Round {st.session_state.current_round + 1} Q&A")
+    st.markdown(f"## 📝 Q&A")
     for i, question in enumerate(BINARY_QUESTIONS):
         st.radio(question, ("Yes", "No"), key=f"qa_{i}")
     
-    if st.session_state.current_round + 1 < len(st.session_state.round_configs):
-        st.button("Submit & Continue to Next Round", on_click=submit_qa)
-    else:
-        st.button("Submit & Finish", on_click=submit_qa)
+    # With only one game, always show "Submit & Finish"
+    st.button("Submit & Finish", on_click=submit_qa)
 
 # END SCREEN
 elif st.session_state.phase == "end":
