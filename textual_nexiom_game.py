@@ -111,11 +111,8 @@ def save_game_data(participant_id, game_data):
         now = datetime.datetime.now()
         
         if phase == 'main_experiment':
-            # For main game: save under main_game/round_X
+            # For main game: save directly to main_game (no round subdirectory)
             games_ref = participant_ref.child('main_game')
-            round_number = game_data.get('round_number', 1)
-            round_key = f"round_{round_number}"
-            games_ref = games_ref.child(round_key)
         elif phase == 'comprehension':
             # For comprehension: save under comprehension key
             games_ref = participant_ref.child('comprehension')
@@ -129,7 +126,7 @@ def save_game_data(participant_id, game_data):
             "session_timestamp": now.timestamp()
         }
         
-        # For main game rounds, save directly (overwrite if exists)
+        # For main game, save directly (overwrite if exists)
         # For comprehension, use a specific key
         if phase == 'comprehension':
             print(f"💾 Saving comprehension data to Nexiom database")
@@ -141,12 +138,12 @@ def save_game_data(participant_id, game_data):
             print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
         else:
             print(f"💾 Saving main game data to Nexiom database")
-            print(f"💾 Saving main game data to path: {participant_id}/main_game/{round_key}")
+            print(f"💾 Saving main game data to path: {participant_id}/main_game")
             print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
             if 'test_timings' in enhanced_game_data:
                 print(f"   💾 test_timings: {len(enhanced_game_data['test_timings'])} entries")
             games_ref.set(enhanced_game_data)
-            print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id} - Round {round_number}")
+            print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
     except Exception as e:
         print(f"❌ Failed to save game data for {participant_id}: {e}")
         import traceback
@@ -172,10 +169,8 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
         phase = "comprehension" if is_practice else "main_experiment"
         if phase == "main_experiment":
             games_ref = participant_ref.child('main_game')
-            entry_id = f"round_{current_round + 1}_qa"
         else:
-            games_ref = participant_ref.child('games')
-            entry_id = f"comprehension_qa"
+            games_ref = participant_ref.child('comprehension')
         
         # Collect blicket classifications (using 0-based object IDs)
         blicket_classifications = {}
@@ -186,19 +181,18 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
         end_time = datetime.datetime.now()
         total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
         
-        # Generate unique round ID
+        # Generate unique session ID
         now = datetime.datetime.now()
-        round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+        session_id = f"session_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
         
         # Save Q&A data
         user_test_actions_snapshot = st.session_state.user_test_actions.copy() if 'user_test_actions' in st.session_state else []
         qa_data = {
-            "round_id": round_id,
+            "session_id": session_id,
             "start_time": st.session_state.game_start_time.isoformat(),
             "end_time": end_time.isoformat(),
             "total_time_seconds": total_time_seconds,
-            "round_number": current_round + 1,
-            "round_config": round_config,
+            "config": round_config,
             "state_history": st.session_state.state_history.copy() if 'state_history' in st.session_state else [],
             "test_timings": st.session_state.get("test_timings", []).copy(),  # Time for each test button press
             "total_actions": len(user_test_actions_snapshot),
@@ -221,8 +215,8 @@ def save_qa_data_immediately(participant_id, round_config, current_round, total_
         # Convert NumPy types to JSON-serializable types
         qa_data = convert_numpy_types(qa_data)
         
-        games_ref.child(entry_id).set(qa_data)
-        print(f"✅ Q&A data saved immediately for {participant_id} - Round {current_round + 1}")
+        games_ref.set(qa_data)
+        print(f"✅ Q&A data saved immediately for {participant_id}")
         if 'test_timings' in qa_data and qa_data['test_timings']:
             print(f"   💾 test_timings saved to Nexiom database: {len(qa_data['test_timings'])} entries")
         
@@ -312,7 +306,6 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
             "selected_objects": list(st.session_state.selected_objects) if 'selected_objects' in st.session_state else [],
             "game_start_time": st.session_state.game_start_time.isoformat() if 'game_start_time' in st.session_state else now.isoformat(),
             "phase": phase,
-            "round_number": current_round + 1,
             "true_blicket_indices": round_config.get('blicket_indices', []),
             "object_labels_mapping": object_labels_mapping  # New: Object labels mapping
         }
@@ -341,7 +334,7 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
         updated_data = convert_numpy_types(updated_data)
         
         progress_ref.set(convert_numpy_types(updated_data))
-        print(f"💾 {phase} progress updated for {participant_id} - Round {current_round + 1} - Q&A data included")
+        print(f"💾 {phase} progress updated for {participant_id} - Q&A data included")
         print(f"💾 test_timings saved to Nexiom database: {len(updated_data.get('test_timings', []))} entries")
         
     except Exception as e:
@@ -1478,9 +1471,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     end_time = datetime.datetime.now()
                     total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
                     
-                    # Generate unique round ID
+                    # Generate unique session ID
                     now = datetime.datetime.now()
-                    round_id = f"round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+                    session_id = f"session_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
                     
                     # Create object labels mapping for this round
                     label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
@@ -1512,12 +1505,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         print(f"💾 Preparing to save comprehension phase data with {len(test_timings_data)} test_timings entries")
                     
                     round_data = {
-                        "round_id": round_id,  # Unique identifier for this round
+                        "session_id": session_id,  # Unique identifier for this session
                         "start_time": st.session_state.game_start_time.isoformat(),
                         "end_time": end_time.isoformat(),
                         "total_time_seconds": total_time_seconds,
-                        "round_number": current_round + 1,
-                        "round_config": round_config,
+                        "config": round_config,
                         "user_test_actions": st.session_state.user_test_actions,  # All place/remove/test actions with labels
                         "action_history": st.session_state.action_history,  # Detailed action history
                         "state_history": st.session_state.state_history,  # State changes with object labels
@@ -1561,19 +1553,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         save_data_func(participant_id, round_data)
                     else:
                         save_game_data(participant_id, round_data)
-                    
-                    # Clean up old round_X_progress entries for main_game (if they exist)
-                    if not is_practice:
-                        try:
-                            from firebase_admin import db
-                            participant_ref = db.reference(f'{participant_id}')
-                            main_game_ref = participant_ref.child('main_game')
-                            progress_key = f"round_{current_round + 1}_progress"
-                            if main_game_ref.child(progress_key).get():
-                                main_game_ref.child(progress_key).delete()
-                                print(f"🗑️ Deleted old {progress_key} entry")
-                        except Exception as e:
-                            print(f"⚠️ Could not delete old progress entry: {e}")
                     
                     # Clear session state for next round (but NOT the round counter or phase management)
                     # Only clear game-specific variables, not phase control variables
@@ -1638,9 +1617,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     end_time = datetime.datetime.now()
                     total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
                     
-                    # Generate unique round ID for main phase
+                    # Generate unique session ID for main phase
                     now = datetime.datetime.now()
-                    round_id = f"main_round_{current_round + 1}_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+                    session_id = f"session_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
                     
                     # Create object labels mapping for this round
                     label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
@@ -1667,12 +1646,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     
                     # Save final round data with detailed action tracking
                     round_data = {
-                        "round_id": round_id,  # Unique identifier for this round
+                        "session_id": session_id,  # Unique identifier for this session
                         "start_time": st.session_state.game_start_time.isoformat(),
                         "end_time": end_time.isoformat(),
                         "total_time_seconds": total_time_seconds,
-                        "round_number": current_round + 1,
-                        "round_config": round_config,
+                        "config": round_config,
                         "user_test_actions": st.session_state.get("user_test_actions", []),  # All place/remove/test actions with labels
                         "action_history": st.session_state.get("action_history", []),  # Detailed action history
                         "state_history": st.session_state.get("state_history", []),  # State changes with object labels
@@ -1712,18 +1690,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         save_data_func(participant_id, round_data)
                     else:
                         save_game_data(participant_id, round_data)
-                    
-                    # Clean up old round_X_progress entries for this round (if they exist)
-                    try:
-                        from firebase_admin import db
-                        participant_ref = db.reference(f'{participant_id}')
-                        main_game_ref = participant_ref.child('main_game')
-                        progress_key = f"round_{current_round + 1}_progress"
-                        if main_game_ref.child(progress_key).get():
-                            main_game_ref.child(progress_key).delete()
-                            print(f"🗑️ Deleted old {progress_key} entry (FINAL)")
-                    except Exception as e:
-                        print(f"⚠️ Could not delete old progress entry: {e}")
                     
                     # Clear session state completely for phase transition
                     reset_game_session_state()

@@ -190,11 +190,8 @@ def save_game_data(participant_id, game_data):
             now = datetime.datetime.now()
             
             if phase == 'main_experiment':
-                # For main game: save under main_game/round_X
+                # For main game: save directly to main_game (no round subdirectory)
                 games_ref = participant_ref.child('main_game')
-                round_number = game_data.get('round_number', 1)
-                round_key = f"round_{round_number}"
-                games_ref = games_ref.child(round_key)
             elif phase == 'comprehension':
                 # For comprehension: save under comprehension key
                 games_ref = participant_ref.child('comprehension')
@@ -246,12 +243,12 @@ def save_game_data(participant_id, game_data):
                 print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
             else:
                 print(f"💾 Saving main game data to Nexiom database")
-                print(f"💾 Saving main game data to path: {participant_id}/main_game/{round_key}")
+                print(f"💾 Saving main game data to path: {participant_id}/main_game")
                 print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
                 if 'test_timings' in enhanced_game_data:
                     print(f"   💾 test_timings: {len(enhanced_game_data['test_timings'])} entries")
                 games_ref.set(enhanced_game_data)
-                print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id} - Round {round_number}")
+                print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
         except Exception as e:
             print(f"❌ Failed to save game data: {e}")
             import traceback
@@ -291,13 +288,11 @@ def save_intermediate_progress_app(participant_id, phase, round_number=None, tot
                 "user_test_actions": st.session_state.get('user_test_actions', []),
                 "test_timings": st.session_state.get("test_timings", []).copy() if 'test_timings' in st.session_state else [],  # Time for each test button press
                 "total_actions": action_count,
-                "phase": phase,
-                "round_number": round_number,
-                "total_rounds": total_rounds
+                "phase": phase
             }
             
             progress_ref.set(updated_data)
-            print(f"💾 {phase} progress updated for {participant_id} - Round {round_number} - {action_count} actions")
+            print(f"💾 {phase} progress updated for {participant_id} - {action_count} actions")
             if 'test_timings' in updated_data and updated_data['test_timings']:
                 print(f"   💾 test_timings saved to Nexiom database: {len(updated_data['test_timings'])} entries")
             
@@ -383,11 +378,11 @@ def submit_qa():
             user_test_actions.append(command)
             action_timestamps.append(time.isoformat())
 
-    round_id = f"qa_round_{st.session_state.current_round + 1}_{qa_time.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+    session_id = f"session_{qa_time.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
     current_round_config = st.session_state.round_configs[st.session_state.current_round]
     
     round_data = {
-        "round_id": round_id,
+        "session_id": session_id,
         "start_time": st.session_state.start_time.isoformat(),
         "end_time": qa_time.isoformat(),
         "total_time_seconds": total_time_seconds,
@@ -401,8 +396,7 @@ def submit_qa():
         "action_history_length": len(user_test_actions),
         "binary_answers": binary_answers,
         "qa_time": qa_time.isoformat(),
-        "round_config": current_round_config,
-        "round_number": st.session_state.current_round + 1,
+        "config": current_round_config,
         "true_rule": current_round_config.get('rule', 'unknown'),
         "true_blicket_indices": current_round_config.get('blicket_indices', []),
         "phase": "main_experiment",
