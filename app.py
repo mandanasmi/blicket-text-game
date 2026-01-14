@@ -1202,10 +1202,9 @@ elif st.session_state.phase == "practice_complete":
             
             random.seed(hash(st.session_state.current_participant_id) % 2**32)
             
-            num_rounds = 3
+            num_rounds = 1
             round_configs = []
             current_rule = random.choice(['conjunctive', 'disjunctive'])
-            rule_change_probability = 0.4
             
             blicket_combinations = [
                 [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
@@ -1217,16 +1216,7 @@ elif st.session_state.phase == "practice_complete":
                 blicket_indices = blicket_combinations[i % len(blicket_combinations)]
                 num_blickets = len(blicket_indices)
                 
-                if i == 0:
-                    rule = current_rule
-                else:
-                    if random.random() < rule_change_probability:
-                        available_rules = ['conjunctive', 'disjunctive']
-                        available_rules.remove(current_rule)
-                        rule = random.choice(available_rules)
-                        current_rule = rule
-                    else:
-                        rule = current_rule
+                rule = current_rule
 
                 init_prob = random.uniform(0.1, 0.3)
                 transition_noise = 0.0
@@ -1240,13 +1230,6 @@ elif st.session_state.phase == "practice_complete":
                     'transition_noise': transition_noise,
                     'horizon': 16
                 })
-
-            # Ensure there is at least one conjunctive and one disjunctive round
-            rules_present = {cfg['rule'] for cfg in round_configs}
-            if len(rules_present) == 1:
-                # Flip the rule of the final round to introduce variety
-                alternate_rule = 'disjunctive' if round_configs[-1]['rule'] == 'conjunctive' else 'conjunctive'
-                round_configs[-1]['rule'] = alternate_rule
 
             # Get comprehension phase config
             practice_blicket = st.session_state.get("practice_blicket_index")
