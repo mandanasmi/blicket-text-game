@@ -1055,7 +1055,7 @@ elif st.session_state.phase == "practice_game":
     """, unsafe_allow_html=True)
 
     st.title("🧙 Nexiom Text Adventure")
-    st.markdown("## Comprehension Phase - Round 1")
+    st.markdown("## Comprehension Phase")
 
     practice_blicket = st.session_state.get("practice_blicket_index")
     if practice_blicket is None:
