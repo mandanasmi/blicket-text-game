@@ -1201,7 +1201,7 @@ elif st.session_state.phase == "practice_complete":
             
             num_rounds = 1
             round_configs = []
-            current_rule = random.choice(['conjunctive', 'disjunctive'])
+            current_rule = 'disjunctive'
             
             blicket_combinations = [
                 [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
