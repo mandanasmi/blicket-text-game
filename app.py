@@ -1201,7 +1201,21 @@ elif st.session_state.phase == "practice_complete":
             
             num_rounds = 1
             round_configs = []
-            current_rule = 'disjunctive'
+            # Rule: secret query param (?e=nex1) or env (NEXIOM_MAIN_RULE); else disjunctive.
+            # Conjunctive-only link uses ?e=nex1 (no "conjunctive" in URL).
+            _SECRET_CONJ = "nex1"
+            try:
+                _qp = st.query_params.get("e")
+            except Exception:
+                _qp = (st.experimental_get_query_params().get("e") or [None])[0]
+            if isinstance(_qp, list):
+                _qp = _qp[0] if _qp else ""
+            _qp = (_qp or "").strip().lower()
+            _env = (os.getenv("NEXIOM_MAIN_RULE") or "").strip().lower()
+            if _qp == _SECRET_CONJ or _env == "conjunctive":
+                current_rule = "conjunctive"
+            else:
+                current_rule = "disjunctive"
             
             blicket_combinations = [
                 [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],

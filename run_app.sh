@@ -10,6 +10,6 @@ echo ""
 # Activate virtual environment
 source venv/bin/activate
 
-# Run the Streamlit app
-streamlit run app.py
+# Run the Streamlit app (port 8501). Use run_app_conjunctive.sh for conjunctive-only on 8502.
+streamlit run app.py --server.port 8501
 
