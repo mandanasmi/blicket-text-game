@@ -1,0 +1,19 @@
+Raw numbers: Mean (M) and Standard Error (SE)
+============================================================
+
+PNAS (Gopnik et al.):
+------------------------------------------------------------
+Age group          Conjunctive M Conjunctive SE Disjunctive M Disjunctive SE
+------------------------------------------------------------
+4-y-olds                   0.92           0.01         0.68           0.05
+6-7-y-olds                 0.56           0.02         0.82           0.05
+9-11-y-olds                0.60           0.02         0.96           0.02
+12-14-y-olds               0.28           0.02         0.97           0.02
+Adults                     0.25           0.02         0.90           0.03
+
+Current study (Adult Active, rule inference accuracy, n=102; 51 conjunctive, 51 disjunctive):
+------------------------------------------------------------
+Adults (Active)            0.82           0.05         0.96           0.03
+
+Note: PNAS disjunctive values in this table are plotted as (1 - raw)
+      in the figure; raw from paper figure: 0.32, 0.18, 0.04, 0.03, 0.10
