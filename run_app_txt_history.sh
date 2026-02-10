@@ -15,4 +15,4 @@ if [ -d "venv" ]; then
   source venv/bin/activate
 fi
 
-streamlit run app_txt_history.py --server.port 8503
+streamlit run passive_app/app_txt_history.py --server.port 8503
