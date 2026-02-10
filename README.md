@@ -147,6 +147,7 @@ FIREBASE_DATABASE_URL=https://your-project-default-rtdb.firebaseio.com/
 ```bash
 streamlit run app.py
 ```
+Or use the helper script: `./run_app.sh`
 
 The app will be available at `http://localhost:8501`
 
@@ -205,6 +206,18 @@ Each round entry (keyed by timestamp) includes:
 - **Automatic saving**: All data is saved automatically when completing each round
 - **Session preservation**: Comprehension phase data is preserved when transitioning to main game
 
+### Analysis Scripts
+
+The `analysis/` folder contains scripts to analyze collected data. Two main workflows:
+
+1. **Basic analysis** (Firebase export): Use `analyze_from_json.py` and `visualize_results.py` to process exported JSON and produce CSVs and visualizations. See `analysis/README.md` for steps.
+
+2. **Human-data results (round 7)** under `analysis/results/final_data_round7/`:
+   - **Entrypoint**: `prepare_results_human_data.py` orchestrates data prep and plotting.
+   - **Subfolders**: `accuracy/` (accuracy by rule, correlation scatters, four outcomes), `exploration_time/` (actions/tests/time by rule), `human_search_strategy/` (action sequences, efficient strategies), `infogain_hypothesis/` (info-gain and hypothesis-remaining; entrypoint `run_infogain_hypothesis.py`), `pnas/` (PNAS comparison plots; entrypoint `run_pnas_plots.py`), `correlations/` (correlation data and best performers), `active_explore/` (participant outcome tables, ranked successful participants).
+
+See `analysis/README.md` for detailed usage and data export steps.
+
 ## Technical Details
 
 - **Framework**: Streamlit (Python web app framework)
@@ -216,15 +229,32 @@ Each round entry (keyed by timestamp) includes:
 
 ```
 blicket-text-game/
-├── app.py                      # Main Streamlit application and participant flow
-├── textual_blicket_game.py    # Game logic and interface
+├── app.py                        # Main Streamlit application and participant flow
+├── textual_nexiom_game.py         # Game logic and interface
+├── run_app.sh                    # Helper to run the Streamlit app
 ├── env/
-│   └── blicket_text.py        # Environment logic for blicket machine
-├── images/                     # UI assets
-├── requirements.txt            # Python dependencies
-├── README.md                   # This file
-├── SETUP.md                    # Detailed setup instructions
-└── STREAMLIT_CLOUD_SECRETS.md  # Cloud deployment guide
+│   └── blicket_text.py           # Environment logic for blicket machine
+├── images/                       # UI assets
+├── analysis/                     # Data analysis scripts
+│   ├── README.md                 # Analysis documentation and quick start
+│   ├── analyze_from_json.py      # Analyze exported Firebase JSON
+│   ├── visualize_results.py      # Visualization generator
+│   └── results/
+│       └── final_data_round7/     # Human-data results (round 7)
+│           ├── prepare_results_human_data.py  # Main entrypoint
+│           ├── accuracy/         # Accuracy plots and scripts
+│           ├── exploration_time/
+│           ├── human_search_strategy/
+│           ├── infogain_hypothesis/
+│           ├── pnas/
+│           ├── correlations/
+│           └── active_explore/
+├── requirements.txt              # Python dependencies
+├── README.md                     # This file
+├── SETUP.md                      # Detailed setup instructions
+├── STREAMLIT_CLOUD_SECRETS.md    # Cloud deployment guide
+├── upload_to_gcs.py              # Upload analysis/results to Google Cloud Storage
+└── GCS_UPLOAD_README.md          # GCS upload usage
 ```
 
 ## License
