@@ -1,0 +1,87 @@
+=== Action sequence analysis (round7_actions.csv) ===
+
+Participants: 108  |  Total actions: 2892
+Actions per participant: mean 26.8, median 23, min 2, max 67
+
+--- Action type counts ---
+  place: 1096 (37.9%)
+  remove: 926 (32.0%)
+  test_off: 491 (17.0%)
+  test_on: 379 (13.1%)
+
+--- Transition matrix (action_type -> next action_type) ---
+  place -> 
+      place: 288 (26.4%)
+      remove: 106 (9.7%)
+      test_on: 311 (28.6%)
+      test_off: 384 (35.3%)
+  remove -> 
+      place: 538 (60.2%)
+      remove: 196 (21.9%)
+      test_on: 62 (6.9%)
+      test_off: 97 (10.9%)
+  test_on -> 
+      place: 40 (12.1%)
+      remove: 285 (86.1%)
+      test_on: 6 (1.8%)
+  test_off -> 
+      place: 122 (25.9%)
+      remove: 339 (72.0%)
+      test_off: 10 (2.1%)
+
+--- Within-test structure (actions before each Test Result) ---
+  Place actions per test:  mean 1.20, median 1.0, min 0, max 8
+  Remove actions per test: mean 1.02, median 1.0, min 0, max 6
+  Top (place, remove) patterns per test:
+    (1, 1): 329 tests
+    (1, 0): 139 tests
+    (0, 1): 105 tests
+    (2, 2): 99 tests
+    (2, 0): 57 tests
+    (2, 1): 51 tests
+    (1, 2): 30 tests
+    (0, 2): 17 tests
+    (0, 0): 16 tests
+    (3, 2): 14 tests
+
+--- Bigrams (action_type pairs) ---
+  remove -> place: 538
+  place -> test_off: 384
+  test_off -> remove: 339
+  place -> test_on: 311
+  place -> place: 288
+  test_on -> remove: 285
+  remove -> remove: 196
+  test_off -> place: 122
+  place -> remove: 106
+  remove -> test_off: 97
+  remove -> test_on: 62
+  test_on -> place: 40
+
+--- Trigrams (action_type triples) ---
+  place -> test_off -> remove: 297
+  test_off -> remove -> place: 235
+  place -> test_on -> remove: 234
+  remove -> place -> test_off: 220
+  remove -> place -> place: 163
+  remove -> remove -> place: 143
+  test_on -> remove -> place: 127
+  remove -> place -> test_on: 123
+  place -> place -> test_on: 119
+  place -> place -> test_off: 97
+
+--- First object placed (exploration start) ---
+  Object 1: 98 participants (90.7%)
+  Object 2: 7 participants (6.5%)
+  Object 4: 3 participants (2.8%)
+
+--- Tests per participant ---
+  mean 8.4, median 8, min 1, max 16
+
+--- Summary ---
+  - Place (37.9%) and remove (32.0%) dominate; test_off (17.0%) > test_on (13.1%).
+  - Typical cycle: place -> test -> remove -> place -> ... ; after test_off, remove (72%)
+    is far more common than place (26%); after test_on, remove (86%) dominates.
+  - Most common within-test pattern: (1 place, 1 remove) then test, then (1,0) or (0,1).
+  - Top trigrams: place->test_off->remove, test_off->remove->place, place->test_on->remove.
+  - ~91% start by placing Object 1; participants run ~8 tests on median.
