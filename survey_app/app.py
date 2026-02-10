@@ -174,10 +174,14 @@ def parse_action_history(content: str):
         m_action = re.match(r"action\s+\d+\s*:\s*(.+)", line, re.IGNORECASE)
         if m_action:
             action_part = m_action.group(1).rstrip(",").strip()
-            # Check for "-> Nexiom machine is ON" or "Nexiom machine is OFF"
+            # Check for "-> Nexiom machine is ON" or "Nexiom machine is OFF"; show only "-> Machine: ON", remove OFF from action text
             machine_match = re.search(r"->\s*Nexiom machine is (ON|OFF)", action_part, re.IGNORECASE)
             if machine_match:
                 machine = "ON" if machine_match.group(1).upper() == "ON" else "OFF"
+                if machine == "ON":
+                    action_part = re.sub(r"->\s*Nexiom machine is (ON|OFF)", "-> Machine: ON", action_part, flags=re.IGNORECASE)
+                else:
+                    action_part = re.sub(r"->\s*Nexiom machine is (ON|OFF)", "", action_part, flags=re.IGNORECASE).strip()
             # Infer object count from "Object N" in text
             for obj_m in re.finditer(r"Object\s+(\d+)", action_part, re.IGNORECASE):
                 max_object_seen = max(max_object_seen, int(obj_m.group(1)))
@@ -197,25 +201,24 @@ def parse_action_history(content: str):
 
 
 def render_history(steps):
-    """Render action history: only the action text; show machine ON/OFF only when we have it."""
+    """Render action history: only the action text; show machine ON/OFF only when we have it. Compact layout."""
     if not steps:
         st.info("No steps. Add action history above (upload .txt or paste text).")
         return
     st.markdown(
-        "<div style='text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 12px; padding: 10px; background-color: #555; color: #fff; border-radius: 6px;'>Action history</div>",
+        "<div style='text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 8px; padding: 6px 10px; background-color: #555; color: #fff; border-radius: 4px;'>Action history</div>",
         unsafe_allow_html=True,
     )
     for i, step in enumerate(steps):
         machine = step.get("machine")
         machine_line = ""
-        if machine is not None:
-            machine_color = "#388e3c" if machine == "ON" else "#333"
-            machine_line = f"<div style='font-size: 15px; font-weight: bold; color: {machine_color}'>Machine: {machine}</div>"
+        if machine == "ON":
+            machine_line = "<div style='font-size: 12px; font-weight: bold; color: #388e3c'>Machine: ON</div>"
         st.markdown(
             f"""
-            <div style='width: 100%; margin: 8px 0; padding: 12px 16px; background-color: #e8e8e8; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box;'>
-                <div style='font-size: 16px; font-weight: bold; margin-bottom: 6px;'>Step {i + 1}</div>
-                <div style='font-size: 15px;'>{step["action"]}</div>
+            <div style='width: 100%; margin: 3px 0; padding: 6px 10px; background-color: #e8e8e8; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;'>
+                <div style='font-size: 12px; font-weight: bold; margin-bottom: 2px;'>Step {i + 1}</div>
+                <div style='font-size: 13px;'>{step["action"]}</div>
                 {machine_line}
             </div>
             """,
@@ -236,10 +239,22 @@ if "participant_id_entered" not in st.session_state:
     st.session_state.participant_id_entered = False
 if "survey_submitted" not in st.session_state:
     st.session_state.survey_submitted = False
+if "survey_sequence_viewed" not in st.session_state:
+    st.session_state.survey_sequence_viewed = False
 
 # ————— Global CSS: center content like main app —————
 st.markdown("""
 <style>
+html, body,
+[data-testid="stAppViewContainer"],
+[data-testid="stAppViewContainer"] > div,
+[data-testid="stMain"],
+main, main section,
+[data-testid="stVerticalBlock"] {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+}
+
 html, body,
 [data-testid="stAppViewContainer"],
 [data-testid="stAppViewContainer"] > div,
@@ -273,7 +288,7 @@ body {
     border-radius: 26px !important;
     min-height: calc(100vh - 6rem) !important;
     overflow: visible !important;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08) !important;
+    box-shadow: none !important;
     box-sizing: border-box !important;
     position: relative !important;
 }
@@ -285,6 +300,13 @@ body {
         max-width: min(620px, calc(100vw - 2rem)) !important;
         margin-right: auto !important;
     }
+}
+
+[data-testid="stExpander"],
+.stExpander,
+[data-testid="stVerticalBlock"] > div {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -516,8 +538,21 @@ if st.session_state.phase == "intro":
 
 # ————— Action history + Q&A —————
 if st.session_state.phase == "action_history":
+    # Same background as consent: white body, transparent container
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+    }
+    body { background: #ffffff !important; }
+    </style>
+    """, unsafe_allow_html=True)
     st.title("Nexiom: Action history and questions")
-    st.markdown("Provide the action history (upload or paste), then answer the object and rule questions. No object interaction or exploration.")
+    st.markdown("Provide the action history (upload or paste), then answer the object and rule questions.")
 
     st.header("1. Action history")
     input_mode = st.radio(
@@ -541,6 +576,8 @@ if st.session_state.phase == "action_history":
 
     if content:
         steps, num_objects = parse_action_history(content)
+        if content != st.session_state.get("survey_action_history_text"):
+            st.session_state["survey_sequence_viewed"] = False
         st.session_state["survey_steps"] = steps
         st.session_state["survey_num_objects"] = num_objects
         st.session_state["survey_action_history_text"] = content
@@ -552,14 +589,20 @@ if st.session_state.phase == "action_history":
         st.info("Upload a .txt file or paste action history above to continue.")
         st.stop()
 
+    if not st.session_state.get("survey_sequence_viewed", False):
+        st.header("2. View action sequence")
+        st.markdown(f"Action history has **{len(steps)}** steps. Click below to see the sequence, then answer the object identification questions.")
+        if st.button("Next: See the sequence", type="primary", use_container_width=True):
+            st.session_state.survey_sequence_viewed = True
+            st.rerun()
+        st.stop()
+
     st.header("2. Action history on screen")
     render_history(steps)
 
-    st.header("3. Object identification and rule inference")
-    st.markdown("Based on the action history above, answer the following. No exploration or object interaction.")
+    st.header("3. Object identification")
+    st.markdown("Based on the action history above, indicate for each object whether you think it is a **Nexiom** (can make the machine turn on).")
 
-    st.subheader("Object identification")
-    st.markdown("For each object, indicate whether you think it is a **Nexiom** (can make the machine turn on).")
     blicket_answers = {}
     for i in range(num_objects):
         blicket_answers[f"object_{i}"] = st.radio(
@@ -569,32 +612,81 @@ if st.session_state.phase == "action_history":
             index=None,
         )
 
-    st.subheader("Rule inference")
+    st.header("4. Rule inference")
+    st.markdown("Describe how you think the objects turn on the Nexiom machine.")
     rule_hypothesis = st.text_area(
         "Describe how you think the objects turn on the Nexiom machine.",
-        placeholder="e.g. Both object 1 and object 2 need to be on the machine.",
         height=100,
         key="survey_rule_hypothesis",
     )
-    rule_type = st.radio(
+
+    all_answered = all(blicket_answers.get(f"object_{i}") is not None for i in range(num_objects))
+
+    if st.button("Next: Rule type", type="primary", disabled=not all_answered, use_container_width=True):
+        st.session_state.saved_rule_hypothesis = (rule_hypothesis or "").strip()
+        st.session_state.phase = "rule_inference"
+        st.rerun()
+    st.stop()
+
+# ————— Rule type selection (new page) —————
+if st.session_state.phase == "rule_inference":
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+    }
+    body { background: #ffffff !important; }
+    </style>
+    """, unsafe_allow_html=True)
+    st.title("Rule type")
+    st.markdown("Based on the action history and your answers, what type of rule do you think governs this Nexiom machine?")
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        **Conjunctive rule**
+
+        The machine switches on when **ALL** of the Nexioms are present on the machine.
+
+        *Example: If Objects 1 and 3 are Nexioms, the machine only switches on when BOTH Object 1 AND Object 3 are on the machine.*
+        """)
+    with col2:
+        st.markdown("""
+        **Disjunctive rule**
+
+        The machine switches on when **ANY** of the Nexioms are present on the machine.
+
+        *Example: If Objects 1 and 3 are Nexioms, the machine switches on when EITHER Object 1 OR Object 3 (or both) are on the machine.*
+        """)
+
+    rule_type_raw = st.radio(
         "What type of rule do you think applies?",
-        ["Conjunctive", "Disjunctive"],
+        ["Conjunctive (ALL Nexioms must be present)", "Disjunctive (ANY Nexiom can activate)"],
         key="survey_rule_type",
         index=None,
     )
+    rule_type = "Conjunctive" if rule_type_raw and "Conjunctive" in rule_type_raw else ("Disjunctive" if rule_type_raw and "Disjunctive" in rule_type_raw else None)
 
-    all_answered = all(blicket_answers.get(f"object_{i}") is not None for i in range(num_objects))
-    can_submit = all_answered and rule_type is not None
-
-    if st.button("Submit responses", type="primary", disabled=not can_submit, use_container_width=True):
+    if st.button("Submit responses", type="primary", disabled=rule_type is None, use_container_width=True):
+        steps = st.session_state.get("survey_steps", [])
+        num_objects = st.session_state.get("survey_num_objects", DEFAULT_NUM_OBJECTS)
+        blicket_answers = {
+            f"object_{i}": st.session_state.get(f"survey_blicket_q_{i}", "No")
+            for i in range(num_objects)
+        }
         action_history_text = st.session_state.get("survey_action_history_text", "")
+        rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "")
         save_survey_data(
             st.session_state.current_participant_id,
             action_history_text,
             num_objects,
             steps,
             blicket_answers,
-            (rule_hypothesis or "").strip(),
+            rule_hypothesis,
             rule_type or "",
         )
         st.session_state.survey_submitted = True
