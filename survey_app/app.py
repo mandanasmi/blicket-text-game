@@ -613,6 +613,7 @@ if st.session_state.phase == "action_history":
     st.header("4. Rule inference")
     st.markdown("Describe how you think the objects turn on the Nexiom machine.")
     rule_hypothesis = st.text_area(
+        "Describe how you think the objects turn on the Nexiom machine.",
         height=100,
         key="survey_rule_hypothesis",
     )
