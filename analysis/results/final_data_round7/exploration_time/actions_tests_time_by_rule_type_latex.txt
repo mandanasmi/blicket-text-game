@@ -1,0 +1,17 @@
+    Metric ($M \pm SE$) & Conjunctive & Disjunctive \\
+    \hline
+    \# Actions & $32.06 \pm 2.37$ & $20.76 \pm 1.40$ \\
+    Actions per test & $3.38 \pm 0.12$ & $3.25 \pm 0.06$ \\
+    \# Tests (all) & $9.59 \pm 0.62$ & $6.39 \pm 0.42$ \\
+    Max tests allowed & 16 & 16 \\
+    $N$ maxed out (count) & 6 & 2 \\
+    $N$ maxed out \& both correct & 4 & 2 \\
+    $N$ maxed out (\%) & 11.8\% & 3.9\% \\
+    Total Test Time (seconds) & $90.71 \pm 8.46$ & $52.96 \pm 4.99$ \\
+    Time per test (seconds) & $9.49 \pm 0.71$ & $8.33 \pm 0.71$ \\
+    Exploration Time (seconds) & $90.70 \pm 8.46$ & $52.96 \pm 4.99$ \\
+    \# Tests to Succ. (successful only) & $11.24 \pm 0.53$ & $6.48 \pm 0.45$ \\
+    Time to Succ. (seconds) & $103.03 \pm 9.64$ & $52.18 \pm 4.77$ \\
+    \hline
+    $N$ Participants & 51 & 51 \\
+    $N$ Successful Participants & 34 & 48 \\

@@ -1,0 +1,22 @@
+ACTIONS, TESTS, AND TIME BY RULE TYPE
+==========================================================================================
+
+Metric                         Conjunctive               Disjunctive              
+------------------------------------------------------------------------------------------
+Number of actions (M +/- SE)   32.06 +/- 2.37            20.76 +/- 1.40           
+Actions per test (M +/- SE)    3.38 +/- 0.12             3.25 +/- 0.06            
+# Tests (all participants) (M +/- SE) 9.59 +/- 0.62             6.39 +/- 0.42            
+# Tests to Success (successful only) (M +/- SE) 11.24 +/- 0.53            6.48 +/- 0.45            
+Total Test Time, s (M +/- SE)  90.71 +/- 8.46            52.96 +/- 4.99           
+Time per test, s (M +/- SE)    9.49 +/- 0.71             8.33 +/- 0.71            
+Exploration Time, s (M +/- SE) 90.70 +/- 8.46            52.96 +/- 4.99           
+Time to success, s (M +/- SE)* 103.03 +/- 9.64           52.18 +/- 4.77           
+N maxed out tests (16) (count) 6                         2                        
+N maxed out & both correct     4                         2                        
+N maxed out tests (%)          11.8%                     3.9%
+------------------------------------------------------------------------------------------
+N participants                 51                        51                       
+N successful (both correct)    34                        48                       
+
+* Time to success = among participants who got both objects and rule correct.
+* Max tests allowed in game = 16.

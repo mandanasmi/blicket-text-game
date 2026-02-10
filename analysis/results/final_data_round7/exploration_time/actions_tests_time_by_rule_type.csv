@@ -1,0 +1,13 @@
+metric,conjunctive_mean,conjunctive_se,disjunctive_mean,disjunctive_se
+num_actions,32.06,2.37,20.76,1.40
+actions_per_test,3.38,0.12,3.25,0.06
+num_tests,9.59,0.62,6.39,0.42
+max_tests_allowed,16,0,16,0
+n_maxed_out,6,0,2,0
+n_maxed_out_both_ok,4,0,2,0
+pct_maxed_out,11.8,0,3.9,0
+total_time_s,90.71,8.46,52.96,4.99
+time_per_test_s,9.49,0.71,8.33,0.71
+exploration_time_s,90.70,8.46,52.96,4.99
+tests_to_success,11.24,0.53,6.48,0.45
+time_to_success_s,103.03,9.64,52.18,4.77
