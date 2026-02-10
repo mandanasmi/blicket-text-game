@@ -174,14 +174,11 @@ def parse_action_history(content: str):
         m_action = re.match(r"action\s+\d+\s*:\s*(.+)", line, re.IGNORECASE)
         if m_action:
             action_part = m_action.group(1).rstrip(",").strip()
-            # Check for "-> Nexiom machine is ON" or "Nexiom machine is OFF"; show only "-> Machine: ON", remove OFF from action text
+            # Check for "-> Nexiom machine is ON" or "Nexiom machine is OFF"; normalize to "-> Machine: ON/OFF"
             machine_match = re.search(r"->\s*Nexiom machine is (ON|OFF)", action_part, re.IGNORECASE)
             if machine_match:
                 machine = "ON" if machine_match.group(1).upper() == "ON" else "OFF"
-                if machine == "ON":
-                    action_part = re.sub(r"->\s*Nexiom machine is (ON|OFF)", "-> Machine: ON", action_part, flags=re.IGNORECASE)
-                else:
-                    action_part = re.sub(r"->\s*Nexiom machine is (ON|OFF)", "", action_part, flags=re.IGNORECASE).strip()
+                action_part = re.sub(r"->\s*Nexiom machine is (ON|OFF)", "-> Machine: " + machine, action_part, flags=re.IGNORECASE)
             # Infer object count from "Object N" in text
             for obj_m in re.finditer(r"Object\s+(\d+)", action_part, re.IGNORECASE):
                 max_object_seen = max(max_object_seen, int(obj_m.group(1)))
@@ -201,7 +198,7 @@ def parse_action_history(content: str):
 
 
 def render_history(steps):
-    """Render action history: only the action text; show machine ON/OFF only when we have it. Compact layout."""
+    """Render action history: action text and machine status (ON green, OFF black) when known. Compact layout."""
     if not steps:
         st.info("No steps. Add action history above (upload .txt or paste text).")
         return
@@ -212,8 +209,9 @@ def render_history(steps):
     for i, step in enumerate(steps):
         machine = step.get("machine")
         machine_line = ""
-        if machine == "ON":
-            machine_line = "<div style='font-size: 12px; font-weight: bold; color: #388e3c'>Machine: ON</div>"
+        if machine is not None:
+            machine_color = "#388e3c" if machine == "ON" else "#000000"
+            machine_line = f"<div style='font-size: 12px; font-weight: bold; color: {machine_color}'>Machine: {machine}</div>"
         st.markdown(
             f"""
             <div style='width: 100%; margin: 3px 0; padding: 6px 10px; background-color: #e8e8e8; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;'>
@@ -615,7 +613,6 @@ if st.session_state.phase == "action_history":
     st.header("4. Rule inference")
     st.markdown("Describe how you think the objects turn on the Nexiom machine.")
     rule_hypothesis = st.text_area(
-        "Describe how you think the objects turn on the Nexiom machine.",
         height=100,
         key="survey_rule_hypothesis",
     )

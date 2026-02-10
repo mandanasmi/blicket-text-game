@@ -51,6 +51,8 @@ To serve this survey app at a URL like `https://blicket-text-game-passive.stream
 3. In **Secrets**, add the same Firebase TOML as the main app (see project root `STREAMLIT_CLOUD_SECRETS.md`).
 4. Save and redeploy. The survey app will run at that URL.
 
+Cloud uses the **entrypoint directory** for dependencies: with Main file path `survey_app/app.py`, it should use `survey_app/requirements.txt` (streamlit, firebase-admin, python-dotenv only). If the build still fails, ensure this `survey_app/requirements.txt` is committed and that the app’s Main file path is exactly `survey_app/app.py`.
+
 ## Config
 
 - `SURVEY_COMPLETION_CODE` – completion code for Prolific (default: same as main app).
