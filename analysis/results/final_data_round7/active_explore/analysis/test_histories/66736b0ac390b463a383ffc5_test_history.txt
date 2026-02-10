@@ -1,0 +1,12 @@
+test1 -> object 1, object 3 -> machine off
+test2 -> object 2, object 3 -> machine off
+test3 -> object 2, object 3 -> machine off
+test4 -> object 1 -> machine off
+test5 -> object 4 -> machine off
+test6 -> object 4 -> machine off
+test7 -> object 4 -> machine off
+test8 -> object 3, object 4 -> machine on
+test9 -> object 1, object 3 -> machine off
+test10 -> object 1, object 4 -> machine off
+test11 -> object 2, object 4 -> machine off
+test12 -> object 1, object 2 -> machine off
