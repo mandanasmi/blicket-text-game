@@ -34,6 +34,55 @@ PROLIFIC_RETURN_URL = f"https://app.prolific.com/submissions/complete?cc={COMPLE
 
 DEFAULT_NUM_OBJECTS = 4
 
+# ————— Assigned action histories (one per use, cycle through 102 files) —————
+# Path to active_explore/analysis/action_histories relative to this app file
+_ACTION_HISTORIES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "active_explore", "analysis", "action_histories")
+_ACTION_HISTORY_FILES = None  # Lazy-loaded sorted list of filenames
+
+def get_action_history_file_list():
+    """Return sorted list of *_action_history.txt filenames (full path). Deterministic order."""
+    global _ACTION_HISTORY_FILES
+    if _ACTION_HISTORY_FILES is None:
+        if not os.path.isdir(_ACTION_HISTORIES_DIR):
+            _ACTION_HISTORY_FILES = []
+        else:
+            _ACTION_HISTORY_FILES = sorted(
+                f for f in os.listdir(_ACTION_HISTORIES_DIR)
+                if f.endswith("_action_history.txt")
+            )
+            _ACTION_HISTORY_FILES = [os.path.join(_ACTION_HISTORIES_DIR, f) for f in _ACTION_HISTORY_FILES]
+    return _ACTION_HISTORY_FILES
+
+def get_next_action_history_index():
+    """
+    Return (index, filepath, filename) for the next action history to use.
+    Uses Firebase _config/action_history_next_index (transaction) to cycle 0..101.
+    If Firebase is not connected, returns (0, first_file_path, first_filename) and does not persist.
+    """
+    files = get_action_history_file_list()
+    n = len(files)
+    if n == 0:
+        return None, None, None
+    if not firebase_initialized or not db_ref:
+        # No Firebase: use first file every time (for local testing)
+        return 0, files[0], os.path.basename(files[0])
+    try:
+        ref = db_ref.child("_config").child("action_history_next_index")
+
+        def updater(current):
+            if current is None:
+                current = 0
+            return current + 1
+
+        new_value = ref.transaction(updater)
+        index = (new_value - 1) % n
+        filepath = files[index]
+        filename = os.path.basename(filepath)
+        return index, filepath, filename
+    except Exception as e:
+        print(f"get_next_action_history_index failed: {e}")
+        return 0, files[0], os.path.basename(files[0])
+
 # ————— Firebase —————
 firebase_initialized = False
 db_ref = None
@@ -169,7 +218,6 @@ def save_game_data(
             "object_answers": blicket_answers,
             "blicket_classifications": blicket_answers,
             "rule_inference": (rule_hypothesis or "").strip(),
-            "rule_hypothesis": (rule_hypothesis or "").strip(),
             "rule_type": rule_type or "",
             "saved_at": now.isoformat(),
             "submitted_at": now.isoformat(),
@@ -300,6 +348,8 @@ if "survey_uploaded_filename" not in st.session_state:
     st.session_state.survey_uploaded_filename = None
 if "survey_source_participant_id" not in st.session_state:
     st.session_state.survey_source_participant_id = None
+if "survey_assigned_file_index" not in st.session_state:
+    st.session_state.survey_assigned_file_index = None
 
 # ————— Global CSS: center content like main app —————
 st.markdown("""
@@ -617,51 +667,51 @@ if st.session_state.phase == "action_history":
     </style>
     """, unsafe_allow_html=True)
     st.title("Nexiom: Action history and questions")
-    st.markdown("Provide the action history (upload or paste), then answer the object and rule questions.")
 
-    st.header("1. Action history")
-    input_mode = st.radio(
-        "How do you want to provide the action history?",
-        ["Upload a .txt file", "Paste text"],
-        horizontal=True,
-        key="input_mode",
-    )
-    content = None
-    if input_mode == "Upload a .txt file":
-        uploaded = st.file_uploader("Choose a .txt file", type=["txt"], key="upload")
-        if uploaded:
-            content = uploaded.read().decode("utf-8", errors="replace")
-            st.session_state.survey_uploaded_filename = uploaded.name
-            # Extract source participant id from filename (e.g. "5c3bdbf548ad2900017fac31_action_history.txt")
-            name = uploaded.name
-            if "_action_history" in name:
-                st.session_state.survey_source_participant_id = name.split("_action_history")[0].strip()
-            else:
-                st.session_state.survey_source_participant_id = name.replace(".txt", "").strip() or None
-    else:
-        st.session_state.survey_uploaded_filename = None
-        st.session_state.survey_source_participant_id = None
-        content = st.text_area(
-            "Paste your action history (one step per line, e.g. 'action 1: Placed Object 2 on machine,' or 'action 2: Test the machine -> Nexiom machine is ON,')",
-            height=120,
-            placeholder="action 1: Placed Object 2 on machine,\naction 2: Test the machine -> Nexiom machine is ON,\naction 3: Removed Object 2 from machine,",
-            key="paste_history",
-        )
+    # Assign one action history file per use (cycle through 102 files via Firebase counter)
+    if st.session_state.survey_assigned_file_index is None:
+        index, filepath, filename = get_next_action_history_index()
+        if filepath and os.path.isfile(filepath):
+            try:
+                with open(filepath, "r", encoding="utf-8", errors="replace") as f:
+                    content = f.read()
+            except Exception as e:
+                st.error(f"Could not load assigned action history: {e}")
+                content = ""
+            if content:
+                steps, num_objects = parse_action_history(content)
+                st.session_state["survey_steps"] = steps
+                st.session_state["survey_num_objects"] = num_objects
+                st.session_state["survey_action_history_text"] = content
+                st.session_state["survey_uploaded_filename"] = filename
+                if "_action_history" in filename:
+                    st.session_state["survey_source_participant_id"] = filename.split("_action_history")[0].strip()
+                else:
+                    st.session_state["survey_source_participant_id"] = filename.replace(".txt", "").strip() or None
+                st.session_state["survey_assigned_file_index"] = index
+        else:
+            st.session_state["survey_assigned_file_index"] = -1  # No files; don't retry
+            st.info("No action history files found. Add files to active_explore/analysis/action_histories/ or run locally with that directory.")
+            st.stop()
 
-    if content:
-        steps, num_objects = parse_action_history(content)
-        if content != st.session_state.get("survey_action_history_text"):
-            st.session_state["survey_sequence_viewed"] = False
-        st.session_state["survey_steps"] = steps
-        st.session_state["survey_num_objects"] = num_objects
-        st.session_state["survey_action_history_text"] = content
-    else:
-        steps = st.session_state.get("survey_steps", [])
-        num_objects = st.session_state.get("survey_num_objects", DEFAULT_NUM_OBJECTS)
+    steps = st.session_state.get("survey_steps", [])
+    num_objects = st.session_state.get("survey_num_objects", DEFAULT_NUM_OBJECTS)
+    content = st.session_state.get("survey_action_history_text", "")
 
     if not steps:
-        st.info("Upload a .txt file or paste action history above to continue.")
+        st.info("No action history loaded.")
         st.stop()
+
+    st.markdown("This session uses the following action history (assigned automatically).")
+    st.header("1. Action history")
+    # Show assigned content read-only (no upload/paste)
+    st.text_area(
+        "Action history (read-only)",
+        value=content,
+        height=120,
+        disabled=True,
+        key="assigned_action_history_display",
+    )
 
     if not st.session_state.get("survey_sequence_viewed", False):
         st.header("2. View action sequence")
