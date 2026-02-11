@@ -702,7 +702,12 @@ if st.session_state.phase == "action_history":
         st.info("No action history loaded.")
         st.stop()
 
-    st.header("Action history on screen")
+    st.header("Action history of an active participant")
+    st.markdown(
+        "Below is the action history from one active participant who interacted with the Nexiom machine. "
+        "Read through the sequence carefully. Then use it to answer the object identification questions (which objects are Nexioms), "
+        "describe how you think the machine works, and choose the rule type (conjunctive or disjunctive)."
+    )
     render_history(steps)
 
     if not st.session_state.get("survey_sequence_viewed", False):
