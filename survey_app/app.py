@@ -673,7 +673,7 @@ if st.session_state.phase == "action_history":
     body { background: #ffffff !important; }
     </style>
     """, unsafe_allow_html=True)
-    st.title("Nexiom: Action history and questions")
+    st.title("Nexiom Adventure")
 
     # Assign one action history file per use (cycle through 102 files via Firebase counter)
     if st.session_state.survey_assigned_file_index is None:
