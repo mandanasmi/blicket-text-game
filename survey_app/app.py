@@ -759,8 +759,9 @@ if st.session_state.phase == "action_history":
     )
 
     all_answered = all(blicket_answers.get(f"object_{i}") is not None for i in range(num_objects))
+    rule_inference_filled = (rule_hypothesis or "").strip() != ""
 
-    if st.button("Next: Rule type", type="primary", disabled=not all_answered, use_container_width=True):
+    if st.button("Next: Rule type", type="primary", disabled=not (all_answered and rule_inference_filled), use_container_width=True):
         st.session_state.saved_rule_hypothesis = (rule_hypothesis or "").strip()
         st.session_state.phase = "rule_inference"
         st.rerun()
