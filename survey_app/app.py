@@ -752,14 +752,19 @@ if st.session_state.phase == "action_history":
         st.session_state.survey_first_object_response_at = datetime.datetime.now().timestamp()
 
     st.header("4. Rule inference")
+    def _rerun_on_rule_change():
+        st.rerun()
+
     rule_hypothesis = st.text_area(
         "Describe how you think the objects turn on the Nexiom machine.",
         height=100,
         key="survey_rule_hypothesis",
+        on_change=_rerun_on_rule_change,
     )
 
     all_answered = all(blicket_answers.get(f"object_{i}") is not None for i in range(num_objects))
-    rule_inference_filled = (rule_hypothesis or "").strip() != ""
+    # Enable "Next: Rule type" as soon as at least one character is written (any character)
+    rule_inference_filled = len(rule_hypothesis or "") >= 1
 
     if st.button("Next: Rule type", type="primary", disabled=not (all_answered and rule_inference_filled), use_container_width=True):
         st.session_state.saved_rule_hypothesis = (rule_hypothesis or "").strip()
