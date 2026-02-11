@@ -702,29 +702,17 @@ if st.session_state.phase == "action_history":
         st.info("No action history loaded.")
         st.stop()
 
-    st.markdown("This session uses the following action history (assigned automatically).")
-    st.header("1. Action history")
-    # Show assigned content read-only (no upload/paste)
-    st.text_area(
-        "Action history (read-only)",
-        value=content,
-        height=120,
-        disabled=True,
-        key="assigned_action_history_display",
-    )
+    st.header("Action history on screen")
+    render_history(steps)
 
     if not st.session_state.get("survey_sequence_viewed", False):
-        st.header("2. View action sequence")
-        st.markdown(f"Action history has **{len(steps)}** steps. Click below to see the sequence, then answer the object identification questions.")
+        st.markdown(f"Action history has **{len(steps)}** steps. Click below to continue to the object identification questions.")
         if st.button("Next: See the sequence", type="primary", use_container_width=True):
             st.session_state.survey_sequence_viewed = True
             if st.session_state.survey_action_history_entered_at is None:
                 st.session_state.survey_action_history_entered_at = datetime.datetime.now().timestamp()
             st.rerun()
         st.stop()
-
-    st.header("2. Action history on screen")
-    render_history(steps)
 
     st.header("3. Object identification")
     st.markdown("Based on the action history above, indicate for each object whether you think it is a **Nexiom** (can make the machine turn on).")
