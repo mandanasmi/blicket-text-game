@@ -201,6 +201,7 @@ def save_game_data(
     rule_type,
     response_time_seconds=None,
     action_history_review_time_seconds=None,
+    passive_exploration_time_seconds=None,
     uploaded_filename=None,
     source_participant_id=None,
 ):
@@ -228,6 +229,8 @@ def save_game_data(
             payload["response_time_seconds"] = round(response_time_seconds, 2)
         if action_history_review_time_seconds is not None:
             payload["action_history_review_time_seconds"] = round(action_history_review_time_seconds, 2)
+        if passive_exploration_time_seconds is not None:
+            payload["passive_exploration_time"] = round(passive_exploration_time_seconds, 2)
         if uploaded_filename:
             payload["uploaded_filename"] = uploaded_filename
         if source_participant_id:
@@ -350,6 +353,10 @@ if "survey_source_participant_id" not in st.session_state:
     st.session_state.survey_source_participant_id = None
 if "survey_assigned_file_index" not in st.session_state:
     st.session_state.survey_assigned_file_index = None
+if "survey_passive_exploration_start_at" not in st.session_state:
+    st.session_state.survey_passive_exploration_start_at = None
+if "survey_passive_exploration_time_seconds" not in st.session_state:
+    st.session_state.survey_passive_exploration_time_seconds = None
 
 # ————— Global CSS: center content like main app —————
 st.markdown("""
@@ -702,6 +709,10 @@ if st.session_state.phase == "action_history":
         st.info("No action history loaded.")
         st.stop()
 
+    # Time from entering this section until they press "Next: Object identification"
+    if st.session_state.survey_passive_exploration_start_at is None:
+        st.session_state.survey_passive_exploration_start_at = datetime.datetime.now().timestamp()
+
     st.header("Action history of an active participant")
     st.markdown(
         "Below is the action history from one active participant who interacted with the Nexiom machine. "
@@ -716,6 +727,11 @@ if st.session_state.phase == "action_history":
             st.session_state.survey_sequence_viewed = True
             if st.session_state.survey_action_history_entered_at is None:
                 st.session_state.survey_action_history_entered_at = datetime.datetime.now().timestamp()
+            start_at = st.session_state.get("survey_passive_exploration_start_at")
+            if start_at is not None:
+                st.session_state.survey_passive_exploration_time_seconds = (
+                    datetime.datetime.now().timestamp() - start_at
+                )
             st.rerun()
         st.stop()
 
@@ -818,6 +834,7 @@ if st.session_state.phase == "rule_inference":
             rule_type or "",
             response_time_seconds=response_time_seconds,
             action_history_review_time_seconds=action_history_review_time_seconds,
+            passive_exploration_time_seconds=st.session_state.get("survey_passive_exploration_time_seconds"),
             uploaded_filename=st.session_state.get("survey_uploaded_filename"),
             source_participant_id=st.session_state.get("survey_source_participant_id"),
         )
