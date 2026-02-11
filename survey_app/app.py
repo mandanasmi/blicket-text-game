@@ -37,6 +37,13 @@ DEFAULT_NUM_OBJECTS = 4
 # ————— Firebase —————
 firebase_initialized = False
 db_ref = None
+firebase_init_error = None
+
+def _valid_database_url(url):
+    """Realtime Database URL must contain firebaseio.com or firebasedatabase.app, not the Console page."""
+    if not url or not isinstance(url, str):
+        return False
+    return "firebaseio.com" in url or "firebasedatabase.app" in url
 
 if not firebase_admin._apps:
     try:
@@ -56,7 +63,7 @@ if not firebase_admin._apps:
                 "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"],
                 "universe_domain": "googleapis.com",
             }
-            database_url = st.secrets["firebase"]["database_url"]
+            database_url = st.secrets["firebase"].get("database_url") or st.secrets["firebase"].get("databaseURL")
         elif os.getenv("FIREBASE_PROJECT_ID"):
             firebase_credentials = {
                 "type": "service_account",
@@ -75,20 +82,33 @@ if not firebase_admin._apps:
         else:
             database_url = None
             firebase_credentials = None
+            firebase_init_error = "No Firebase config: set Streamlit secrets [firebase] or env vars (FIREBASE_PROJECT_ID, FIREBASE_DATABASE_URL, etc.). See survey_app/FIREBASE.md."
 
-        if database_url and firebase_credentials and firebase_credentials.get("project_id"):
+        if firebase_init_error is None and database_url and not _valid_database_url(database_url):
+            firebase_init_error = (
+                "database_url must be your Realtime Database URL (e.g. https://PROJECT-default-rtdb.firebaseio.com), "
+                "not the Firebase Console page URL. In Firebase Console: Build -> Realtime Database, copy the URL."
+            )
+
+        if firebase_init_error is None and database_url and firebase_credentials and firebase_credentials.get("project_id"):
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {"databaseURL": database_url})
             db_ref = db.reference()
             firebase_initialized = True
             print("Firebase initialized for survey app")
     except Exception as e:
+        firebase_init_error = str(e)
         print(f"Firebase initialization failed: {e}")
         import traceback
         traceback.print_exc()
 else:
-    firebase_initialized = True
-    db_ref = db.reference()
+    try:
+        firebase_initialized = True
+        db_ref = db.reference()
+    except Exception as e:
+        firebase_init_error = str(e)
+        firebase_initialized = False
+        db_ref = None
 
 
 def save_demographics(participant_id, demographics):
@@ -122,8 +142,20 @@ def save_consent(participant_id):
         print(f"Failed to save consent: {e}")
 
 
-def save_survey_data(participant_id, action_history_text, num_objects, steps, blicket_answers, rule_hypothesis, rule_type, response_time_seconds=None, demographics=None):
-    """Save survey response to Firebase. Includes object answers, rule inference, rule type, response time, demographics."""
+def save_game_data(
+    participant_id,
+    action_history_text,
+    num_objects,
+    steps,
+    blicket_answers,
+    rule_hypothesis,
+    rule_type,
+    response_time_seconds=None,
+    action_history_review_time_seconds=None,
+    uploaded_filename=None,
+    source_participant_id=None,
+):
+    """Save game/survey response to Firebase under game_data. No demographics in payload."""
     if not firebase_initialized or not db_ref:
         return
     try:
@@ -146,14 +178,18 @@ def save_survey_data(participant_id, action_history_text, num_objects, steps, bl
         }
         if response_time_seconds is not None:
             payload["response_time_seconds"] = round(response_time_seconds, 2)
-        if demographics is not None:
-            payload["demographics"] = demographics
-        ref.child("survey").set(payload)
+        if action_history_review_time_seconds is not None:
+            payload["action_history_review_time_seconds"] = round(action_history_review_time_seconds, 2)
+        if uploaded_filename:
+            payload["uploaded_filename"] = uploaded_filename
+        if source_participant_id:
+            payload["source_participant_id"] = source_participant_id
+        ref.child("game_data").set(payload)
         ref.child("status").set("completed")
         ref.child("completed_at").set(now.isoformat())
-        print(f"Saved survey data for {participant_id}")
+        print(f"Saved game_data for {participant_id}")
     except Exception as e:
-        print(f"Failed to save survey data: {e}")
+        print(f"Failed to save game_data: {e}")
         import traceback
         traceback.print_exc()
 
@@ -258,6 +294,12 @@ if "survey_action_history_entered_at" not in st.session_state:
     st.session_state.survey_action_history_entered_at = None
 if "demographics" not in st.session_state:
     st.session_state.demographics = None
+if "survey_first_object_response_at" not in st.session_state:
+    st.session_state.survey_first_object_response_at = None
+if "survey_uploaded_filename" not in st.session_state:
+    st.session_state.survey_uploaded_filename = None
+if "survey_source_participant_id" not in st.session_state:
+    st.session_state.survey_source_participant_id = None
 
 # ————— Global CSS: center content like main app —————
 st.markdown("""
@@ -508,7 +550,10 @@ if st.session_state.phase == "intro":
         print("Firebase connected - Data saving enabled")
     else:
         print("Firebase not connected - Running in demo mode")
-        st.warning("Firebase is not connected. Data will not be saved. Check Streamlit Secrets (or .streamlit/secrets.toml) and that Realtime Database is enabled for your project. See survey_app/FIREBASE.md.")
+        st.warning("Firebase is not connected. Data will not be saved.")
+        if firebase_init_error:
+            st.code(firebase_init_error, language=None)
+        st.markdown("Check Streamlit Secrets (or `.streamlit/secrets.toml`) and that Realtime Database is enabled. **database_url** must be the Realtime Database URL (e.g. `https://PROJECT-default-rtdb.firebaseio.com`), not the Firebase Console page. See survey_app/FIREBASE.md.")
 
     if not st.session_state.participant_id_entered:
         st.markdown("""
@@ -586,7 +631,16 @@ if st.session_state.phase == "action_history":
         uploaded = st.file_uploader("Choose a .txt file", type=["txt"], key="upload")
         if uploaded:
             content = uploaded.read().decode("utf-8", errors="replace")
+            st.session_state.survey_uploaded_filename = uploaded.name
+            # Extract source participant id from filename (e.g. "5c3bdbf548ad2900017fac31_action_history.txt")
+            name = uploaded.name
+            if "_action_history" in name:
+                st.session_state.survey_source_participant_id = name.split("_action_history")[0].strip()
+            else:
+                st.session_state.survey_source_participant_id = name.replace(".txt", "").strip() or None
     else:
+        st.session_state.survey_uploaded_filename = None
+        st.session_state.survey_source_participant_id = None
         content = st.text_area(
             "Paste your action history (one step per line, e.g. 'action 1: Placed Object 2 on machine,' or 'action 2: Test the machine -> Nexiom machine is ON,')",
             height=120,
@@ -633,6 +687,10 @@ if st.session_state.phase == "action_history":
             key=f"survey_blicket_q_{i}",
             index=None,
         )
+
+    # Time spent reviewing action history before first object answer
+    if st.session_state.survey_first_object_response_at is None and blicket_answers.get("object_0") is not None:
+        st.session_state.survey_first_object_response_at = datetime.datetime.now().timestamp()
 
     st.header("4. Rule inference")
     rule_hypothesis = st.text_area(
@@ -702,8 +760,12 @@ if st.session_state.phase == "rule_inference":
         action_history_text = st.session_state.get("survey_action_history_text", "")
         rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "")
         entered_at = st.session_state.get("survey_action_history_entered_at")
+        first_object_at = st.session_state.get("survey_first_object_response_at")
         response_time_seconds = (datetime.datetime.now().timestamp() - entered_at) if entered_at else None
-        save_survey_data(
+        action_history_review_time_seconds = (
+            (first_object_at - entered_at) if (entered_at and first_object_at) else None
+        )
+        save_game_data(
             st.session_state.current_participant_id,
             action_history_text,
             num_objects,
@@ -712,7 +774,9 @@ if st.session_state.phase == "rule_inference":
             rule_hypothesis,
             rule_type or "",
             response_time_seconds=response_time_seconds,
-            demographics=st.session_state.get("demographics"),
+            action_history_review_time_seconds=action_history_review_time_seconds,
+            uploaded_filename=st.session_state.get("survey_uploaded_filename"),
+            source_participant_id=st.session_state.get("survey_source_participant_id"),
         )
         st.session_state.survey_submitted = True
         st.session_state.phase = "end"

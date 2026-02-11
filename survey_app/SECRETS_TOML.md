@@ -1,56 +1,18 @@
-# Streamlit Cloud Secrets (TOML)
+# Survey app Firebase secrets (Admin SDK)
+# Use this structure in .streamlit/secrets.toml (local) or Streamlit Cloud Secrets.
+# database_url must match firebase-web-config.example.js "databaseURL".
+# Other values come from Firebase Console: Project settings -> Service accounts -> Generate new private key (JSON).
 
-Streamlit Cloud serves secrets to your app at runtime. Use **TOML format** in the dashboard under **Secrets**. Changes take around a minute to propagate. See **FIREBASE.md** for why the survey app needs the Admin SDK (service account + database URL), not the Web SDK config.
-
-**Do not commit** your service account JSON or any file containing your `private_key`. Paste credentials only into Streamlit Cloud Secrets (or local `.streamlit/secrets.toml`, which is gitignored).
-
-## Where to get the values
-
-1. **Realtime Database** – In [Firebase Console](https://console.firebase.google.com/) for **nexiom-passive-participants**, enable **Realtime Database** and copy the database URL (e.g. `https://nexiom-passive-participants-default-rtdb.firebaseio.com`).
-
-2. **Service account** – In the same project: Project settings (gear) → **Service accounts** → **Generate new private key**. Download the JSON. It contains:
-   - `project_id`
-   - `private_key_id`
-   - `private_key`
-   - `client_email`
-   - `client_id`
-   - `client_x509_cert_url`
-
-## Survey app: Firebase (nexiom-passive-participants)
-
-Paste this in the Secrets text area. Replace the placeholders with values from the downloaded service account JSON and the Realtime Database URL from the console.
-
-```toml
 [firebase]
 project_id = "nexiom-passive-participants"
-private_key_id = "from your downloaded JSON"
-private_key = "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
-client_email = "firebase-adminsdk-xxxxx@nexiom-passive-participants.iam.gserviceaccount.com"
-client_id = "from your JSON"
-client_x509_cert_url = "from your JSON"
+private_key_id = "63a1efdfd8313276be87516d9e06f1116890d38a"
+private_key = "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCkcrg39ICrEJch\n2ciuupVl2m+6TfnMkgFWOIfQI76QW16iWfQVvbrp7SR/F/KiGAIxwrYkkH7zOmpj\nG1CRy/YYZygJNAPweuHuDwcnYBUpIgVRaX63+w9Ls07d3CPaHFM5vvegL7zg6VT2\noCEz4uNOHIofeP960vtdSWPi+RqrvwMBwmy/qOvJQnVwFbHdzMieXWVucFSoe3oT\n0xdlcapBRH5YzY5+p02rvxyfbudioknkxx3LYiHOlCB+YvGuSqVcd+qTXKkbxJvo\nvRirT4urOxZ3LlevQJRdH90Ft+1bwMgpsurvKn8THbuZklJ7exZbBBbV7xNXeaU8\n0qmt1XSBAgMBAAECggEAB/lwKXZ3ztPNIF0ZOC/gEsJW7KffVyY1XmL7YwJ4uTNV\nEXZfObarm7BeNrOIloeng5Y3kupW3aCVjBzE+Wz0kBZggKG/Fyg+UHb2F9i27fmy\nXFJLTMyl3zvgtS15p5f8CS7TfzcRZ66o6hS1x3hXIXCM2h3Z9bDJc6qdZ2JBAtb6\nfgKbkxCPX9SaMaDBitCPCt8O7B0SW4eXHFkYY9rrP/74jirv71pTaj/Vs+nzwT8w\n+u2u9zVxyzpj9VzE0nIwXi5nPfbOKRjzZHeNYDMfiGy+EuOpNk12440NxcUCgqHb\nXUKvv6tk0SAKKhyo8rHJoUKBLQwSWnRjwAg4PPjOyQKBgQDOidx+rtWMx7EWfbup\nYONsFMUbIaLKheFhhUMXJl/CC17aJ0R6MrbnTNgzcAo9zQIRHEZ9cQq8fLjSmDv1\ncjwGtrocOl7z6vrKLNFwwqu9yAvvRM/JERnZ0WqZe8pCO/urdbjVT3im+Mo+gEH0\ndKSqVo+KiqRGsHnJste10Lcz6wKBgQDL1HJJwyk0w7RUS4dfCYzlr5uwq4jeqxB1\nXB6FkSEfjs+GdT3VcPkJr//i7BP5ZbNgFXVbfPJM8DXpjISS7vdaypKs+AAdRiBL\nas6rT96hTAsGXEdZdIfxFFT52KWhfInTJeA52CbE46RCxAWHKUFfC18/KOAxyRgr\nF5inuZcaQwKBgQCFl1pNfpyWQJvkplL5zbeMMysCz5DSWiJbx6yLjsClbGFfzcJX\nH/J6TZQSQUf+jVnm41kczj9Zh3qsjNdLfSYiWZKrq327W6P3nWGjA+e+C2Tc0K9t\nqGgGIZRHznAWw2GXl7+ECbFKnuWB48fFbKUNoIub2u1C4+cCdXFdIrE9HQKBgQCx\nNckPXD+tAiD70JanB9SZtK11Ug0zGiK7BhX7JgxYNX8zdScHNKsvwvaDwaA0CjmD\nZeScX+sA/S7CGEsCvAQNyWTwQMVIrjlRmFCKHGyAa26CXyQhH/E4peajObn2xiHF\nk354i/ZY41liOq5broCJM4fhj5YrcpwyitdLq001pQKBgEQ20y+Y2fcGtaHbfHKV\nY+2W46CgD3cX1RCY5ctKvtojUETNN++BnLX4SDN0CGDvwA1WPbiJXfuV2v9zCGZR\nhXyd6UWHSQIXmPCyTKeiMSbVcGnmt5XPUJaCpHoDBGnQBkUpORgB8cweCQYJuAqN\nU5aX7yGIJBKOyteA33lSq0By\n-----END PRIVATE KEY-----\n"
+client_email = "firebase-adminsdk-fbsvc@nexiom-passive-participants.iam.gserviceaccount.com"
+client_id = "108423531331843857830"
+auth_uri = "https://accounts.google.com/o/oauth2/auth"
+token_uri = "https://oauth2.googleapis.com/token"
+auth_provider_x509_cert_url = "https://www.googleapis.com/oauth2/v1/certs"
+client_x509_cert_url = "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40nexiom-passive-participants.iam.gserviceaccount.com"
+universe_domain = "googleapis.com"
 database_url = "https://nexiom-passive-participants-default-rtdb.firebaseio.com"
-```
 
-- **project_id** – Use `"nexiom-passive-participants"` (or copy from the JSON).
-- **private_key_id**, **client_id** – Copy from the service account JSON.
-- **private_key** – Full PEM block from the JSON; keep newlines or use `\n` between lines.
-- **client_email**, **client_x509_cert_url** – From the JSON; replace `xxxxx` with your service account ID in both if you type them by hand.
-- **database_url** – From Firebase Console → Realtime Database; use the URL for your region if different (e.g. `...europe-west1.firebasedatabase.app`).
-
-After saving, the survey app will read and write to the **nexiom-passive-participants** Realtime Database.
-
-## Optional: completion code and IRB
-
-To override defaults via Streamlit Cloud, you can set environment variables in **Settings → Environment variables** instead of in Secrets (the app reads `os.getenv("SURVEY_COMPLETION_CODE")` and `os.getenv("IRB_PROTOCOL_NUMBER")`). If you prefer Secrets:
-
-```toml
-# Add to the same Secrets TOML (top-level keys):
-SURVEY_COMPLETION_CODE = "YOUR_PROLIFIC_COMPLETION_CODE"
-IRB_PROTOCOL_NUMBER = "YOUR_IRB_NUMBER"
-```
-
-## Reference
-
-- [Streamlit docs: Secrets management](https://docs.streamlit.io/streamlit-community-cloud/deploy-your-app/secrets-management)
-- **FIREBASE.md** – Admin SDK vs Web SDK, and what the survey app needs.
-- The app reads `st.secrets["firebase"]` and `os.getenv("FIREBASE_*")` (see `survey_app/app.py`).
