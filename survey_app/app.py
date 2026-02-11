@@ -706,13 +706,13 @@ if st.session_state.phase == "action_history":
     st.markdown(
         "Below is the action history from one active participant who interacted with the Nexiom machine. "
         "Read through the sequence carefully. Then use it to answer the object identification questions (which objects are Nexioms), "
-        "describe how you think the machine works, and choose the rule type (conjunctive or disjunctive)."
+        "describe how you think the machine works."
     )
     render_history(steps)
 
     if not st.session_state.get("survey_sequence_viewed", False):
         st.markdown(f"Action history has **{len(steps)}** steps. Click below to continue to the object identification questions.")
-        if st.button("Next: See the sequence", type="primary", use_container_width=True):
+        if st.button("Next: Object identification", type="primary", use_container_width=True):
             st.session_state.survey_sequence_viewed = True
             if st.session_state.survey_action_history_entered_at is None:
                 st.session_state.survey_action_history_entered_at = datetime.datetime.now().timestamp()
