@@ -673,7 +673,7 @@ if st.session_state.phase == "action_history":
     body { background: #ffffff !important; }
     </style>
     """, unsafe_allow_html=True)
-    st.title("Nexiom Adventure")
+    st.title("Nexiom Adventure Game")
 
     # Assign one action history file per use (cycle through 102 files via Firebase counter)
     if st.session_state.survey_assigned_file_index is None:
@@ -713,7 +713,7 @@ if st.session_state.phase == "action_history":
     if st.session_state.survey_passive_exploration_start_at is None:
         st.session_state.survey_passive_exploration_start_at = datetime.datetime.now().timestamp()
 
-    st.header("Action history of an active participant")
+    st.header("Action history")
     st.markdown(
         "Below is the action history from one active participant who interacted with the Nexiom machine. "
         "Read through the sequence carefully. Then use it to answer the object identification questions (which objects are Nexioms), "
