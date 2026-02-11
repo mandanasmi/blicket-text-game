@@ -31,13 +31,14 @@ def _load_secrets_toml():
         return
     try:
         import tomllib
+        with open(toml_path, "rb") as f:
+            data = tomllib.load(f)
     except ImportError:
         try:
-            import toml as tomllib
+            import toml
+            data = toml.load(toml_path)
         except ImportError:
             return
-    with open(toml_path, "rb") as f:
-        data = tomllib.load(f)
     fb = data.get("firebase", {})
     if not fb:
         return
