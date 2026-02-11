@@ -7,6 +7,7 @@ Survey app: collect human data without comprehension or exploration.
 """
 import os
 import re
+import html
 import datetime
 import streamlit as st
 import firebase_admin
@@ -121,8 +122,8 @@ def save_consent(participant_id):
         print(f"Failed to save consent: {e}")
 
 
-def save_survey_data(participant_id, action_history_text, num_objects, steps, blicket_answers, rule_hypothesis, rule_type):
-    """Save survey response to Firebase. Action history stored as text only."""
+def save_survey_data(participant_id, action_history_text, num_objects, steps, blicket_answers, rule_hypothesis, rule_type, response_time_seconds=None, demographics=None):
+    """Save survey response to Firebase. Includes object answers, rule inference, rule type, response time, demographics."""
     if not firebase_initialized or not db_ref:
         return
     try:
@@ -133,13 +134,20 @@ def save_survey_data(participant_id, action_history_text, num_objects, steps, bl
             "action_history_text": action_history_text,
             "num_objects": num_objects,
             "num_steps": len(steps),
+            "object_answers": blicket_answers,
             "blicket_classifications": blicket_answers,
+            "rule_inference": (rule_hypothesis or "").strip(),
             "rule_hypothesis": (rule_hypothesis or "").strip(),
             "rule_type": rule_type or "",
             "saved_at": now.isoformat(),
+            "submitted_at": now.isoformat(),
             "session_timestamp": now.timestamp(),
             "app_type": "survey_no_exploration",
         }
+        if response_time_seconds is not None:
+            payload["response_time_seconds"] = round(response_time_seconds, 2)
+        if demographics is not None:
+            payload["demographics"] = demographics
         ref.child("survey").set(payload)
         ref.child("status").set("completed")
         ref.child("completed_at").set(now.isoformat())
@@ -174,11 +182,12 @@ def parse_action_history(content: str):
         m_action = re.match(r"action\s+\d+\s*:\s*(.+)", line, re.IGNORECASE)
         if m_action:
             action_part = m_action.group(1).rstrip(",").strip()
-            # Check for "-> Nexiom machine is ON" or "Nexiom machine is OFF"; normalize to "-> Machine: ON/OFF"
-            machine_match = re.search(r"->\s*Nexiom machine is (ON|OFF)", action_part, re.IGNORECASE)
+            # Extract machine ON/OFF; remove from action text (we show "Action: Machine: ON/OFF" in render with bold color)
+            # Match "-> Nexiom machine is ON/OFF" or "-> Machine: ON/OFF"
+            machine_match = re.search(r"->\s*(?:Nexiom machine is|Machine:)\s*(ON|OFF)", action_part, re.IGNORECASE)
             if machine_match:
                 machine = "ON" if machine_match.group(1).upper() == "ON" else "OFF"
-                action_part = re.sub(r"->\s*Nexiom machine is (ON|OFF)", "-> Machine: " + machine, action_part, flags=re.IGNORECASE)
+                action_part = re.sub(r"->\s*(?:Nexiom machine is|Machine:)\s*(?:ON|OFF)\s*,?\s*", "", action_part, flags=re.IGNORECASE).strip()
             # Infer object count from "Object N" in text
             for obj_m in re.finditer(r"Object\s+(\d+)", action_part, re.IGNORECASE):
                 max_object_seen = max(max_object_seen, int(obj_m.group(1)))
@@ -198,30 +207,36 @@ def parse_action_history(content: str):
 
 
 def render_history(steps):
-    """Render action history: action text and machine status (ON green, OFF black) when known. Compact layout."""
+    """Render action history in one bar; action text and machine status (ON green, OFF black). Font size matches rest of app."""
     if not steps:
         st.info("No steps. Add action history above (upload .txt or paste text).")
         return
     st.markdown(
-        "<div style='text-align: center; font-size: 14px; font-weight: bold; margin-bottom: 8px; padding: 6px 10px; background-color: #555; color: #fff; border-radius: 4px;'>Action history</div>",
+        "<div style='text-align: center; font-size: 1.125rem; font-weight: bold; margin-bottom: 8px; padding: 8px 12px; background-color: #555; color: #fff; border-radius: 6px;'>Action history</div>",
         unsafe_allow_html=True,
     )
+    parts = []
     for i, step in enumerate(steps):
         machine = step.get("machine")
-        machine_line = ""
+        machine_bit = ""
         if machine is not None:
             machine_color = "#388e3c" if machine == "ON" else "#000000"
-            machine_line = f"<div style='font-size: 12px; font-weight: bold; color: {machine_color}'>Machine: {machine}</div>"
-        st.markdown(
-            f"""
-            <div style='width: 100%; margin: 3px 0; padding: 6px 10px; background-color: #e8e8e8; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;'>
-                <div style='font-size: 12px; font-weight: bold; margin-bottom: 2px;'>Step {i + 1}</div>
-                <div style='font-size: 13px;'>{step["action"]}</div>
-                {machine_line}
-            </div>
-            """,
-            unsafe_allow_html=True,
+            machine_bit = f": <span style='font-weight: bold; color: {machine_color}'>Machine: {machine}</span>"
+        action_escaped = html.escape(step["action"])
+        parts.append(
+            f"<div style='font-size: 1.05rem; margin: 6px 0; line-height: 1.4;'>"
+            f"<span style='font-weight: bold;'>Step {i + 1}</span> {action_escaped}{machine_bit}"
+            f"</div>"
         )
+    inner = "\n".join(parts)
+    st.markdown(
+        f"""
+        <div style='width: 100%; padding: 14px 16px; background-color: #e8e8e8; border: 1px solid #ccc; border-radius: 8px; box-sizing: border-box; font-size: 1.05rem;'>
+            {inner}
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
 
 # ————— Session state —————
@@ -239,6 +254,10 @@ if "survey_submitted" not in st.session_state:
     st.session_state.survey_submitted = False
 if "survey_sequence_viewed" not in st.session_state:
     st.session_state.survey_sequence_viewed = False
+if "survey_action_history_entered_at" not in st.session_state:
+    st.session_state.survey_action_history_entered_at = None
+if "demographics" not in st.session_state:
+    st.session_state.demographics = None
 
 # ————— Global CSS: center content like main app —————
 st.markdown("""
@@ -489,6 +508,7 @@ if st.session_state.phase == "intro":
         print("Firebase connected - Data saving enabled")
     else:
         print("Firebase not connected - Running in demo mode")
+        st.warning("Firebase is not connected. Data will not be saved. Check Streamlit Secrets (or .streamlit/secrets.toml) and that Realtime Database is enabled for your project. See survey_app/FIREBASE.md.")
 
     if not st.session_state.participant_id_entered:
         st.markdown("""
@@ -523,11 +543,13 @@ if st.session_state.phase == "intro":
 
             if firebase_initialized and db_ref and st.session_state.consent:
                 save_consent(st.session_state.current_participant_id)
-                save_demographics(st.session_state.current_participant_id, {
+                demographics = {
                     "prolific_id": st.session_state.current_participant_id,
                     "age": int(st.session_state.get("participant_age", 25)),
                     "gender": str(st.session_state.get("participant_gender", "Prefer not to say")),
-                })
+                }
+                save_demographics(st.session_state.current_participant_id, demographics)
+                st.session_state.demographics = demographics
 
             st.session_state.phase = "action_history"
             st.rerun()
@@ -592,6 +614,8 @@ if st.session_state.phase == "action_history":
         st.markdown(f"Action history has **{len(steps)}** steps. Click below to see the sequence, then answer the object identification questions.")
         if st.button("Next: See the sequence", type="primary", use_container_width=True):
             st.session_state.survey_sequence_viewed = True
+            if st.session_state.survey_action_history_entered_at is None:
+                st.session_state.survey_action_history_entered_at = datetime.datetime.now().timestamp()
             st.rerun()
         st.stop()
 
@@ -611,7 +635,6 @@ if st.session_state.phase == "action_history":
         )
 
     st.header("4. Rule inference")
-    st.markdown("Describe how you think the objects turn on the Nexiom machine.")
     rule_hypothesis = st.text_area(
         "Describe how you think the objects turn on the Nexiom machine.",
         height=100,
@@ -678,6 +701,8 @@ if st.session_state.phase == "rule_inference":
         }
         action_history_text = st.session_state.get("survey_action_history_text", "")
         rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "")
+        entered_at = st.session_state.get("survey_action_history_entered_at")
+        response_time_seconds = (datetime.datetime.now().timestamp() - entered_at) if entered_at else None
         save_survey_data(
             st.session_state.current_participant_id,
             action_history_text,
@@ -686,6 +711,8 @@ if st.session_state.phase == "rule_inference":
             blicket_answers,
             rule_hypothesis,
             rule_type or "",
+            response_time_seconds=response_time_seconds,
+            demographics=st.session_state.get("demographics"),
         )
         st.session_state.survey_submitted = True
         st.session_state.phase = "end"
