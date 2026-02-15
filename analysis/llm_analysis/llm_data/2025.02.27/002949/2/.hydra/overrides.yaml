@@ -1,0 +1,9 @@
+- agent=normative_agent
+- num_trials=128
+- max_actions_per_trial=32
+- env_kwargs.rule=conjunctive
+- env_kwargs.num_objects=6
+- env_kwargs.num_blickets=2
+- env_kwargs.transition_noise=0.0
+- agent.indep_test=mi
+- seed=12

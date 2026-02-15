@@ -1,0 +1,199 @@
+[2025-03-25 04:57:08,812][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.25/003419/6
+[2025-03-25 04:57:08,813][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 48 trials...
+[2025-03-25 04:57:09,343][__main__][INFO] - Trial: 1. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb688058510>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [6, 7]
+[2025-03-25 04:57:09,358][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6a856b150>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 6]
+[2025-03-25 04:57:09,422][__main__][INFO] - Trial: 7. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668706dd0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [5, 7]
+[2025-03-25 04:57:09,477][__main__][INFO] - Trial: 8. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6a81ad550>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [3, 4]
+[2025-03-25 04:57:09,478][__main__][INFO] - Trial: 16. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668629a50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 7]
+[2025-03-25 04:57:09,486][__main__][INFO] - Trial: 2. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6a81b21d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 7]
+[2025-03-25 04:57:09,490][__main__][INFO] - Trial: 14. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6881e8e50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 2]
+[2025-03-25 04:57:09,497][__main__][INFO] - Trial: 21. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6a8676750>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [3, 6]
+[2025-03-25 04:57:09,500][__main__][INFO] - Trial: 18. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668766c50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 1]
+[2025-03-25 04:57:09,504][__main__][INFO] - Trial: 19. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb688042850>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 6]
+[2025-03-25 04:57:09,508][__main__][INFO] - Trial: 25. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6a86bca10>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 3]
+[2025-03-25 04:57:09,514][__main__][INFO] - Trial: 11. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6a82e3450>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 1]
+[2025-03-25 04:57:09,529][__main__][INFO] - Trial: 33. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6686e9850>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 7]
+[2025-03-25 04:57:09,552][__main__][INFO] - Trial: 4. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb66867b490>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [3, 7]
+[2025-03-25 04:57:09,558][__main__][INFO] - Trial: 3. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6687819d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [2, 4]
+[2025-03-25 04:57:09,558][__main__][INFO] - Trial: 9. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6a8158dd0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 5]
+[2025-03-25 04:57:09,562][__main__][INFO] - Trial: 12. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb68801fe90>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 3]
+[2025-03-25 04:57:09,570][__main__][INFO] - Trial: 13. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668606050>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 7]
+[2025-03-25 04:57:09,575][__main__][INFO] - Trial: 24. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb688085810>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 3]
+[2025-03-25 04:57:09,578][__main__][INFO] - Trial: 5. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668346a50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 5]
+[2025-03-25 04:57:09,585][__main__][INFO] - Trial: 6. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6880f8850>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 5]
+[2025-03-25 04:57:09,604][__main__][INFO] - Trial: 23. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6b9a38550>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [2, 7]
+[2025-03-25 04:57:09,615][__main__][INFO] - Trial: 27. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6883539d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [5, 7]
+[2025-03-25 04:57:09,625][__main__][INFO] - Trial: 22. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668727f50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 7]
+[2025-03-25 04:57:09,628][__main__][INFO] - Trial: 15. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6a82e0d90>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 5]
+[2025-03-25 04:57:09,633][__main__][INFO] - Trial: 34. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6880e3d10>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [6, 7]
+[2025-03-25 04:57:09,637][__main__][INFO] - Trial: 10. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb688372710>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 5]
+[2025-03-25 04:57:09,639][__main__][INFO] - Trial: 20. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb688040850>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 6]
+[2025-03-25 04:57:09,640][__main__][INFO] - Trial: 38. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb66846d010>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [5, 6]
+[2025-03-25 04:57:09,640][__main__][INFO] - Trial: 45. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb66848bbd0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [3, 7]
+[2025-03-25 04:57:09,641][__main__][INFO] - Trial: 26. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb688061190>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [3, 7]
+[2025-03-25 04:57:09,642][__main__][INFO] - Trial: 39. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6880102d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [3, 4]
+[2025-03-25 04:57:09,645][__main__][INFO] - Trial: 17. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668703cd0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 4]
+[2025-03-25 04:57:09,645][__main__][INFO] - Trial: 37. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6686f7810>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 5]
+[2025-03-25 04:57:09,645][__main__][INFO] - Trial: 35. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6686f24d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 6]
+[2025-03-25 04:57:09,651][__main__][INFO] - Trial: 40. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6686688d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 6]
+[2025-03-25 04:57:09,651][__main__][INFO] - Trial: 31. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6686dec50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 3]
+[2025-03-25 04:57:09,652][__main__][INFO] - Trial: 32. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6686af050>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 7]
+[2025-03-25 04:57:09,655][__main__][INFO] - Trial: 30. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb66840bd50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 2]
+[2025-03-25 04:57:09,655][__main__][INFO] - Trial: 36. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6884fbf10>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 5]
+[2025-03-25 04:57:09,656][__main__][INFO] - Trial: 29. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6686aef10>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [5, 6]
+[2025-03-25 04:57:09,656][__main__][INFO] - Trial: 28. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6687d1f90>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 5]
+[2025-03-25 04:57:09,657][__main__][INFO] - Trial: 46. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb6b9b8b050>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 7]
+[2025-03-25 04:57:09,658][__main__][INFO] - Trial: 43. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb68860b7d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 2]
+[2025-03-25 04:57:09,658][__main__][INFO] - Trial: 47. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668498b90>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 2]
+[2025-03-25 04:57:09,661][__main__][INFO] - Trial: 42. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb668480910>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [2, 7]
+[2025-03-25 04:57:09,661][__main__][INFO] - Trial: 44. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb66848a590>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 4]
+[2025-03-25 04:57:09,662][__main__][INFO] - Trial: 41. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fb688096e90>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [3, 7]
+[2025-03-25 04:57:09,685][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,723][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,734][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,799][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,801][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,829][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,831][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,854][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,857][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,861][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,861][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,865][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,866][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,875][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,880][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,890][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,915][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,921][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,924][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,937][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,938][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,946][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,962][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,974][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,976][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,978][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,992][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,996][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:09,999][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,000][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,000][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,008][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,024][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,027][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,031][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,032][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,033][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,033][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,034][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,043][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,052][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,067][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,077][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,090][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,156][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,370][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,523][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:57:10,583][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 04:59:01,365][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:01:11,080][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:04:50,204][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:05:27,799][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:07:03,851][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:07:47,251][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:08:57,133][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:09:27,028][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:11:26,119][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:11:52,848][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:12:54,270][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:13:14,933][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:14:08,961][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:17:13,904][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:18:17,146][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:18:31,550][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:19:03,476][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:19:33,422][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:20:44,147][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:21:53,780][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:22:54,726][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:23:12,491][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:23:37,962][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:24:13,779][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:25:37,477][__main__][INFO] - Trial 21 completed in 4 steps. Questions correct: 4/4
+[2025-03-25 05:29:09,019][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:31:03,719][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:31:39,740][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:32:43,510][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:34:16,325][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:35:54,097][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:38:40,510][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:39:18,988][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:39:57,792][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:42:19,109][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:44:05,291][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:46:02,408][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:46:23,804][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:46:40,243][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:48:07,915][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:49:39,320][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:50:37,318][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:52:24,596][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:52:45,634][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:55:14,995][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:55:59,432][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:57:33,198][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:58:03,413][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 05:59:09,867][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:00:54,322][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:03:25,141][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:04:39,114][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:07:42,096][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:08:20,257][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:10:46,700][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:12:24,096][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:13:20,901][__main__][INFO] - Trial 9 completed in 12 steps. Questions correct: 4/4
+[2025-03-25 06:14:56,267][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:16:04,885][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:17:32,915][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:18:07,490][__main__][INFO] - Trial 17 completed in 13 steps. Questions correct: 3/4
+[2025-03-25 06:22:29,015][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:22:55,203][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:23:51,043][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:24:05,649][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:26:01,046][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:27:25,632][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:27:47,605][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:28:50,505][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:29:24,767][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:29:51,283][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:30:12,215][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:30:26,588][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:30:43,571][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:31:51,151][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:32:12,563][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:32:27,583][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:34:01,669][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:34:18,321][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:35:06,324][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:35:49,537][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:36:43,443][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:37:20,988][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:40:46,662][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:41:06,902][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:41:22,307][__main__][INFO] - Trial 1 completed in 12 steps. Questions correct: 8/8
+[2025-03-25 06:42:30,526][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:42:44,230][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:47:05,949][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:47:32,581][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:49:37,790][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:49:54,334][__main__][INFO] - Trial 7 completed in 14 steps. Questions correct: 8/8
+[2025-03-25 06:52:12,651][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:52:48,084][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:54:03,113][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:54:26,106][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:55:13,643][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:55:32,274][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:56:38,651][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:57:06,533][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-03-25 06:58:19,221][__main__][INFO] - Trial 0 completed in 23 steps. Questions correct: 8/8

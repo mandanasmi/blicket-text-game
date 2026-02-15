@@ -5,3 +5,12 @@ __pycache__/
 *.pyc
 venv/
 .streamlit/secrets.toml
+analysis/*.csv
+analysis/*.png
+data_txt_history/
+*test_history.txt
+*test_history.text
+# Ignore all .md files except README
+*.md
+!README.md
+!**/README.md

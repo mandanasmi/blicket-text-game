@@ -7,7 +7,7 @@
 # Cloud:  Default https://nexiom-text-game.streamlit.app/
 #         Conjunctive-only https://nexiom-text-game.streamlit.app/?e=nex1
 
-echo "Starting Nexiom Text Game (conjunctive rules only)..."
+echo "Starting Nexiom Text Game ..."
 echo "Port 8502 - run run_app.sh for default (disjunctive) on port 8501."
 echo "Streamlit Cloud: use ?e=nex1 for conjunctive-only link."
 echo "Make sure you have configured your .env file with Firebase credentials"

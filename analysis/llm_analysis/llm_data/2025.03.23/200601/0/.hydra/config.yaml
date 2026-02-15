@@ -1,0 +1,21 @@
+agent:
+  _target_: agent.prompts_llm.PromptsAgent
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+  filter_actions: false
+  react: false
+  model: ollama/gemma3:12b
+  temperature: 0.0
+  system_msg_path: ./agent/prompts/system_human_conj.txt
+num_trials: 32
+max_actions_per_trial: 32
+save_trial_log: true
+use_threadpool: true
+tp_max_workers: 2
+seed: 22
+env_kwargs:
+  num_objects: 8
+  num_blickets: 2
+  init_prob: 0.1
+  transition_noise: 0.0
+  rule: conjunctive

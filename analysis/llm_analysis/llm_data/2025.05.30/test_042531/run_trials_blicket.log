@@ -1,0 +1,7 @@
+[2025-05-30 04:25:31,538][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.05.30/test_042531
+[2025-05-30 04:25:31,539][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 1 trials...
+[2025-05-30 04:25:32,084][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f86b1655cd0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 6]
+[2025-05-30 04:25:32,910][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 402 Payment Required"
+[2025-05-30 04:25:33,486][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 402 Payment Required"
+[2025-05-30 04:25:34,068][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 402 Payment Required"
+[2025-05-30 04:25:34,659][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 402 Payment Required"

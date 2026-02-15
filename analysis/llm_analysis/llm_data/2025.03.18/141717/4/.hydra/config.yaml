@@ -1,0 +1,16 @@
+read_path_parent: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/
+read_path_wc:
+- 2025.03.17/223904/*/action_log_trial-*.jsonl
+expl_filter:
+  env_kwargs:
+    num_objects: 8
+  agent:
+    explore_strategy: object_count
+use_threadpool: true
+tp_max_workers: 16
+system_msg_path: ./agent/prompts/system_qa_math_def.txt
+prompt_method: default
+model: gpt-4o-2024-08-06
+temperature: 0.0
+save_trial_log: true
+seed: 14

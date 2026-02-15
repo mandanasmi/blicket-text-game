@@ -1,0 +1,12 @@
+model,rule,mean,std,count,se
+deepseek-chat,conjunctive,1.0,,1,0.0
+deepseek-chat,disjunctive,1.0,0.0,37,0.0
+deepseek-reasoner,conjunctive,1.0,0.0,2,0.0
+deepseek-reasoner,disjunctive,1.0,0.0,21,0.0
+gemma3:27b,conjunctive,1.0,0.0,2,0.0
+gemma3:27b,disjunctive,1.0,0.0,16,0.0
+gpt-4o,conjunctive,1.0,,1,0.0
+gpt-4o,disjunctive,1.0,0.0,59,0.0
+gpt-4o-mini,conjunctive,1.0,0.0,7,0.0
+gpt-4o-mini,disjunctive,1.0,0.0,72,0.0
+qwq,disjunctive,1.0,0.0,7,0.0

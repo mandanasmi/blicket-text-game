@@ -1,0 +1,76 @@
+[2025-03-25 04:45:16,222][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.25/002758/6
+[2025-03-25 04:45:16,222][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 32 trials...
+[2025-03-25 04:45:16,270][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,418][__main__][INFO] - Trial: 1. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aaf50b90>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-25 04:45:16,443][__main__][INFO] - Trial: 2. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aaf51210>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-25 04:45:16,447][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ae7907d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-25 04:45:16,450][__main__][INFO] - Trial: 4. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aaec43d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 3]
+[2025-03-25 04:45:16,453][__main__][INFO] - Trial: 6. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab0f2290>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-25 04:45:16,454][__main__][INFO] - Trial: 5. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab42a0d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 2]
+[2025-03-25 04:45:16,461][__main__][INFO] - Trial: 7. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aacf16d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-25 04:45:16,462][__main__][INFO] - Trial: 3. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f1879747190>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [2, 3]
+[2025-03-25 04:45:16,470][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,471][openai._base_client][INFO] - Retrying request to /chat/completions in 0.399638 seconds
+[2025-03-25 04:45:16,518][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,518][openai._base_client][INFO] - Retrying request to /chat/completions in 0.376340 seconds
+[2025-03-25 04:45:16,717][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,717][openai._base_client][INFO] - Retrying request to /chat/completions in 0.423050 seconds
+[2025-03-25 04:45:16,744][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,744][openai._base_client][INFO] - Retrying request to /chat/completions in 0.452239 seconds
+[2025-03-25 04:45:16,750][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,751][openai._base_client][INFO] - Retrying request to /chat/completions in 0.491961 seconds
+[2025-03-25 04:45:16,757][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,757][openai._base_client][INFO] - Retrying request to /chat/completions in 0.860145 seconds
+[2025-03-25 04:45:16,762][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,763][openai._base_client][INFO] - Retrying request to /chat/completions in 0.468505 seconds
+[2025-03-25 04:45:16,770][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,770][openai._base_client][INFO] - Retrying request to /chat/completions in 0.407642 seconds
+[2025-03-25 04:45:16,787][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,787][openai._base_client][INFO] - Retrying request to /chat/completions in 0.442373 seconds
+[2025-03-25 04:45:16,804][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,804][openai._base_client][INFO] - Retrying request to /chat/completions in 0.893785 seconds
+[2025-03-25 04:45:16,874][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,874][openai._base_client][INFO] - Retrying request to /chat/completions in 0.795942 seconds
+[2025-03-25 04:45:16,878][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,879][openai._base_client][INFO] - Retrying request to /chat/completions in 0.766695 seconds
+[2025-03-25 04:45:16,903][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:16,903][openai._base_client][INFO] - Retrying request to /chat/completions in 0.473094 seconds
+[2025-03-25 04:45:17,152][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,152][openai._base_client][INFO] - Retrying request to /chat/completions in 0.905511 seconds
+[2025-03-25 04:45:17,174][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,175][openai._base_client][INFO] - Retrying request to /chat/completions in 0.844760 seconds
+[2025-03-25 04:45:17,271][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,271][openai._base_client][INFO] - Retrying request to /chat/completions in 0.456214 seconds
+[2025-03-25 04:45:17,283][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,283][openai._base_client][INFO] - Retrying request to /chat/completions in 0.805039 seconds
+[2025-03-25 04:45:17,442][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,443][openai._base_client][INFO] - Retrying request to /chat/completions in 0.760634 seconds
+[2025-03-25 04:45:17,450][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,450][openai._base_client][INFO] - Retrying request to /chat/completions in 0.780141 seconds
+[2025-03-25 04:45:17,494][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,494][openai._base_client][INFO] - Retrying request to /chat/completions in 0.870433 seconds
+[2025-03-25 04:45:17,503][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,504][openai._base_client][INFO] - Retrying request to /chat/completions in 0.793071 seconds
+[2025-03-25 04:45:17,517][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,517][openai._base_client][INFO] - Retrying request to /chat/completions in 0.840110 seconds
+[2025-03-25 04:45:17,712][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,713][openai._base_client][INFO] - Retrying request to /chat/completions in 0.847158 seconds
+[2025-03-25 04:45:17,896][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,921][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,950][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:17,986][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,002][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,002][openai._base_client][INFO] - Retrying request to /chat/completions in 0.864192 seconds
+[2025-03-25 04:45:18,107][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,107][openai._base_client][INFO] - Retrying request to /chat/completions in 0.939874 seconds
+[2025-03-25 04:45:18,299][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,335][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,368][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,504][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,529][__main__][INFO] - Trial: 8. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aaf828d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 3]
+[2025-03-25 04:45:18,577][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,601][__main__][INFO] - Trial: 9. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab2b0210>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [2, 3]
+[2025-03-25 04:45:18,613][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,635][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:18,639][__main__][INFO] - Trial: 10. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aae55350>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 2]
+[2025-03-25 04:45:18,639][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"

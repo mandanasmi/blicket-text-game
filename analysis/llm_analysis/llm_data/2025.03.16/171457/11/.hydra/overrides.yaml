@@ -1,0 +1,14 @@
+- agent=prompts_llm
+- use_threadpool=True
+- tp_max_workers=8
+- num_trials=16
+- max_actions_per_trial=32
+- env_kwargs.rule=disjunctive
+- env_kwargs.num_objects=6
+- env_kwargs.num_blickets=3
+- env_kwargs.transition_noise=0.0
+- agent.model=gpt-4o-2024-08-06
+- agent.temperature=0.0
+- agent.react=False
+- agent.system_msg_path=./agent/prompts/system_math_def.txt
+- seed=21

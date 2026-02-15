@@ -1,0 +1,6 @@
+[2025-03-27 22:57:01,410][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.27/test_225701
+[2025-03-27 22:57:01,410][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 1 trials...
+[2025-03-27 22:57:01,985][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f1d0a37c790>, with 3 objects. Object names: ['object 0', 'object 1', 'object 2']. Blicket indices: [1, 2]
+[2025-03-27 22:57:03,268][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-27 22:57:03,747][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-27 22:57:04,303][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

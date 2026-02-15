@@ -1,0 +1,16 @@
+- agent=hypo_elim_lm
+- use_threadpool=True
+- tp_max_workers=16
+- num_trials=16
+- max_actions_per_trial=32
+- env_kwargs.rule=conjunctive
+- env_kwargs.num_objects=8
+- env_kwargs.num_blickets=2
+- env_kwargs.transition_noise=0.0
+- agent.model=gpt-4o-2024-08-06
+- agent.temperature=0.0
+- agent.system_msg_path=./agent/prompts/system_human_conj_hyp.txt
+- agent.prompt_type=default
+- agent.add_elim_hypothesis=True
+- agent.hyp_space_update=elim_add
+- seed=25

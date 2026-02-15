@@ -1,0 +1,8 @@
+# num_objects=4
+# One step per line:  ACTION | Machine: ON  or  Machine: OFF
+place Object 1 on the machine | Machine: OFF
+place Object 2 on the machine | Machine: OFF
+place Object 1 on the machine | Machine: ON
+take Object 1 off the machine | Machine: OFF
+place Object 1 on the machine | Machine: ON
+place Object 2 on the machine | Machine: ON

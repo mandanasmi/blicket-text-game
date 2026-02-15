@@ -1,0 +1,10 @@
+- agent=oracle_agent
+- use_threadpool=True
+- tp_max_workers=16
+- num_trials=16
+- max_actions_per_trial=32
+- env_kwargs.rule=conjunctive
+- env_kwargs.num_objects=3
+- env_kwargs.num_blickets=2
+- env_kwargs.transition_noise=0.0
+- seed=12

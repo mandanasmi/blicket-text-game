@@ -1,0 +1,39 @@
+% Add these definitions to your evaluation metrics section (after the three binary accuracy measures)
+% To use as a standalone document, uncomment the preamble and \end{document} below:
+%
+% \documentclass[11pt]{article}
+% \usepackage{amsmath,amssymb}
+% \begin{document}
+
+We additionally defined three exploration-process measures derived from participants' test sequences:
+
+\textit{4. Information gain per test.} One way to measure optimal behaviour in the Blicket Test is through each action's informativeness (Kosoy et al., 2022b). Concretely, the hypothesis space $\mathcal{F}$ is the set of functions mapping from the objects' states (on or off the machine) $x \in \mathcal{X}$ to the machine's state (light is on or off) $y \in \mathcal{Y}$: $\mathcal{F}: \mathcal{X} \to \mathcal{Y}$. The agent's goal is to discover the correct $F \in \mathcal{F}$ via maximizing information gain (Bernardo, 1979; Rainforth et al., 2024):
+\begin{equation}
+\text{InfoGain}(x, y) := H[p(F)] - H[p(F|x, y)]
+\end{equation}
+This describes the reduction in (Shannon) entropy from the prior over the hypothesis space, $p(F)$, to the posterior after observing new data, $p(F|x, y)$. In the Blicket Test, the hypothesis space is discrete, consisting of all combinations of items being nexioms with the number of rules (conjunctive vs.\ disjunctive). Further, if we assume the distribution $p(F)$ is always uniform over all non-zero hypotheses, then maximizing information gain corresponds to eliminating the most hypotheses. When all but one hypothesis remains, $p(F)$ has zero entropy and no further information gain is possible.
+
+In practice, an agent does not know the outcome $y$ a priori. It can instead maximize expected information gain:
+\begin{equation}
+G(x) := \mathbb{E}_{p(y|x)}\bigl[\text{InfoGain}(x, y)\bigr] = \mathbb{E}_{p(F)p(y|F,x)}\bigl[\log p(F|x, y) - \log p(F)\bigr]
+\end{equation}
+
+Operationally, we compute information gain per test $t$ from participants' observed sequences. With a uniform prior over the $N_{t-1}$ hypotheses consistent before test $t$, entropy is $H[p(F)] = \log_2(N_{t-1})$ bits; after observing the outcome, $N_t$ hypotheses remain and $H[p(F|x,y)] = \log_2(N_t)$ bits. Thus:
+\begin{equation}
+\text{IG}_t = \log_2\left(\frac{N_{t-1}}{N_t}\right) \quad \text{(bits)}
+\end{equation}
+with $N_{t-1} > 0$ and $N_t > 0$; if $N_t = 0$, we use $\text{IG}_t = \log_2(N_{t-1})$. We report the mean information gain per test across all tests for each participant.
+
+\textit{5. Cumulative information gain} is the sum of information gains across all tests performed up to a given test number. Let $t$ denote the test index (1, 2, 3, \ldots) and $k$ denote the test number up to which we sum. Then for test $k$:
+\begin{equation}
+\text{CIG}_k = \sum_{t=1}^{k} \text{IG}_t
+\end{equation}
+where $\text{IG}_t$ is the information gain from test $t$ (Eq.~4). It measures the total amount of uncertainty resolved by the participant's test sequence up to that point.
+
+\textit{6. Number of hypotheses remaining} tracks how many full hypotheses are still consistent with the test outcomes after each test. The full hypothesis space $\mathcal{H}$ comprises all pairs of (nexiom set, rule), where each nexiom set is a subset of objects (including the empty set) and each rule is either conjunctive or disjunctive ($|\mathcal{H}| = 32$ initially). Let $\mathcal{H}_t$ denote the set of hypotheses consistent with outcomes of tests 1 through $t$. Then the number of hypotheses remaining after test $t$ is:
+\begin{equation}
+R_t = |\mathcal{H}_t|
+\end{equation}
+where $\mathcal{H}_t \subseteq \mathcal{H}_{t-1}$ and $\mathcal{H}_0 = \mathcal{H}$. The sequence $R_t$ decreases (or stays constant) as tests eliminate inconsistent hypotheses, reaching 1 when the hypothesis space is fully resolved.
+
+% \end{document}

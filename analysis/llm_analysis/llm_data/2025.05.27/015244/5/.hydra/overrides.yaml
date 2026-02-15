@@ -1,0 +1,14 @@
+- agent=oreason_prompts_llm
+- use_threadpool=True
+- tp_max_workers=8
+- num_trials=8
+- max_actions_per_trial=32
+- env_kwargs.rule=disjunctive
+- env_kwargs.num_objects=8
+- env_kwargs.num_blickets=2
+- env_kwargs.transition_noise=0.0
+- agent.model=o3-mini-2025-01-31
+- agent.reasoning_effort=medium
+- agent.react=False
+- agent.system_msg_path=./agent/prompts/system_math_def.txt
+- seed=18

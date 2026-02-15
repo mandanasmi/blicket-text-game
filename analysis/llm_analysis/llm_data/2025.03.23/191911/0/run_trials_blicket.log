@@ -1,0 +1,10 @@
+[2025-03-23 19:19:11,937][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.23/191911/0
+[2025-03-23 19:19:11,937][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 32 trials...
+[2025-03-23 19:19:12,763][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f987898e350>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [5, 6]
+[2025-03-23 19:19:13,051][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:19:13,434][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:19:13,733][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:19:14,041][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:19:14,344][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:19:14,650][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:19:14,963][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"

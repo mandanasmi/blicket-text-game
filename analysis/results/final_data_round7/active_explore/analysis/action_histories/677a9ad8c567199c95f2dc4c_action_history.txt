@@ -1,2 +1,0 @@
-    action 1: Placed Object 2 on machine,
-    action 2: Test the machine -> Nexiom machine is OFF,

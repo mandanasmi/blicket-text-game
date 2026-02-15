@@ -1,7 +1,0 @@
-    action 1: Placed Object 1 on machine,
-    action 2: Placed Object 3 on machine,
-    action 3: Test the machine -> Nexiom machine is OFF,
-    action 4: Removed Object 1 from machine,
-    action 5: Removed Object 3 from machine,
-    action 6: Placed Object 2 on machine,
-    action 7: Placed Object 4 on machine,

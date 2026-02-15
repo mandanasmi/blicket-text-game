@@ -1,0 +1,132 @@
+[2025-03-07 00:12:48,306][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.07/001108/1
+[2025-03-07 00:12:48,307][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f09d3c80790>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [2, 3]
+[2025-03-07 00:12:48,307][__main__][INFO] - Running agent <agent.agents.NaiveLLM object at 0x7f09d3b82110> for 16 trials...
+[2025-03-07 00:12:48,307][__main__][INFO] - Starting trial 0...
+[2025-03-07 00:12:50,985][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:12:52,179][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:12:53,362][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:12:54,375][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:12:55,421][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:12:55,423][__main__][INFO] - Trial 0 completed in 1 steps. Questions correct: 3/4
+[2025-03-07 00:12:55,423][__main__][INFO] - Estimated cost so far: 0.00060885
+[2025-03-07 00:12:55,423][__main__][INFO] - Starting trial 1...
+[2025-03-07 00:12:56,529][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:12:58,139][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:12:59,161][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:00,225][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:01,186][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:01,192][__main__][INFO] - Trial 1 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:13:01,192][__main__][INFO] - Estimated cost so far: 0.0011075999999999998
+[2025-03-07 00:13:01,192][__main__][INFO] - Starting trial 2...
+[2025-03-07 00:13:02,018][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:02,607][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:03,374][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:04,130][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:07,850][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:07,852][__main__][INFO] - Trial 2 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:13:07,852][__main__][INFO] - Estimated cost so far: 0.00158895
+[2025-03-07 00:13:07,852][__main__][INFO] - Starting trial 3...
+[2025-03-07 00:13:08,951][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:09,668][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:10,744][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:11,940][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:12,814][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:12,815][__main__][INFO] - Trial 3 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:13:12,815][__main__][INFO] - Estimated cost so far: 0.0020733
+[2025-03-07 00:13:12,815][__main__][INFO] - Starting trial 4...
+[2025-03-07 00:13:13,991][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:14,749][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:16,028][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:17,120][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:18,373][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:18,374][__main__][INFO] - Trial 4 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:13:18,374][__main__][INFO] - Estimated cost so far: 0.0026107500000000002
+[2025-03-07 00:13:18,374][__main__][INFO] - Starting trial 5...
+[2025-03-07 00:13:19,705][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:21,037][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:22,081][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:23,314][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:24,059][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:24,065][__main__][INFO] - Trial 5 completed in 1 steps. Questions correct: 3/4
+[2025-03-07 00:13:24,066][__main__][INFO] - Estimated cost so far: 0.0031944000000000005
+[2025-03-07 00:13:24,066][__main__][INFO] - Starting trial 6...
+[2025-03-07 00:13:25,465][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:26,283][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:27,403][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:28,967][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:30,669][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:30,670][__main__][INFO] - Trial 6 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:13:30,670][__main__][INFO] - Estimated cost so far: 0.0037450500000000006
+[2025-03-07 00:13:30,670][__main__][INFO] - Starting trial 7...
+[2025-03-07 00:13:31,746][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:32,884][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:33,615][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:34,375][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:35,308][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:35,309][__main__][INFO] - Trial 7 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:13:35,310][__main__][INFO] - Estimated cost so far: 0.0042354
+[2025-03-07 00:13:35,310][__main__][INFO] - Starting trial 8...
+[2025-03-07 00:13:37,044][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:37,701][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:38,713][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:39,687][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:40,639][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:40,643][__main__][INFO] - Trial 8 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:13:40,643][__main__][INFO] - Estimated cost so far: 0.00474015
+[2025-03-07 00:13:40,643][__main__][INFO] - Starting trial 9...
+[2025-03-07 00:13:41,957][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:43,293][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:44,427][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:46,054][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:47,054][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:47,063][__main__][INFO] - Trial 9 completed in 1 steps. Questions correct: 3/4
+[2025-03-07 00:13:47,063][__main__][INFO] - Estimated cost so far: 0.0053154000000000005
+[2025-03-07 00:13:47,064][__main__][INFO] - Starting trial 10...
+[2025-03-07 00:13:49,321][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:50,622][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:51,771][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:53,113][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:54,619][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:54,621][__main__][INFO] - Trial 10 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:13:54,621][__main__][INFO] - Estimated cost so far: 0.0058546499999999994
+[2025-03-07 00:13:54,621][__main__][INFO] - Starting trial 11...
+[2025-03-07 00:13:55,587][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:56,459][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:57,241][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:13:58,338][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:02,849][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:02,853][__main__][INFO] - Trial 11 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:14:02,853][__main__][INFO] - Estimated cost so far: 0.0063408
+[2025-03-07 00:14:02,853][__main__][INFO] - Starting trial 12...
+[2025-03-07 00:14:06,382][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:07,621][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:11,230][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:12,212][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:15,499][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:15,502][__main__][INFO] - Trial 12 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:14:15,502][__main__][INFO] - Estimated cost so far: 0.00689625
+[2025-03-07 00:14:15,502][__main__][INFO] - Starting trial 13...
+[2025-03-07 00:14:16,825][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:18,549][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:22,345][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:23,461][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:24,262][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:24,263][__main__][INFO] - Trial 13 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:14:24,263][__main__][INFO] - Estimated cost so far: 0.0074046
+[2025-03-07 00:14:24,263][__main__][INFO] - Starting trial 14...
+[2025-03-07 00:14:25,603][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:26,287][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:27,290][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:30,349][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:31,186][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:31,190][__main__][INFO] - Trial 14 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:14:31,190][__main__][INFO] - Estimated cost so far: 0.00791235
+[2025-03-07 00:14:31,190][__main__][INFO] - Starting trial 15...
+[2025-03-07 00:14:32,015][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:32,579][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:33,399][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:34,178][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:35,065][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-07 00:14:35,066][__main__][INFO] - Trial 15 completed in 1 steps. Questions correct: 2/4
+[2025-03-07 00:14:35,066][__main__][INFO] - Estimated cost so far: 0.008393099999999999
+[2025-03-07 00:14:35,066][__main__][INFO] - Estimated total cost: 0.008393099999999999

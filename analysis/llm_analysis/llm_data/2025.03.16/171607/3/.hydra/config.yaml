@@ -1,0 +1,21 @@
+agent:
+  _target_: agent.reflexion_llm.ReflexionPromptsAgent
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+  filter_actions: false
+  reflexion: true
+  model: gpt-4o-2024-08-06
+  temperature: 0.0
+  system_msg_path: ./agent/prompts/system_human.txt
+num_trials: 16
+max_actions_per_trial: 32
+save_trial_log: true
+use_threadpool: true
+tp_max_workers: 8
+seed: 21
+env_kwargs:
+  num_objects: 6
+  num_blickets: 3
+  init_prob: 0.1
+  transition_noise: 0.0
+  rule: disjunctive

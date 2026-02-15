@@ -1,0 +1,95 @@
+[2025-03-25 04:45:31,542][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.25/002758/12
+[2025-03-25 04:45:31,542][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 32 trials...
+[2025-03-25 04:45:31,733][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aad4ee50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [2, 7]
+[2025-03-25 04:45:31,750][__main__][INFO] - Trial: 1. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab317e50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 4]
+[2025-03-25 04:45:31,757][__main__][INFO] - Trial: 2. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab218ed0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [2, 3]
+[2025-03-25 04:45:31,767][__main__][INFO] - Trial: 5. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aaf53310>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 6]
+[2025-03-25 04:45:31,771][__main__][INFO] - Trial: 4. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aadaa5d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [2, 7]
+[2025-03-25 04:45:31,771][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:31,772][__main__][INFO] - Trial: 3. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab1b8310>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [2, 6]
+[2025-03-25 04:45:31,772][__main__][INFO] - Trial: 6. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aac5b2d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [2, 6]
+[2025-03-25 04:45:31,773][__main__][INFO] - Trial: 7. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aad7acd0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [0, 5]
+[2025-03-25 04:45:31,776][openai._base_client][INFO] - Retrying request to /chat/completions in 0.799276 seconds
+[2025-03-25 04:45:31,799][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:31,799][openai._base_client][INFO] - Retrying request to /chat/completions in 0.752680 seconds
+[2025-03-25 04:45:31,806][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:31,806][openai._base_client][INFO] - Retrying request to /chat/completions in 0.846101 seconds
+[2025-03-25 04:45:31,847][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:31,847][openai._base_client][INFO] - Retrying request to /chat/completions in 0.904478 seconds
+[2025-03-25 04:45:31,876][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:31,876][openai._base_client][INFO] - Retrying request to /chat/completions in 0.491961 seconds
+[2025-03-25 04:45:31,911][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:31,911][openai._base_client][INFO] - Retrying request to /chat/completions in 0.860145 seconds
+[2025-03-25 04:45:31,944][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 503 Service Unavailable"
+[2025-03-25 04:45:31,945][openai._base_client][INFO] - Retrying request to /chat/completions in 0.937010 seconds
+[2025-03-25 04:45:32,047][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,047][openai._base_client][INFO] - Retrying request to /chat/completions in 0.815285 seconds
+[2025-03-25 04:45:32,051][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,051][openai._base_client][INFO] - Retrying request to /chat/completions in 0.442373 seconds
+[2025-03-25 04:45:32,053][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,053][openai._base_client][INFO] - Retrying request to /chat/completions in 0.446893 seconds
+[2025-03-25 04:45:32,070][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,070][openai._base_client][INFO] - Retrying request to /chat/completions in 0.397971 seconds
+[2025-03-25 04:45:32,078][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,078][openai._base_client][INFO] - Retrying request to /chat/completions in 0.383348 seconds
+[2025-03-25 04:45:32,080][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,080][openai._base_client][INFO] - Retrying request to /chat/completions in 0.473094 seconds
+[2025-03-25 04:45:32,164][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,165][openai._base_client][INFO] - Retrying request to /chat/completions in 0.452756 seconds
+[2025-03-25 04:45:32,287][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,287][openai._base_client][INFO] - Retrying request to /chat/completions in 0.422380 seconds
+[2025-03-25 04:45:32,297][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,297][openai._base_client][INFO] - Retrying request to /chat/completions in 0.456214 seconds
+[2025-03-25 04:45:32,643][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,643][openai._base_client][INFO] - Retrying request to /chat/completions in 0.805039 seconds
+[2025-03-25 04:45:32,736][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,736][openai._base_client][INFO] - Retrying request to /chat/completions in 0.760634 seconds
+[2025-03-25 04:45:32,741][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,741][openai._base_client][INFO] - Retrying request to /chat/completions in 0.780141 seconds
+[2025-03-25 04:45:32,769][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,769][openai._base_client][INFO] - Retrying request to /chat/completions in 0.870433 seconds
+[2025-03-25 04:45:32,785][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,786][openai._base_client][INFO] - Retrying request to /chat/completions in 0.793071 seconds
+[2025-03-25 04:45:32,832][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,833][openai._base_client][INFO] - Retrying request to /chat/completions in 0.840110 seconds
+[2025-03-25 04:45:32,849][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,865][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,895][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:32,895][openai._base_client][INFO] - Retrying request to /chat/completions in 0.847158 seconds
+[2025-03-25 04:45:32,934][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,005][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,006][openai._base_client][INFO] - Retrying request to /chat/completions in 0.864192 seconds
+[2025-03-25 04:45:33,031][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,043][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,044][openai._base_client][INFO] - Retrying request to /chat/completions in 0.939874 seconds
+[2025-03-25 04:45:33,057][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,149][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,167][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,727][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,774][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,799][__main__][INFO] - Trial: 8. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab2555d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [5, 6]
+[2025-03-25 04:45:33,802][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,826][__main__][INFO] - Trial: 9. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab256850>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 4]
+[2025-03-25 04:45:33,855][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,881][__main__][INFO] - Trial: 10. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab222910>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [4, 5]
+[2025-03-25 04:45:33,912][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,938][__main__][INFO] - Trial: 11. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17a835f9d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [5, 7]
+[2025-03-25 04:45:33,944][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:33,968][__main__][INFO] - Trial: 12. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab421550>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 6]
+[2025-03-25 04:45:34,091][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:34,091][openai._base_client][INFO] - Retrying request to /chat/completions in 0.444972 seconds
+[2025-03-25 04:45:34,112][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:34,112][openai._base_client][INFO] - Retrying request to /chat/completions in 0.477002 seconds
+[2025-03-25 04:45:34,155][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:34,171][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:34,172][openai._base_client][INFO] - Retrying request to /chat/completions in 0.441878 seconds
+[2025-03-25 04:45:34,181][__main__][INFO] - Trial: 13. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17aaf298d0>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [1, 2]
+[2025-03-25 04:45:34,238][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:34,238][openai._base_client][INFO] - Retrying request to /chat/completions in 0.400441 seconds
+[2025-03-25 04:45:34,247][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:34,247][openai._base_client][INFO] - Retrying request to /chat/completions in 0.491342 seconds
+[2025-03-25 04:45:34,290][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:34,314][__main__][INFO] - Trial: 14. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f17ab08cd50>, with 8 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7']. Blicket indices: [5, 6]
+[2025-03-25 04:45:34,469][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-25 04:45:34,469][openai._base_client][INFO] - Retrying request to /chat/completions in 0.466456 seconds
+[2025-03-25 04:45:34,542][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 500 Internal Server Error"

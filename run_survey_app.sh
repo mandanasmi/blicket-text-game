@@ -16,4 +16,4 @@ if [ -d "venv" ]; then
   source venv/bin/activate
 fi
 
-streamlit run survey_app/app.py --server.port 8504
+streamlit run passive_app/app.py --server.port 8504

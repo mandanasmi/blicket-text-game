@@ -1,0 +1,17 @@
+trial_idx,unique_state_visited,turn_machine_on,num_steps,total_reward,num_questions,num_correct
+0,16,True,32,0.0,8,7
+1,11,True,32,0.0,8,5
+2,14,True,32,0.0,8,7
+3,1,False,32,0.0,8,6
+4,11,True,32,0.0,8,7
+5,16,True,32,0.0,8,6
+6,15,True,32,0.0,8,5
+7,14,True,32,0.0,8,7
+8,13,True,32,0.0,8,2
+9,15,True,32,0.0,8,6
+10,12,True,32,0.0,8,6
+11,1,False,32,0.0,8,6
+12,12,True,32,0.0,8,8
+13,14,True,32,0.0,8,6
+14,13,True,32,0.0,8,6
+15,9,False,32,0.0,8,6

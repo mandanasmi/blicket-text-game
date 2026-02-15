@@ -1,0 +1,43 @@
+[2025-03-14 16:15:13,197][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.14/161510/2
+[2025-03-14 16:15:13,197][__main__][INFO] - Running agent agent.oracle_agent.OracleAgent for 20 trials...
+[2025-03-14 16:15:13,198][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77acd2a50>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [0, 4]
+[2025-03-14 16:15:13,200][__main__][INFO] - Trial: 1. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77acd5cd0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [0, 4]
+[2025-03-14 16:15:13,209][__main__][INFO] - Trial: 2. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77acee2d0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [3, 4]
+[2025-03-14 16:15:13,214][__main__][INFO] - Trial: 3. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77aced010>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [0, 1]
+[2025-03-14 16:15:13,232][__main__][INFO] - Trial: 4. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77ace3bd0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [3, 5]
+[2025-03-14 16:15:13,240][__main__][INFO] - Trial: 5. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77ace2850>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 5]
+[2025-03-14 16:15:13,242][__main__][INFO] - Trial: 6. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77ace16d0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [0, 1]
+[2025-03-14 16:15:13,246][__main__][INFO] - Trial: 7. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77ace5bd0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [0, 2]
+[2025-03-14 16:15:13,258][__main__][INFO] - Trial: 8. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77ace4f10>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [4, 5]
+[2025-03-14 16:15:13,286][__main__][INFO] - Trial: 9. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77accf590>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [4, 5]
+[2025-03-14 16:15:13,330][__main__][INFO] - Trial: 11. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77acbf610>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 2]
+[2025-03-14 16:15:13,350][__main__][INFO] - Trial: 10. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77accc650>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [2, 4]
+[2025-03-14 16:15:13,355][__main__][INFO] - Trial: 12. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77ace7810>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [2, 5]
+[2025-03-14 16:15:13,364][__main__][INFO] - Trial: 13. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd6899e9f50>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 4]
+[2025-03-14 16:15:13,366][__main__][INFO] - Trial: 14. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd732b49d90>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 2]
+[2025-03-14 16:15:13,377][__main__][INFO] - Trial: 15. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77ac61c90>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 5]
+[2025-03-14 16:15:15,317][__main__][INFO] - Trial 13 completed in 6 steps. Questions correct: 6/6
+[2025-03-14 16:15:15,446][__main__][INFO] - Trial: 16. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77ace7f90>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [2, 5]
+[2025-03-14 16:15:15,773][__main__][INFO] - Trial 0 completed in 7 steps. Questions correct: 6/6
+[2025-03-14 16:15:15,930][__main__][INFO] - Trial: 17. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77acd1e10>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [4, 5]
+[2025-03-14 16:15:15,946][__main__][INFO] - Trial 14 completed in 7 steps. Questions correct: 6/6
+[2025-03-14 16:15:15,951][__main__][INFO] - Trial 10 completed in 8 steps. Questions correct: 6/6
+[2025-03-14 16:15:15,994][__main__][INFO] - Trial 5 completed in 9 steps. Questions correct: 6/6
+[2025-03-14 16:15:16,039][__main__][INFO] - Trial: 18. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd68bdb3950>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [3, 4]
+[2025-03-14 16:15:16,133][__main__][INFO] - Trial: 19. Environment: <env.blicket_text.BlicketTextEnv object at 0x7fd77accc0d0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [0, 5]
+[2025-03-14 16:15:16,271][__main__][INFO] - Trial 7 completed in 8 steps. Questions correct: 6/6
+[2025-03-14 16:15:16,633][__main__][INFO] - Trial 1 completed in 11 steps. Questions correct: 6/6
+[2025-03-14 16:15:16,695][__main__][INFO] - Trial 9 completed in 10 steps. Questions correct: 6/6
+[2025-03-14 16:15:16,729][__main__][INFO] - Trial 8 completed in 10 steps. Questions correct: 6/6
+[2025-03-14 16:15:16,814][__main__][INFO] - Trial 3 completed in 12 steps. Questions correct: 6/6
+[2025-03-14 16:15:16,815][__main__][INFO] - Trial 17 completed in 4 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,060][__main__][INFO] - Trial 15 completed in 11 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,124][__main__][INFO] - Trial 12 completed in 13 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,415][__main__][INFO] - Trial 11 completed in 12 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,529][__main__][INFO] - Trial 16 completed in 7 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,619][__main__][INFO] - Trial 2 completed in 14 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,744][__main__][INFO] - Trial 18 completed in 9 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,765][__main__][INFO] - Trial 19 completed in 11 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,893][__main__][INFO] - Trial 4 completed in 19 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,924][__main__][INFO] - Trial 6 completed in 20 steps. Questions correct: 6/6
+[2025-03-14 16:15:17,925][__main__][INFO] - Num trials: 20. Total time: 4.728312. Estimated total cost: 0.0.

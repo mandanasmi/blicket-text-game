@@ -1,0 +1,4 @@
+[2025-03-25 16:22:30,109][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.25/test_162230
+[2025-03-25 16:22:30,109][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 1 trials...
+[2025-03-25 16:22:30,924][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f3bc1523c10>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 2]
+[2025-03-25 16:22:31,247][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"

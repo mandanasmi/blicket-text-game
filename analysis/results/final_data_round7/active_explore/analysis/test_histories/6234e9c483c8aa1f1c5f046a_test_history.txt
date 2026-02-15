@@ -1,6 +1,0 @@
-test1 -> object 1, object 2 -> machine on
-test2 -> object 1 -> machine on
-test3 -> object 2 -> machine off
-test4 -> object 3 -> machine off
-test5 -> object 4 -> machine on
-test6 -> object 1, object 4 -> machine on

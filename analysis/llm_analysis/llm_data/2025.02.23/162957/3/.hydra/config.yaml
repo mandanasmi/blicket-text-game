@@ -1,0 +1,18 @@
+agent:
+  _target_: agent.agents.NaiveLLM
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+  filter_actions: false
+  model: gpt-4o-mini-2024-07-18
+  react: true
+num_trials: 16
+max_actions_per_trial: 32
+save_lm_log: true
+seed: 11
+env_kwargs:
+  num_objects: 6
+  num_blickets: 2
+  init_prob: 0.1
+  transition_noise: 0.05
+  rule: conjunctive
+  seed: ${seed}

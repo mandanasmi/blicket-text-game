@@ -1,0 +1,25 @@
+agent:
+  _target_: agent.hypo_code_lm.HypothesisCodeAgent
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+  filter_actions: false
+  prompt_type: default
+  model: gpt-4o-mini-2024-07-18
+  temperature: 0.0
+  system_msg_path: ./agent/prompts/system_human_conj.txt
+  hyp_gen_msg_path: ./agent/prompts/hyp_gen_func.txt
+  infer_state: false
+  gen_n_hypothesis: 32
+  add_elim_hypothesis: true
+num_trials: 16
+max_actions_per_trial: 32
+save_trial_log: true
+use_threadpool: true
+tp_max_workers: 16
+seed: 23
+env_kwargs:
+  num_objects: 8
+  num_blickets: 2
+  init_prob: 0.1
+  transition_noise: 0.0
+  rule: conjunctive

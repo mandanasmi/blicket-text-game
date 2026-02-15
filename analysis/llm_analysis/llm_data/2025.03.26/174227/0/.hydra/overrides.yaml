@@ -1,0 +1,11 @@
+- use_threadpool=True
+- tp_max_workers=32
+- system_msg_path=./agent/prompts/system_qa_human.txt
+- prompt_method=default
+- model=deepseek-reasoner
+- read_path_parent=/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/
+- read_path_wc=[2025.03.14/010645/*/action_log_trial-*.jsonl,2025.03.14/010942/*/action_log_trial-*.jsonl,2025.03.16/170513/*/action_log_trial-*.jsonl]
+- +expl_filter.agent.system_msg_path=./agent/prompts/system_human_conj.txt
+- +expl_filter.agent.react=False
+- +expl_filter.env_kwargs.num_objects=8
+- seed=20

@@ -1,0 +1,21 @@
+agent:
+  _target_: agent.prompts_llm.PromptsAgent
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+  filter_actions: false
+  react: false
+  model: deepseek-chat
+  temperature: 0.0
+  system_msg_path: ./agent/prompts/system_human.txt
+num_trials: 1
+max_actions_per_trial: 8
+save_trial_log: true
+use_threadpool: false
+tp_max_workers: 1
+seed: 30
+env_kwargs:
+  num_objects: 4
+  num_blickets: 2
+  init_prob: 0.1
+  transition_noise: 0.0
+  rule: disjunctive

@@ -1,0 +1,6 @@
+- num_trials=32
+- num_seeds=1
+- condition=conjunctive
+- model=deepseek-reasoner
+- two_training_trials=True
+- temperature=0.2

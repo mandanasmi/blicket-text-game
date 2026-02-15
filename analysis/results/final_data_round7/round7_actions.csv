@@ -1,0 +1,2893 @@
+user_id,action_index,action_text,test_index
+558955ebfdf99b6bd06016c9,1,Placed Object 1 on machine,1
+558955ebfdf99b6bd06016c9,2,Placed Object 2 on machine,1
+558955ebfdf99b6bd06016c9,3,Test Result: Nexiom machine is OFF,1
+558955ebfdf99b6bd06016c9,4,Removed Object 1 from machine,2
+558955ebfdf99b6bd06016c9,5,Removed Object 2 from machine,2
+558955ebfdf99b6bd06016c9,6,Placed Object 3 on machine,2
+558955ebfdf99b6bd06016c9,7,Placed Object 4 on machine,2
+558955ebfdf99b6bd06016c9,8,Test Result: Nexiom machine is OFF,2
+558955ebfdf99b6bd06016c9,9,Removed Object 3 from machine,3
+558955ebfdf99b6bd06016c9,10,Removed Object 4 from machine,3
+558955ebfdf99b6bd06016c9,11,Placed Object 1 on machine,3
+558955ebfdf99b6bd06016c9,12,Placed Object 3 on machine,3
+558955ebfdf99b6bd06016c9,13,Test Result: Nexiom machine is OFF,3
+558955ebfdf99b6bd06016c9,14,Removed Object 1 from machine,4
+558955ebfdf99b6bd06016c9,15,Removed Object 3 from machine,4
+558955ebfdf99b6bd06016c9,16,Placed Object 2 on machine,4
+558955ebfdf99b6bd06016c9,17,Placed Object 4 on machine,4
+558955ebfdf99b6bd06016c9,18,Test Result: Nexiom machine is ON,4
+558955ebfdf99b6bd06016c9,19,Removed Object 2 from machine,5
+558955ebfdf99b6bd06016c9,20,Removed Object 4 from machine,5
+558955ebfdf99b6bd06016c9,21,Placed Object 1 on machine,5
+558955ebfdf99b6bd06016c9,22,Placed Object 4 on machine,5
+558955ebfdf99b6bd06016c9,23,Test Result: Nexiom machine is OFF,5
+558955ebfdf99b6bd06016c9,24,Removed Object 4 from machine,6
+558955ebfdf99b6bd06016c9,25,Removed Object 1 from machine,6
+558955ebfdf99b6bd06016c9,26,Placed Object 2 on machine,6
+558955ebfdf99b6bd06016c9,27,Placed Object 3 on machine,6
+558955ebfdf99b6bd06016c9,28,Test Result: Nexiom machine is OFF,6
+558955ebfdf99b6bd06016c9,29,Removed Object 2 from machine,7
+558955ebfdf99b6bd06016c9,30,Removed Object 3 from machine,7
+558955ebfdf99b6bd06016c9,31,Placed Object 1 on machine,7
+558955ebfdf99b6bd06016c9,32,Placed Object 2 on machine,7
+558955ebfdf99b6bd06016c9,33,Placed Object 3 on machine,7
+558955ebfdf99b6bd06016c9,34,Test Result: Nexiom machine is OFF,7
+558955ebfdf99b6bd06016c9,35,Removed Object 3 from machine,8
+558955ebfdf99b6bd06016c9,36,Placed Object 4 on machine,8
+558955ebfdf99b6bd06016c9,37,Test Result: Nexiom machine is ON,8
+558955ebfdf99b6bd06016c9,38,Placed Object 3 on machine,9
+558955ebfdf99b6bd06016c9,39,Removed Object 2 from machine,9
+558955ebfdf99b6bd06016c9,40,Test Result: Nexiom machine is OFF,9
+558955ebfdf99b6bd06016c9,41,Placed Object 2 on machine,10
+558955ebfdf99b6bd06016c9,42,Removed Object 1 from machine,10
+558955ebfdf99b6bd06016c9,43,Test Result: Nexiom machine is ON,10
+558955ebfdf99b6bd06016c9,44,Placed Object 1 on machine,11
+558955ebfdf99b6bd06016c9,45,Test Result: Nexiom machine is ON,11
+558955ebfdf99b6bd06016c9,46,Removed Object 2 from machine,12
+558955ebfdf99b6bd06016c9,47,Removed Object 3 from machine,12
+558955ebfdf99b6bd06016c9,48,Removed Object 4 from machine,12
+558955ebfdf99b6bd06016c9,49,Test Result: Nexiom machine is OFF,12
+558955ebfdf99b6bd06016c9,50,Placed Object 2 on machine,13
+558955ebfdf99b6bd06016c9,51,Removed Object 1 from machine,13
+558955ebfdf99b6bd06016c9,52,Test Result: Nexiom machine is OFF,13
+558955ebfdf99b6bd06016c9,53,Removed Object 2 from machine,14
+558955ebfdf99b6bd06016c9,54,Placed Object 3 on machine,14
+558955ebfdf99b6bd06016c9,55,Test Result: Nexiom machine is OFF,14
+558955ebfdf99b6bd06016c9,56,Removed Object 3 from machine,15
+558955ebfdf99b6bd06016c9,57,Placed Object 4 on machine,15
+558955ebfdf99b6bd06016c9,58,Test Result: Nexiom machine is OFF,15
+558955ebfdf99b6bd06016c9,59,Removed Object 4 from machine,16
+56e32190e414dc000c8b40ae,1,Placed Object 1 on machine,1
+56e32190e414dc000c8b40ae,2,Placed Object 2 on machine,1
+56e32190e414dc000c8b40ae,3,Test Result: Nexiom machine is ON,1
+56e32190e414dc000c8b40ae,4,Removed Object 2 from machine,2
+56e32190e414dc000c8b40ae,5,Test Result: Nexiom machine is OFF,2
+56e32190e414dc000c8b40ae,6,Removed Object 1 from machine,3
+56e32190e414dc000c8b40ae,7,Placed Object 2 on machine,3
+56e32190e414dc000c8b40ae,8,Test Result: Nexiom machine is ON,3
+56e32190e414dc000c8b40ae,9,Removed Object 2 from machine,4
+56e32190e414dc000c8b40ae,10,Placed Object 3 on machine,4
+56e32190e414dc000c8b40ae,11,Test Result: Nexiom machine is ON,4
+56e32190e414dc000c8b40ae,12,Removed Object 3 from machine,5
+56e32190e414dc000c8b40ae,13,Placed Object 4 on machine,5
+56e32190e414dc000c8b40ae,14,Test Result: Nexiom machine is OFF,5
+56e32190e414dc000c8b40ae,15,Placed Object 1 on machine,6
+56e32190e414dc000c8b40ae,16,Test Result: Nexiom machine is OFF,6
+56e32190e414dc000c8b40ae,17,Removed Object 1 from machine,7
+56e32190e414dc000c8b40ae,18,Removed Object 4 from machine,7
+56e32190e414dc000c8b40ae,19,Placed Object 3 on machine,7
+56e32190e414dc000c8b40ae,20,Placed Object 2 on machine,7
+56e32190e414dc000c8b40ae,21,Test Result: Nexiom machine is ON,7
+56e32190e414dc000c8b40ae,22,Removed Object 2 from machine,8
+56e32190e414dc000c8b40ae,23,Removed Object 3 from machine,8
+58380cb9f1faf8000129673a,1,Placed Object 1 on machine,1
+58380cb9f1faf8000129673a,2,Placed Object 2 on machine,1
+58380cb9f1faf8000129673a,3,Test Result: Nexiom machine is ON,1
+58380cb9f1faf8000129673a,4,Removed Object 1 from machine,2
+58380cb9f1faf8000129673a,5,Removed Object 2 from machine,2
+58380cb9f1faf8000129673a,6,Placed Object 3 on machine,2
+58380cb9f1faf8000129673a,7,Placed Object 2 on machine,2
+58380cb9f1faf8000129673a,8,Test Result: Nexiom machine is ON,2
+58380cb9f1faf8000129673a,9,Removed Object 3 from machine,3
+58380cb9f1faf8000129673a,10,Placed Object 4 on machine,3
+58380cb9f1faf8000129673a,11,Test Result: Nexiom machine is ON,3
+58380cb9f1faf8000129673a,12,Removed Object 4 from machine,4
+58380cb9f1faf8000129673a,13,Test Result: Nexiom machine is ON,4
+58380cb9f1faf8000129673a,14,Removed Object 2 from machine,5
+58380cb9f1faf8000129673a,15,Placed Object 3 on machine,5
+58380cb9f1faf8000129673a,16,Placed Object 4 on machine,5
+58380cb9f1faf8000129673a,17,Test Result: Nexiom machine is OFF,5
+58380cb9f1faf8000129673a,18,Placed Object 2 on machine,6
+58380cb9f1faf8000129673a,19,Removed Object 3 from machine,6
+58380cb9f1faf8000129673a,20,Removed Object 4 from machine,6
+58380cb9f1faf8000129673a,21,Removed Object 2 from machine,6
+58380cb9f1faf8000129673a,22,Placed Object 4 on machine,6
+58380cb9f1faf8000129673a,23,Test Result: Nexiom machine is OFF,6
+58380cb9f1faf8000129673a,24,Removed Object 4 from machine,7
+58380cb9f1faf8000129673a,25,Placed Object 1 on machine,7
+58380cb9f1faf8000129673a,26,Test Result: Nexiom machine is ON,7
+58380cb9f1faf8000129673a,27,Placed Object 3 on machine,8
+58380cb9f1faf8000129673a,28,Test Result: Nexiom machine is ON,8
+58380cb9f1faf8000129673a,29,Removed Object 3 from machine,9
+58380cb9f1faf8000129673a,30,Removed Object 1 from machine,9
+58380cb9f1faf8000129673a,31,Placed Object 1 on machine,9
+58380cb9f1faf8000129673a,32,Placed Object 2 on machine,9
+58380cb9f1faf8000129673a,33,Placed Object 3 on machine,9
+58380cb9f1faf8000129673a,34,Placed Object 4 on machine,9
+58380cb9f1faf8000129673a,35,Test Result: Nexiom machine is ON,9
+58380cb9f1faf8000129673a,36,Removed Object 4 from machine,10
+58380cb9f1faf8000129673a,37,Test Result: Nexiom machine is ON,10
+589f4b4b4d580c0001e0a155,1,Placed Object 1 on machine,1
+589f4b4b4d580c0001e0a155,2,Test Result: Nexiom machine is ON,1
+589f4b4b4d580c0001e0a155,3,Removed Object 1 from machine,2
+589f4b4b4d580c0001e0a155,4,Placed Object 2 on machine,2
+589f4b4b4d580c0001e0a155,5,Test Result: Nexiom machine is OFF,2
+589f4b4b4d580c0001e0a155,6,Removed Object 2 from machine,3
+589f4b4b4d580c0001e0a155,7,Placed Object 3 on machine,3
+589f4b4b4d580c0001e0a155,8,Test Result: Nexiom machine is ON,3
+589f4b4b4d580c0001e0a155,9,Removed Object 3 from machine,4
+589f4b4b4d580c0001e0a155,10,Placed Object 4 on machine,4
+589f4b4b4d580c0001e0a155,11,Test Result: Nexiom machine is OFF,4
+589f4b4b4d580c0001e0a155,12,Removed Object 4 from machine,5
+58d834cec207720001e2e750,1,Placed Object 1 on machine,1
+58d834cec207720001e2e750,2,Test Result: Nexiom machine is OFF,1
+58d834cec207720001e2e750,3,Placed Object 2 on machine,2
+58d834cec207720001e2e750,4,Test Result: Nexiom machine is OFF,2
+58d834cec207720001e2e750,5,Removed Object 1 from machine,3
+58d834cec207720001e2e750,6,Test Result: Nexiom machine is OFF,3
+58d834cec207720001e2e750,7,Removed Object 2 from machine,4
+58d834cec207720001e2e750,8,Placed Object 3 on machine,4
+58d834cec207720001e2e750,9,Test Result: Nexiom machine is OFF,4
+58d834cec207720001e2e750,10,Removed Object 3 from machine,5
+58d834cec207720001e2e750,11,Placed Object 4 on machine,5
+58d834cec207720001e2e750,12,Test Result: Nexiom machine is OFF,5
+58d834cec207720001e2e750,13,Placed Object 2 on machine,6
+58d834cec207720001e2e750,14,Test Result: Nexiom machine is OFF,6
+58d834cec207720001e2e750,15,Removed Object 4 from machine,7
+58d834cec207720001e2e750,16,Removed Object 2 from machine,7
+58d834cec207720001e2e750,17,Placed Object 3 on machine,7
+58d834cec207720001e2e750,18,Placed Object 1 on machine,7
+58d834cec207720001e2e750,19,Removed Object 3 from machine,7
+58d834cec207720001e2e750,20,Placed Object 3 on machine,7
+58d834cec207720001e2e750,21,Test Result: Nexiom machine is ON,7
+58d834cec207720001e2e750,22,Removed Object 3 from machine,8
+58d834cec207720001e2e750,23,Placed Object 4 on machine,8
+58d834cec207720001e2e750,24,Test Result: Nexiom machine is OFF,8
+58d834cec207720001e2e750,25,Removed Object 4 from machine,9
+58d834cec207720001e2e750,26,Removed Object 1 from machine,9
+58d834cec207720001e2e750,27,Placed Object 3 on machine,9
+58d834cec207720001e2e750,28,Placed Object 2 on machine,9
+58d834cec207720001e2e750,29,Test Result: Nexiom machine is OFF,9
+58d834cec207720001e2e750,30,Removed Object 2 from machine,10
+58d834cec207720001e2e750,31,Placed Object 1 on machine,10
+58d834cec207720001e2e750,32,Removed Object 3 from machine,10
+58d834cec207720001e2e750,33,Placed Object 4 on machine,10
+58d834cec207720001e2e750,34,Removed Object 1 from machine,10
+58d834cec207720001e2e750,35,Placed Object 3 on machine,10
+58d834cec207720001e2e750,36,Test Result: Nexiom machine is OFF,10
+58d834cec207720001e2e750,37,Removed Object 4 from machine,11
+58d834cec207720001e2e750,38,Removed Object 3 from machine,11
+58d834cec207720001e2e750,39,Placed Object 1 on machine,11
+58d834cec207720001e2e750,40,Placed Object 3 on machine,11
+58d834cec207720001e2e750,41,Removed Object 1 from machine,11
+58d834cec207720001e2e750,42,Removed Object 3 from machine,11
+58d834cec207720001e2e750,43,Placed Object 2 on machine,11
+58d834cec207720001e2e750,44,Placed Object 4 on machine,11
+58d834cec207720001e2e750,45,Removed Object 4 from machine,11
+58d834cec207720001e2e750,46,Removed Object 2 from machine,11
+58d834cec207720001e2e750,47,Placed Object 1 on machine,11
+58d834cec207720001e2e750,48,Placed Object 2 on machine,11
+58d834cec207720001e2e750,49,Placed Object 3 on machine,11
+58d834cec207720001e2e750,50,Placed Object 4 on machine,11
+58d834cec207720001e2e750,51,Test Result: Nexiom machine is ON,11
+58d834cec207720001e2e750,52,Removed Object 4 from machine,12
+58d834cec207720001e2e750,53,Test Result: Nexiom machine is ON,12
+58d834cec207720001e2e750,54,Removed Object 2 from machine,13
+58d834cec207720001e2e750,55,Placed Object 4 on machine,13
+58d834cec207720001e2e750,56,Test Result: Nexiom machine is ON,13
+594a969df0ea1b0001558178,1,Placed Object 1 on machine,1
+594a969df0ea1b0001558178,2,Placed Object 3 on machine,1
+594a969df0ea1b0001558178,3,Test Result: Nexiom machine is OFF,1
+594a969df0ea1b0001558178,4,Removed Object 1 from machine,2
+594a969df0ea1b0001558178,5,Removed Object 3 from machine,2
+594a969df0ea1b0001558178,6,Placed Object 2 on machine,2
+594a969df0ea1b0001558178,7,Placed Object 4 on machine,2
+594a969df0ea1b0001558178,8,Test Result: Nexiom machine is OFF,2
+594a969df0ea1b0001558178,9,Placed Object 3 on machine,3
+594a969df0ea1b0001558178,10,Placed Object 1 on machine,3
+594a969df0ea1b0001558178,11,Test Result: Nexiom machine is ON,3
+594a969df0ea1b0001558178,12,Removed Object 4 from machine,4
+594a969df0ea1b0001558178,13,Test Result: Nexiom machine is ON,4
+594a969df0ea1b0001558178,14,Removed Object 3 from machine,5
+594a969df0ea1b0001558178,15,Test Result: Nexiom machine is OFF,5
+594a969df0ea1b0001558178,16,Placed Object 3 on machine,6
+594a969df0ea1b0001558178,17,Removed Object 1 from machine,6
+594a969df0ea1b0001558178,18,Test Result: Nexiom machine is ON,6
+594a969df0ea1b0001558178,19,Placed Object 1 on machine,7
+594a969df0ea1b0001558178,20,Test Result: Nexiom machine is ON,7
+594a969df0ea1b0001558178,21,Removed Object 1 from machine,8
+594a969df0ea1b0001558178,22,Placed Object 4 on machine,8
+594a969df0ea1b0001558178,23,Test Result: Nexiom machine is ON,8
+594a969df0ea1b0001558178,24,Removed Object 3 from machine,9
+594a969df0ea1b0001558178,25,Test Result: Nexiom machine is OFF,9
+594a969df0ea1b0001558178,26,Placed Object 1 on machine,10
+594a969df0ea1b0001558178,27,Test Result: Nexiom machine is OFF,10
+594a969df0ea1b0001558178,28,Removed Object 2 from machine,11
+594a969df0ea1b0001558178,29,Removed Object 1 from machine,11
+594a969df0ea1b0001558178,30,Removed Object 4 from machine,11
+594a969df0ea1b0001558178,31,Placed Object 3 on machine,11
+594a969df0ea1b0001558178,32,Test Result: Nexiom machine is OFF,11
+594a969df0ea1b0001558178,33,Placed Object 2 on machine,12
+594a969df0ea1b0001558178,34,Test Result: Nexiom machine is ON,12
+5bdc6d16d9bc4e0001134779,1,Placed Object 2 on machine,1
+5bdc6d16d9bc4e0001134779,2,Test Result: Nexiom machine is ON,1
+5bdc6d16d9bc4e0001134779,3,Removed Object 2 from machine,2
+5bdc6d16d9bc4e0001134779,4,Placed Object 1 on machine,2
+5bdc6d16d9bc4e0001134779,5,Test Result: Nexiom machine is ON,2
+5bdc6d16d9bc4e0001134779,6,Removed Object 1 from machine,3
+5bdc6d16d9bc4e0001134779,7,Placed Object 3 on machine,3
+5bdc6d16d9bc4e0001134779,8,Test Result: Nexiom machine is OFF,3
+5bdc6d16d9bc4e0001134779,9,Placed Object 4 on machine,4
+5bdc6d16d9bc4e0001134779,10,Removed Object 3 from machine,4
+5bdc6d16d9bc4e0001134779,11,Test Result: Nexiom machine is OFF,4
+5c04872c55614800012b7cf0,1,Placed Object 1 on machine,1
+5c04872c55614800012b7cf0,2,Test Result: Nexiom machine is OFF,1
+5c04872c55614800012b7cf0,3,Placed Object 2 on machine,2
+5c04872c55614800012b7cf0,4,Removed Object 1 from machine,2
+5c04872c55614800012b7cf0,5,Test Result: Nexiom machine is OFF,2
+5c04872c55614800012b7cf0,6,Removed Object 2 from machine,3
+5c04872c55614800012b7cf0,7,Placed Object 3 on machine,3
+5c04872c55614800012b7cf0,8,Test Result: Nexiom machine is OFF,3
+5c04872c55614800012b7cf0,9,Removed Object 3 from machine,4
+5c04872c55614800012b7cf0,10,Placed Object 4 on machine,4
+5c04872c55614800012b7cf0,11,Test Result: Nexiom machine is OFF,4
+5c04872c55614800012b7cf0,12,Placed Object 1 on machine,5
+5c04872c55614800012b7cf0,13,Placed Object 2 on machine,5
+5c04872c55614800012b7cf0,14,Placed Object 3 on machine,5
+5c04872c55614800012b7cf0,15,Test Result: Nexiom machine is ON,5
+5c04872c55614800012b7cf0,16,Removed Object 1 from machine,6
+5c04872c55614800012b7cf0,17,Test Result: Nexiom machine is ON,6
+5c04872c55614800012b7cf0,18,Removed Object 2 from machine,7
+5c04872c55614800012b7cf0,19,Test Result: Nexiom machine is OFF,7
+5c04872c55614800012b7cf0,20,Placed Object 2 on machine,8
+5c04872c55614800012b7cf0,21,Removed Object 3 from machine,8
+5c04872c55614800012b7cf0,22,Placed Object 1 on machine,8
+5c04872c55614800012b7cf0,23,Test Result: Nexiom machine is ON,8
+5c04872c55614800012b7cf0,24,Placed Object 3 on machine,9
+5c04872c55614800012b7cf0,25,Removed Object 2 from machine,9
+5c04872c55614800012b7cf0,26,Test Result: Nexiom machine is OFF,9
+5c04872c55614800012b7cf0,27,Placed Object 2 on machine,10
+5c04872c55614800012b7cf0,28,Removed Object 4 from machine,10
+5c04872c55614800012b7cf0,29,Test Result: Nexiom machine is OFF,10
+5c04872c55614800012b7cf0,30,Removed Object 1 from machine,11
+5c04872c55614800012b7cf0,31,Removed Object 3 from machine,11
+5c04872c55614800012b7cf0,32,Placed Object 4 on machine,11
+5c04872c55614800012b7cf0,33,Test Result: Nexiom machine is ON,11
+5c04872c55614800012b7cf0,34,Placed Object 1 on machine,12
+5c04872c55614800012b7cf0,35,Removed Object 2 from machine,12
+5c04872c55614800012b7cf0,36,Placed Object 3 on machine,12
+5c04872c55614800012b7cf0,37,Removed Object 4 from machine,12
+5c04872c55614800012b7cf0,38,Test Result: Nexiom machine is OFF,12
+5c04872c55614800012b7cf0,39,Removed Object 1 from machine,13
+5c04872c55614800012b7cf0,40,Placed Object 2 on machine,13
+5c04872c55614800012b7cf0,41,Removed Object 3 from machine,13
+5c04872c55614800012b7cf0,42,Placed Object 4 on machine,13
+5c04872c55614800012b7cf0,43,Test Result: Nexiom machine is ON,13
+5c3bdbf548ad2900017fac31,1,Placed Object 1 on machine,1
+5c3bdbf548ad2900017fac31,2,Test Result: Nexiom machine is OFF,1
+5c3bdbf548ad2900017fac31,3,Removed Object 1 from machine,2
+5c3bdbf548ad2900017fac31,4,Placed Object 2 on machine,2
+5c3bdbf548ad2900017fac31,5,Test Result: Nexiom machine is OFF,2
+5c3bdbf548ad2900017fac31,6,Removed Object 2 from machine,3
+5c3bdbf548ad2900017fac31,7,Placed Object 3 on machine,3
+5c3bdbf548ad2900017fac31,8,Removed Object 3 from machine,3
+5c3bdbf548ad2900017fac31,9,Placed Object 3 on machine,3
+5c3bdbf548ad2900017fac31,10,Test Result: Nexiom machine is OFF,3
+5c3bdbf548ad2900017fac31,11,Removed Object 3 from machine,4
+5c3bdbf548ad2900017fac31,12,Placed Object 4 on machine,4
+5c3bdbf548ad2900017fac31,13,Test Result: Nexiom machine is OFF,4
+5c452213a6c3df0001d2014f,1,Placed Object 1 on machine,1
+5c452213a6c3df0001d2014f,2,Test Result: Nexiom machine is ON,1
+5c452213a6c3df0001d2014f,3,Removed Object 1 from machine,2
+5c452213a6c3df0001d2014f,4,Placed Object 2 on machine,2
+5c452213a6c3df0001d2014f,5,Test Result: Nexiom machine is ON,2
+5c452213a6c3df0001d2014f,6,Removed Object 2 from machine,3
+5c452213a6c3df0001d2014f,7,Placed Object 3 on machine,3
+5c452213a6c3df0001d2014f,8,Test Result: Nexiom machine is OFF,3
+5c452213a6c3df0001d2014f,9,Removed Object 3 from machine,4
+5c452213a6c3df0001d2014f,10,Placed Object 4 on machine,4
+5c452213a6c3df0001d2014f,11,Test Result: Nexiom machine is OFF,4
+5c452213a6c3df0001d2014f,12,Removed Object 4 from machine,5
+5c452213a6c3df0001d2014f,13,Placed Object 1 on machine,5
+5c452213a6c3df0001d2014f,14,Placed Object 2 on machine,5
+5c452213a6c3df0001d2014f,15,Test Result: Nexiom machine is ON,5
+5c452213a6c3df0001d2014f,16,Removed Object 1 from machine,6
+5c452213a6c3df0001d2014f,17,Removed Object 2 from machine,6
+5c452213a6c3df0001d2014f,18,Placed Object 3 on machine,6
+5c452213a6c3df0001d2014f,19,Placed Object 4 on machine,6
+5c452213a6c3df0001d2014f,20,Test Result: Nexiom machine is OFF,6
+5c452213a6c3df0001d2014f,21,Removed Object 3 from machine,7
+5c452213a6c3df0001d2014f,22,Removed Object 4 from machine,7
+5c452213a6c3df0001d2014f,23,Placed Object 2 on machine,7
+5c452213a6c3df0001d2014f,24,Placed Object 1 on machine,7
+5c452213a6c3df0001d2014f,25,Test Result: Nexiom machine is ON,7
+5c452213a6c3df0001d2014f,26,Test Result: Nexiom machine is ON,8
+5c50046b2b89f500015e5f6b,1,Placed Object 1 on machine,1
+5c50046b2b89f500015e5f6b,2,Placed Object 2 on machine,1
+5c50046b2b89f500015e5f6b,3,Test Result: Nexiom machine is ON,1
+5c50046b2b89f500015e5f6b,4,Removed Object 2 from machine,2
+5c50046b2b89f500015e5f6b,5,Test Result: Nexiom machine is OFF,2
+5c50046b2b89f500015e5f6b,6,Removed Object 1 from machine,3
+5c50046b2b89f500015e5f6b,7,Placed Object 3 on machine,3
+5c50046b2b89f500015e5f6b,8,Placed Object 4 on machine,3
+5c50046b2b89f500015e5f6b,9,Test Result: Nexiom machine is OFF,3
+5c50046b2b89f500015e5f6b,10,Removed Object 3 from machine,4
+5c50046b2b89f500015e5f6b,11,Removed Object 4 from machine,4
+5c50046b2b89f500015e5f6b,12,Placed Object 2 on machine,4
+5c50046b2b89f500015e5f6b,13,Test Result: Nexiom machine is OFF,4
+5c50046b2b89f500015e5f6b,14,Placed Object 1 on machine,5
+5c50046b2b89f500015e5f6b,15,Placed Object 3 on machine,5
+5c50046b2b89f500015e5f6b,16,Test Result: Nexiom machine is ON,5
+5c50046b2b89f500015e5f6b,17,Placed Object 4 on machine,6
+5c50046b2b89f500015e5f6b,18,Test Result: Nexiom machine is ON,6
+5c50046b2b89f500015e5f6b,19,Removed Object 1 from machine,7
+5c50046b2b89f500015e5f6b,20,Test Result: Nexiom machine is OFF,7
+5c50046b2b89f500015e5f6b,21,Removed Object 3 from machine,8
+5c50046b2b89f500015e5f6b,22,Test Result: Nexiom machine is OFF,8
+5c50046b2b89f500015e5f6b,23,Placed Object 3 on machine,9
+5c50046b2b89f500015e5f6b,24,Removed Object 4 from machine,9
+5c50046b2b89f500015e5f6b,25,Test Result: Nexiom machine is OFF,9
+5d439cb393066e001a5a4d26,1,Placed Object 1 on machine,1
+5d439cb393066e001a5a4d26,2,Test Result: Nexiom machine is OFF,1
+5d439cb393066e001a5a4d26,3,Removed Object 1 from machine,2
+5d439cb393066e001a5a4d26,4,Placed Object 2 on machine,2
+5d439cb393066e001a5a4d26,5,Test Result: Nexiom machine is OFF,2
+5d439cb393066e001a5a4d26,6,Removed Object 2 from machine,3
+5d439cb393066e001a5a4d26,7,Placed Object 3 on machine,3
+5d439cb393066e001a5a4d26,8,Test Result: Nexiom machine is ON,3
+5d439cb393066e001a5a4d26,9,Removed Object 3 from machine,4
+5d439cb393066e001a5a4d26,10,Placed Object 4 on machine,4
+5d439cb393066e001a5a4d26,11,Test Result: Nexiom machine is ON,4
+5d439cb393066e001a5a4d26,12,Removed Object 4 from machine,5
+5d439cb393066e001a5a4d26,13,Placed Object 1 on machine,5
+5d439cb393066e001a5a4d26,14,Placed Object 2 on machine,5
+5d439cb393066e001a5a4d26,15,Removed Object 2 from machine,5
+5d439cb393066e001a5a4d26,16,Placed Object 3 on machine,5
+5d439cb393066e001a5a4d26,17,Test Result: Nexiom machine is ON,5
+5d439cb393066e001a5a4d26,18,Placed Object 2 on machine,6
+5d439cb393066e001a5a4d26,19,Test Result: Nexiom machine is ON,6
+5dac4dad5e53cc001499f1f6,1,Placed Object 1 on machine,1
+5dac4dad5e53cc001499f1f6,2,Placed Object 2 on machine,1
+5dac4dad5e53cc001499f1f6,3,Test Result: Nexiom machine is OFF,1
+5dac4dad5e53cc001499f1f6,4,Removed Object 1 from machine,2
+5dac4dad5e53cc001499f1f6,5,Removed Object 2 from machine,2
+5dac4dad5e53cc001499f1f6,6,Placed Object 3 on machine,2
+5dac4dad5e53cc001499f1f6,7,Placed Object 4 on machine,2
+5dac4dad5e53cc001499f1f6,8,Test Result: Nexiom machine is ON,2
+5dac4dad5e53cc001499f1f6,9,Removed Object 3 from machine,3
+5dac4dad5e53cc001499f1f6,10,Test Result: Nexiom machine is OFF,3
+5dac4dad5e53cc001499f1f6,11,Removed Object 4 from machine,4
+5dac4dad5e53cc001499f1f6,12,Placed Object 3 on machine,4
+5dac4dad5e53cc001499f1f6,13,Test Result: Nexiom machine is OFF,4
+5dac4dad5e53cc001499f1f6,14,Placed Object 4 on machine,5
+5dac4dad5e53cc001499f1f6,15,Test Result: Nexiom machine is ON,5
+5dac4dad5e53cc001499f1f6,16,Placed Object 2 on machine,6
+5dac4dad5e53cc001499f1f6,17,Test Result: Nexiom machine is ON,6
+5dac4dad5e53cc001499f1f6,18,Placed Object 1 on machine,7
+5dac4dad5e53cc001499f1f6,19,Test Result: Nexiom machine is ON,7
+5dac4dad5e53cc001499f1f6,20,Removed Object 1 from machine,8
+5dac4dad5e53cc001499f1f6,21,Removed Object 4 from machine,8
+5dac4dad5e53cc001499f1f6,22,Test Result: Nexiom machine is OFF,8
+5dac4dad5e53cc001499f1f6,23,Placed Object 4 on machine,9
+5dac4dad5e53cc001499f1f6,24,Removed Object 2 from machine,9
+5db06c106756f6001753feb6,1,Placed Object 1 on machine,1
+5db06c106756f6001753feb6,2,Placed Object 2 on machine,1
+5db06c106756f6001753feb6,3,Placed Object 3 on machine,1
+5db06c106756f6001753feb6,4,Test Result: Nexiom machine is ON,1
+5db06c106756f6001753feb6,5,Removed Object 1 from machine,2
+5db06c106756f6001753feb6,6,Placed Object 4 on machine,2
+5db06c106756f6001753feb6,7,Removed Object 2 from machine,2
+5db06c106756f6001753feb6,8,Test Result: Nexiom machine is OFF,2
+5db06c106756f6001753feb6,9,Removed Object 3 from machine,3
+5db06c106756f6001753feb6,10,Removed Object 4 from machine,3
+5db06c106756f6001753feb6,11,Placed Object 1 on machine,3
+5db06c106756f6001753feb6,12,Test Result: Nexiom machine is ON,3
+5db06c106756f6001753feb6,13,Removed Object 1 from machine,4
+5db06c106756f6001753feb6,14,Placed Object 2 on machine,4
+5db06c106756f6001753feb6,15,Test Result: Nexiom machine is ON,4
+5db06c106756f6001753feb6,16,Removed Object 2 from machine,5
+5db06c106756f6001753feb6,17,Placed Object 4 on machine,5
+5db06c106756f6001753feb6,18,Placed Object 3 on machine,5
+5db06c106756f6001753feb6,19,Removed Object 3 from machine,5
+5db06c106756f6001753feb6,20,Test Result: Nexiom machine is OFF,5
+5db06c106756f6001753feb6,21,Removed Object 4 from machine,6
+5e3b759740e302397f294a2d,1,Placed Object 1 on machine,1
+5e3b759740e302397f294a2d,2,Placed Object 2 on machine,1
+5e3b759740e302397f294a2d,3,Removed Object 2 from machine,1
+5e3b759740e302397f294a2d,4,Test Result: Nexiom machine is ON,1
+5e3b759740e302397f294a2d,5,Removed Object 1 from machine,2
+5e3b759740e302397f294a2d,6,Placed Object 2 on machine,2
+5e3b759740e302397f294a2d,7,Test Result: Nexiom machine is OFF,2
+5e3b759740e302397f294a2d,8,Removed Object 2 from machine,3
+5e3b759740e302397f294a2d,9,Placed Object 3 on machine,3
+5e3b759740e302397f294a2d,10,Test Result: Nexiom machine is OFF,3
+5e3b759740e302397f294a2d,11,Removed Object 3 from machine,4
+5e3b759740e302397f294a2d,12,Placed Object 4 on machine,4
+5e3b759740e302397f294a2d,13,Test Result: Nexiom machine is ON,4
+5e3b759740e302397f294a2d,14,Removed Object 4 from machine,5
+5e3f778e91be661ca60e3540,1,Placed Object 1 on machine,1
+5e3f778e91be661ca60e3540,2,Test Result: Nexiom machine is OFF,1
+5e3f778e91be661ca60e3540,3,Removed Object 1 from machine,2
+5e3f778e91be661ca60e3540,4,Placed Object 2 on machine,2
+5e3f778e91be661ca60e3540,5,Placed Object 3 on machine,2
+5e3f778e91be661ca60e3540,6,Test Result: Nexiom machine is OFF,2
+5e3f778e91be661ca60e3540,7,Removed Object 2 from machine,3
+5e3f778e91be661ca60e3540,8,Removed Object 3 from machine,3
+5e3f778e91be661ca60e3540,9,Placed Object 4 on machine,3
+5e3f778e91be661ca60e3540,10,Test Result: Nexiom machine is OFF,3
+5e3f778e91be661ca60e3540,11,Placed Object 1 on machine,4
+5e3f778e91be661ca60e3540,12,Test Result: Nexiom machine is OFF,4
+5e3f778e91be661ca60e3540,13,Placed Object 2 on machine,5
+5e3f778e91be661ca60e3540,14,Placed Object 3 on machine,5
+5e3f778e91be661ca60e3540,15,Test Result: Nexiom machine is ON,5
+5e3f778e91be661ca60e3540,16,Removed Object 2 from machine,6
+5e3f778e91be661ca60e3540,17,Test Result: Nexiom machine is OFF,6
+5e3f778e91be661ca60e3540,18,Placed Object 2 on machine,7
+5e3f778e91be661ca60e3540,19,Removed Object 3 from machine,7
+5e3f778e91be661ca60e3540,20,Test Result: Nexiom machine is ON,7
+5e3f778e91be661ca60e3540,21,Removed Object 4 from machine,8
+5e3f778e91be661ca60e3540,22,Test Result: Nexiom machine is OFF,8
+5e3f778e91be661ca60e3540,23,Placed Object 4 on machine,9
+5e3f778e91be661ca60e3540,24,Removed Object 1 from machine,9
+5e3f778e91be661ca60e3540,25,Test Result: Nexiom machine is ON,9
+5e3f778e91be661ca60e3540,26,Removed Object 4 from machine,10
+5e3f778e91be661ca60e3540,27,Test Result: Nexiom machine is OFF,10
+5e3f778e91be661ca60e3540,28,Placed Object 4 on machine,11
+5e63e793e50a6316a75213c4,1,Placed Object 4 on machine,1
+5e63e793e50a6316a75213c4,2,Test Result: Nexiom machine is OFF,1
+5e63e793e50a6316a75213c4,3,Placed Object 3 on machine,2
+5e63e793e50a6316a75213c4,4,Test Result: Nexiom machine is OFF,2
+5e63e793e50a6316a75213c4,5,Placed Object 2 on machine,3
+5e63e793e50a6316a75213c4,6,Test Result: Nexiom machine is ON,3
+5e63e793e50a6316a75213c4,7,Removed Object 3 from machine,4
+5e63e793e50a6316a75213c4,8,Removed Object 4 from machine,4
+5e63e793e50a6316a75213c4,9,Test Result: Nexiom machine is OFF,4
+5e63e793e50a6316a75213c4,10,Placed Object 1 on machine,5
+5e63e793e50a6316a75213c4,11,Test Result: Nexiom machine is OFF,5
+5e63e793e50a6316a75213c4,12,Removed Object 1 from machine,6
+5e63e793e50a6316a75213c4,13,Placed Object 3 on machine,6
+5e63e793e50a6316a75213c4,14,Test Result: Nexiom machine is ON,6
+5e63e793e50a6316a75213c4,15,Removed Object 3 from machine,7
+5e63e793e50a6316a75213c4,16,Placed Object 4 on machine,7
+5e63e793e50a6316a75213c4,17,Test Result: Nexiom machine is OFF,7
+5e63e793e50a6316a75213c4,18,Removed Object 4 from machine,8
+5e63e793e50a6316a75213c4,19,Placed Object 3 on machine,8
+5e63e793e50a6316a75213c4,20,Placed Object 1 on machine,8
+5e63e793e50a6316a75213c4,21,Test Result: Nexiom machine is ON,8
+5e63e793e50a6316a75213c4,22,Removed Object 3 from machine,9
+5e63e793e50a6316a75213c4,23,Placed Object 3 on machine,9
+5e63e793e50a6316a75213c4,24,Removed Object 2 from machine,9
+5e63e793e50a6316a75213c4,25,Test Result: Nexiom machine is OFF,9
+5e63e793e50a6316a75213c4,26,Placed Object 2 on machine,10
+5e63e793e50a6316a75213c4,27,Placed Object 4 on machine,10
+5e63e793e50a6316a75213c4,28,Test Result: Nexiom machine is ON,10
+5e63e793e50a6316a75213c4,29,Removed Object 2 from machine,11
+5e63e793e50a6316a75213c4,30,Test Result: Nexiom machine is OFF,11
+5e63e793e50a6316a75213c4,31,Placed Object 2 on machine,12
+5e63e793e50a6316a75213c4,32,Removed Object 3 from machine,12
+5e63e793e50a6316a75213c4,33,Test Result: Nexiom machine is OFF,12
+5e63e793e50a6316a75213c4,34,Placed Object 3 on machine,13
+5e63e793e50a6316a75213c4,35,Removed Object 2 from machine,13
+5e63e793e50a6316a75213c4,36,Removed Object 3 from machine,13
+5e63e793e50a6316a75213c4,37,Removed Object 4 from machine,13
+5e63e793e50a6316a75213c4,38,Test Result: Nexiom machine is OFF,13
+5e63e793e50a6316a75213c4,39,Removed Object 1 from machine,14
+5e63e793e50a6316a75213c4,40,Placed Object 3 on machine,14
+5e63e793e50a6316a75213c4,41,Test Result: Nexiom machine is OFF,14
+5e63e793e50a6316a75213c4,42,Removed Object 3 from machine,15
+5e63e793e50a6316a75213c4,43,Placed Object 2 on machine,15
+5e63e793e50a6316a75213c4,44,Test Result: Nexiom machine is OFF,15
+5e63e793e50a6316a75213c4,45,Removed Object 2 from machine,16
+5e63e793e50a6316a75213c4,46,Placed Object 1 on machine,16
+5e63e793e50a6316a75213c4,47,Placed Object 4 on machine,16
+5e63e793e50a6316a75213c4,48,Test Result: Nexiom machine is OFF,16
+5e92917cb554e90d387a37da,1,Placed Object 1 on machine,1
+5e92917cb554e90d387a37da,2,Test Result: Nexiom machine is OFF,1
+5e92917cb554e90d387a37da,3,Removed Object 1 from machine,2
+5e92917cb554e90d387a37da,4,Placed Object 2 on machine,2
+5e92917cb554e90d387a37da,5,Placed Object 3 on machine,2
+5e92917cb554e90d387a37da,6,Test Result: Nexiom machine is ON,2
+5e92917cb554e90d387a37da,7,Removed Object 2 from machine,3
+5e92917cb554e90d387a37da,8,Placed Object 4 on machine,3
+5e92917cb554e90d387a37da,9,Test Result: Nexiom machine is ON,3
+5e92917cb554e90d387a37da,10,Removed Object 3 from machine,4
+5e92917cb554e90d387a37da,11,Placed Object 2 on machine,4
+5e92917cb554e90d387a37da,12,Test Result: Nexiom machine is ON,4
+5e92917cb554e90d387a37da,13,Removed Object 2 from machine,5
+5e92917cb554e90d387a37da,14,Test Result: Nexiom machine is OFF,5
+5e92917cb554e90d387a37da,15,Placed Object 3 on machine,6
+5e92917cb554e90d387a37da,16,Placed Object 2 on machine,6
+5e92917cb554e90d387a37da,17,Removed Object 4 from machine,6
+5ecb0bb39b4189656f60872b,1,Placed Object 1 on machine,1
+5ecb0bb39b4189656f60872b,2,Placed Object 2 on machine,1
+5ecb0bb39b4189656f60872b,3,Test Result: Nexiom machine is ON,1
+5ecb0bb39b4189656f60872b,4,Removed Object 2 from machine,2
+5ecb0bb39b4189656f60872b,5,Test Result: Nexiom machine is ON,2
+5ecb0bb39b4189656f60872b,6,Removed Object 1 from machine,3
+5ecb0bb39b4189656f60872b,7,Placed Object 2 on machine,3
+5ecb0bb39b4189656f60872b,8,Placed Object 3 on machine,3
+5ecb0bb39b4189656f60872b,9,Test Result: Nexiom machine is ON,3
+5ecb0bb39b4189656f60872b,10,Placed Object 4 on machine,4
+5ecb0bb39b4189656f60872b,11,Removed Object 2 from machine,4
+5ecb0bb39b4189656f60872b,12,Test Result: Nexiom machine is OFF,4
+5ecb0bb39b4189656f60872b,13,Removed Object 3 from machine,5
+5ecb0bb39b4189656f60872b,14,Removed Object 4 from machine,5
+5ecb0bb39b4189656f60872b,15,Placed Object 2 on machine,5
+5ecb0bb39b4189656f60872b,16,Test Result: Nexiom machine is ON,5
+5f4a7a00dc1bde60ab8f7ac5,1,Placed Object 1 on machine,1
+5f4a7a00dc1bde60ab8f7ac5,2,Placed Object 2 on machine,1
+5f4a7a00dc1bde60ab8f7ac5,3,Placed Object 3 on machine,1
+5f4a7a00dc1bde60ab8f7ac5,4,Test Result: Nexiom machine is ON,1
+5f4a7a00dc1bde60ab8f7ac5,5,Removed Object 2 from machine,2
+5f4a7a00dc1bde60ab8f7ac5,6,Removed Object 3 from machine,2
+5f4a7a00dc1bde60ab8f7ac5,7,Test Result: Nexiom machine is OFF,2
+5f4a7a00dc1bde60ab8f7ac5,8,Removed Object 1 from machine,3
+5f4a7a00dc1bde60ab8f7ac5,9,Placed Object 2 on machine,3
+5f4a7a00dc1bde60ab8f7ac5,10,Test Result: Nexiom machine is OFF,3
+5f4a7a00dc1bde60ab8f7ac5,11,Removed Object 2 from machine,4
+5f4a7a00dc1bde60ab8f7ac5,12,Placed Object 4 on machine,4
+5f4a7a00dc1bde60ab8f7ac5,13,Test Result: Nexiom machine is OFF,4
+5f4a7a00dc1bde60ab8f7ac5,14,Removed Object 4 from machine,5
+5f4a7a00dc1bde60ab8f7ac5,15,Placed Object 3 on machine,5
+5f4a7a00dc1bde60ab8f7ac5,16,Test Result: Nexiom machine is OFF,5
+5f4a7a00dc1bde60ab8f7ac5,17,Placed Object 2 on machine,6
+5f4a7a00dc1bde60ab8f7ac5,18,Test Result: Nexiom machine is OFF,6
+5f4a7a00dc1bde60ab8f7ac5,19,Removed Object 2 from machine,7
+5f4a7a00dc1bde60ab8f7ac5,20,Placed Object 4 on machine,7
+5f4a7a00dc1bde60ab8f7ac5,21,Test Result: Nexiom machine is OFF,7
+5f4a7a00dc1bde60ab8f7ac5,22,Placed Object 2 on machine,8
+5f4a7a00dc1bde60ab8f7ac5,23,Test Result: Nexiom machine is OFF,8
+5f4a7a00dc1bde60ab8f7ac5,24,Placed Object 1 on machine,9
+5f4a7a00dc1bde60ab8f7ac5,25,Test Result: Nexiom machine is ON,9
+5f4a7a00dc1bde60ab8f7ac5,26,Removed Object 2 from machine,10
+5f4a7a00dc1bde60ab8f7ac5,27,Removed Object 4 from machine,10
+5f4a7a00dc1bde60ab8f7ac5,28,Test Result: Nexiom machine is OFF,10
+5f4a7a00dc1bde60ab8f7ac5,29,Placed Object 4 on machine,11
+5f4a7a00dc1bde60ab8f7ac5,30,Test Result: Nexiom machine is OFF,11
+5f4a7a00dc1bde60ab8f7ac5,31,Removed Object 3 from machine,12
+5f4a7a00dc1bde60ab8f7ac5,32,Removed Object 4 from machine,12
+5f4a7a00dc1bde60ab8f7ac5,33,Placed Object 2 on machine,12
+5f4a7a00dc1bde60ab8f7ac5,34,Test Result: Nexiom machine is ON,12
+5f76586f6ce6850f223a25ab,1,Placed Object 1 on machine,1
+5f76586f6ce6850f223a25ab,2,Placed Object 2 on machine,1
+5f76586f6ce6850f223a25ab,3,Test Result: Nexiom machine is OFF,1
+5f76586f6ce6850f223a25ab,4,Removed Object 2 from machine,2
+5f76586f6ce6850f223a25ab,5,Removed Object 1 from machine,2
+5f76586f6ce6850f223a25ab,6,Placed Object 3 on machine,2
+5f76586f6ce6850f223a25ab,7,Placed Object 4 on machine,2
+5f76586f6ce6850f223a25ab,8,Test Result: Nexiom machine is ON,2
+5f76586f6ce6850f223a25ab,9,Removed Object 3 from machine,3
+5f76586f6ce6850f223a25ab,10,Test Result: Nexiom machine is ON,3
+5f76586f6ce6850f223a25ab,11,Removed Object 4 from machine,4
+5f76586f6ce6850f223a25ab,12,Placed Object 3 on machine,4
+5f76586f6ce6850f223a25ab,13,Test Result: Nexiom machine is ON,4
+5f76586f6ce6850f223a25ab,14,Removed Object 3 from machine,5
+5fa9dab94f9d9c26d3db5226,1,Placed Object 4 on machine,1
+5fa9dab94f9d9c26d3db5226,2,Placed Object 2 on machine,1
+5fa9dab94f9d9c26d3db5226,3,Test Result: Nexiom machine is ON,1
+5fa9dab94f9d9c26d3db5226,4,Removed Object 4 from machine,2
+5fa9dab94f9d9c26d3db5226,5,Removed Object 2 from machine,2
+5fa9dab94f9d9c26d3db5226,6,Placed Object 3 on machine,2
+5fa9dab94f9d9c26d3db5226,7,Placed Object 1 on machine,2
+5fa9dab94f9d9c26d3db5226,8,Test Result: Nexiom machine is OFF,2
+5fa9dab94f9d9c26d3db5226,9,Removed Object 1 from machine,3
+5fa9dab94f9d9c26d3db5226,10,Removed Object 3 from machine,3
+5fa9dab94f9d9c26d3db5226,11,Placed Object 2 on machine,3
+5fa9dab94f9d9c26d3db5226,12,Test Result: Nexiom machine is ON,3
+5fa9dab94f9d9c26d3db5226,13,Removed Object 2 from machine,4
+5fa9dab94f9d9c26d3db5226,14,Placed Object 4 on machine,4
+5fa9dab94f9d9c26d3db5226,15,Test Result: Nexiom machine is ON,4
+602aaba2c2eb7c106100e516,1,Placed Object 1 on machine,1
+602aaba2c2eb7c106100e516,2,Test Result: Nexiom machine is ON,1
+602aaba2c2eb7c106100e516,3,Removed Object 1 from machine,2
+602aaba2c2eb7c106100e516,4,Placed Object 4 on machine,2
+602aaba2c2eb7c106100e516,5,Test Result: Nexiom machine is OFF,2
+602aaba2c2eb7c106100e516,6,Removed Object 4 from machine,3
+602aaba2c2eb7c106100e516,7,Placed Object 2 on machine,3
+602aaba2c2eb7c106100e516,8,Test Result: Nexiom machine is ON,3
+602aaba2c2eb7c106100e516,9,Removed Object 2 from machine,4
+602aaba2c2eb7c106100e516,10,Placed Object 3 on machine,4
+602aaba2c2eb7c106100e516,11,Test Result: Nexiom machine is OFF,4
+602aaba2c2eb7c106100e516,12,Removed Object 3 from machine,5
+602aaba2c2eb7c106100e516,13,Placed Object 1 on machine,5
+602aaba2c2eb7c106100e516,14,Placed Object 2 on machine,5
+602aaba2c2eb7c106100e516,15,Test Result: Nexiom machine is ON,5
+602aaba2c2eb7c106100e516,16,Removed Object 1 from machine,6
+602aaba2c2eb7c106100e516,17,Removed Object 2 from machine,6
+602aaba2c2eb7c106100e516,18,Placed Object 4 on machine,6
+602aaba2c2eb7c106100e516,19,Placed Object 3 on machine,6
+602aaba2c2eb7c106100e516,20,Test Result: Nexiom machine is OFF,6
+602aaba2c2eb7c106100e516,21,Removed Object 3 from machine,7
+602aaba2c2eb7c106100e516,22,Placed Object 1 on machine,7
+602aaba2c2eb7c106100e516,23,Test Result: Nexiom machine is ON,7
+602aaba2c2eb7c106100e516,24,Removed Object 1 from machine,8
+602aaba2c2eb7c106100e516,25,Removed Object 4 from machine,8
+602aaba2c2eb7c106100e516,26,Placed Object 4 on machine,8
+602aaba2c2eb7c106100e516,27,Placed Object 2 on machine,8
+602aaba2c2eb7c106100e516,28,Test Result: Nexiom machine is ON,8
+602aaba2c2eb7c106100e516,29,Removed Object 2 from machine,9
+602aaba2c2eb7c106100e516,30,Removed Object 4 from machine,9
+602aaba2c2eb7c106100e516,31,Placed Object 3 on machine,9
+602aaba2c2eb7c106100e516,32,Placed Object 1 on machine,9
+602aaba2c2eb7c106100e516,33,Test Result: Nexiom machine is ON,9
+602aaba2c2eb7c106100e516,34,Removed Object 1 from machine,10
+602aaba2c2eb7c106100e516,35,Placed Object 2 on machine,10
+602aaba2c2eb7c106100e516,36,Test Result: Nexiom machine is ON,10
+602aaba2c2eb7c106100e516,37,Removed Object 2 from machine,11
+602aaba2c2eb7c106100e516,38,Placed Object 4 on machine,11
+602aaba2c2eb7c106100e516,39,Placed Object 2 on machine,11
+602aaba2c2eb7c106100e516,40,Test Result: Nexiom machine is ON,11
+602aaba2c2eb7c106100e516,41,Removed Object 2 from machine,12
+602aaba2c2eb7c106100e516,42,Placed Object 1 on machine,12
+602aaba2c2eb7c106100e516,43,Test Result: Nexiom machine is ON,12
+602aaba2c2eb7c106100e516,44,Removed Object 3 from machine,13
+602aaba2c2eb7c106100e516,45,Removed Object 4 from machine,13
+602aaba2c2eb7c106100e516,46,Placed Object 2 on machine,13
+602aaba2c2eb7c106100e516,47,Removed Object 1 from machine,13
+602aaba2c2eb7c106100e516,48,Removed Object 2 from machine,13
+602aaba2c2eb7c106100e516,49,Placed Object 1 on machine,13
+602aaba2c2eb7c106100e516,50,Placed Object 2 on machine,13
+602aaba2c2eb7c106100e516,51,Placed Object 3 on machine,13
+602aaba2c2eb7c106100e516,52,Placed Object 4 on machine,13
+602aaba2c2eb7c106100e516,53,Test Result: Nexiom machine is ON,13
+6070fa4b22640f1d2b78c5a7,1,Placed Object 1 on machine,1
+6070fa4b22640f1d2b78c5a7,2,Placed Object 2 on machine,1
+6070fa4b22640f1d2b78c5a7,3,Test Result: Nexiom machine is OFF,1
+6070fa4b22640f1d2b78c5a7,4,Removed Object 1 from machine,2
+6070fa4b22640f1d2b78c5a7,5,Removed Object 2 from machine,2
+6070fa4b22640f1d2b78c5a7,6,Placed Object 3 on machine,2
+6070fa4b22640f1d2b78c5a7,7,Placed Object 4 on machine,2
+6070fa4b22640f1d2b78c5a7,8,Test Result: Nexiom machine is OFF,2
+6070fa4b22640f1d2b78c5a7,9,Removed Object 4 from machine,3
+6070fa4b22640f1d2b78c5a7,10,Removed Object 3 from machine,3
+609916ce82bc0800c9196cde,1,Placed Object 1 on machine,1
+609916ce82bc0800c9196cde,2,Placed Object 2 on machine,1
+609916ce82bc0800c9196cde,3,Test Result: Nexiom machine is ON,1
+609916ce82bc0800c9196cde,4,Removed Object 1 from machine,2
+609916ce82bc0800c9196cde,5,Removed Object 2 from machine,2
+609916ce82bc0800c9196cde,6,Placed Object 3 on machine,2
+609916ce82bc0800c9196cde,7,Placed Object 4 on machine,2
+609916ce82bc0800c9196cde,8,Test Result: Nexiom machine is ON,2
+609916ce82bc0800c9196cde,9,Removed Object 4 from machine,3
+609916ce82bc0800c9196cde,10,Placed Object 2 on machine,3
+609916ce82bc0800c9196cde,11,Test Result: Nexiom machine is ON,3
+609916ce82bc0800c9196cde,12,Removed Object 3 from machine,4
+609916ce82bc0800c9196cde,13,Placed Object 4 on machine,4
+609916ce82bc0800c9196cde,14,Test Result: Nexiom machine is OFF,4
+609916ce82bc0800c9196cde,15,Removed Object 2 from machine,5
+609916ce82bc0800c9196cde,16,Removed Object 4 from machine,5
+609916ce82bc0800c9196cde,17,Placed Object 3 on machine,5
+609916ce82bc0800c9196cde,18,Placed Object 1 on machine,5
+609916ce82bc0800c9196cde,19,Removed Object 1 from machine,5
+609916ce82bc0800c9196cde,20,Test Result: Nexiom machine is ON,5
+609916ce82bc0800c9196cde,21,Removed Object 3 from machine,6
+609916ce82bc0800c9196cde,22,Placed Object 1 on machine,6
+609916ce82bc0800c9196cde,23,Test Result: Nexiom machine is ON,6
+60a1e1f4a3707c983a98f185,1,Placed Object 1 on machine,1
+60a1e1f4a3707c983a98f185,2,Test Result: Nexiom machine is OFF,1
+60a1e1f4a3707c983a98f185,3,Removed Object 1 from machine,2
+60a1e1f4a3707c983a98f185,4,Placed Object 2 on machine,2
+60a1e1f4a3707c983a98f185,5,Test Result: Nexiom machine is ON,2
+60a1e1f4a3707c983a98f185,6,Removed Object 2 from machine,3
+60a1e1f4a3707c983a98f185,7,Placed Object 3 on machine,3
+60a1e1f4a3707c983a98f185,8,Test Result: Nexiom machine is OFF,3
+60a1e1f4a3707c983a98f185,9,Removed Object 3 from machine,4
+60a1e1f4a3707c983a98f185,10,Placed Object 4 on machine,4
+60a1e1f4a3707c983a98f185,11,Test Result: Nexiom machine is ON,4
+60a1e1f4a3707c983a98f185,12,Removed Object 4 from machine,5
+60a1e1f4a3707c983a98f185,13,Placed Object 1 on machine,5
+60a1e1f4a3707c983a98f185,14,Placed Object 3 on machine,5
+60a1e1f4a3707c983a98f185,15,Test Result: Nexiom machine is OFF,5
+60a1e1f4a3707c983a98f185,16,Removed Object 1 from machine,6
+60a1e1f4a3707c983a98f185,17,Removed Object 3 from machine,6
+60a1e1f4a3707c983a98f185,18,Placed Object 4 on machine,6
+60a1e1f4a3707c983a98f185,19,Test Result: Nexiom machine is ON,6
+60a1e1f4a3707c983a98f185,20,Removed Object 4 from machine,7
+60a1e1f4a3707c983a98f185,21,Placed Object 1 on machine,7
+60a1e1f4a3707c983a98f185,22,Placed Object 4 on machine,7
+60a1e1f4a3707c983a98f185,23,Test Result: Nexiom machine is ON,7
+60a1e1f4a3707c983a98f185,24,Removed Object 1 from machine,8
+60a1e1f4a3707c983a98f185,25,Removed Object 4 from machine,8
+60a1e1f4a3707c983a98f185,26,Placed Object 3 on machine,8
+60a1e1f4a3707c983a98f185,27,Placed Object 2 on machine,8
+60a1e1f4a3707c983a98f185,28,Test Result: Nexiom machine is ON,8
+60a1e1f4a3707c983a98f185,29,Removed Object 2 from machine,9
+60a1e1f4a3707c983a98f185,30,Removed Object 3 from machine,9
+60a1e1f4a3707c983a98f185,31,Placed Object 2 on machine,9
+60a1e1f4a3707c983a98f185,32,Test Result: Nexiom machine is ON,9
+60a1e1f4a3707c983a98f185,33,Removed Object 2 from machine,10
+60a1e1f4a3707c983a98f185,34,Placed Object 3 on machine,10
+60a1e1f4a3707c983a98f185,35,Test Result: Nexiom machine is OFF,10
+60a1e1f4a3707c983a98f185,36,Removed Object 3 from machine,11
+60a1e1f4a3707c983a98f185,37,Placed Object 2 on machine,11
+60a1e1f4a3707c983a98f185,38,Test Result: Nexiom machine is ON,11
+60a1e1f4a3707c983a98f185,39,Removed Object 2 from machine,12
+60a1e1f4a3707c983a98f185,40,Placed Object 1 on machine,12
+60a1e1f4a3707c983a98f185,41,Test Result: Nexiom machine is OFF,12
+60a1e1f4a3707c983a98f185,42,Removed Object 1 from machine,13
+60a1e1f4a3707c983a98f185,43,Placed Object 1 on machine,13
+60a1e1f4a3707c983a98f185,44,Test Result: Nexiom machine is OFF,13
+60a1e1f4a3707c983a98f185,45,Removed Object 1 from machine,14
+60a1e1f4a3707c983a98f185,46,Placed Object 2 on machine,14
+60a1e1f4a3707c983a98f185,47,Test Result: Nexiom machine is ON,14
+60a1e1f4a3707c983a98f185,48,Removed Object 2 from machine,15
+60a1e1f4a3707c983a98f185,49,Placed Object 1 on machine,15
+60a1e1f4a3707c983a98f185,50,Test Result: Nexiom machine is OFF,15
+60a1e1f4a3707c983a98f185,51,Removed Object 1 from machine,16
+60a1e1f4a3707c983a98f185,52,Placed Object 4 on machine,16
+60a1e1f4a3707c983a98f185,53,Test Result: Nexiom machine is ON,16
+60b788ecd24b27bb39298936,1,Placed Object 1 on machine,1
+60b788ecd24b27bb39298936,2,Test Result: Nexiom machine is OFF,1
+60b788ecd24b27bb39298936,3,Removed Object 1 from machine,2
+60b788ecd24b27bb39298936,4,Placed Object 2 on machine,2
+60b788ecd24b27bb39298936,5,Test Result: Nexiom machine is OFF,2
+60b788ecd24b27bb39298936,6,Removed Object 2 from machine,3
+60b788ecd24b27bb39298936,7,Placed Object 3 on machine,3
+60b788ecd24b27bb39298936,8,Test Result: Nexiom machine is OFF,3
+60b788ecd24b27bb39298936,9,Removed Object 3 from machine,4
+60b788ecd24b27bb39298936,10,Placed Object 4 on machine,4
+60b788ecd24b27bb39298936,11,Test Result: Nexiom machine is OFF,4
+60b788ecd24b27bb39298936,12,Removed Object 4 from machine,5
+60b788ecd24b27bb39298936,13,Placed Object 1 on machine,5
+60b788ecd24b27bb39298936,14,Placed Object 2 on machine,5
+60b788ecd24b27bb39298936,15,Test Result: Nexiom machine is OFF,5
+60b788ecd24b27bb39298936,16,Removed Object 2 from machine,6
+60b788ecd24b27bb39298936,17,Placed Object 3 on machine,6
+60b788ecd24b27bb39298936,18,Test Result: Nexiom machine is OFF,6
+60b788ecd24b27bb39298936,19,Removed Object 3 from machine,7
+60b788ecd24b27bb39298936,20,Placed Object 4 on machine,7
+60b788ecd24b27bb39298936,21,Test Result: Nexiom machine is OFF,7
+60b788ecd24b27bb39298936,22,Removed Object 4 from machine,8
+60b788ecd24b27bb39298936,23,Removed Object 1 from machine,8
+60b788ecd24b27bb39298936,24,Placed Object 2 on machine,8
+60b788ecd24b27bb39298936,25,Placed Object 3 on machine,8
+60b788ecd24b27bb39298936,26,Test Result: Nexiom machine is OFF,8
+60b788ecd24b27bb39298936,27,Removed Object 3 from machine,9
+60b788ecd24b27bb39298936,28,Placed Object 4 on machine,9
+60b788ecd24b27bb39298936,29,Test Result: Nexiom machine is OFF,9
+60b788ecd24b27bb39298936,30,Removed Object 4 from machine,10
+60b788ecd24b27bb39298936,31,Removed Object 2 from machine,10
+60b788ecd24b27bb39298936,32,Placed Object 3 on machine,10
+60b788ecd24b27bb39298936,33,Placed Object 4 on machine,10
+60b788ecd24b27bb39298936,34,Test Result: Nexiom machine is ON,10
+60b788ecd24b27bb39298936,35,Removed Object 3 from machine,11
+60b788ecd24b27bb39298936,36,Removed Object 4 from machine,11
+60b788ecd24b27bb39298936,37,Placed Object 3 on machine,11
+60b788ecd24b27bb39298936,38,Placed Object 4 on machine,11
+60b788ecd24b27bb39298936,39,Placed Object 1 on machine,11
+60b788ecd24b27bb39298936,40,Test Result: Nexiom machine is ON,11
+60b788ecd24b27bb39298936,41,Placed Object 2 on machine,12
+60b788ecd24b27bb39298936,42,Test Result: Nexiom machine is ON,12
+60b788ecd24b27bb39298936,43,Removed Object 1 from machine,13
+60b788ecd24b27bb39298936,44,Test Result: Nexiom machine is ON,13
+60b788ecd24b27bb39298936,45,Removed Object 2 from machine,14
+60b788ecd24b27bb39298936,46,Removed Object 3 from machine,14
+60b788ecd24b27bb39298936,47,Removed Object 4 from machine,14
+60b788ecd24b27bb39298936,48,Placed Object 1 on machine,14
+60b788ecd24b27bb39298936,49,Placed Object 2 on machine,14
+60b788ecd24b27bb39298936,50,Placed Object 3 on machine,14
+60b788ecd24b27bb39298936,51,Test Result: Nexiom machine is OFF,14
+60b788ecd24b27bb39298936,52,Placed Object 4 on machine,15
+60b788ecd24b27bb39298936,53,Removed Object 3 from machine,15
+60b788ecd24b27bb39298936,54,Test Result: Nexiom machine is OFF,15
+60bea43aa26919517334ed4a,1,Placed Object 1 on machine,1
+60bea43aa26919517334ed4a,2,Placed Object 2 on machine,1
+60bea43aa26919517334ed4a,3,Test Result: Nexiom machine is OFF,1
+60bea43aa26919517334ed4a,4,Removed Object 1 from machine,2
+60bea43aa26919517334ed4a,5,Removed Object 2 from machine,2
+60bea43aa26919517334ed4a,6,Placed Object 3 on machine,2
+60bea43aa26919517334ed4a,7,Test Result: Nexiom machine is OFF,2
+60bea43aa26919517334ed4a,8,Removed Object 3 from machine,3
+60bea43aa26919517334ed4a,9,Placed Object 4 on machine,3
+60bea43aa26919517334ed4a,10,Test Result: Nexiom machine is OFF,3
+60bea43aa26919517334ed4a,11,Placed Object 2 on machine,4
+60bea43aa26919517334ed4a,12,Test Result: Nexiom machine is ON,4
+60bea43aa26919517334ed4a,13,Removed Object 4 from machine,5
+60bea43aa26919517334ed4a,14,Placed Object 1 on machine,5
+60bea43aa26919517334ed4a,15,Test Result: Nexiom machine is OFF,5
+60bea43aa26919517334ed4a,16,Removed Object 1 from machine,6
+60bea43aa26919517334ed4a,17,Placed Object 3 on machine,6
+60bea43aa26919517334ed4a,18,Test Result: Nexiom machine is OFF,6
+60bea43aa26919517334ed4a,19,Removed Object 2 from machine,7
+60bea43aa26919517334ed4a,20,Removed Object 3 from machine,7
+60bea43aa26919517334ed4a,21,Placed Object 1 on machine,7
+60bea43aa26919517334ed4a,22,Placed Object 3 on machine,7
+60bea43aa26919517334ed4a,23,Test Result: Nexiom machine is OFF,7
+60bea43aa26919517334ed4a,24,Removed Object 1 from machine,8
+60bea43aa26919517334ed4a,25,Removed Object 3 from machine,8
+60bea43aa26919517334ed4a,26,Placed Object 2 on machine,8
+60bea43aa26919517334ed4a,27,Placed Object 3 on machine,8
+60bea43aa26919517334ed4a,28,Placed Object 4 on machine,8
+60bea43aa26919517334ed4a,29,Test Result: Nexiom machine is ON,8
+60da4f9aa1ced7efeecca18a,1,Placed Object 1 on machine,1
+60da4f9aa1ced7efeecca18a,2,Placed Object 2 on machine,1
+60da4f9aa1ced7efeecca18a,3,Test Result: Nexiom machine is OFF,1
+60da4f9aa1ced7efeecca18a,4,Removed Object 2 from machine,2
+60da4f9aa1ced7efeecca18a,5,Removed Object 1 from machine,2
+60da4f9aa1ced7efeecca18a,6,Placed Object 3 on machine,2
+60da4f9aa1ced7efeecca18a,7,Placed Object 1 on machine,2
+60da4f9aa1ced7efeecca18a,8,Test Result: Nexiom machine is OFF,2
+60da4f9aa1ced7efeecca18a,9,Removed Object 1 from machine,3
+60da4f9aa1ced7efeecca18a,10,Placed Object 4 on machine,3
+60da4f9aa1ced7efeecca18a,11,Removed Object 3 from machine,3
+60da4f9aa1ced7efeecca18a,12,Placed Object 2 on machine,3
+60da4f9aa1ced7efeecca18a,13,Test Result: Nexiom machine is OFF,3
+60da4f9aa1ced7efeecca18a,14,Removed Object 2 from machine,4
+60da4f9aa1ced7efeecca18a,15,Placed Object 3 on machine,4
+60da4f9aa1ced7efeecca18a,16,Test Result: Nexiom machine is OFF,4
+60da4f9aa1ced7efeecca18a,17,Placed Object 1 on machine,5
+60da4f9aa1ced7efeecca18a,18,Placed Object 2 on machine,5
+60da4f9aa1ced7efeecca18a,19,Test Result: Nexiom machine is ON,5
+60da4f9aa1ced7efeecca18a,20,Removed Object 2 from machine,6
+60da4f9aa1ced7efeecca18a,21,Test Result: Nexiom machine is OFF,6
+60da4f9aa1ced7efeecca18a,22,Placed Object 2 on machine,7
+60da4f9aa1ced7efeecca18a,23,Removed Object 3 from machine,7
+60da4f9aa1ced7efeecca18a,24,Test Result: Nexiom machine is OFF,7
+60da4f9aa1ced7efeecca18a,25,Removed Object 1 from machine,8
+60da4f9aa1ced7efeecca18a,26,Placed Object 1 on machine,8
+60da4f9aa1ced7efeecca18a,27,Removed Object 2 from machine,8
+60da4f9aa1ced7efeecca18a,28,Placed Object 3 on machine,8
+60da4f9aa1ced7efeecca18a,29,Removed Object 3 from machine,8
+60da4f9aa1ced7efeecca18a,30,Test Result: Nexiom machine is OFF,8
+60da4f9aa1ced7efeecca18a,31,Placed Object 2 on machine,9
+60da4f9aa1ced7efeecca18a,32,Placed Object 3 on machine,9
+60da4f9aa1ced7efeecca18a,33,Removed Object 1 from machine,9
+60da4f9aa1ced7efeecca18a,34,Test Result: Nexiom machine is ON,9
+60da4f9aa1ced7efeecca18a,35,Removed Object 3 from machine,10
+60da4f9aa1ced7efeecca18a,36,Test Result: Nexiom machine is OFF,10
+60da4f9aa1ced7efeecca18a,37,Placed Object 3 on machine,11
+60da4f9aa1ced7efeecca18a,38,Removed Object 4 from machine,11
+60da4f9aa1ced7efeecca18a,39,Test Result: Nexiom machine is ON,11
+60da4f9aa1ced7efeecca18a,40,Placed Object 1 on machine,12
+60da4f9aa1ced7efeecca18a,41,Test Result: Nexiom machine is ON,12
+60db3cf3270edd7c9c7e0bd3,1,Placed Object 2 on machine,1
+60db3cf3270edd7c9c7e0bd3,2,Placed Object 4 on machine,1
+60db3cf3270edd7c9c7e0bd3,3,Test Result: Nexiom machine is OFF,1
+60db3cf3270edd7c9c7e0bd3,4,Removed Object 2 from machine,2
+60db3cf3270edd7c9c7e0bd3,5,Removed Object 4 from machine,2
+60db3cf3270edd7c9c7e0bd3,6,Placed Object 3 on machine,2
+60db3cf3270edd7c9c7e0bd3,7,Placed Object 1 on machine,2
+60db3cf3270edd7c9c7e0bd3,8,Test Result: Nexiom machine is OFF,2
+60db3cf3270edd7c9c7e0bd3,9,Removed Object 1 from machine,3
+60db3cf3270edd7c9c7e0bd3,10,Removed Object 3 from machine,3
+60db3cf3270edd7c9c7e0bd3,11,Placed Object 1 on machine,3
+60db3cf3270edd7c9c7e0bd3,12,Placed Object 4 on machine,3
+60db3cf3270edd7c9c7e0bd3,13,Test Result: Nexiom machine is ON,3
+60db3cf3270edd7c9c7e0bd3,14,Removed Object 1 from machine,4
+60db3cf3270edd7c9c7e0bd3,15,Removed Object 4 from machine,4
+60db3cf3270edd7c9c7e0bd3,16,Placed Object 2 on machine,4
+60db3cf3270edd7c9c7e0bd3,17,Placed Object 4 on machine,4
+60db3cf3270edd7c9c7e0bd3,18,Test Result: Nexiom machine is OFF,4
+60db3cf3270edd7c9c7e0bd3,19,Removed Object 2 from machine,5
+60db3cf3270edd7c9c7e0bd3,20,Placed Object 3 on machine,5
+60db3cf3270edd7c9c7e0bd3,21,Test Result: Nexiom machine is OFF,5
+60db3cf3270edd7c9c7e0bd3,22,Placed Object 2 on machine,6
+60db3cf3270edd7c9c7e0bd3,23,Placed Object 1 on machine,6
+60db3cf3270edd7c9c7e0bd3,24,Test Result: Nexiom machine is ON,6
+60db3cf3270edd7c9c7e0bd3,25,Removed Object 1 from machine,7
+60db3cf3270edd7c9c7e0bd3,26,Test Result: Nexiom machine is OFF,7
+60db3cf3270edd7c9c7e0bd3,27,Removed Object 2 from machine,8
+60db3cf3270edd7c9c7e0bd3,28,Placed Object 1 on machine,8
+60db3cf3270edd7c9c7e0bd3,29,Test Result: Nexiom machine is ON,8
+60db3cf3270edd7c9c7e0bd3,30,Removed Object 3 from machine,9
+60db3cf3270edd7c9c7e0bd3,31,Placed Object 2 on machine,9
+60db3cf3270edd7c9c7e0bd3,32,Test Result: Nexiom machine is ON,9
+60fcc292d13ae9614d4a77a7,1,Placed Object 1 on machine,1
+60fcc292d13ae9614d4a77a7,2,Test Result: Nexiom machine is OFF,1
+60fcc292d13ae9614d4a77a7,3,Removed Object 1 from machine,2
+60fcc292d13ae9614d4a77a7,4,Placed Object 2 on machine,2
+60fcc292d13ae9614d4a77a7,5,Test Result: Nexiom machine is ON,2
+60fcc292d13ae9614d4a77a7,6,Removed Object 2 from machine,3
+60fcc292d13ae9614d4a77a7,7,Placed Object 3 on machine,3
+60fcc292d13ae9614d4a77a7,8,Test Result: Nexiom machine is OFF,3
+60fcc292d13ae9614d4a77a7,9,Removed Object 3 from machine,4
+60fcc292d13ae9614d4a77a7,10,Placed Object 4 on machine,4
+60fcc292d13ae9614d4a77a7,11,Test Result: Nexiom machine is ON,4
+60fcc292d13ae9614d4a77a7,12,Removed Object 4 from machine,5
+60fcc292d13ae9614d4a77a7,13,Placed Object 2 on machine,5
+60fcc292d13ae9614d4a77a7,14,Placed Object 4 on machine,5
+60fcc292d13ae9614d4a77a7,15,Test Result: Nexiom machine is ON,5
+60fd05fdd8f4081c41972a1b,1,Placed Object 2 on machine,1
+60fd05fdd8f4081c41972a1b,2,Placed Object 1 on machine,1
+60fd05fdd8f4081c41972a1b,3,Test Result: Nexiom machine is ON,1
+60fd05fdd8f4081c41972a1b,4,Removed Object 2 from machine,2
+60fd05fdd8f4081c41972a1b,5,Test Result: Nexiom machine is ON,2
+60fd05fdd8f4081c41972a1b,6,Removed Object 1 from machine,3
+60fd05fdd8f4081c41972a1b,7,Placed Object 3 on machine,3
+60fd05fdd8f4081c41972a1b,8,Placed Object 4 on machine,3
+60fd05fdd8f4081c41972a1b,9,Test Result: Nexiom machine is ON,3
+60fd05fdd8f4081c41972a1b,10,Removed Object 4 from machine,4
+60fd05fdd8f4081c41972a1b,11,Test Result: Nexiom machine is OFF,4
+60fd05fdd8f4081c41972a1b,12,Placed Object 2 on machine,5
+60fd05fdd8f4081c41972a1b,13,Test Result: Nexiom machine is OFF,5
+60fd05fdd8f4081c41972a1b,14,Removed Object 2 from machine,6
+60fd05fdd8f4081c41972a1b,15,Removed Object 3 from machine,6
+60fd05fdd8f4081c41972a1b,16,Placed Object 4 on machine,6
+60fd05fdd8f4081c41972a1b,17,Placed Object 1 on machine,6
+60fd05fdd8f4081c41972a1b,18,Test Result: Nexiom machine is ON,6
+60fda57e0916dfe2157c9b00,1,Placed Object 1 on machine,1
+60fda57e0916dfe2157c9b00,2,Test Result: Nexiom machine is OFF,1
+60fda57e0916dfe2157c9b00,3,Removed Object 1 from machine,2
+60fda57e0916dfe2157c9b00,4,Placed Object 2 on machine,2
+60fda57e0916dfe2157c9b00,5,Test Result: Nexiom machine is OFF,2
+60fda57e0916dfe2157c9b00,6,Removed Object 2 from machine,3
+60fda57e0916dfe2157c9b00,7,Placed Object 3 on machine,3
+60fda57e0916dfe2157c9b00,8,Test Result: Nexiom machine is OFF,3
+60fda57e0916dfe2157c9b00,9,Removed Object 3 from machine,4
+60fda57e0916dfe2157c9b00,10,Placed Object 4 on machine,4
+60fda57e0916dfe2157c9b00,11,Test Result: Nexiom machine is OFF,4
+60fda57e0916dfe2157c9b00,12,Placed Object 3 on machine,5
+60fda57e0916dfe2157c9b00,13,Test Result: Nexiom machine is ON,5
+60fda57e0916dfe2157c9b00,14,Removed Object 3 from machine,6
+60fda57e0916dfe2157c9b00,15,Placed Object 2 on machine,6
+60fda57e0916dfe2157c9b00,16,Test Result: Nexiom machine is OFF,6
+60fda57e0916dfe2157c9b00,17,Removed Object 2 from machine,7
+60fda57e0916dfe2157c9b00,18,Placed Object 1 on machine,7
+60fda57e0916dfe2157c9b00,19,Test Result: Nexiom machine is OFF,7
+60fda57e0916dfe2157c9b00,20,Removed Object 1 from machine,8
+60fda57e0916dfe2157c9b00,21,Removed Object 4 from machine,8
+60fda57e0916dfe2157c9b00,22,Placed Object 3 on machine,8
+60fda57e0916dfe2157c9b00,23,Placed Object 2 on machine,8
+60fda57e0916dfe2157c9b00,24,Test Result: Nexiom machine is OFF,8
+60fda57e0916dfe2157c9b00,25,Removed Object 2 from machine,9
+60fda57e0916dfe2157c9b00,26,Placed Object 1 on machine,9
+60fda57e0916dfe2157c9b00,27,Test Result: Nexiom machine is OFF,9
+60fda57e0916dfe2157c9b00,28,Removed Object 3 from machine,10
+60fda57e0916dfe2157c9b00,29,Removed Object 1 from machine,10
+60fda57e0916dfe2157c9b00,30,Placed Object 2 on machine,10
+60fda57e0916dfe2157c9b00,31,Placed Object 1 on machine,10
+60fda57e0916dfe2157c9b00,32,Test Result: Nexiom machine is OFF,10
+60fda57e0916dfe2157c9b00,33,Removed Object 1 from machine,11
+60fda57e0916dfe2157c9b00,34,Placed Object 3 on machine,11
+60fda57e0916dfe2157c9b00,35,Test Result: Nexiom machine is OFF,11
+60fda57e0916dfe2157c9b00,36,Removed Object 2 from machine,12
+60fda57e0916dfe2157c9b00,37,Placed Object 2 on machine,12
+60fda57e0916dfe2157c9b00,38,Removed Object 3 from machine,12
+60fda57e0916dfe2157c9b00,39,Placed Object 4 on machine,12
+60fda57e0916dfe2157c9b00,40,Test Result: Nexiom machine is OFF,12
+60fda57e0916dfe2157c9b00,41,Removed Object 4 from machine,13
+60fda57e0916dfe2157c9b00,42,Removed Object 2 from machine,13
+60fda57e0916dfe2157c9b00,43,Placed Object 1 on machine,13
+60fda57e0916dfe2157c9b00,44,Placed Object 3 on machine,13
+60fda57e0916dfe2157c9b00,45,Test Result: Nexiom machine is OFF,13
+60fda57e0916dfe2157c9b00,46,Removed Object 3 from machine,14
+60fda57e0916dfe2157c9b00,47,Placed Object 4 on machine,14
+60fda57e0916dfe2157c9b00,48,Test Result: Nexiom machine is OFF,14
+60fda57e0916dfe2157c9b00,49,Removed Object 1 from machine,15
+60fda57e0916dfe2157c9b00,50,Placed Object 3 on machine,15
+60fda57e0916dfe2157c9b00,51,Placed Object 2 on machine,15
+60fda57e0916dfe2157c9b00,52,Test Result: Nexiom machine is ON,15
+60fda57e0916dfe2157c9b00,53,Removed Object 3 from machine,16
+60fda57e0916dfe2157c9b00,54,Placed Object 1 on machine,16
+60fda57e0916dfe2157c9b00,55,Test Result: Nexiom machine is OFF,16
+60ff33eea57872b7188f12e2,1,Placed Object 1 on machine,1
+60ff33eea57872b7188f12e2,2,Test Result: Nexiom machine is ON,1
+60ff33eea57872b7188f12e2,3,Removed Object 1 from machine,2
+60ff33eea57872b7188f12e2,4,Placed Object 2 on machine,2
+60ff33eea57872b7188f12e2,5,Test Result: Nexiom machine is OFF,2
+60ff33eea57872b7188f12e2,6,Removed Object 2 from machine,3
+60ff33eea57872b7188f12e2,7,Placed Object 3 on machine,3
+60ff33eea57872b7188f12e2,8,Test Result: Nexiom machine is ON,3
+60ff33eea57872b7188f12e2,9,Removed Object 3 from machine,4
+60ff33eea57872b7188f12e2,10,Placed Object 4 on machine,4
+60ff33eea57872b7188f12e2,11,Test Result: Nexiom machine is OFF,4
+60ff33eea57872b7188f12e2,12,Removed Object 4 from machine,5
+60ff33eea57872b7188f12e2,13,Placed Object 1 on machine,5
+60ff33eea57872b7188f12e2,14,Placed Object 3 on machine,5
+60ff33eea57872b7188f12e2,15,Test Result: Nexiom machine is ON,5
+60ff33eea57872b7188f12e2,16,Removed Object 3 from machine,6
+60ff33eea57872b7188f12e2,17,Removed Object 1 from machine,6
+60ff33eea57872b7188f12e2,18,Placed Object 2 on machine,6
+60ff33eea57872b7188f12e2,19,Placed Object 4 on machine,6
+60ff33eea57872b7188f12e2,20,Test Result: Nexiom machine is OFF,6
+6100b6365a3b961d941f7071,1,Placed Object 1 on machine,1
+6100b6365a3b961d941f7071,2,Placed Object 2 on machine,1
+6100b6365a3b961d941f7071,3,Test Result: Nexiom machine is OFF,1
+6100b6365a3b961d941f7071,4,Removed Object 1 from machine,2
+6100b6365a3b961d941f7071,5,Removed Object 2 from machine,2
+6100b6365a3b961d941f7071,6,Placed Object 3 on machine,2
+6100b6365a3b961d941f7071,7,Test Result: Nexiom machine is OFF,2
+6100b6365a3b961d941f7071,8,Removed Object 3 from machine,3
+6100b6365a3b961d941f7071,9,Placed Object 4 on machine,3
+6100b6365a3b961d941f7071,10,Test Result: Nexiom machine is OFF,3
+6100b6365a3b961d941f7071,11,Removed Object 4 from machine,4
+6100b6365a3b961d941f7071,12,Placed Object 1 on machine,4
+6100b6365a3b961d941f7071,13,Test Result: Nexiom machine is OFF,4
+6100b6365a3b961d941f7071,14,Removed Object 1 from machine,5
+6100b6365a3b961d941f7071,15,Placed Object 2 on machine,5
+6100b6365a3b961d941f7071,16,Test Result: Nexiom machine is OFF,5
+6100b6365a3b961d941f7071,17,Removed Object 2 from machine,6
+610329975d39376c37360d3c,1,Placed Object 1 on machine,1
+610329975d39376c37360d3c,2,Test Result: Nexiom machine is OFF,1
+610329975d39376c37360d3c,3,Removed Object 1 from machine,2
+610329975d39376c37360d3c,4,Placed Object 2 on machine,2
+610329975d39376c37360d3c,5,Test Result: Nexiom machine is ON,2
+610329975d39376c37360d3c,6,Removed Object 2 from machine,3
+610329975d39376c37360d3c,7,Placed Object 3 on machine,3
+610329975d39376c37360d3c,8,Test Result: Nexiom machine is OFF,3
+610329975d39376c37360d3c,9,Removed Object 3 from machine,4
+610329975d39376c37360d3c,10,Placed Object 4 on machine,4
+610329975d39376c37360d3c,11,Test Result: Nexiom machine is ON,4
+610329975d39376c37360d3c,12,Removed Object 4 from machine,5
+610329975d39376c37360d3c,13,Placed Object 4 on machine,5
+610329975d39376c37360d3c,14,Placed Object 3 on machine,5
+610329975d39376c37360d3c,15,Test Result: Nexiom machine is ON,5
+610329975d39376c37360d3c,16,Removed Object 3 from machine,6
+610329975d39376c37360d3c,17,Removed Object 4 from machine,6
+610329975d39376c37360d3c,18,Placed Object 2 on machine,6
+610329975d39376c37360d3c,19,Placed Object 3 on machine,6
+610329975d39376c37360d3c,20,Test Result: Nexiom machine is ON,6
+610329975d39376c37360d3c,21,Removed Object 2 from machine,7
+610329975d39376c37360d3c,22,Removed Object 3 from machine,7
+610825355ae77bd1867d118e,1,Placed Object 1 on machine,1
+610825355ae77bd1867d118e,2,Test Result: Nexiom machine is OFF,1
+610825355ae77bd1867d118e,3,Removed Object 1 from machine,2
+610825355ae77bd1867d118e,4,Placed Object 2 on machine,2
+610825355ae77bd1867d118e,5,Test Result: Nexiom machine is OFF,2
+610825355ae77bd1867d118e,6,Removed Object 2 from machine,3
+610825355ae77bd1867d118e,7,Placed Object 3 on machine,3
+610825355ae77bd1867d118e,8,Test Result: Nexiom machine is OFF,3
+610825355ae77bd1867d118e,9,Removed Object 3 from machine,4
+610825355ae77bd1867d118e,10,Placed Object 4 on machine,4
+610825355ae77bd1867d118e,11,Test Result: Nexiom machine is OFF,4
+610825355ae77bd1867d118e,12,Placed Object 3 on machine,5
+610825355ae77bd1867d118e,13,Test Result: Nexiom machine is OFF,5
+610825355ae77bd1867d118e,14,Removed Object 3 from machine,6
+610825355ae77bd1867d118e,15,Placed Object 2 on machine,6
+610825355ae77bd1867d118e,16,Test Result: Nexiom machine is OFF,6
+610825355ae77bd1867d118e,17,Removed Object 2 from machine,7
+610825355ae77bd1867d118e,18,Placed Object 1 on machine,7
+610825355ae77bd1867d118e,19,Test Result: Nexiom machine is OFF,7
+610825355ae77bd1867d118e,20,Removed Object 4 from machine,8
+610825355ae77bd1867d118e,21,Placed Object 2 on machine,8
+610825355ae77bd1867d118e,22,Test Result: Nexiom machine is OFF,8
+610825355ae77bd1867d118e,23,Removed Object 2 from machine,9
+610825355ae77bd1867d118e,24,Placed Object 3 on machine,9
+610825355ae77bd1867d118e,25,Test Result: Nexiom machine is OFF,9
+610825355ae77bd1867d118e,26,Removed Object 1 from machine,10
+610825355ae77bd1867d118e,27,Placed Object 2 on machine,10
+610825355ae77bd1867d118e,28,Test Result: Nexiom machine is ON,10
+610863156133d1485b80d389,1,Placed Object 1 on machine,1
+610863156133d1485b80d389,2,Placed Object 2 on machine,1
+610863156133d1485b80d389,3,Placed Object 3 on machine,1
+610863156133d1485b80d389,4,Placed Object 4 on machine,1
+610863156133d1485b80d389,5,Test Result: Nexiom machine is ON,1
+610863156133d1485b80d389,6,Removed Object 2 from machine,2
+610863156133d1485b80d389,7,Test Result: Nexiom machine is ON,2
+610863156133d1485b80d389,8,Removed Object 1 from machine,3
+610863156133d1485b80d389,9,Test Result: Nexiom machine is OFF,3
+610863156133d1485b80d389,10,Placed Object 1 on machine,4
+610863156133d1485b80d389,11,Removed Object 3 from machine,4
+610863156133d1485b80d389,12,Test Result: Nexiom machine is ON,4
+610863156133d1485b80d389,13,Removed Object 4 from machine,5
+610863156133d1485b80d389,14,Test Result: Nexiom machine is ON,5
+611098e0196fa40fa49f3aeb,1,Placed Object 1 on machine,1
+611098e0196fa40fa49f3aeb,2,Placed Object 2 on machine,1
+611098e0196fa40fa49f3aeb,3,Test Result: Nexiom machine is ON,1
+611098e0196fa40fa49f3aeb,4,Removed Object 1 from machine,2
+611098e0196fa40fa49f3aeb,5,Removed Object 2 from machine,2
+611098e0196fa40fa49f3aeb,6,Placed Object 3 on machine,2
+611098e0196fa40fa49f3aeb,7,Placed Object 4 on machine,2
+611098e0196fa40fa49f3aeb,8,Test Result: Nexiom machine is ON,2
+611098e0196fa40fa49f3aeb,9,Removed Object 3 from machine,3
+611098e0196fa40fa49f3aeb,10,Removed Object 4 from machine,3
+611098e0196fa40fa49f3aeb,11,Placed Object 2 on machine,3
+611098e0196fa40fa49f3aeb,12,Test Result: Nexiom machine is OFF,3
+611098e0196fa40fa49f3aeb,13,Removed Object 2 from machine,4
+611098e0196fa40fa49f3aeb,14,Placed Object 3 on machine,4
+611098e0196fa40fa49f3aeb,15,Test Result: Nexiom machine is OFF,4
+611098e0196fa40fa49f3aeb,16,Removed Object 3 from machine,5
+611098e0196fa40fa49f3aeb,17,Placed Object 2 on machine,5
+611098e0196fa40fa49f3aeb,18,Placed Object 3 on machine,5
+611098e0196fa40fa49f3aeb,19,Test Result: Nexiom machine is OFF,5
+611098e0196fa40fa49f3aeb,20,Removed Object 2 from machine,6
+611098e0196fa40fa49f3aeb,21,Removed Object 3 from machine,6
+611098e0196fa40fa49f3aeb,22,Placed Object 1 on machine,6
+611098e0196fa40fa49f3aeb,23,Test Result: Nexiom machine is ON,6
+611098e0196fa40fa49f3aeb,24,Removed Object 1 from machine,7
+611098e0196fa40fa49f3aeb,25,Placed Object 4 on machine,7
+611098e0196fa40fa49f3aeb,26,Test Result: Nexiom machine is ON,7
+611098e0196fa40fa49f3aeb,27,Placed Object 1 on machine,8
+611098e0196fa40fa49f3aeb,28,Test Result: Nexiom machine is ON,8
+611098e0196fa40fa49f3aeb,29,Placed Object 2 on machine,9
+611098e0196fa40fa49f3aeb,30,Test Result: Nexiom machine is ON,9
+611098e0196fa40fa49f3aeb,31,Removed Object 1 from machine,10
+611098e0196fa40fa49f3aeb,32,Test Result: Nexiom machine is ON,10
+611098e0196fa40fa49f3aeb,33,Placed Object 3 on machine,11
+611098e0196fa40fa49f3aeb,34,Test Result: Nexiom machine is ON,11
+611098e0196fa40fa49f3aeb,35,Removed Object 4 from machine,12
+611098e0196fa40fa49f3aeb,36,Placed Object 1 on machine,12
+611098e0196fa40fa49f3aeb,37,Test Result: Nexiom machine is ON,12
+611098e0196fa40fa49f3aeb,38,Removed Object 2 from machine,13
+611098e0196fa40fa49f3aeb,39,Removed Object 3 from machine,13
+611098e0196fa40fa49f3aeb,40,Removed Object 1 from machine,13
+6122548871de12f3a454e5cb,1,Placed Object 1 on machine,1
+6122548871de12f3a454e5cb,2,Placed Object 2 on machine,1
+6122548871de12f3a454e5cb,3,Test Result: Nexiom machine is OFF,1
+6122548871de12f3a454e5cb,4,Removed Object 2 from machine,2
+6122548871de12f3a454e5cb,5,Removed Object 1 from machine,2
+6122548871de12f3a454e5cb,6,Placed Object 3 on machine,2
+6122548871de12f3a454e5cb,7,Placed Object 4 on machine,2
+6122548871de12f3a454e5cb,8,Test Result: Nexiom machine is ON,2
+6122548871de12f3a454e5cb,9,Removed Object 4 from machine,3
+6122548871de12f3a454e5cb,10,Test Result: Nexiom machine is ON,3
+6122548871de12f3a454e5cb,11,Removed Object 3 from machine,4
+6122548871de12f3a454e5cb,12,Placed Object 4 on machine,4
+6122548871de12f3a454e5cb,13,Test Result: Nexiom machine is ON,4
+6122548871de12f3a454e5cb,14,Removed Object 4 from machine,5
+61522983a596d0aa25117787,1,Placed Object 1 on machine,1
+61522983a596d0aa25117787,2,Test Result: Nexiom machine is OFF,1
+61522983a596d0aa25117787,3,Removed Object 1 from machine,2
+61522983a596d0aa25117787,4,Placed Object 2 on machine,2
+61522983a596d0aa25117787,5,Test Result: Nexiom machine is OFF,2
+61522983a596d0aa25117787,6,Removed Object 2 from machine,3
+61522983a596d0aa25117787,7,Placed Object 3 on machine,3
+61522983a596d0aa25117787,8,Test Result: Nexiom machine is ON,3
+61522983a596d0aa25117787,9,Removed Object 3 from machine,4
+61522983a596d0aa25117787,10,Placed Object 4 on machine,4
+61522983a596d0aa25117787,11,Test Result: Nexiom machine is ON,4
+61522983a596d0aa25117787,12,Placed Object 3 on machine,5
+61522983a596d0aa25117787,13,Test Result: Nexiom machine is ON,5
+6154973c69da7c97996a19f6,1,Placed Object 1 on machine,1
+6154973c69da7c97996a19f6,2,Placed Object 3 on machine,1
+6154973c69da7c97996a19f6,3,Test Result: Nexiom machine is OFF,1
+6154973c69da7c97996a19f6,4,Removed Object 1 from machine,2
+6154973c69da7c97996a19f6,5,Removed Object 3 from machine,2
+6154973c69da7c97996a19f6,6,Placed Object 2 on machine,2
+6154973c69da7c97996a19f6,7,Placed Object 4 on machine,2
+6154973c69da7c97996a19f6,8,Test Result: Nexiom machine is ON,2
+6154973c69da7c97996a19f6,9,Removed Object 4 from machine,3
+6154973c69da7c97996a19f6,10,Test Result: Nexiom machine is OFF,3
+6154973c69da7c97996a19f6,11,Removed Object 2 from machine,4
+6154973c69da7c97996a19f6,12,Placed Object 4 on machine,4
+6154973c69da7c97996a19f6,13,Test Result: Nexiom machine is OFF,4
+6154973c69da7c97996a19f6,14,Removed Object 4 from machine,5
+6154973c69da7c97996a19f6,15,Placed Object 1 on machine,5
+6154973c69da7c97996a19f6,16,Placed Object 2 on machine,5
+6154973c69da7c97996a19f6,17,Test Result: Nexiom machine is OFF,5
+6154973c69da7c97996a19f6,18,Removed Object 2 from machine,6
+6154973c69da7c97996a19f6,19,Placed Object 4 on machine,6
+6154973c69da7c97996a19f6,20,Test Result: Nexiom machine is OFF,6
+6154973c69da7c97996a19f6,21,Placed Object 2 on machine,7
+6154973c69da7c97996a19f6,22,Test Result: Nexiom machine is ON,7
+6154973c69da7c97996a19f6,23,Placed Object 3 on machine,8
+6154973c69da7c97996a19f6,24,Removed Object 2 from machine,8
+6154973c69da7c97996a19f6,25,Test Result: Nexiom machine is OFF,8
+6154973c69da7c97996a19f6,26,Placed Object 2 on machine,9
+6154973c69da7c97996a19f6,27,Test Result: Nexiom machine is ON,9
+6154973c69da7c97996a19f6,28,Removed Object 1 from machine,10
+6154973c69da7c97996a19f6,29,Test Result: Nexiom machine is ON,10
+6154973c69da7c97996a19f6,30,Removed Object 2 from machine,11
+6154973c69da7c97996a19f6,31,Test Result: Nexiom machine is OFF,11
+6154973c69da7c97996a19f6,32,Removed Object 3 from machine,12
+6154973c69da7c97996a19f6,33,Removed Object 4 from machine,12
+6154973c69da7c97996a19f6,34,Placed Object 3 on machine,12
+6154973c69da7c97996a19f6,35,Placed Object 2 on machine,12
+6154973c69da7c97996a19f6,36,Placed Object 1 on machine,12
+6154973c69da7c97996a19f6,37,Test Result: Nexiom machine is OFF,12
+6154973c69da7c97996a19f6,38,Removed Object 1 from machine,13
+6154973c69da7c97996a19f6,39,Test Result: Nexiom machine is OFF,13
+6154973c69da7c97996a19f6,40,Removed Object 3 from machine,14
+6154973c69da7c97996a19f6,41,Removed Object 2 from machine,14
+6154973c69da7c97996a19f6,42,Placed Object 1 on machine,14
+6154973c69da7c97996a19f6,43,Test Result: Nexiom machine is OFF,14
+6154973c69da7c97996a19f6,44,Removed Object 1 from machine,15
+6154973c69da7c97996a19f6,45,Placed Object 3 on machine,15
+6154973c69da7c97996a19f6,46,Test Result: Nexiom machine is OFF,15
+6154973c69da7c97996a19f6,47,Removed Object 3 from machine,16
+6234e9c483c8aa1f1c5f046a,1,Placed Object 1 on machine,1
+6234e9c483c8aa1f1c5f046a,2,Placed Object 2 on machine,1
+6234e9c483c8aa1f1c5f046a,3,Test Result: Nexiom machine is ON,1
+6234e9c483c8aa1f1c5f046a,4,Removed Object 2 from machine,2
+6234e9c483c8aa1f1c5f046a,5,Test Result: Nexiom machine is ON,2
+6234e9c483c8aa1f1c5f046a,6,Removed Object 1 from machine,3
+6234e9c483c8aa1f1c5f046a,7,Placed Object 2 on machine,3
+6234e9c483c8aa1f1c5f046a,8,Test Result: Nexiom machine is OFF,3
+6234e9c483c8aa1f1c5f046a,9,Removed Object 2 from machine,4
+6234e9c483c8aa1f1c5f046a,10,Placed Object 3 on machine,4
+6234e9c483c8aa1f1c5f046a,11,Test Result: Nexiom machine is OFF,4
+6234e9c483c8aa1f1c5f046a,12,Removed Object 3 from machine,5
+6234e9c483c8aa1f1c5f046a,13,Placed Object 4 on machine,5
+6234e9c483c8aa1f1c5f046a,14,Test Result: Nexiom machine is ON,5
+6234e9c483c8aa1f1c5f046a,15,Placed Object 1 on machine,6
+6234e9c483c8aa1f1c5f046a,16,Test Result: Nexiom machine is ON,6
+62740f4f578f0114e649016d,1,Placed Object 1 on machine,1
+62740f4f578f0114e649016d,2,Placed Object 3 on machine,1
+62740f4f578f0114e649016d,3,Test Result: Nexiom machine is OFF,1
+62740f4f578f0114e649016d,4,Removed Object 1 from machine,2
+62740f4f578f0114e649016d,5,Removed Object 3 from machine,2
+62740f4f578f0114e649016d,6,Placed Object 4 on machine,2
+62740f4f578f0114e649016d,7,Placed Object 2 on machine,2
+62740f4f578f0114e649016d,8,Test Result: Nexiom machine is OFF,2
+62740f4f578f0114e649016d,9,Removed Object 2 from machine,3
+62740f4f578f0114e649016d,10,Placed Object 3 on machine,3
+62740f4f578f0114e649016d,11,Removed Object 4 from machine,3
+62740f4f578f0114e649016d,12,Placed Object 2 on machine,3
+62740f4f578f0114e649016d,13,Test Result: Nexiom machine is ON,3
+62740f4f578f0114e649016d,14,Removed Object 2 from machine,4
+62740f4f578f0114e649016d,15,Removed Object 3 from machine,4
+62740f4f578f0114e649016d,16,Placed Object 2 on machine,4
+62740f4f578f0114e649016d,17,Placed Object 1 on machine,4
+62740f4f578f0114e649016d,18,Test Result: Nexiom machine is OFF,4
+62740f4f578f0114e649016d,19,Removed Object 1 from machine,5
+62740f4f578f0114e649016d,20,Placed Object 3 on machine,5
+62740f4f578f0114e649016d,21,Test Result: Nexiom machine is ON,5
+62740f4f578f0114e649016d,22,Removed Object 2 from machine,6
+62740f4f578f0114e649016d,23,Placed Object 4 on machine,6
+62740f4f578f0114e649016d,24,Test Result: Nexiom machine is OFF,6
+62740f4f578f0114e649016d,25,Removed Object 4 from machine,7
+62740f4f578f0114e649016d,26,Placed Object 1 on machine,7
+62740f4f578f0114e649016d,27,Test Result: Nexiom machine is OFF,7
+62740f4f578f0114e649016d,28,Removed Object 1 from machine,8
+62740f4f578f0114e649016d,29,Placed Object 2 on machine,8
+62740f4f578f0114e649016d,30,Test Result: Nexiom machine is ON,8
+628eab48a8c8dc1ecec338dd,1,Placed Object 1 on machine,1
+628eab48a8c8dc1ecec338dd,2,Test Result: Nexiom machine is ON,1
+628eab48a8c8dc1ecec338dd,3,Removed Object 1 from machine,2
+628eab48a8c8dc1ecec338dd,4,Placed Object 2 on machine,2
+628eab48a8c8dc1ecec338dd,5,Test Result: Nexiom machine is ON,2
+628eab48a8c8dc1ecec338dd,6,Removed Object 2 from machine,3
+628eab48a8c8dc1ecec338dd,7,Placed Object 3 on machine,3
+628eab48a8c8dc1ecec338dd,8,Test Result: Nexiom machine is OFF,3
+628eab48a8c8dc1ecec338dd,9,Removed Object 3 from machine,4
+628eab48a8c8dc1ecec338dd,10,Placed Object 4 on machine,4
+628eab48a8c8dc1ecec338dd,11,Test Result: Nexiom machine is OFF,4
+628eab48a8c8dc1ecec338dd,12,Removed Object 4 from machine,5
+628eab48a8c8dc1ecec338dd,13,Placed Object 3 on machine,5
+628eab48a8c8dc1ecec338dd,14,Placed Object 4 on machine,5
+628eab48a8c8dc1ecec338dd,15,Test Result: Nexiom machine is OFF,5
+628eab48a8c8dc1ecec338dd,16,Test Result: Nexiom machine is OFF,6
+628eab48a8c8dc1ecec338dd,17,Placed Object 2 on machine,7
+628eab48a8c8dc1ecec338dd,18,Test Result: Nexiom machine is ON,7
+62a0b34cbcc5987a8fa73c39,1,Placed Object 1 on machine,1
+62a0b34cbcc5987a8fa73c39,2,Placed Object 2 on machine,1
+62a0b34cbcc5987a8fa73c39,3,Test Result: Nexiom machine is OFF,1
+62a0b34cbcc5987a8fa73c39,4,Removed Object 2 from machine,2
+62a0b34cbcc5987a8fa73c39,5,Removed Object 1 from machine,2
+62a0b34cbcc5987a8fa73c39,6,Placed Object 3 on machine,2
+62a0b34cbcc5987a8fa73c39,7,Test Result: Nexiom machine is OFF,2
+62a779f845a7840040d41bf8,1,Placed Object 1 on machine,1
+62a779f845a7840040d41bf8,2,Test Result: Nexiom machine is OFF,1
+62a779f845a7840040d41bf8,3,Removed Object 1 from machine,2
+62a779f845a7840040d41bf8,4,Placed Object 2 on machine,2
+62a779f845a7840040d41bf8,5,Test Result: Nexiom machine is OFF,2
+62a779f845a7840040d41bf8,6,Removed Object 2 from machine,3
+62a779f845a7840040d41bf8,7,Placed Object 3 on machine,3
+62a779f845a7840040d41bf8,8,Test Result: Nexiom machine is OFF,3
+62a779f845a7840040d41bf8,9,Removed Object 3 from machine,4
+62a779f845a7840040d41bf8,10,Placed Object 4 on machine,4
+62a779f845a7840040d41bf8,11,Test Result: Nexiom machine is OFF,4
+62a779f845a7840040d41bf8,12,Placed Object 2 on machine,5
+62a779f845a7840040d41bf8,13,Test Result: Nexiom machine is ON,5
+62a779f845a7840040d41bf8,14,Removed Object 2 from machine,6
+62a779f845a7840040d41bf8,15,Removed Object 4 from machine,6
+62a779f845a7840040d41bf8,16,Placed Object 3 on machine,6
+62a779f845a7840040d41bf8,17,Placed Object 1 on machine,6
+62a779f845a7840040d41bf8,18,Test Result: Nexiom machine is OFF,6
+62a779f845a7840040d41bf8,19,Removed Object 3 from machine,7
+62a779f845a7840040d41bf8,20,Placed Object 2 on machine,7
+62a779f845a7840040d41bf8,21,Test Result: Nexiom machine is OFF,7
+62a779f845a7840040d41bf8,22,Removed Object 1 from machine,8
+62a779f845a7840040d41bf8,23,Placed Object 3 on machine,8
+62a779f845a7840040d41bf8,24,Test Result: Nexiom machine is OFF,8
+62a779f845a7840040d41bf8,25,Removed Object 2 from machine,9
+62a779f845a7840040d41bf8,26,Removed Object 3 from machine,9
+62a779f845a7840040d41bf8,27,Placed Object 1 on machine,9
+62a779f845a7840040d41bf8,28,Placed Object 4 on machine,9
+62e42aaad0079d2ff8e97597,1,Placed Object 1 on machine,1
+62e42aaad0079d2ff8e97597,2,Test Result: Nexiom machine is ON,1
+62e42aaad0079d2ff8e97597,3,Removed Object 1 from machine,2
+62e42aaad0079d2ff8e97597,4,Placed Object 2 on machine,2
+62e42aaad0079d2ff8e97597,5,Test Result: Nexiom machine is OFF,2
+62e42aaad0079d2ff8e97597,6,Removed Object 2 from machine,3
+62e42aaad0079d2ff8e97597,7,Placed Object 3 on machine,3
+62e42aaad0079d2ff8e97597,8,Test Result: Nexiom machine is ON,3
+62e42aaad0079d2ff8e97597,9,Removed Object 3 from machine,4
+62e42aaad0079d2ff8e97597,10,Placed Object 4 on machine,4
+62e42aaad0079d2ff8e97597,11,Test Result: Nexiom machine is OFF,4
+62e42aaad0079d2ff8e97597,12,Removed Object 4 from machine,5
+62eab7b53494af2a6cb73504,1,Placed Object 1 on machine,1
+62eab7b53494af2a6cb73504,2,Test Result: Nexiom machine is OFF,1
+62eab7b53494af2a6cb73504,3,Removed Object 1 from machine,2
+62eab7b53494af2a6cb73504,4,Placed Object 2 on machine,2
+62eab7b53494af2a6cb73504,5,Test Result: Nexiom machine is OFF,2
+62eab7b53494af2a6cb73504,6,Removed Object 2 from machine,3
+62eab7b53494af2a6cb73504,7,Placed Object 3 on machine,3
+62eab7b53494af2a6cb73504,8,Test Result: Nexiom machine is OFF,3
+62eab7b53494af2a6cb73504,9,Removed Object 3 from machine,4
+62eab7b53494af2a6cb73504,10,Placed Object 4 on machine,4
+62eab7b53494af2a6cb73504,11,Test Result: Nexiom machine is OFF,4
+62eab7b53494af2a6cb73504,12,Removed Object 4 from machine,5
+62eab7b53494af2a6cb73504,13,Placed Object 1 on machine,5
+62eab7b53494af2a6cb73504,14,Placed Object 3 on machine,5
+62eab7b53494af2a6cb73504,15,Test Result: Nexiom machine is OFF,5
+62eab7b53494af2a6cb73504,16,Removed Object 1 from machine,6
+62eab7b53494af2a6cb73504,17,Removed Object 3 from machine,6
+62eab7b53494af2a6cb73504,18,Placed Object 2 on machine,6
+62eab7b53494af2a6cb73504,19,Placed Object 4 on machine,6
+62eab7b53494af2a6cb73504,20,Removed Object 2 from machine,6
+62eab7b53494af2a6cb73504,21,Removed Object 4 from machine,6
+62eab7b53494af2a6cb73504,22,Placed Object 1 on machine,6
+62eab7b53494af2a6cb73504,23,Placed Object 2 on machine,6
+62eab7b53494af2a6cb73504,24,Test Result: Nexiom machine is OFF,6
+62eab7b53494af2a6cb73504,25,Removed Object 1 from machine,7
+62eab7b53494af2a6cb73504,26,Removed Object 2 from machine,7
+62eab7b53494af2a6cb73504,27,Placed Object 1 on machine,7
+62eab7b53494af2a6cb73504,28,Placed Object 4 on machine,7
+62eab7b53494af2a6cb73504,29,Test Result: Nexiom machine is OFF,7
+62eab7b53494af2a6cb73504,30,Removed Object 1 from machine,8
+62eab7b53494af2a6cb73504,31,Removed Object 4 from machine,8
+62eab7b53494af2a6cb73504,32,Placed Object 2 on machine,8
+62eab7b53494af2a6cb73504,33,Placed Object 3 on machine,8
+62eab7b53494af2a6cb73504,34,Test Result: Nexiom machine is ON,8
+62eab7b53494af2a6cb73504,35,Removed Object 2 from machine,9
+62eab7b53494af2a6cb73504,36,Removed Object 3 from machine,9
+62eab7b53494af2a6cb73504,37,Placed Object 2 on machine,9
+62eab7b53494af2a6cb73504,38,Placed Object 4 on machine,9
+62eab7b53494af2a6cb73504,39,Test Result: Nexiom machine is OFF,9
+62eab7b53494af2a6cb73504,40,Removed Object 2 from machine,10
+62eab7b53494af2a6cb73504,41,Placed Object 3 on machine,10
+62eab7b53494af2a6cb73504,42,Test Result: Nexiom machine is OFF,10
+62eab7b53494af2a6cb73504,43,Removed Object 3 from machine,11
+62eab7b53494af2a6cb73504,44,Removed Object 4 from machine,11
+62eab7b53494af2a6cb73504,45,Placed Object 3 on machine,11
+62eab7b53494af2a6cb73504,46,Placed Object 1 on machine,11
+62eab7b53494af2a6cb73504,47,Placed Object 2 on machine,11
+62eab7b53494af2a6cb73504,48,Test Result: Nexiom machine is ON,11
+62eab7b53494af2a6cb73504,49,Removed Object 3 from machine,12
+62eab7b53494af2a6cb73504,50,Placed Object 4 on machine,12
+62eab7b53494af2a6cb73504,51,Test Result: Nexiom machine is OFF,12
+62eab7b53494af2a6cb73504,52,Placed Object 3 on machine,13
+62eab7b53494af2a6cb73504,53,Removed Object 4 from machine,13
+62eab7b53494af2a6cb73504,54,Removed Object 1 from machine,13
+62eab7b53494af2a6cb73504,55,Test Result: Nexiom machine is ON,13
+62eab7b53494af2a6cb73504,56,Removed Object 2 from machine,14
+62eab7b53494af2a6cb73504,57,Removed Object 3 from machine,14
+62eab7b53494af2a6cb73504,58,Placed Object 4 on machine,14
+62eab7b53494af2a6cb73504,59,Placed Object 3 on machine,14
+62eab7b53494af2a6cb73504,60,Placed Object 2 on machine,14
+62eab7b53494af2a6cb73504,61,Placed Object 1 on machine,14
+62eab7b53494af2a6cb73504,62,Test Result: Nexiom machine is ON,14
+62eab7b53494af2a6cb73504,63,Removed Object 4 from machine,15
+62eab7b53494af2a6cb73504,64,Removed Object 3 from machine,15
+62eab7b53494af2a6cb73504,65,Test Result: Nexiom machine is OFF,15
+62eab7b53494af2a6cb73504,66,Placed Object 3 on machine,16
+62eab7b53494af2a6cb73504,67,Test Result: Nexiom machine is ON,16
+6307bd3bb93e804d22332b3e,1,Placed Object 1 on machine,1
+6307bd3bb93e804d22332b3e,2,Test Result: Nexiom machine is OFF,1
+6307bd3bb93e804d22332b3e,3,Removed Object 1 from machine,2
+6307bd3bb93e804d22332b3e,4,Placed Object 2 on machine,2
+6307bd3bb93e804d22332b3e,5,Test Result: Nexiom machine is OFF,2
+6307bd3bb93e804d22332b3e,6,Test Result: Nexiom machine is OFF,3
+6307bd3bb93e804d22332b3e,7,Removed Object 2 from machine,4
+6307bd3bb93e804d22332b3e,8,Placed Object 3 on machine,4
+6307bd3bb93e804d22332b3e,9,Test Result: Nexiom machine is OFF,4
+6307bd3bb93e804d22332b3e,10,Placed Object 4 on machine,5
+6307bd3bb93e804d22332b3e,11,Removed Object 3 from machine,5
+6307bd3bb93e804d22332b3e,12,Test Result: Nexiom machine is OFF,5
+6307bd3bb93e804d22332b3e,13,Placed Object 2 on machine,6
+6307bd3bb93e804d22332b3e,14,Test Result: Nexiom machine is ON,6
+6307bd3bb93e804d22332b3e,15,Removed Object 2 from machine,7
+6307bd3bb93e804d22332b3e,16,Placed Object 3 on machine,7
+6307bd3bb93e804d22332b3e,17,Test Result: Nexiom machine is OFF,7
+6307bd3bb93e804d22332b3e,18,Placed Object 2 on machine,8
+6307bd3bb93e804d22332b3e,19,Removed Object 4 from machine,8
+63614a372fef8174fe8363f1,1,Placed Object 1 on machine,1
+63614a372fef8174fe8363f1,2,Placed Object 3 on machine,1
+63614a372fef8174fe8363f1,3,Test Result: Nexiom machine is ON,1
+63614a372fef8174fe8363f1,4,Removed Object 1 from machine,2
+63614a372fef8174fe8363f1,5,Test Result: Nexiom machine is ON,2
+63614a372fef8174fe8363f1,6,Removed Object 3 from machine,3
+63614a372fef8174fe8363f1,7,Placed Object 2 on machine,3
+63614a372fef8174fe8363f1,8,Placed Object 4 on machine,3
+63614a372fef8174fe8363f1,9,Test Result: Nexiom machine is ON,3
+63614a372fef8174fe8363f1,10,Removed Object 4 from machine,4
+63614a372fef8174fe8363f1,11,Test Result: Nexiom machine is OFF,4
+63614a372fef8174fe8363f1,12,Removed Object 2 from machine,5
+63614a372fef8174fe8363f1,13,Placed Object 1 on machine,5
+63614a372fef8174fe8363f1,14,Test Result: Nexiom machine is OFF,5
+63614a372fef8174fe8363f1,15,Removed Object 1 from machine,6
+63b6ef9027eb90f292852ee4,1,Placed Object 2 on machine,1
+63b6ef9027eb90f292852ee4,2,Placed Object 1 on machine,1
+63b6ef9027eb90f292852ee4,3,Test Result: Nexiom machine is ON,1
+63b6ef9027eb90f292852ee4,4,Removed Object 1 from machine,2
+63b6ef9027eb90f292852ee4,5,Removed Object 2 from machine,2
+63b6ef9027eb90f292852ee4,6,Placed Object 3 on machine,2
+63b6ef9027eb90f292852ee4,7,Placed Object 4 on machine,2
+63b6ef9027eb90f292852ee4,8,Test Result: Nexiom machine is ON,2
+63b6ef9027eb90f292852ee4,9,Removed Object 3 from machine,3
+63b6ef9027eb90f292852ee4,10,Test Result: Nexiom machine is OFF,3
+63b6ef9027eb90f292852ee4,11,Removed Object 4 from machine,4
+63b6ef9027eb90f292852ee4,12,Placed Object 2 on machine,4
+63b6ef9027eb90f292852ee4,13,Test Result: Nexiom machine is OFF,4
+63b6ef9027eb90f292852ee4,14,Removed Object 2 from machine,5
+63b6ef9027eb90f292852ee4,15,Placed Object 1 on machine,5
+63b6ef9027eb90f292852ee4,16,Placed Object 3 on machine,5
+63b6ef9027eb90f292852ee4,17,Test Result: Nexiom machine is ON,5
+63b6ef9027eb90f292852ee4,18,Removed Object 3 from machine,6
+63b6ef9027eb90f292852ee4,19,Test Result: Nexiom machine is ON,6
+63b6ef9027eb90f292852ee4,20,Removed Object 1 from machine,7
+63b6ef9027eb90f292852ee4,21,Placed Object 3 on machine,7
+63b6ef9027eb90f292852ee4,22,Test Result: Nexiom machine is ON,7
+63b6ef9027eb90f292852ee4,23,Placed Object 1 on machine,8
+63b6ffb02943686f4f354741,1,Placed Object 1 on machine,1
+63b6ffb02943686f4f354741,2,Placed Object 2 on machine,1
+63b6ffb02943686f4f354741,3,Placed Object 3 on machine,1
+63b6ffb02943686f4f354741,4,Placed Object 4 on machine,1
+63b6ffb02943686f4f354741,5,Test Result: Nexiom machine is ON,1
+63b6ffb02943686f4f354741,6,Removed Object 4 from machine,2
+63b6ffb02943686f4f354741,7,Test Result: Nexiom machine is ON,2
+63b6ffb02943686f4f354741,8,Removed Object 3 from machine,3
+63b6ffb02943686f4f354741,9,Test Result: Nexiom machine is ON,3
+63b6ffb02943686f4f354741,10,Removed Object 2 from machine,4
+63b6ffb02943686f4f354741,11,Test Result: Nexiom machine is ON,4
+63b6ffb02943686f4f354741,12,Removed Object 1 from machine,5
+63b6ffb02943686f4f354741,13,Placed Object 2 on machine,5
+63b6ffb02943686f4f354741,14,Placed Object 3 on machine,5
+63b6ffb02943686f4f354741,15,Placed Object 4 on machine,5
+63b6ffb02943686f4f354741,16,Test Result: Nexiom machine is ON,5
+63b6ffb02943686f4f354741,17,Removed Object 2 from machine,6
+63b6ffb02943686f4f354741,18,Test Result: Nexiom machine is ON,6
+63b6ffb02943686f4f354741,19,Removed Object 3 from machine,7
+63b6ffb02943686f4f354741,20,Test Result: Nexiom machine is OFF,7
+63b6ffb02943686f4f354741,21,Removed Object 4 from machine,8
+63b6ffb02943686f4f354741,22,Placed Object 3 on machine,8
+63b6ffb02943686f4f354741,23,Placed Object 2 on machine,8
+63b6ffb02943686f4f354741,24,Test Result: Nexiom machine is ON,8
+63b6ffb02943686f4f354741,25,Removed Object 3 from machine,9
+63b6ffb02943686f4f354741,26,Placed Object 1 on machine,9
+63b6ffb02943686f4f354741,27,Removed Object 2 from machine,9
+63b6ffb02943686f4f354741,28,Placed Object 3 on machine,9
+63b6ffb02943686f4f354741,29,Test Result: Nexiom machine is ON,9
+63b6ffb02943686f4f354741,30,Removed Object 1 from machine,10
+63b6ffb02943686f4f354741,31,Test Result: Nexiom machine is ON,10
+63b6ffb02943686f4f354741,32,Removed Object 3 from machine,11
+63b6ffb02943686f4f354741,33,Placed Object 1 on machine,11
+63b6ffb02943686f4f354741,34,Removed Object 1 from machine,11
+63b6ffb02943686f4f354741,35,Placed Object 2 on machine,11
+63b6ffb02943686f4f354741,36,Test Result: Nexiom machine is OFF,11
+63b6ffb02943686f4f354741,37,Removed Object 2 from machine,12
+63b6ffb02943686f4f354741,38,Placed Object 4 on machine,12
+63b6ffb02943686f4f354741,39,Test Result: Nexiom machine is OFF,12
+63b6ffb02943686f4f354741,40,Removed Object 4 from machine,13
+63d1ab339162ce0fb4e50be7,1,Placed Object 1 on machine,1
+63d1ab339162ce0fb4e50be7,2,Placed Object 2 on machine,1
+63d1ab339162ce0fb4e50be7,3,Test Result: Nexiom machine is ON,1
+63d1ab339162ce0fb4e50be7,4,Removed Object 1 from machine,2
+63d1ab339162ce0fb4e50be7,5,Placed Object 3 on machine,2
+63d1ab339162ce0fb4e50be7,6,Test Result: Nexiom machine is OFF,2
+63d1ab339162ce0fb4e50be7,7,Placed Object 1 on machine,3
+63d1ab339162ce0fb4e50be7,8,Removed Object 2 from machine,3
+63d1ab339162ce0fb4e50be7,9,Removed Object 3 from machine,3
+63d1ab339162ce0fb4e50be7,10,Placed Object 4 on machine,3
+63d1ab339162ce0fb4e50be7,11,Test Result: Nexiom machine is OFF,3
+63d1ab339162ce0fb4e50be7,12,Placed Object 2 on machine,4
+63d1ab339162ce0fb4e50be7,13,Removed Object 4 from machine,4
+63d1ab339162ce0fb4e50be7,14,Removed Object 1 from machine,4
+63d1ab339162ce0fb4e50be7,15,Placed Object 4 on machine,4
+63d1ab339162ce0fb4e50be7,16,Test Result: Nexiom machine is OFF,4
+63d1ab339162ce0fb4e50be7,17,Placed Object 1 on machine,5
+63d1ab339162ce0fb4e50be7,18,Removed Object 4 from machine,5
+63d1ab339162ce0fb4e50be7,19,Removed Object 1 from machine,5
+63d1ab339162ce0fb4e50be7,20,Removed Object 2 from machine,5
+63d1ab339162ce0fb4e50be7,21,Placed Object 3 on machine,5
+63d1ab339162ce0fb4e50be7,22,Placed Object 4 on machine,5
+63d1ab339162ce0fb4e50be7,23,Test Result: Nexiom machine is OFF,5
+63fcf26a814570a76bcf2237,1,Placed Object 1 on machine,1
+63fcf26a814570a76bcf2237,2,Placed Object 2 on machine,1
+63fcf26a814570a76bcf2237,3,Placed Object 3 on machine,1
+63fcf26a814570a76bcf2237,4,Test Result: Nexiom machine is OFF,1
+63fcf26a814570a76bcf2237,5,Placed Object 4 on machine,2
+63fcf26a814570a76bcf2237,6,Test Result: Nexiom machine is ON,2
+63fcf26a814570a76bcf2237,7,Removed Object 1 from machine,3
+63fcf26a814570a76bcf2237,8,Test Result: Nexiom machine is ON,3
+63fcf26a814570a76bcf2237,9,Removed Object 2 from machine,4
+63fcf26a814570a76bcf2237,10,Test Result: Nexiom machine is OFF,4
+63fcf26a814570a76bcf2237,11,Placed Object 2 on machine,5
+63fcf26a814570a76bcf2237,12,Removed Object 3 from machine,5
+63fcf26a814570a76bcf2237,13,Test Result: Nexiom machine is ON,5
+63fcf26a814570a76bcf2237,14,Removed Object 4 from machine,6
+63fcf26a814570a76bcf2237,15,Test Result: Nexiom machine is OFF,6
+63fcf26a814570a76bcf2237,16,Placed Object 4 on machine,7
+63fcf26a814570a76bcf2237,17,Test Result: Nexiom machine is ON,7
+63fcf26a814570a76bcf2237,18,Removed Object 2 from machine,8
+63fcf26a814570a76bcf2237,19,Test Result: Nexiom machine is OFF,8
+63fcf26a814570a76bcf2237,20,Placed Object 2 on machine,9
+63fcf26a814570a76bcf2237,21,Placed Object 1 on machine,9
+63fcf26a814570a76bcf2237,22,Test Result: Nexiom machine is ON,9
+63fcf26a814570a76bcf2237,23,Placed Object 3 on machine,10
+63fcf26a814570a76bcf2237,24,Test Result: Nexiom machine is ON,10
+63fcf26a814570a76bcf2237,25,Removed Object 3 from machine,11
+63fcf26a814570a76bcf2237,26,Test Result: Nexiom machine is ON,11
+6452945d35a44481f5757a6c,1,Placed Object 1 on machine,1
+6452945d35a44481f5757a6c,2,Placed Object 3 on machine,1
+6452945d35a44481f5757a6c,3,Test Result: Nexiom machine is ON,1
+6452945d35a44481f5757a6c,4,Removed Object 3 from machine,2
+6452945d35a44481f5757a6c,5,Test Result: Nexiom machine is ON,2
+6452945d35a44481f5757a6c,6,Removed Object 1 from machine,3
+6452945d35a44481f5757a6c,7,Placed Object 2 on machine,3
+6452945d35a44481f5757a6c,8,Placed Object 4 on machine,3
+6452945d35a44481f5757a6c,9,Test Result: Nexiom machine is OFF,3
+6452945d35a44481f5757a6c,10,Removed Object 2 from machine,4
+6452945d35a44481f5757a6c,11,Placed Object 3 on machine,4
+6452945d35a44481f5757a6c,12,Test Result: Nexiom machine is ON,4
+6452945d35a44481f5757a6c,13,Removed Object 4 from machine,5
+6452945d35a44481f5757a6c,14,Test Result: Nexiom machine is ON,5
+6452945d35a44481f5757a6c,15,Removed Object 3 from machine,6
+6452945d35a44481f5757a6c,16,Placed Object 2 on machine,6
+6452945d35a44481f5757a6c,17,Test Result: Nexiom machine is OFF,6
+6473bd2d95a488b826bc24c4,1,Placed Object 1 on machine,1
+6473bd2d95a488b826bc24c4,2,Placed Object 2 on machine,1
+6473bd2d95a488b826bc24c4,3,Test Result: Nexiom machine is OFF,1
+6473bd2d95a488b826bc24c4,4,Removed Object 1 from machine,2
+6473bd2d95a488b826bc24c4,5,Removed Object 2 from machine,2
+6473bd2d95a488b826bc24c4,6,Placed Object 3 on machine,2
+6473bd2d95a488b826bc24c4,7,Test Result: Nexiom machine is ON,2
+6473bd2d95a488b826bc24c4,8,Removed Object 3 from machine,3
+6473bd2d95a488b826bc24c4,9,Placed Object 4 on machine,3
+6473bd2d95a488b826bc24c4,10,Test Result: Nexiom machine is ON,3
+6473bd2d95a488b826bc24c4,11,Test Result: Nexiom machine is ON,4
+6473bd2d95a488b826bc24c4,12,Removed Object 4 from machine,5
+65006ac193352f62ba59a095,1,Placed Object 1 on machine,1
+65006ac193352f62ba59a095,2,Placed Object 2 on machine,1
+65006ac193352f62ba59a095,3,Test Result: Nexiom machine is ON,1
+65006ac193352f62ba59a095,4,Removed Object 2 from machine,2
+65006ac193352f62ba59a095,5,Removed Object 1 from machine,2
+65006ac193352f62ba59a095,6,Placed Object 3 on machine,2
+65006ac193352f62ba59a095,7,Placed Object 4 on machine,2
+65006ac193352f62ba59a095,8,Test Result: Nexiom machine is OFF,2
+65006ac193352f62ba59a095,9,Removed Object 4 from machine,3
+65006ac193352f62ba59a095,10,Removed Object 3 from machine,3
+65006ac193352f62ba59a095,11,Placed Object 2 on machine,3
+65006ac193352f62ba59a095,12,Test Result: Nexiom machine is ON,3
+65006ac193352f62ba59a095,13,Removed Object 2 from machine,4
+65006ac193352f62ba59a095,14,Placed Object 1 on machine,4
+65006ac193352f62ba59a095,15,Test Result: Nexiom machine is ON,4
+65006ac193352f62ba59a095,16,Removed Object 1 from machine,5
+650a6d03acf66d20e752b42c,1,Placed Object 1 on machine,1
+650a6d03acf66d20e752b42c,2,Test Result: Nexiom machine is OFF,1
+650a6d03acf66d20e752b42c,3,Removed Object 1 from machine,2
+650a6d03acf66d20e752b42c,4,Placed Object 2 on machine,2
+650a6d03acf66d20e752b42c,5,Test Result: Nexiom machine is OFF,2
+650a6d03acf66d20e752b42c,6,Removed Object 2 from machine,3
+650a6d03acf66d20e752b42c,7,Placed Object 3 on machine,3
+650a6d03acf66d20e752b42c,8,Test Result: Nexiom machine is OFF,3
+650a6d03acf66d20e752b42c,9,Removed Object 3 from machine,4
+650a6d03acf66d20e752b42c,10,Placed Object 4 on machine,4
+650a6d03acf66d20e752b42c,11,Test Result: Nexiom machine is OFF,4
+650a6d03acf66d20e752b42c,12,Removed Object 4 from machine,5
+650a6d03acf66d20e752b42c,13,Placed Object 1 on machine,5
+650a6d03acf66d20e752b42c,14,Placed Object 2 on machine,5
+650a6d03acf66d20e752b42c,15,Test Result: Nexiom machine is OFF,5
+650a6d03acf66d20e752b42c,16,Removed Object 1 from machine,6
+650a6d03acf66d20e752b42c,17,Removed Object 2 from machine,6
+650a6d03acf66d20e752b42c,18,Placed Object 3 on machine,6
+650a6d03acf66d20e752b42c,19,Placed Object 4 on machine,6
+650a6d03acf66d20e752b42c,20,Test Result: Nexiom machine is OFF,6
+650a6d03acf66d20e752b42c,21,Removed Object 3 from machine,7
+650a6d03acf66d20e752b42c,22,Placed Object 3 on machine,7
+650a6d03acf66d20e752b42c,23,Placed Object 2 on machine,7
+650a6d03acf66d20e752b42c,24,Placed Object 1 on machine,7
+650a6d03acf66d20e752b42c,25,Test Result: Nexiom machine is ON,7
+650a6d03acf66d20e752b42c,26,Removed Object 2 from machine,8
+650a6d03acf66d20e752b42c,27,Placed Object 2 on machine,8
+650a6d03acf66d20e752b42c,28,Removed Object 4 from machine,8
+650a6d03acf66d20e752b42c,29,Removed Object 2 from machine,8
+650a6d03acf66d20e752b42c,30,Test Result: Nexiom machine is OFF,8
+650a6d03acf66d20e752b42c,31,Removed Object 1 from machine,9
+650a6d03acf66d20e752b42c,32,Placed Object 2 on machine,9
+650a6d03acf66d20e752b42c,33,Removed Object 3 from machine,9
+650a6d03acf66d20e752b42c,34,Placed Object 4 on machine,9
+650a6d03acf66d20e752b42c,35,Test Result: Nexiom machine is ON,9
+650a6d03acf66d20e752b42c,36,Removed Object 2 from machine,10
+650a6d03acf66d20e752b42c,37,Removed Object 4 from machine,10
+650a6d03acf66d20e752b42c,38,Placed Object 2 on machine,10
+650a6d03acf66d20e752b42c,39,Placed Object 4 on machine,10
+650a6d03acf66d20e752b42c,40,Placed Object 3 on machine,10
+650a6d03acf66d20e752b42c,41,Test Result: Nexiom machine is ON,10
+650a6d03acf66d20e752b42c,42,Removed Object 3 from machine,11
+650a6d03acf66d20e752b42c,43,Placed Object 1 on machine,11
+650a6d03acf66d20e752b42c,44,Test Result: Nexiom machine is ON,11
+650a6d03acf66d20e752b42c,45,Removed Object 1 from machine,12
+650a6d03acf66d20e752b42c,46,Removed Object 2 from machine,12
+650a6d03acf66d20e752b42c,47,Placed Object 1 on machine,12
+650a6d03acf66d20e752b42c,48,Test Result: Nexiom machine is OFF,12
+650a6d03acf66d20e752b42c,49,Removed Object 1 from machine,13
+650a6d03acf66d20e752b42c,50,Removed Object 4 from machine,13
+650a6d03acf66d20e752b42c,51,Placed Object 2 on machine,13
+650a6d03acf66d20e752b42c,52,Placed Object 3 on machine,13
+650a6d03acf66d20e752b42c,53,Test Result: Nexiom machine is OFF,13
+650a6d03acf66d20e752b42c,54,Removed Object 2 from machine,14
+650a6d03acf66d20e752b42c,55,Placed Object 2 on machine,14
+650a6d03acf66d20e752b42c,56,Removed Object 3 from machine,14
+650a6d03acf66d20e752b42c,57,Placed Object 4 on machine,14
+650a6d03acf66d20e752b42c,58,Test Result: Nexiom machine is ON,14
+654e6dcbb060f1ea2d712339,1,Placed Object 1 on machine,1
+654e6dcbb060f1ea2d712339,2,Placed Object 2 on machine,1
+654e6dcbb060f1ea2d712339,3,Removed Object 2 from machine,1
+654e6dcbb060f1ea2d712339,4,Test Result: Nexiom machine is OFF,1
+654e6dcbb060f1ea2d712339,5,Removed Object 1 from machine,2
+654e6dcbb060f1ea2d712339,6,Placed Object 2 on machine,2
+654e6dcbb060f1ea2d712339,7,Test Result: Nexiom machine is OFF,2
+654e6dcbb060f1ea2d712339,8,Removed Object 2 from machine,3
+654e6dcbb060f1ea2d712339,9,Placed Object 3 on machine,3
+654e6dcbb060f1ea2d712339,10,Test Result: Nexiom machine is OFF,3
+654e6dcbb060f1ea2d712339,11,Removed Object 3 from machine,4
+654e6dcbb060f1ea2d712339,12,Placed Object 4 on machine,4
+654e6dcbb060f1ea2d712339,13,Test Result: Nexiom machine is OFF,4
+654e6dcbb060f1ea2d712339,14,Removed Object 4 from machine,5
+654e6dcbb060f1ea2d712339,15,Placed Object 1 on machine,5
+654e6dcbb060f1ea2d712339,16,Placed Object 2 on machine,5
+654e6dcbb060f1ea2d712339,17,Test Result: Nexiom machine is OFF,5
+654e6dcbb060f1ea2d712339,18,Removed Object 2 from machine,6
+654e6dcbb060f1ea2d712339,19,Removed Object 1 from machine,6
+654e6dcbb060f1ea2d712339,20,Placed Object 2 on machine,6
+654e6dcbb060f1ea2d712339,21,Placed Object 3 on machine,6
+654e6dcbb060f1ea2d712339,22,Test Result: Nexiom machine is OFF,6
+654e6dcbb060f1ea2d712339,23,Removed Object 3 from machine,7
+654e6dcbb060f1ea2d712339,24,Removed Object 2 from machine,7
+654e6dcbb060f1ea2d712339,25,Placed Object 3 on machine,7
+654e6dcbb060f1ea2d712339,26,Placed Object 4 on machine,7
+654e6dcbb060f1ea2d712339,27,Test Result: Nexiom machine is OFF,7
+654e6dcbb060f1ea2d712339,28,Removed Object 4 from machine,8
+654e6dcbb060f1ea2d712339,29,Removed Object 3 from machine,8
+654e6dcbb060f1ea2d712339,30,Placed Object 3 on machine,8
+654e6dcbb060f1ea2d712339,31,Placed Object 1 on machine,8
+654e6dcbb060f1ea2d712339,32,Test Result: Nexiom machine is ON,8
+654e6dcbb060f1ea2d712339,33,Removed Object 3 from machine,9
+654e6dcbb060f1ea2d712339,34,Placed Object 4 on machine,9
+654e6dcbb060f1ea2d712339,35,Test Result: Nexiom machine is OFF,9
+654e6dcbb060f1ea2d712339,36,Removed Object 1 from machine,10
+654e6dcbb060f1ea2d712339,37,Placed Object 2 on machine,10
+654e6dcbb060f1ea2d712339,38,Test Result: Nexiom machine is OFF,10
+654e6dcbb060f1ea2d712339,39,Removed Object 4 from machine,11
+654e6dcbb060f1ea2d712339,40,Removed Object 2 from machine,11
+654e6dcbb060f1ea2d712339,41,Placed Object 1 on machine,11
+654e6dcbb060f1ea2d712339,42,Placed Object 2 on machine,11
+654e6dcbb060f1ea2d712339,43,Placed Object 3 on machine,11
+654e6dcbb060f1ea2d712339,44,Test Result: Nexiom machine is ON,11
+654e6dcbb060f1ea2d712339,45,Removed Object 1 from machine,12
+654e6dcbb060f1ea2d712339,46,Placed Object 4 on machine,12
+654e6dcbb060f1ea2d712339,47,Test Result: Nexiom machine is OFF,12
+654e6dcbb060f1ea2d712339,48,Removed Object 4 from machine,13
+654e6dcbb060f1ea2d712339,49,Removed Object 2 from machine,13
+654e6dcbb060f1ea2d712339,50,Placed Object 2 on machine,13
+654e6dcbb060f1ea2d712339,51,Test Result: Nexiom machine is OFF,13
+654e6dcbb060f1ea2d712339,52,Placed Object 4 on machine,14
+654e6dcbb060f1ea2d712339,53,Test Result: Nexiom machine is OFF,14
+654e6dcbb060f1ea2d712339,54,Removed Object 4 from machine,15
+654e6dcbb060f1ea2d712339,55,Removed Object 3 from machine,15
+654e6dcbb060f1ea2d712339,56,Removed Object 2 from machine,15
+654e6dcbb060f1ea2d712339,57,Placed Object 1 on machine,15
+654e6dcbb060f1ea2d712339,58,Placed Object 4 on machine,15
+654e6dcbb060f1ea2d712339,59,Placed Object 2 on machine,15
+654e6dcbb060f1ea2d712339,60,Test Result: Nexiom machine is OFF,15
+654e6dcbb060f1ea2d712339,61,Placed Object 3 on machine,16
+654e6dcbb060f1ea2d712339,62,Test Result: Nexiom machine is ON,16
+655fd05c12d38751dfa91559,1,Placed Object 1 on machine,1
+655fd05c12d38751dfa91559,2,Test Result: Nexiom machine is OFF,1
+655fd05c12d38751dfa91559,3,Removed Object 1 from machine,2
+655fd05c12d38751dfa91559,4,Placed Object 2 on machine,2
+655fd05c12d38751dfa91559,5,Test Result: Nexiom machine is OFF,2
+655fd05c12d38751dfa91559,6,Removed Object 2 from machine,3
+655fd05c12d38751dfa91559,7,Placed Object 3 on machine,3
+655fd05c12d38751dfa91559,8,Test Result: Nexiom machine is ON,3
+655fd05c12d38751dfa91559,9,Removed Object 3 from machine,4
+655fd05c12d38751dfa91559,10,Placed Object 4 on machine,4
+655fd05c12d38751dfa91559,11,Test Result: Nexiom machine is ON,4
+655fd05c12d38751dfa91559,12,Placed Object 1 on machine,5
+655fd05c12d38751dfa91559,13,Test Result: Nexiom machine is ON,5
+655fd05c12d38751dfa91559,14,Removed Object 1 from machine,6
+655fd05c12d38751dfa91559,15,Placed Object 3 on machine,6
+655fd05c12d38751dfa91559,16,Test Result: Nexiom machine is ON,6
+655fd05c12d38751dfa91559,17,Placed Object 2 on machine,7
+655fd05c12d38751dfa91559,18,Test Result: Nexiom machine is ON,7
+655fd05c12d38751dfa91559,19,Placed Object 1 on machine,8
+655fd05c12d38751dfa91559,20,Test Result: Nexiom machine is ON,8
+655fd05c12d38751dfa91559,21,Removed Object 3 from machine,9
+655fd05c12d38751dfa91559,22,Removed Object 1 from machine,9
+655fd05c12d38751dfa91559,23,Removed Object 2 from machine,9
+655fd05c12d38751dfa91559,24,Removed Object 4 from machine,9
+655fd05c12d38751dfa91559,25,Placed Object 1 on machine,9
+655fd05c12d38751dfa91559,26,Placed Object 2 on machine,9
+655fd05c12d38751dfa91559,27,Test Result: Nexiom machine is OFF,9
+655fd05c12d38751dfa91559,28,Removed Object 1 from machine,10
+655fd05c12d38751dfa91559,29,Placed Object 1 on machine,10
+655fd05c12d38751dfa91559,30,Placed Object 3 on machine,10
+655fd05c12d38751dfa91559,31,Test Result: Nexiom machine is ON,10
+655fd05c12d38751dfa91559,32,Removed Object 1 from machine,11
+655fd05c12d38751dfa91559,33,Removed Object 2 from machine,11
+655fd05c12d38751dfa91559,34,Placed Object 4 on machine,11
+655fd05c12d38751dfa91559,35,Placed Object 2 on machine,11
+655fd05c12d38751dfa91559,36,Test Result: Nexiom machine is ON,11
+655fd05c12d38751dfa91559,37,Removed Object 2 from machine,12
+655fd05c12d38751dfa91559,38,Removed Object 3 from machine,12
+655fd05c12d38751dfa91559,39,Removed Object 4 from machine,12
+65cbe16e047f780198657d96,1,Placed Object 1 on machine,1
+65cbe16e047f780198657d96,2,Test Result: Nexiom machine is OFF,1
+65cbe16e047f780198657d96,3,Removed Object 1 from machine,2
+65cbe16e047f780198657d96,4,Placed Object 2 on machine,2
+65cbe16e047f780198657d96,5,Test Result: Nexiom machine is OFF,2
+65cbe16e047f780198657d96,6,Removed Object 2 from machine,3
+65cbe16e047f780198657d96,7,Placed Object 3 on machine,3
+65cbe16e047f780198657d96,8,Test Result: Nexiom machine is OFF,3
+65cbe16e047f780198657d96,9,Removed Object 3 from machine,4
+65cbe16e047f780198657d96,10,Placed Object 4 on machine,4
+65cbe16e047f780198657d96,11,Test Result: Nexiom machine is OFF,4
+65cbe16e047f780198657d96,12,Placed Object 1 on machine,5
+65cbe16e047f780198657d96,13,Test Result: Nexiom machine is OFF,5
+65cbe16e047f780198657d96,14,Placed Object 2 on machine,6
+65cbe16e047f780198657d96,15,Test Result: Nexiom machine is OFF,6
+65cbe16e047f780198657d96,16,Placed Object 3 on machine,7
+65cbe16e047f780198657d96,17,Test Result: Nexiom machine is ON,7
+65cbe16e047f780198657d96,18,Removed Object 1 from machine,8
+65cbe16e047f780198657d96,19,Test Result: Nexiom machine is ON,8
+65cbe16e047f780198657d96,20,Removed Object 2 from machine,9
+65cbe16e047f780198657d96,21,Test Result: Nexiom machine is OFF,9
+65cbe16e047f780198657d96,22,Placed Object 2 on machine,10
+65cbe16e047f780198657d96,23,Removed Object 4 from machine,10
+65cbe16e047f780198657d96,24,Test Result: Nexiom machine is ON,10
+65da5ea53cf757c346ee5b18,1,Placed Object 1 on machine,1
+65da5ea53cf757c346ee5b18,2,Placed Object 2 on machine,1
+65da5ea53cf757c346ee5b18,3,Placed Object 3 on machine,1
+65da5ea53cf757c346ee5b18,4,Test Result: Nexiom machine is ON,1
+65da5ea53cf757c346ee5b18,5,Removed Object 3 from machine,2
+65da5ea53cf757c346ee5b18,6,Test Result: Nexiom machine is ON,2
+65da5ea53cf757c346ee5b18,7,Removed Object 2 from machine,3
+65da5ea53cf757c346ee5b18,8,Test Result: Nexiom machine is OFF,3
+65da5ea53cf757c346ee5b18,9,Removed Object 1 from machine,4
+65da5ea53cf757c346ee5b18,10,Placed Object 4 on machine,4
+65da5ea53cf757c346ee5b18,11,Placed Object 3 on machine,4
+65da5ea53cf757c346ee5b18,12,Placed Object 1 on machine,4
+65da5ea53cf757c346ee5b18,13,Test Result: Nexiom machine is ON,4
+65da5ea53cf757c346ee5b18,14,Removed Object 1 from machine,5
+65da5ea53cf757c346ee5b18,15,Removed Object 3 from machine,5
+65da5ea53cf757c346ee5b18,16,Removed Object 4 from machine,5
+65da5ea53cf757c346ee5b18,17,Placed Object 2 on machine,5
+65da5ea53cf757c346ee5b18,18,Test Result: Nexiom machine is ON,5
+65da5ea53cf757c346ee5b18,19,Removed Object 2 from machine,6
+65da5ea53cf757c346ee5b18,20,Placed Object 4 on machine,6
+65da5ea53cf757c346ee5b18,21,Placed Object 1 on machine,6
+65da5ea53cf757c346ee5b18,22,Test Result: Nexiom machine is OFF,6
+65da5ea53cf757c346ee5b18,23,Removed Object 1 from machine,7
+65da5ea53cf757c346ee5b18,24,Removed Object 4 from machine,7
+65da5ea53cf757c346ee5b18,25,Placed Object 3 on machine,7
+65da5ea53cf757c346ee5b18,26,Placed Object 2 on machine,7
+65da5ea53cf757c346ee5b18,27,Test Result: Nexiom machine is ON,7
+65da5ea53cf757c346ee5b18,28,Removed Object 2 from machine,8
+65da5ea53cf757c346ee5b18,29,Placed Object 1 on machine,8
+65e8d07f6dee8323f49a2b5b,1,Placed Object 1 on machine,1
+65e8d07f6dee8323f49a2b5b,2,Test Result: Nexiom machine is OFF,1
+65e8d07f6dee8323f49a2b5b,3,Removed Object 1 from machine,2
+65e8d07f6dee8323f49a2b5b,4,Placed Object 2 on machine,2
+65e8d07f6dee8323f49a2b5b,5,Test Result: Nexiom machine is OFF,2
+65e8d07f6dee8323f49a2b5b,6,Removed Object 2 from machine,3
+65e8d07f6dee8323f49a2b5b,7,Placed Object 3 on machine,3
+65e8d07f6dee8323f49a2b5b,8,Test Result: Nexiom machine is OFF,3
+65e8d07f6dee8323f49a2b5b,9,Removed Object 3 from machine,4
+65e8d07f6dee8323f49a2b5b,10,Placed Object 4 on machine,4
+65e8d07f6dee8323f49a2b5b,11,Test Result: Nexiom machine is OFF,4
+65e8d07f6dee8323f49a2b5b,12,Placed Object 1 on machine,5
+65e8d07f6dee8323f49a2b5b,13,Test Result: Nexiom machine is ON,5
+65e8d07f6dee8323f49a2b5b,14,Removed Object 1 from machine,6
+65e8d07f6dee8323f49a2b5b,15,Removed Object 4 from machine,6
+65e8d07f6dee8323f49a2b5b,16,Placed Object 2 on machine,6
+65e8d07f6dee8323f49a2b5b,17,Placed Object 3 on machine,6
+65e8d07f6dee8323f49a2b5b,18,Test Result: Nexiom machine is OFF,6
+65e8d07f6dee8323f49a2b5b,19,Removed Object 2 from machine,7
+65e8d07f6dee8323f49a2b5b,20,Removed Object 3 from machine,7
+65e8d07f6dee8323f49a2b5b,21,Placed Object 1 on machine,7
+65e8d07f6dee8323f49a2b5b,22,Placed Object 2 on machine,7
+65e8d07f6dee8323f49a2b5b,23,Test Result: Nexiom machine is OFF,7
+65e8d07f6dee8323f49a2b5b,24,Removed Object 1 from machine,8
+65e8d07f6dee8323f49a2b5b,25,Removed Object 2 from machine,8
+65e8d07f6dee8323f49a2b5b,26,Placed Object 2 on machine,8
+65e8d07f6dee8323f49a2b5b,27,Placed Object 4 on machine,8
+65e8d07f6dee8323f49a2b5b,28,Test Result: Nexiom machine is OFF,8
+65e8d07f6dee8323f49a2b5b,29,Removed Object 2 from machine,9
+65e8d07f6dee8323f49a2b5b,30,Removed Object 4 from machine,9
+65e8d07f6dee8323f49a2b5b,31,Placed Object 3 on machine,9
+65e8d07f6dee8323f49a2b5b,32,Placed Object 1 on machine,9
+65e8d07f6dee8323f49a2b5b,33,Test Result: Nexiom machine is OFF,9
+6618650ff8e368f495675c9f,1,Placed Object 1 on machine,1
+6618650ff8e368f495675c9f,2,Test Result: Nexiom machine is OFF,1
+6618650ff8e368f495675c9f,3,Removed Object 1 from machine,2
+6618650ff8e368f495675c9f,4,Placed Object 2 on machine,2
+6618650ff8e368f495675c9f,5,Test Result: Nexiom machine is ON,2
+6618650ff8e368f495675c9f,6,Removed Object 2 from machine,3
+6618650ff8e368f495675c9f,7,Placed Object 3 on machine,3
+6618650ff8e368f495675c9f,8,Test Result: Nexiom machine is OFF,3
+6618650ff8e368f495675c9f,9,Removed Object 3 from machine,4
+6618650ff8e368f495675c9f,10,Placed Object 4 on machine,4
+6618650ff8e368f495675c9f,11,Test Result: Nexiom machine is ON,4
+6618650ff8e368f495675c9f,12,Removed Object 4 from machine,5
+6618650ff8e368f495675c9f,13,Placed Object 4 on machine,5
+6618650ff8e368f495675c9f,14,Placed Object 2 on machine,5
+6618650ff8e368f495675c9f,15,Test Result: Nexiom machine is ON,5
+6618650ff8e368f495675c9f,16,Removed Object 4 from machine,6
+6618650ff8e368f495675c9f,17,Placed Object 1 on machine,6
+6618650ff8e368f495675c9f,18,Test Result: Nexiom machine is ON,6
+6618650ff8e368f495675c9f,19,Removed Object 1 from machine,7
+6618650ff8e368f495675c9f,20,Placed Object 3 on machine,7
+6618650ff8e368f495675c9f,21,Removed Object 2 from machine,7
+6618650ff8e368f495675c9f,22,Placed Object 4 on machine,7
+6618650ff8e368f495675c9f,23,Test Result: Nexiom machine is ON,7
+6618650ff8e368f495675c9f,24,Removed Object 4 from machine,8
+6618650ff8e368f495675c9f,25,Placed Object 1 on machine,8
+6618650ff8e368f495675c9f,26,Test Result: Nexiom machine is OFF,8
+6618650ff8e368f495675c9f,27,Placed Object 2 on machine,9
+6618650ff8e368f495675c9f,28,Placed Object 4 on machine,9
+6618650ff8e368f495675c9f,29,Test Result: Nexiom machine is ON,9
+6618650ff8e368f495675c9f,30,Removed Object 3 from machine,10
+6618650ff8e368f495675c9f,31,Test Result: Nexiom machine is ON,10
+6618650ff8e368f495675c9f,32,Removed Object 2 from machine,11
+6618650ff8e368f495675c9f,33,Removed Object 1 from machine,11
+6618650ff8e368f495675c9f,34,Placed Object 1 on machine,11
+6618650ff8e368f495675c9f,35,Placed Object 3 on machine,11
+6618650ff8e368f495675c9f,36,Test Result: Nexiom machine is ON,11
+661a38cd3b483dbdaafbf325,1,Placed Object 1 on machine,1
+661a38cd3b483dbdaafbf325,2,Test Result: Nexiom machine is OFF,1
+661a38cd3b483dbdaafbf325,3,Removed Object 1 from machine,2
+661a38cd3b483dbdaafbf325,4,Placed Object 2 on machine,2
+661a38cd3b483dbdaafbf325,5,Test Result: Nexiom machine is OFF,2
+661a38cd3b483dbdaafbf325,6,Removed Object 2 from machine,3
+661a38cd3b483dbdaafbf325,7,Placed Object 3 on machine,3
+661a38cd3b483dbdaafbf325,8,Test Result: Nexiom machine is OFF,3
+661a38cd3b483dbdaafbf325,9,Removed Object 3 from machine,4
+661a38cd3b483dbdaafbf325,10,Placed Object 4 on machine,4
+661a38cd3b483dbdaafbf325,11,Test Result: Nexiom machine is OFF,4
+661a38cd3b483dbdaafbf325,12,Removed Object 4 from machine,5
+661a38cd3b483dbdaafbf325,13,Placed Object 1 on machine,5
+661a38cd3b483dbdaafbf325,14,Placed Object 2 on machine,5
+661a38cd3b483dbdaafbf325,15,Test Result: Nexiom machine is ON,5
+661a38cd3b483dbdaafbf325,16,Removed Object 2 from machine,6
+661a38cd3b483dbdaafbf325,17,Placed Object 3 on machine,6
+661a38cd3b483dbdaafbf325,18,Test Result: Nexiom machine is OFF,6
+661a38cd3b483dbdaafbf325,19,Removed Object 3 from machine,7
+661a38cd3b483dbdaafbf325,20,Placed Object 4 on machine,7
+661a38cd3b483dbdaafbf325,21,Test Result: Nexiom machine is OFF,7
+661a38cd3b483dbdaafbf325,22,Removed Object 4 from machine,8
+661a38cd3b483dbdaafbf325,23,Placed Object 2 on machine,8
+661a38cd3b483dbdaafbf325,24,Placed Object 3 on machine,8
+661a38cd3b483dbdaafbf325,25,Test Result: Nexiom machine is ON,8
+661a38cd3b483dbdaafbf325,26,Removed Object 3 from machine,9
+661a38cd3b483dbdaafbf325,27,Placed Object 4 on machine,9
+661a38cd3b483dbdaafbf325,28,Test Result: Nexiom machine is ON,9
+661a38cd3b483dbdaafbf325,29,Placed Object 3 on machine,10
+661a38cd3b483dbdaafbf325,30,Test Result: Nexiom machine is ON,10
+661a38cd3b483dbdaafbf325,31,Removed Object 1 from machine,11
+661a38cd3b483dbdaafbf325,32,Removed Object 4 from machine,11
+661a38cd3b483dbdaafbf325,33,Test Result: Nexiom machine is OFF,11
+661a38cd3b483dbdaafbf325,34,Removed Object 3 from machine,12
+661a38cd3b483dbdaafbf325,35,Placed Object 4 on machine,12
+661a38cd3b483dbdaafbf325,36,Test Result: Nexiom machine is OFF,12
+661a38cd3b483dbdaafbf325,37,Placed Object 3 on machine,13
+661a38cd3b483dbdaafbf325,38,Test Result: Nexiom machine is OFF,13
+661a38cd3b483dbdaafbf325,39,Removed Object 2 from machine,14
+661a38cd3b483dbdaafbf325,40,Test Result: Nexiom machine is OFF,14
+661afa4a5efc676a1b16a98a,1,Placed Object 1 on machine,1
+661afa4a5efc676a1b16a98a,2,Test Result: Nexiom machine is ON,1
+661afa4a5efc676a1b16a98a,3,Removed Object 1 from machine,2
+661afa4a5efc676a1b16a98a,4,Placed Object 2 on machine,2
+661afa4a5efc676a1b16a98a,5,Test Result: Nexiom machine is OFF,2
+661afa4a5efc676a1b16a98a,6,Removed Object 2 from machine,3
+661afa4a5efc676a1b16a98a,7,Placed Object 3 on machine,3
+661afa4a5efc676a1b16a98a,8,Test Result: Nexiom machine is ON,3
+661afa4a5efc676a1b16a98a,9,Removed Object 3 from machine,4
+661afa4a5efc676a1b16a98a,10,Placed Object 4 on machine,4
+661afa4a5efc676a1b16a98a,11,Test Result: Nexiom machine is OFF,4
+661afa4a5efc676a1b16a98a,12,Removed Object 4 from machine,5
+661afa4a5efc676a1b16a98a,13,Placed Object 3 on machine,5
+661afa4a5efc676a1b16a98a,14,Placed Object 2 on machine,5
+661afa4a5efc676a1b16a98a,15,Test Result: Nexiom machine is ON,5
+661afa4a5efc676a1b16a98a,16,Removed Object 2 from machine,6
+661afa4a5efc676a1b16a98a,17,Placed Object 1 on machine,6
+661afa4a5efc676a1b16a98a,18,Test Result: Nexiom machine is ON,6
+661afa4a5efc676a1b16a98a,19,Removed Object 1 from machine,7
+661afa4a5efc676a1b16a98a,20,Placed Object 4 on machine,7
+661afa4a5efc676a1b16a98a,21,Test Result: Nexiom machine is ON,7
+661afa4a5efc676a1b16a98a,22,Removed Object 4 from machine,8
+661afa4a5efc676a1b16a98a,23,Removed Object 3 from machine,8
+661afa4a5efc676a1b16a98a,24,Placed Object 1 on machine,8
+661afa4a5efc676a1b16a98a,25,Placed Object 2 on machine,8
+661afa4a5efc676a1b16a98a,26,Test Result: Nexiom machine is ON,8
+662f98ee5dc1287d77d01750,1,Placed Object 1 on machine,1
+662f98ee5dc1287d77d01750,2,Test Result: Nexiom machine is OFF,1
+662f98ee5dc1287d77d01750,3,Removed Object 1 from machine,2
+662f98ee5dc1287d77d01750,4,Placed Object 2 on machine,2
+662f98ee5dc1287d77d01750,5,Test Result: Nexiom machine is ON,2
+662f98ee5dc1287d77d01750,6,Removed Object 2 from machine,3
+662f98ee5dc1287d77d01750,7,Placed Object 3 on machine,3
+662f98ee5dc1287d77d01750,8,Test Result: Nexiom machine is ON,3
+662f98ee5dc1287d77d01750,9,Removed Object 3 from machine,4
+662f98ee5dc1287d77d01750,10,Placed Object 4 on machine,4
+662f98ee5dc1287d77d01750,11,Test Result: Nexiom machine is OFF,4
+662f98ee5dc1287d77d01750,12,Removed Object 4 from machine,5
+662f98ee5dc1287d77d01750,13,Placed Object 2 on machine,5
+662f98ee5dc1287d77d01750,14,Placed Object 3 on machine,5
+662f98ee5dc1287d77d01750,15,Test Result: Nexiom machine is ON,5
+66311cdfdc6a541751ee782a,1,Placed Object 1 on machine,1
+66311cdfdc6a541751ee782a,2,Placed Object 2 on machine,1
+66311cdfdc6a541751ee782a,3,Test Result: Nexiom machine is ON,1
+66311cdfdc6a541751ee782a,4,Removed Object 2 from machine,2
+66311cdfdc6a541751ee782a,5,Placed Object 3 on machine,2
+66311cdfdc6a541751ee782a,6,Test Result: Nexiom machine is ON,2
+66311cdfdc6a541751ee782a,7,Removed Object 3 from machine,3
+66311cdfdc6a541751ee782a,8,Placed Object 4 on machine,3
+66311cdfdc6a541751ee782a,9,Test Result: Nexiom machine is ON,3
+66311cdfdc6a541751ee782a,10,Removed Object 4 from machine,4
+66311cdfdc6a541751ee782a,11,Removed Object 1 from machine,4
+66311cdfdc6a541751ee782a,12,Placed Object 2 on machine,4
+66311cdfdc6a541751ee782a,13,Placed Object 4 on machine,4
+66311cdfdc6a541751ee782a,14,Test Result: Nexiom machine is ON,4
+66311cdfdc6a541751ee782a,15,Removed Object 4 from machine,5
+66311cdfdc6a541751ee782a,16,Placed Object 3 on machine,5
+66311cdfdc6a541751ee782a,17,Test Result: Nexiom machine is ON,5
+66311cdfdc6a541751ee782a,18,Removed Object 3 from machine,6
+66311cdfdc6a541751ee782a,19,Removed Object 2 from machine,6
+66311cdfdc6a541751ee782a,20,Placed Object 3 on machine,6
+66311cdfdc6a541751ee782a,21,Placed Object 4 on machine,6
+66311cdfdc6a541751ee782a,22,Test Result: Nexiom machine is OFF,6
+66311cdfdc6a541751ee782a,23,Removed Object 3 from machine,7
+66311cdfdc6a541751ee782a,24,Removed Object 4 from machine,7
+66311cdfdc6a541751ee782a,25,Placed Object 4 on machine,7
+66311cdfdc6a541751ee782a,26,Test Result: Nexiom machine is OFF,7
+66311cdfdc6a541751ee782a,27,Removed Object 4 from machine,8
+66311cdfdc6a541751ee782a,28,Placed Object 3 on machine,8
+66311cdfdc6a541751ee782a,29,Test Result: Nexiom machine is OFF,8
+66311cdfdc6a541751ee782a,30,Removed Object 3 from machine,9
+6636e5ffb1e341fa2390a2c0,1,Placed Object 2 on machine,1
+6636e5ffb1e341fa2390a2c0,2,Placed Object 3 on machine,1
+6636e5ffb1e341fa2390a2c0,3,Test Result: Nexiom machine is OFF,1
+6636e5ffb1e341fa2390a2c0,4,Removed Object 2 from machine,2
+6636e5ffb1e341fa2390a2c0,5,Removed Object 3 from machine,2
+6636e5ffb1e341fa2390a2c0,6,Placed Object 1 on machine,2
+6636e5ffb1e341fa2390a2c0,7,Placed Object 4 on machine,2
+6636e5ffb1e341fa2390a2c0,8,Test Result: Nexiom machine is OFF,2
+6636e5ffb1e341fa2390a2c0,9,Removed Object 4 from machine,3
+6636e5ffb1e341fa2390a2c0,10,Removed Object 1 from machine,3
+6636e5ffb1e341fa2390a2c0,11,Placed Object 1 on machine,3
+6636e5ffb1e341fa2390a2c0,12,Placed Object 2 on machine,3
+6636e5ffb1e341fa2390a2c0,13,Test Result: Nexiom machine is OFF,3
+6636e5ffb1e341fa2390a2c0,14,Removed Object 2 from machine,4
+6636e5ffb1e341fa2390a2c0,15,Placed Object 3 on machine,4
+6636e5ffb1e341fa2390a2c0,16,Placed Object 2 on machine,4
+6636e5ffb1e341fa2390a2c0,17,Removed Object 2 from machine,4
+6636e5ffb1e341fa2390a2c0,18,Test Result: Nexiom machine is OFF,4
+6636e5ffb1e341fa2390a2c0,19,Placed Object 2 on machine,5
+6636e5ffb1e341fa2390a2c0,20,Placed Object 4 on machine,5
+6636e5ffb1e341fa2390a2c0,21,Test Result: Nexiom machine is ON,5
+6636e5ffb1e341fa2390a2c0,22,Removed Object 3 from machine,6
+6636e5ffb1e341fa2390a2c0,23,Removed Object 2 from machine,6
+6636e5ffb1e341fa2390a2c0,24,Removed Object 1 from machine,6
+6636e5ffb1e341fa2390a2c0,25,Test Result: Nexiom machine is OFF,6
+6636e5ffb1e341fa2390a2c0,26,Removed Object 4 from machine,7
+6636e5ffb1e341fa2390a2c0,27,Placed Object 3 on machine,7
+6636e5ffb1e341fa2390a2c0,28,Test Result: Nexiom machine is OFF,7
+6636e5ffb1e341fa2390a2c0,29,Removed Object 3 from machine,8
+6636e5ffb1e341fa2390a2c0,30,Placed Object 2 on machine,8
+6636e5ffb1e341fa2390a2c0,31,Test Result: Nexiom machine is OFF,8
+6636e5ffb1e341fa2390a2c0,32,Removed Object 2 from machine,9
+6636e5ffb1e341fa2390a2c0,33,Placed Object 1 on machine,9
+6636e5ffb1e341fa2390a2c0,34,Test Result: Nexiom machine is OFF,9
+6636e5ffb1e341fa2390a2c0,35,Removed Object 1 from machine,10
+6636e5ffb1e341fa2390a2c0,36,Placed Object 3 on machine,10
+6636e5ffb1e341fa2390a2c0,37,Placed Object 4 on machine,10
+6636e5ffb1e341fa2390a2c0,38,Test Result: Nexiom machine is ON,10
+6636e5ffb1e341fa2390a2c0,39,Placed Object 2 on machine,11
+6636e5ffb1e341fa2390a2c0,40,Test Result: Nexiom machine is ON,11
+6636e5ffb1e341fa2390a2c0,41,Removed Object 3 from machine,12
+6636e5ffb1e341fa2390a2c0,42,Test Result: Nexiom machine is OFF,12
+6636e5ffb1e341fa2390a2c0,43,Placed Object 3 on machine,13
+6636e5ffb1e341fa2390a2c0,44,Removed Object 2 from machine,13
+6636e5ffb1e341fa2390a2c0,45,Placed Object 1 on machine,13
+6636e5ffb1e341fa2390a2c0,46,Test Result: Nexiom machine is ON,13
+6636e5ffb1e341fa2390a2c0,47,Removed Object 1 from machine,14
+6636e5ffb1e341fa2390a2c0,48,Test Result: Nexiom machine is ON,14
+6637f53e203e2f5f706d70ec,1,Placed Object 1 on machine,1
+6637f53e203e2f5f706d70ec,2,Placed Object 2 on machine,1
+6637f53e203e2f5f706d70ec,3,Test Result: Nexiom machine is OFF,1
+6637f53e203e2f5f706d70ec,4,Removed Object 1 from machine,2
+6637f53e203e2f5f706d70ec,5,Removed Object 2 from machine,2
+6637f53e203e2f5f706d70ec,6,Placed Object 3 on machine,2
+6637f53e203e2f5f706d70ec,7,Test Result: Nexiom machine is OFF,2
+6637f53e203e2f5f706d70ec,8,Removed Object 3 from machine,3
+6637f53e203e2f5f706d70ec,9,Placed Object 4 on machine,3
+6637f53e203e2f5f706d70ec,10,Test Result: Nexiom machine is OFF,3
+6637f53e203e2f5f706d70ec,11,Placed Object 3 on machine,4
+6637f53e203e2f5f706d70ec,12,Test Result: Nexiom machine is OFF,4
+6637f53e203e2f5f706d70ec,13,Removed Object 4 from machine,5
+6637f53e203e2f5f706d70ec,14,Placed Object 4 on machine,5
+6637f53e203e2f5f706d70ec,15,Removed Object 3 from machine,5
+6637f53e203e2f5f706d70ec,16,Placed Object 1 on machine,5
+6637f53e203e2f5f706d70ec,17,Test Result: Nexiom machine is OFF,5
+6637f53e203e2f5f706d70ec,18,Removed Object 4 from machine,6
+6637f53e203e2f5f706d70ec,19,Placed Object 3 on machine,6
+6637f53e203e2f5f706d70ec,20,Test Result: Nexiom machine is OFF,6
+6637f53e203e2f5f706d70ec,21,Removed Object 3 from machine,7
+6637f53e203e2f5f706d70ec,22,Removed Object 1 from machine,7
+6637f53e203e2f5f706d70ec,23,Placed Object 2 on machine,7
+6637f53e203e2f5f706d70ec,24,Placed Object 3 on machine,7
+6637f53e203e2f5f706d70ec,25,Test Result: Nexiom machine is OFF,7
+6637f53e203e2f5f706d70ec,26,Removed Object 3 from machine,8
+6637f53e203e2f5f706d70ec,27,Placed Object 4 on machine,8
+6637f53e203e2f5f706d70ec,28,Test Result: Nexiom machine is ON,8
+663911a7d0a58901bbe17704,1,Placed Object 1 on machine,1
+663911a7d0a58901bbe17704,2,Test Result: Nexiom machine is OFF,1
+663911a7d0a58901bbe17704,3,Removed Object 1 from machine,2
+663911a7d0a58901bbe17704,4,Placed Object 2 on machine,2
+663911a7d0a58901bbe17704,5,Test Result: Nexiom machine is OFF,2
+663911a7d0a58901bbe17704,6,Removed Object 2 from machine,3
+663911a7d0a58901bbe17704,7,Placed Object 3 on machine,3
+663911a7d0a58901bbe17704,8,Test Result: Nexiom machine is OFF,3
+663911a7d0a58901bbe17704,9,Removed Object 3 from machine,4
+663911a7d0a58901bbe17704,10,Placed Object 4 on machine,4
+663911a7d0a58901bbe17704,11,Test Result: Nexiom machine is OFF,4
+663911a7d0a58901bbe17704,12,Placed Object 1 on machine,5
+663911a7d0a58901bbe17704,13,Test Result: Nexiom machine is OFF,5
+663911a7d0a58901bbe17704,14,Removed Object 4 from machine,6
+663911a7d0a58901bbe17704,15,Placed Object 4 on machine,6
+663911a7d0a58901bbe17704,16,Placed Object 3 on machine,6
+663911a7d0a58901bbe17704,17,Placed Object 2 on machine,6
+663911a7d0a58901bbe17704,18,Test Result: Nexiom machine is ON,6
+663911a7d0a58901bbe17704,19,Removed Object 4 from machine,7
+663911a7d0a58901bbe17704,20,Removed Object 3 from machine,7
+663911a7d0a58901bbe17704,21,Test Result: Nexiom machine is OFF,7
+663911a7d0a58901bbe17704,22,Removed Object 2 from machine,8
+663911a7d0a58901bbe17704,23,Placed Object 3 on machine,8
+663911a7d0a58901bbe17704,24,Test Result: Nexiom machine is OFF,8
+663911a7d0a58901bbe17704,25,Removed Object 1 from machine,9
+663911a7d0a58901bbe17704,26,Placed Object 2 on machine,9
+663911a7d0a58901bbe17704,27,Test Result: Nexiom machine is OFF,9
+663911a7d0a58901bbe17704,28,Removed Object 2 from machine,10
+663911a7d0a58901bbe17704,29,Placed Object 4 on machine,10
+663911a7d0a58901bbe17704,30,Test Result: Nexiom machine is ON,10
+663911a7d0a58901bbe17704,31,Placed Object 2 on machine,11
+663911a7d0a58901bbe17704,32,Removed Object 3 from machine,11
+663911a7d0a58901bbe17704,33,Test Result: Nexiom machine is OFF,11
+663911a7d0a58901bbe17704,34,Removed Object 2 from machine,12
+663911a7d0a58901bbe17704,35,Placed Object 1 on machine,12
+663911a7d0a58901bbe17704,36,Test Result: Nexiom machine is OFF,12
+663911a7d0a58901bbe17704,37,Removed Object 1 from machine,13
+663a41265f6d1a3d681574c2,1,Placed Object 1 on machine,1
+663a41265f6d1a3d681574c2,2,Placed Object 2 on machine,1
+663a41265f6d1a3d681574c2,3,Placed Object 3 on machine,1
+663a41265f6d1a3d681574c2,4,Test Result: Nexiom machine is OFF,1
+663a41265f6d1a3d681574c2,5,Removed Object 1 from machine,2
+663a41265f6d1a3d681574c2,6,Removed Object 2 from machine,2
+663a41265f6d1a3d681574c2,7,Removed Object 3 from machine,2
+663a41265f6d1a3d681574c2,8,Placed Object 4 on machine,2
+663a41265f6d1a3d681574c2,9,Placed Object 3 on machine,2
+663a41265f6d1a3d681574c2,10,Placed Object 2 on machine,2
+663a41265f6d1a3d681574c2,11,Test Result: Nexiom machine is ON,2
+663a41265f6d1a3d681574c2,12,Removed Object 4 from machine,3
+663a41265f6d1a3d681574c2,13,Removed Object 3 from machine,3
+663a41265f6d1a3d681574c2,14,Placed Object 1 on machine,3
+663a41265f6d1a3d681574c2,15,Placed Object 4 on machine,3
+663a41265f6d1a3d681574c2,16,Test Result: Nexiom machine is ON,3
+66444fab51653be6d035845e,1,Placed Object 1 on machine,1
+66444fab51653be6d035845e,2,Placed Object 2 on machine,1
+66444fab51653be6d035845e,3,Test Result: Nexiom machine is OFF,1
+66444fab51653be6d035845e,4,Removed Object 1 from machine,2
+66444fab51653be6d035845e,5,Removed Object 2 from machine,2
+66444fab51653be6d035845e,6,Placed Object 3 on machine,2
+66444fab51653be6d035845e,7,Placed Object 4 on machine,2
+66444fab51653be6d035845e,8,Test Result: Nexiom machine is ON,2
+66444fab51653be6d035845e,9,Test Result: Nexiom machine is ON,3
+66444fab51653be6d035845e,10,Removed Object 4 from machine,4
+66444fab51653be6d035845e,11,Test Result: Nexiom machine is OFF,4
+66444fab51653be6d035845e,12,Removed Object 3 from machine,5
+66444fab51653be6d035845e,13,Placed Object 4 on machine,5
+66444fab51653be6d035845e,14,Test Result: Nexiom machine is OFF,5
+66444fab51653be6d035845e,15,Placed Object 3 on machine,6
+66444fab51653be6d035845e,16,Test Result: Nexiom machine is ON,6
+66464711c6986686ce7a99ec,1,Placed Object 1 on machine,1
+66464711c6986686ce7a99ec,2,Placed Object 2 on machine,1
+66464711c6986686ce7a99ec,3,Test Result: Nexiom machine is OFF,1
+66464711c6986686ce7a99ec,4,Removed Object 1 from machine,2
+66464711c6986686ce7a99ec,5,Removed Object 2 from machine,2
+66464711c6986686ce7a99ec,6,Placed Object 3 on machine,2
+66464711c6986686ce7a99ec,7,Placed Object 4 on machine,2
+66464711c6986686ce7a99ec,8,Test Result: Nexiom machine is OFF,2
+66464711c6986686ce7a99ec,9,Removed Object 3 from machine,3
+66464711c6986686ce7a99ec,10,Test Result: Nexiom machine is OFF,3
+66464711c6986686ce7a99ec,11,Removed Object 4 from machine,4
+66464711c6986686ce7a99ec,12,Placed Object 3 on machine,4
+66464711c6986686ce7a99ec,13,Test Result: Nexiom machine is OFF,4
+66464711c6986686ce7a99ec,14,Removed Object 3 from machine,5
+66464711c6986686ce7a99ec,15,Placed Object 2 on machine,5
+66464711c6986686ce7a99ec,16,Test Result: Nexiom machine is OFF,5
+66464711c6986686ce7a99ec,17,Removed Object 2 from machine,6
+66464711c6986686ce7a99ec,18,Placed Object 1 on machine,6
+66464711c6986686ce7a99ec,19,Test Result: Nexiom machine is OFF,6
+66464711c6986686ce7a99ec,20,Placed Object 2 on machine,7
+66464711c6986686ce7a99ec,21,Placed Object 3 on machine,7
+66464711c6986686ce7a99ec,22,Test Result: Nexiom machine is OFF,7
+66464711c6986686ce7a99ec,23,Placed Object 4 on machine,8
+66464711c6986686ce7a99ec,24,Test Result: Nexiom machine is ON,8
+66464711c6986686ce7a99ec,25,Removed Object 1 from machine,9
+66464711c6986686ce7a99ec,26,Test Result: Nexiom machine is ON,9
+66464711c6986686ce7a99ec,27,Removed Object 3 from machine,10
+66464711c6986686ce7a99ec,28,Test Result: Nexiom machine is ON,10
+66464711c6986686ce7a99ec,29,Placed Object 3 on machine,11
+66464711c6986686ce7a99ec,30,Removed Object 4 from machine,11
+66464711c6986686ce7a99ec,31,Test Result: Nexiom machine is OFF,11
+664cfc36d05e1ed37dd9f91e,1,Placed Object 1 on machine,1
+664cfc36d05e1ed37dd9f91e,2,Placed Object 2 on machine,1
+664cfc36d05e1ed37dd9f91e,3,Test Result: Nexiom machine is OFF,1
+664cfc36d05e1ed37dd9f91e,4,Removed Object 1 from machine,2
+664cfc36d05e1ed37dd9f91e,5,Removed Object 2 from machine,2
+664cfc36d05e1ed37dd9f91e,6,Placed Object 3 on machine,2
+664cfc36d05e1ed37dd9f91e,7,Placed Object 4 on machine,2
+664cfc36d05e1ed37dd9f91e,8,Removed Object 4 from machine,2
+664cfc36d05e1ed37dd9f91e,9,Test Result: Nexiom machine is ON,2
+664cfc36d05e1ed37dd9f91e,10,Removed Object 3 from machine,3
+664cfc36d05e1ed37dd9f91e,11,Placed Object 4 on machine,3
+664cfc36d05e1ed37dd9f91e,12,Test Result: Nexiom machine is ON,3
+664cfc36d05e1ed37dd9f91e,13,Removed Object 4 from machine,4
+664f96491b1f7c4bf98dfc87,1,Placed Object 1 on machine,1
+664f96491b1f7c4bf98dfc87,2,Placed Object 2 on machine,1
+664f96491b1f7c4bf98dfc87,3,Placed Object 3 on machine,1
+664f96491b1f7c4bf98dfc87,4,Placed Object 4 on machine,1
+664f96491b1f7c4bf98dfc87,5,Test Result: Nexiom machine is ON,1
+664f96491b1f7c4bf98dfc87,6,Removed Object 2 from machine,2
+664f96491b1f7c4bf98dfc87,7,Removed Object 3 from machine,2
+664f96491b1f7c4bf98dfc87,8,Removed Object 4 from machine,2
+664f96491b1f7c4bf98dfc87,9,Test Result: Nexiom machine is OFF,2
+664f96491b1f7c4bf98dfc87,10,Removed Object 1 from machine,3
+664f96491b1f7c4bf98dfc87,11,Placed Object 2 on machine,3
+664f96491b1f7c4bf98dfc87,12,Test Result: Nexiom machine is OFF,3
+664f96491b1f7c4bf98dfc87,13,Removed Object 2 from machine,4
+664f96491b1f7c4bf98dfc87,14,Placed Object 3 on machine,4
+664f96491b1f7c4bf98dfc87,15,Test Result: Nexiom machine is OFF,4
+664f96491b1f7c4bf98dfc87,16,Removed Object 3 from machine,5
+664f96491b1f7c4bf98dfc87,17,Placed Object 4 on machine,5
+664f96491b1f7c4bf98dfc87,18,Test Result: Nexiom machine is OFF,5
+664f96491b1f7c4bf98dfc87,19,Placed Object 1 on machine,6
+664f96491b1f7c4bf98dfc87,20,Placed Object 2 on machine,6
+664f96491b1f7c4bf98dfc87,21,Placed Object 3 on machine,6
+664f96491b1f7c4bf98dfc87,22,Removed Object 2 from machine,6
+664f96491b1f7c4bf98dfc87,23,Removed Object 3 from machine,6
+664f96491b1f7c4bf98dfc87,24,Test Result: Nexiom machine is OFF,6
+6655fd511b6c8d1fd05de12d,1,Placed Object 1 on machine,1
+6655fd511b6c8d1fd05de12d,2,Placed Object 2 on machine,1
+6655fd511b6c8d1fd05de12d,3,Placed Object 3 on machine,1
+6655fd511b6c8d1fd05de12d,4,Placed Object 4 on machine,1
+6655fd511b6c8d1fd05de12d,5,Removed Object 4 from machine,1
+6655fd511b6c8d1fd05de12d,6,Removed Object 3 from machine,1
+6655fd511b6c8d1fd05de12d,7,Test Result: Nexiom machine is OFF,1
+6655fd511b6c8d1fd05de12d,8,Removed Object 1 from machine,2
+6655fd511b6c8d1fd05de12d,9,Placed Object 3 on machine,2
+6655fd511b6c8d1fd05de12d,10,Placed Object 4 on machine,2
+6655fd511b6c8d1fd05de12d,11,Test Result: Nexiom machine is ON,2
+6655fd511b6c8d1fd05de12d,12,Removed Object 2 from machine,3
+6655fd511b6c8d1fd05de12d,13,Test Result: Nexiom machine is OFF,3
+6655fd511b6c8d1fd05de12d,14,Placed Object 2 on machine,4
+6655fd511b6c8d1fd05de12d,15,Removed Object 4 from machine,4
+6655fd511b6c8d1fd05de12d,16,Test Result: Nexiom machine is OFF,4
+6655fd511b6c8d1fd05de12d,17,Placed Object 4 on machine,5
+6655fd511b6c8d1fd05de12d,18,Placed Object 1 on machine,5
+6655fd511b6c8d1fd05de12d,19,Test Result: Nexiom machine is ON,5
+6655fd511b6c8d1fd05de12d,20,Removed Object 1 from machine,6
+6655fd511b6c8d1fd05de12d,21,Removed Object 2 from machine,6
+6655fd511b6c8d1fd05de12d,22,Removed Object 3 from machine,6
+6655fd511b6c8d1fd05de12d,23,Test Result: Nexiom machine is OFF,6
+6655fd511b6c8d1fd05de12d,24,Placed Object 3 on machine,7
+6655fd511b6c8d1fd05de12d,25,Placed Object 2 on machine,7
+6655fd511b6c8d1fd05de12d,26,Removed Object 3 from machine,7
+6655fd511b6c8d1fd05de12d,27,Placed Object 1 on machine,7
+6655fd511b6c8d1fd05de12d,28,Removed Object 1 from machine,7
+6655fd511b6c8d1fd05de12d,29,Test Result: Nexiom machine is ON,7
+6655fd511b6c8d1fd05de12d,30,Removed Object 2 from machine,8
+6655fd511b6c8d1fd05de12d,31,Removed Object 4 from machine,8
+6655fd511b6c8d1fd05de12d,32,Placed Object 1 on machine,8
+6655fd511b6c8d1fd05de12d,33,Placed Object 3 on machine,8
+6655fd511b6c8d1fd05de12d,34,Removed Object 1 from machine,8
+6655fd511b6c8d1fd05de12d,35,Placed Object 1 on machine,8
+6655fd511b6c8d1fd05de12d,36,Placed Object 2 on machine,8
+6655fd511b6c8d1fd05de12d,37,Test Result: Nexiom machine is OFF,8
+6655fd511b6c8d1fd05de12d,38,Removed Object 1 from machine,9
+6655fd511b6c8d1fd05de12d,39,Placed Object 4 on machine,9
+6655fd511b6c8d1fd05de12d,40,Removed Object 3 from machine,9
+6655fd511b6c8d1fd05de12d,41,Placed Object 1 on machine,9
+6655fd511b6c8d1fd05de12d,42,Test Result: Nexiom machine is ON,9
+6655fd511b6c8d1fd05de12d,43,Removed Object 4 from machine,10
+665a8db299aa3f8fb8ff8c4d,1,Placed Object 1 on machine,1
+665a8db299aa3f8fb8ff8c4d,2,Test Result: Nexiom machine is OFF,1
+665a8db299aa3f8fb8ff8c4d,3,Removed Object 1 from machine,2
+665a8db299aa3f8fb8ff8c4d,4,Placed Object 2 on machine,2
+665a8db299aa3f8fb8ff8c4d,5,Test Result: Nexiom machine is OFF,2
+665a8db299aa3f8fb8ff8c4d,6,Removed Object 2 from machine,3
+665a8db299aa3f8fb8ff8c4d,7,Placed Object 3 on machine,3
+665a8db299aa3f8fb8ff8c4d,8,Test Result: Nexiom machine is ON,3
+665a8db299aa3f8fb8ff8c4d,9,Removed Object 3 from machine,4
+665a8db299aa3f8fb8ff8c4d,10,Placed Object 4 on machine,4
+665a8db299aa3f8fb8ff8c4d,11,Test Result: Nexiom machine is ON,4
+665a8db299aa3f8fb8ff8c4d,12,Placed Object 3 on machine,5
+665a8db299aa3f8fb8ff8c4d,13,Test Result: Nexiom machine is ON,5
+665a8db299aa3f8fb8ff8c4d,14,Placed Object 2 on machine,6
+665a8db299aa3f8fb8ff8c4d,15,Placed Object 1 on machine,6
+665a8db299aa3f8fb8ff8c4d,16,Test Result: Nexiom machine is ON,6
+665a8db299aa3f8fb8ff8c4d,17,Removed Object 3 from machine,7
+665a8db299aa3f8fb8ff8c4d,18,Removed Object 4 from machine,7
+665a8db299aa3f8fb8ff8c4d,19,Removed Object 2 from machine,7
+665a8db299aa3f8fb8ff8c4d,20,Removed Object 1 from machine,7
+665a8db299aa3f8fb8ff8c4d,21,Placed Object 3 on machine,7
+665a8db299aa3f8fb8ff8c4d,22,Placed Object 2 on machine,7
+665a8db299aa3f8fb8ff8c4d,23,Test Result: Nexiom machine is ON,7
+665a8db299aa3f8fb8ff8c4d,24,Removed Object 2 from machine,8
+665a8db299aa3f8fb8ff8c4d,25,Removed Object 3 from machine,8
+66621dc2ec23614444716d2c,1,Placed Object 4 on machine,1
+66621dc2ec23614444716d2c,2,Test Result: Nexiom machine is OFF,1
+66621dc2ec23614444716d2c,3,Removed Object 4 from machine,2
+66621dc2ec23614444716d2c,4,Placed Object 3 on machine,2
+66621dc2ec23614444716d2c,5,Test Result: Nexiom machine is OFF,2
+66621dc2ec23614444716d2c,6,Placed Object 2 on machine,3
+66621dc2ec23614444716d2c,7,Removed Object 3 from machine,3
+66621dc2ec23614444716d2c,8,Test Result: Nexiom machine is OFF,3
+66621dc2ec23614444716d2c,9,Placed Object 1 on machine,4
+66621dc2ec23614444716d2c,10,Removed Object 2 from machine,4
+66621dc2ec23614444716d2c,11,Test Result: Nexiom machine is OFF,4
+66736b0ac390b463a383ffc5,1,Placed Object 1 on machine,1
+66736b0ac390b463a383ffc5,2,Placed Object 3 on machine,1
+66736b0ac390b463a383ffc5,3,Test Result: Nexiom machine is OFF,1
+66736b0ac390b463a383ffc5,4,Placed Object 2 on machine,2
+66736b0ac390b463a383ffc5,5,Removed Object 1 from machine,2
+66736b0ac390b463a383ffc5,6,Test Result: Nexiom machine is OFF,2
+66736b0ac390b463a383ffc5,7,Test Result: Nexiom machine is OFF,3
+66736b0ac390b463a383ffc5,8,Removed Object 2 from machine,4
+66736b0ac390b463a383ffc5,9,Placed Object 1 on machine,4
+66736b0ac390b463a383ffc5,10,Removed Object 3 from machine,4
+66736b0ac390b463a383ffc5,11,Test Result: Nexiom machine is OFF,4
+66736b0ac390b463a383ffc5,12,Placed Object 4 on machine,5
+66736b0ac390b463a383ffc5,13,Removed Object 1 from machine,5
+66736b0ac390b463a383ffc5,14,Test Result: Nexiom machine is OFF,5
+66736b0ac390b463a383ffc5,15,Test Result: Nexiom machine is OFF,6
+66736b0ac390b463a383ffc5,16,Test Result: Nexiom machine is OFF,7
+66736b0ac390b463a383ffc5,17,Placed Object 3 on machine,8
+66736b0ac390b463a383ffc5,18,Test Result: Nexiom machine is ON,8
+66736b0ac390b463a383ffc5,19,Removed Object 4 from machine,9
+66736b0ac390b463a383ffc5,20,Placed Object 4 on machine,9
+66736b0ac390b463a383ffc5,21,Removed Object 4 from machine,9
+66736b0ac390b463a383ffc5,22,Placed Object 1 on machine,9
+66736b0ac390b463a383ffc5,23,Test Result: Nexiom machine is OFF,9
+66736b0ac390b463a383ffc5,24,Placed Object 4 on machine,10
+66736b0ac390b463a383ffc5,25,Removed Object 4 from machine,10
+66736b0ac390b463a383ffc5,26,Placed Object 4 on machine,10
+66736b0ac390b463a383ffc5,27,Removed Object 3 from machine,10
+66736b0ac390b463a383ffc5,28,Test Result: Nexiom machine is OFF,10
+66736b0ac390b463a383ffc5,29,Placed Object 2 on machine,11
+66736b0ac390b463a383ffc5,30,Removed Object 1 from machine,11
+66736b0ac390b463a383ffc5,31,Test Result: Nexiom machine is OFF,11
+66736b0ac390b463a383ffc5,32,Removed Object 4 from machine,12
+66736b0ac390b463a383ffc5,33,Placed Object 1 on machine,12
+66736b0ac390b463a383ffc5,34,Test Result: Nexiom machine is OFF,12
+6676ddf4aeae188a30f824f5,1,Placed Object 1 on machine,1
+6676ddf4aeae188a30f824f5,2,Test Result: Nexiom machine is OFF,1
+6676ddf4aeae188a30f824f5,3,Placed Object 2 on machine,2
+6676ddf4aeae188a30f824f5,4,Test Result: Nexiom machine is OFF,2
+6676ddf4aeae188a30f824f5,5,Placed Object 3 on machine,3
+6676ddf4aeae188a30f824f5,6,Test Result: Nexiom machine is OFF,3
+6676ddf4aeae188a30f824f5,7,Placed Object 4 on machine,4
+6676ddf4aeae188a30f824f5,8,Test Result: Nexiom machine is ON,4
+6676ddf4aeae188a30f824f5,9,Removed Object 3 from machine,5
+6676ddf4aeae188a30f824f5,10,Test Result: Nexiom machine is ON,5
+6676ddf4aeae188a30f824f5,11,Removed Object 2 from machine,6
+6676ddf4aeae188a30f824f5,12,Test Result: Nexiom machine is OFF,6
+6676ddf4aeae188a30f824f5,13,Placed Object 2 on machine,7
+6676ddf4aeae188a30f824f5,14,Removed Object 1 from machine,7
+6676ddf4aeae188a30f824f5,15,Test Result: Nexiom machine is ON,7
+6676ddf4aeae188a30f824f5,16,Placed Object 1 on machine,8
+6676ddf4aeae188a30f824f5,17,Test Result: Nexiom machine is ON,8
+6676ddf4aeae188a30f824f5,18,Removed Object 1 from machine,9
+667984ded209db9088acaf30,1,Placed Object 1 on machine,1
+667984ded209db9088acaf30,2,Test Result: Nexiom machine is ON,1
+667984ded209db9088acaf30,3,Removed Object 1 from machine,2
+667984ded209db9088acaf30,4,Placed Object 2 on machine,2
+667984ded209db9088acaf30,5,Test Result: Nexiom machine is OFF,2
+667984ded209db9088acaf30,6,Placed Object 3 on machine,3
+667984ded209db9088acaf30,7,Test Result: Nexiom machine is OFF,3
+667984ded209db9088acaf30,8,Placed Object 4 on machine,4
+667984ded209db9088acaf30,9,Test Result: Nexiom machine is ON,4
+667b4043a7f74c3ff540a60d,1,Placed Object 1 on machine,1
+667b4043a7f74c3ff540a60d,2,Test Result: Nexiom machine is OFF,1
+667b4043a7f74c3ff540a60d,3,Removed Object 1 from machine,2
+667b4043a7f74c3ff540a60d,4,Placed Object 2 on machine,2
+667b4043a7f74c3ff540a60d,5,Test Result: Nexiom machine is OFF,2
+667b4043a7f74c3ff540a60d,6,Removed Object 2 from machine,3
+667b4043a7f74c3ff540a60d,7,Placed Object 3 on machine,3
+667b4043a7f74c3ff540a60d,8,Test Result: Nexiom machine is ON,3
+667b4043a7f74c3ff540a60d,9,Removed Object 3 from machine,4
+667b4043a7f74c3ff540a60d,10,Placed Object 4 on machine,4
+667b4043a7f74c3ff540a60d,11,Test Result: Nexiom machine is ON,4
+667b4043a7f74c3ff540a60d,12,Removed Object 4 from machine,5
+667d08e12ac1bcbdd829a936,1,Placed Object 1 on machine,1
+667d08e12ac1bcbdd829a936,2,Test Result: Nexiom machine is OFF,1
+667d08e12ac1bcbdd829a936,3,Removed Object 1 from machine,2
+667d08e12ac1bcbdd829a936,4,Placed Object 2 on machine,2
+667d08e12ac1bcbdd829a936,5,Test Result: Nexiom machine is OFF,2
+667d08e12ac1bcbdd829a936,6,Removed Object 2 from machine,3
+667d08e12ac1bcbdd829a936,7,Placed Object 3 on machine,3
+667d08e12ac1bcbdd829a936,8,Test Result: Nexiom machine is OFF,3
+667d08e12ac1bcbdd829a936,9,Removed Object 3 from machine,4
+667d08e12ac1bcbdd829a936,10,Placed Object 4 on machine,4
+667d08e12ac1bcbdd829a936,11,Test Result: Nexiom machine is OFF,4
+6684bbcfad6facc374fd6523,1,Placed Object 1 on machine,1
+6684bbcfad6facc374fd6523,2,Placed Object 2 on machine,1
+6684bbcfad6facc374fd6523,3,Test Result: Nexiom machine is ON,1
+6684bbcfad6facc374fd6523,4,Removed Object 2 from machine,2
+6684bbcfad6facc374fd6523,5,Test Result: Nexiom machine is ON,2
+6684bbcfad6facc374fd6523,6,Removed Object 1 from machine,3
+6684bbcfad6facc374fd6523,7,Placed Object 3 on machine,3
+6684bbcfad6facc374fd6523,8,Placed Object 4 on machine,3
+6684bbcfad6facc374fd6523,9,Test Result: Nexiom machine is ON,3
+6684bbcfad6facc374fd6523,10,Removed Object 3 from machine,4
+6684bbcfad6facc374fd6523,11,Test Result: Nexiom machine is OFF,4
+6684bbcfad6facc374fd6523,12,Placed Object 3 on machine,5
+6684bbcfad6facc374fd6523,13,Removed Object 4 from machine,5
+6684bbcfad6facc374fd6523,14,Test Result: Nexiom machine is ON,5
+6684bbcfad6facc374fd6523,15,Placed Object 2 on machine,6
+6684bbcfad6facc374fd6523,16,Removed Object 3 from machine,6
+6684bbcfad6facc374fd6523,17,Test Result: Nexiom machine is OFF,6
+6684bbcfad6facc374fd6523,18,Placed Object 1 on machine,7
+6684bbcfad6facc374fd6523,19,Removed Object 2 from machine,7
+6684bbcfad6facc374fd6523,20,Placed Object 3 on machine,7
+6684bbcfad6facc374fd6523,21,Test Result: Nexiom machine is ON,7
+668ac4c1b3549e7f656154d4,1,Placed Object 1 on machine,1
+668ac4c1b3549e7f656154d4,2,Test Result: Nexiom machine is ON,1
+668ac4c1b3549e7f656154d4,3,Removed Object 1 from machine,2
+668ac4c1b3549e7f656154d4,4,Placed Object 2 on machine,2
+668ac4c1b3549e7f656154d4,5,Test Result: Nexiom machine is OFF,2
+668ac4c1b3549e7f656154d4,6,Removed Object 2 from machine,3
+668ac4c1b3549e7f656154d4,7,Placed Object 3 on machine,3
+668ac4c1b3549e7f656154d4,8,Test Result: Nexiom machine is OFF,3
+668ac4c1b3549e7f656154d4,9,Removed Object 3 from machine,4
+668ac4c1b3549e7f656154d4,10,Placed Object 4 on machine,4
+668ac4c1b3549e7f656154d4,11,Test Result: Nexiom machine is ON,4
+668ac4c1b3549e7f656154d4,12,Removed Object 4 from machine,5
+669abec15946546f5a97a5ff,1,Placed Object 1 on machine,1
+669abec15946546f5a97a5ff,2,Test Result: Nexiom machine is OFF,1
+669abec15946546f5a97a5ff,3,Removed Object 1 from machine,2
+669abec15946546f5a97a5ff,4,Placed Object 2 on machine,2
+669abec15946546f5a97a5ff,5,Test Result: Nexiom machine is ON,2
+669abec15946546f5a97a5ff,6,Removed Object 2 from machine,3
+669abec15946546f5a97a5ff,7,Placed Object 3 on machine,3
+669abec15946546f5a97a5ff,8,Test Result: Nexiom machine is ON,3
+669abec15946546f5a97a5ff,9,Removed Object 3 from machine,4
+669abec15946546f5a97a5ff,10,Placed Object 4 on machine,4
+669abec15946546f5a97a5ff,11,Test Result: Nexiom machine is OFF,4
+669acab688899abf41e03bb5,1,Placed Object 1 on machine,1
+669acab688899abf41e03bb5,2,Test Result: Nexiom machine is OFF,1
+669acab688899abf41e03bb5,3,Removed Object 1 from machine,2
+669acab688899abf41e03bb5,4,Placed Object 2 on machine,2
+669acab688899abf41e03bb5,5,Test Result: Nexiom machine is OFF,2
+669acab688899abf41e03bb5,6,Removed Object 2 from machine,3
+669acab688899abf41e03bb5,7,Placed Object 3 on machine,3
+669acab688899abf41e03bb5,8,Test Result: Nexiom machine is OFF,3
+669acab688899abf41e03bb5,9,Removed Object 3 from machine,4
+669acab688899abf41e03bb5,10,Placed Object 4 on machine,4
+669acab688899abf41e03bb5,11,Test Result: Nexiom machine is OFF,4
+669acab688899abf41e03bb5,12,Placed Object 3 on machine,5
+669acab688899abf41e03bb5,13,Test Result: Nexiom machine is OFF,5
+669acab688899abf41e03bb5,14,Placed Object 2 on machine,6
+669acab688899abf41e03bb5,15,Placed Object 1 on machine,6
+669acab688899abf41e03bb5,16,Test Result: Nexiom machine is ON,6
+669acab688899abf41e03bb5,17,Removed Object 1 from machine,7
+669acab688899abf41e03bb5,18,Test Result: Nexiom machine is OFF,7
+669acab688899abf41e03bb5,19,Placed Object 1 on machine,8
+669acab688899abf41e03bb5,20,Removed Object 2 from machine,8
+669acab688899abf41e03bb5,21,Test Result: Nexiom machine is ON,8
+669acab688899abf41e03bb5,22,Removed Object 3 from machine,9
+669acab688899abf41e03bb5,23,Test Result: Nexiom machine is ON,9
+669acab688899abf41e03bb5,24,Removed Object 4 from machine,10
+669acab688899abf41e03bb5,25,Placed Object 2 on machine,10
+669acab688899abf41e03bb5,26,Test Result: Nexiom machine is OFF,10
+669acab688899abf41e03bb5,27,Removed Object 1 from machine,11
+669acab688899abf41e03bb5,28,Placed Object 3 on machine,11
+669acab688899abf41e03bb5,29,Placed Object 4 on machine,11
+669acab688899abf41e03bb5,30,Test Result: Nexiom machine is OFF,11
+669acab688899abf41e03bb5,31,Removed Object 2 from machine,12
+669acab688899abf41e03bb5,32,Removed Object 3 from machine,12
+669acab688899abf41e03bb5,33,Placed Object 3 on machine,12
+669acab688899abf41e03bb5,34,Removed Object 3 from machine,12
+669acab688899abf41e03bb5,35,Placed Object 3 on machine,12
+669acab688899abf41e03bb5,36,Removed Object 3 from machine,12
+669acab688899abf41e03bb5,37,Placed Object 2 on machine,12
+669acab688899abf41e03bb5,38,Placed Object 1 on machine,12
+669acab688899abf41e03bb5,39,Placed Object 3 on machine,12
+669acab688899abf41e03bb5,40,Removed Object 2 from machine,12
+669acab688899abf41e03bb5,41,Test Result: Nexiom machine is ON,12
+669acab688899abf41e03bb5,42,Removed Object 3 from machine,13
+669acab688899abf41e03bb5,43,Placed Object 2 on machine,13
+669acab688899abf41e03bb5,44,Test Result: Nexiom machine is ON,13
+669acab688899abf41e03bb5,45,Placed Object 3 on machine,14
+669acab688899abf41e03bb5,46,Removed Object 4 from machine,14
+669acab688899abf41e03bb5,47,Test Result: Nexiom machine is OFF,14
+669acab688899abf41e03bb5,48,Removed Object 2 from machine,15
+669acab688899abf41e03bb5,49,Removed Object 3 from machine,15
+669acab688899abf41e03bb5,50,Placed Object 3 on machine,15
+669acab688899abf41e03bb5,51,Placed Object 2 on machine,15
+66ac6629c0da194f918ca3fb,1,Placed Object 1 on machine,1
+66ac6629c0da194f918ca3fb,2,Test Result: Nexiom machine is OFF,1
+66ac6629c0da194f918ca3fb,3,Removed Object 1 from machine,2
+66ac6629c0da194f918ca3fb,4,Placed Object 2 on machine,2
+66ac6629c0da194f918ca3fb,5,Test Result: Nexiom machine is OFF,2
+66ac6629c0da194f918ca3fb,6,Removed Object 2 from machine,3
+66ac6629c0da194f918ca3fb,7,Placed Object 3 on machine,3
+66ac6629c0da194f918ca3fb,8,Test Result: Nexiom machine is OFF,3
+66ac6629c0da194f918ca3fb,9,Removed Object 3 from machine,4
+66ac6629c0da194f918ca3fb,10,Placed Object 4 on machine,4
+66ac6629c0da194f918ca3fb,11,Test Result: Nexiom machine is OFF,4
+66ac6629c0da194f918ca3fb,12,Removed Object 4 from machine,5
+66ac6629c0da194f918ca3fb,13,Placed Object 1 on machine,5
+66ac6629c0da194f918ca3fb,14,Placed Object 2 on machine,5
+66ac6629c0da194f918ca3fb,15,Test Result: Nexiom machine is ON,5
+66ac6629c0da194f918ca3fb,16,Removed Object 2 from machine,6
+66ac6629c0da194f918ca3fb,17,Placed Object 3 on machine,6
+66ac6629c0da194f918ca3fb,18,Test Result: Nexiom machine is OFF,6
+66ac6629c0da194f918ca3fb,19,Removed Object 3 from machine,7
+66ac6629c0da194f918ca3fb,20,Placed Object 4 on machine,7
+66ac6629c0da194f918ca3fb,21,Test Result: Nexiom machine is OFF,7
+66ac6629c0da194f918ca3fb,22,Removed Object 4 from machine,8
+66ac6629c0da194f918ca3fb,23,Removed Object 1 from machine,8
+66ac6629c0da194f918ca3fb,24,Placed Object 2 on machine,8
+66ac6629c0da194f918ca3fb,25,Placed Object 3 on machine,8
+66ac6629c0da194f918ca3fb,26,Test Result: Nexiom machine is OFF,8
+66ac6629c0da194f918ca3fb,27,Removed Object 3 from machine,9
+66ac6629c0da194f918ca3fb,28,Placed Object 4 on machine,9
+66ac6629c0da194f918ca3fb,29,Test Result: Nexiom machine is OFF,9
+66ac6629c0da194f918ca3fb,30,Removed Object 2 from machine,10
+66ac6629c0da194f918ca3fb,31,Placed Object 3 on machine,10
+66ac6629c0da194f918ca3fb,32,Test Result: Nexiom machine is OFF,10
+66ac6629c0da194f918ca3fb,33,Removed Object 4 from machine,11
+66ac6629c0da194f918ca3fb,34,Placed Object 1 on machine,11
+66ac6629c0da194f918ca3fb,35,Placed Object 2 on machine,11
+66ac6629c0da194f918ca3fb,36,Test Result: Nexiom machine is ON,11
+66ac6629c0da194f918ca3fb,37,Removed Object 3 from machine,12
+66ac6629c0da194f918ca3fb,38,Placed Object 4 on machine,12
+66ac6629c0da194f918ca3fb,39,Test Result: Nexiom machine is ON,12
+66ac6629c0da194f918ca3fb,40,Removed Object 2 from machine,13
+66ac6629c0da194f918ca3fb,41,Placed Object 3 on machine,13
+66ac6629c0da194f918ca3fb,42,Test Result: Nexiom machine is OFF,13
+66ac6629c0da194f918ca3fb,43,Removed Object 1 from machine,14
+66ac6629c0da194f918ca3fb,44,Placed Object 2 on machine,14
+66ac6629c0da194f918ca3fb,45,Test Result: Nexiom machine is OFF,14
+66ac6629c0da194f918ca3fb,46,Placed Object 1 on machine,15
+66ac6629c0da194f918ca3fb,47,Test Result: Nexiom machine is ON,15
+66ac6629c0da194f918ca3fb,48,Removed Object 2 from machine,16
+66ac6629c0da194f918ca3fb,49,Removed Object 3 from machine,16
+66ac6629c0da194f918ca3fb,50,Removed Object 4 from machine,16
+66ac6629c0da194f918ca3fb,51,Removed Object 1 from machine,16
+66ac6629c0da194f918ca3fb,52,Placed Object 1 on machine,16
+66ac6629c0da194f918ca3fb,53,Placed Object 2 on machine,16
+66ac6629c0da194f918ca3fb,54,Test Result: Nexiom machine is ON,16
+66ae0709d8dd8981a2d6ee04,1,Placed Object 1 on machine,1
+66ae0709d8dd8981a2d6ee04,2,Test Result: Nexiom machine is OFF,1
+66ae0709d8dd8981a2d6ee04,3,Removed Object 1 from machine,2
+66ae0709d8dd8981a2d6ee04,4,Placed Object 3 on machine,2
+66ae0709d8dd8981a2d6ee04,5,Test Result: Nexiom machine is OFF,2
+66ae0709d8dd8981a2d6ee04,6,Removed Object 3 from machine,3
+66ae0709d8dd8981a2d6ee04,7,Placed Object 2 on machine,3
+66ae0709d8dd8981a2d6ee04,8,Test Result: Nexiom machine is ON,3
+66ae0709d8dd8981a2d6ee04,9,Test Result: Nexiom machine is ON,4
+66ae0709d8dd8981a2d6ee04,10,Removed Object 2 from machine,5
+66ae0709d8dd8981a2d6ee04,11,Placed Object 4 on machine,5
+66ae0709d8dd8981a2d6ee04,12,Test Result: Nexiom machine is ON,5
+66ae0709d8dd8981a2d6ee04,13,Placed Object 2 on machine,6
+66ae0709d8dd8981a2d6ee04,14,Removed Object 2 from machine,6
+66ae0709d8dd8981a2d6ee04,15,Placed Object 3 on machine,6
+66ae0709d8dd8981a2d6ee04,16,Removed Object 4 from machine,6
+66ae0709d8dd8981a2d6ee04,17,Placed Object 1 on machine,6
+66ae0709d8dd8981a2d6ee04,18,Test Result: Nexiom machine is OFF,6
+66ae0709d8dd8981a2d6ee04,19,Removed Object 1 from machine,7
+66ae0709d8dd8981a2d6ee04,20,Removed Object 3 from machine,7
+66d327f02e9e567850b49aee,1,Placed Object 1 on machine,1
+66d327f02e9e567850b49aee,2,Placed Object 2 on machine,1
+66d327f02e9e567850b49aee,3,Placed Object 3 on machine,1
+66d327f02e9e567850b49aee,4,Placed Object 4 on machine,1
+66d327f02e9e567850b49aee,5,Removed Object 4 from machine,1
+66d327f02e9e567850b49aee,6,Test Result: Nexiom machine is OFF,1
+66d327f02e9e567850b49aee,7,Removed Object 1 from machine,2
+66d327f02e9e567850b49aee,8,Removed Object 2 from machine,2
+66d327f02e9e567850b49aee,9,Removed Object 3 from machine,2
+66d327f02e9e567850b49aee,10,Placed Object 4 on machine,2
+66d327f02e9e567850b49aee,11,Test Result: Nexiom machine is OFF,2
+66d327f02e9e567850b49aee,12,Removed Object 4 from machine,3
+66d327f02e9e567850b49aee,13,Placed Object 1 on machine,3
+66d327f02e9e567850b49aee,14,Placed Object 2 on machine,3
+66d327f02e9e567850b49aee,15,Placed Object 3 on machine,3
+66d327f02e9e567850b49aee,16,Placed Object 4 on machine,3
+66d327f02e9e567850b49aee,17,Test Result: Nexiom machine is ON,3
+66d327f02e9e567850b49aee,18,Test Result: Nexiom machine is ON,4
+66d327f02e9e567850b49aee,19,Test Result: Nexiom machine is ON,5
+66de20cd48ec5f6eed0efb42,1,Placed Object 1 on machine,1
+66de20cd48ec5f6eed0efb42,2,Placed Object 2 on machine,1
+66de20cd48ec5f6eed0efb42,3,Placed Object 3 on machine,1
+66de20cd48ec5f6eed0efb42,4,Placed Object 4 on machine,1
+66de20cd48ec5f6eed0efb42,5,Test Result: Nexiom machine is ON,1
+66de20cd48ec5f6eed0efb42,6,Removed Object 3 from machine,2
+66de20cd48ec5f6eed0efb42,7,Removed Object 4 from machine,2
+66de20cd48ec5f6eed0efb42,8,Test Result: Nexiom machine is ON,2
+66de20cd48ec5f6eed0efb42,9,Removed Object 2 from machine,3
+66de20cd48ec5f6eed0efb42,10,Test Result: Nexiom machine is OFF,3
+66de20cd48ec5f6eed0efb42,11,Removed Object 1 from machine,4
+66de20cd48ec5f6eed0efb42,12,Placed Object 3 on machine,4
+66de20cd48ec5f6eed0efb42,13,Placed Object 4 on machine,4
+66de20cd48ec5f6eed0efb42,14,Test Result: Nexiom machine is OFF,4
+66de20cd48ec5f6eed0efb42,15,Removed Object 3 from machine,5
+66de20cd48ec5f6eed0efb42,16,Removed Object 4 from machine,5
+66de20cd48ec5f6eed0efb42,17,Placed Object 2 on machine,5
+66de20cd48ec5f6eed0efb42,18,Test Result: Nexiom machine is OFF,5
+66de20cd48ec5f6eed0efb42,19,Test Result: Nexiom machine is OFF,6
+66de20cd48ec5f6eed0efb42,20,Placed Object 3 on machine,7
+66de20cd48ec5f6eed0efb42,21,Placed Object 4 on machine,7
+66de20cd48ec5f6eed0efb42,22,Test Result: Nexiom machine is OFF,7
+66de20cd48ec5f6eed0efb42,23,Removed Object 3 from machine,8
+66de20cd48ec5f6eed0efb42,24,Removed Object 4 from machine,8
+66de20cd48ec5f6eed0efb42,25,Placed Object 1 on machine,8
+66de20cd48ec5f6eed0efb42,26,Test Result: Nexiom machine is ON,8
+66df530525ff636218e380bf,1,Placed Object 1 on machine,1
+66df530525ff636218e380bf,2,Placed Object 2 on machine,1
+66df530525ff636218e380bf,3,Test Result: Nexiom machine is OFF,1
+66df530525ff636218e380bf,4,Placed Object 3 on machine,2
+66df530525ff636218e380bf,5,Removed Object 2 from machine,2
+66df530525ff636218e380bf,6,Removed Object 1 from machine,2
+66df530525ff636218e380bf,7,Placed Object 4 on machine,2
+66df530525ff636218e380bf,8,Test Result: Nexiom machine is OFF,2
+66df530525ff636218e380bf,9,Placed Object 1 on machine,3
+66df530525ff636218e380bf,10,Placed Object 2 on machine,3
+66df530525ff636218e380bf,11,Test Result: Nexiom machine is ON,3
+66df530525ff636218e380bf,12,Removed Object 1 from machine,4
+66df530525ff636218e380bf,13,Removed Object 3 from machine,4
+66df530525ff636218e380bf,14,Test Result: Nexiom machine is OFF,4
+66df530525ff636218e380bf,15,Placed Object 1 on machine,5
+66df530525ff636218e380bf,16,Placed Object 3 on machine,5
+66df530525ff636218e380bf,17,Removed Object 2 from machine,5
+66df530525ff636218e380bf,18,Removed Object 4 from machine,5
+66df530525ff636218e380bf,19,Test Result: Nexiom machine is OFF,5
+66df530525ff636218e380bf,20,Placed Object 2 on machine,6
+66df530525ff636218e380bf,21,Test Result: Nexiom machine is OFF,6
+66df530525ff636218e380bf,22,Removed Object 1 from machine,7
+66df530525ff636218e380bf,23,Placed Object 4 on machine,7
+66df530525ff636218e380bf,24,Test Result: Nexiom machine is OFF,7
+66df530525ff636218e380bf,25,Placed Object 1 on machine,8
+66df530525ff636218e380bf,26,Removed Object 3 from machine,8
+66df530525ff636218e380bf,27,Test Result: Nexiom machine is ON,8
+66df530525ff636218e380bf,28,Removed Object 2 from machine,9
+66df530525ff636218e380bf,29,Test Result: Nexiom machine is ON,9
+66e0bc36ad31c37654af5fc8,1,Placed Object 1 on machine,1
+66e0bc36ad31c37654af5fc8,2,Placed Object 2 on machine,1
+66e0bc36ad31c37654af5fc8,3,Test Result: Nexiom machine is ON,1
+66e0bc36ad31c37654af5fc8,4,Removed Object 2 from machine,2
+66e0bc36ad31c37654af5fc8,5,Removed Object 1 from machine,2
+66e0bc36ad31c37654af5fc8,6,Placed Object 3 on machine,2
+66e0bc36ad31c37654af5fc8,7,Placed Object 4 on machine,2
+66e0bc36ad31c37654af5fc8,8,Test Result: Nexiom machine is OFF,2
+66e0bc36ad31c37654af5fc8,9,Removed Object 3 from machine,3
+66e0bc36ad31c37654af5fc8,10,Removed Object 4 from machine,3
+66e0bc36ad31c37654af5fc8,11,Placed Object 2 on machine,3
+66e0bc36ad31c37654af5fc8,12,Test Result: Nexiom machine is ON,3
+66e0bc36ad31c37654af5fc8,13,Removed Object 2 from machine,4
+66e0bc36ad31c37654af5fc8,14,Placed Object 1 on machine,4
+66e0bc36ad31c37654af5fc8,15,Test Result: Nexiom machine is ON,4
+66e641a57e7f41866f9e705f,1,Placed Object 1 on machine,1
+66e641a57e7f41866f9e705f,2,Placed Object 3 on machine,1
+66e641a57e7f41866f9e705f,3,Test Result: Nexiom machine is OFF,1
+66e641a57e7f41866f9e705f,4,Removed Object 1 from machine,2
+66e641a57e7f41866f9e705f,5,Removed Object 3 from machine,2
+66e641a57e7f41866f9e705f,6,Placed Object 4 on machine,2
+66e641a57e7f41866f9e705f,7,Placed Object 2 on machine,2
+66e641a57e7f41866f9e705f,8,Test Result: Nexiom machine is ON,2
+66e641a57e7f41866f9e705f,9,Removed Object 2 from machine,3
+66e641a57e7f41866f9e705f,10,Test Result: Nexiom machine is OFF,3
+66e641a57e7f41866f9e705f,11,Placed Object 2 on machine,4
+66e641a57e7f41866f9e705f,12,Removed Object 4 from machine,4
+66e641a57e7f41866f9e705f,13,Test Result: Nexiom machine is OFF,4
+66e641a57e7f41866f9e705f,14,Placed Object 4 on machine,5
+66e641a57e7f41866f9e705f,15,Test Result: Nexiom machine is ON,5
+66e641a57e7f41866f9e705f,16,Placed Object 1 on machine,6
+66e641a57e7f41866f9e705f,17,Test Result: Nexiom machine is ON,6
+66e641a57e7f41866f9e705f,18,Placed Object 3 on machine,7
+66e641a57e7f41866f9e705f,19,Test Result: Nexiom machine is ON,7
+66e641a57e7f41866f9e705f,20,Removed Object 2 from machine,8
+66e641a57e7f41866f9e705f,21,Removed Object 3 from machine,8
+66e641a57e7f41866f9e705f,22,Removed Object 4 from machine,8
+66e641a57e7f41866f9e705f,23,Test Result: Nexiom machine is OFF,8
+66e641a57e7f41866f9e705f,24,Removed Object 1 from machine,9
+66e641a57e7f41866f9e705f,25,Placed Object 3 on machine,9
+66e641a57e7f41866f9e705f,26,Test Result: Nexiom machine is OFF,9
+66e641a57e7f41866f9e705f,27,Removed Object 3 from machine,10
+66e641a57e7f41866f9e705f,28,Placed Object 2 on machine,10
+66e641a57e7f41866f9e705f,29,Test Result: Nexiom machine is OFF,10
+66e641a57e7f41866f9e705f,30,Removed Object 2 from machine,11
+66e641a57e7f41866f9e705f,31,Placed Object 4 on machine,11
+66e641a57e7f41866f9e705f,32,Test Result: Nexiom machine is OFF,11
+66e641a57e7f41866f9e705f,33,Placed Object 2 on machine,12
+66e641a57e7f41866f9e705f,34,Test Result: Nexiom machine is ON,12
+66ee186efc9a208ef9446a30,1,Placed Object 1 on machine,1
+66ee186efc9a208ef9446a30,2,Test Result: Nexiom machine is ON,1
+66ee186efc9a208ef9446a30,3,Removed Object 1 from machine,2
+66ee186efc9a208ef9446a30,4,Placed Object 2 on machine,2
+66ee186efc9a208ef9446a30,5,Test Result: Nexiom machine is ON,2
+66ee186efc9a208ef9446a30,6,Removed Object 2 from machine,3
+66ee186efc9a208ef9446a30,7,Placed Object 3 on machine,3
+66ee186efc9a208ef9446a30,8,Test Result: Nexiom machine is OFF,3
+66ee186efc9a208ef9446a30,9,Removed Object 3 from machine,4
+66ee186efc9a208ef9446a30,10,Placed Object 4 on machine,4
+66ee186efc9a208ef9446a30,11,Test Result: Nexiom machine is OFF,4
+66ee186efc9a208ef9446a30,12,Placed Object 3 on machine,5
+66ee186efc9a208ef9446a30,13,Test Result: Nexiom machine is OFF,5
+66ee186efc9a208ef9446a30,14,Removed Object 3 from machine,6
+66ee186efc9a208ef9446a30,15,Removed Object 4 from machine,6
+66ee186efc9a208ef9446a30,16,Placed Object 1 on machine,6
+66ee186efc9a208ef9446a30,17,Placed Object 2 on machine,6
+66ee186efc9a208ef9446a30,18,Test Result: Nexiom machine is ON,6
+66ee186efc9a208ef9446a30,19,Removed Object 1 from machine,7
+66ee186efc9a208ef9446a30,20,Removed Object 2 from machine,7
+67005512302c242e2c34d34d,1,Placed Object 1 on machine,1
+67005512302c242e2c34d34d,2,Test Result: Nexiom machine is OFF,1
+67005512302c242e2c34d34d,3,Removed Object 1 from machine,2
+67005512302c242e2c34d34d,4,Placed Object 2 on machine,2
+67005512302c242e2c34d34d,5,Test Result: Nexiom machine is OFF,2
+67005512302c242e2c34d34d,6,Removed Object 2 from machine,3
+67005512302c242e2c34d34d,7,Placed Object 3 on machine,3
+67005512302c242e2c34d34d,8,Test Result: Nexiom machine is OFF,3
+67005512302c242e2c34d34d,9,Removed Object 3 from machine,4
+67005512302c242e2c34d34d,10,Placed Object 4 on machine,4
+67005512302c242e2c34d34d,11,Test Result: Nexiom machine is OFF,4
+67005512302c242e2c34d34d,12,Placed Object 1 on machine,5
+67005512302c242e2c34d34d,13,Test Result: Nexiom machine is ON,5
+67005512302c242e2c34d34d,14,Removed Object 4 from machine,6
+67005512302c242e2c34d34d,15,Placed Object 2 on machine,6
+67005512302c242e2c34d34d,16,Test Result: Nexiom machine is OFF,6
+67005512302c242e2c34d34d,17,Removed Object 2 from machine,7
+67005512302c242e2c34d34d,18,Removed Object 1 from machine,7
+67005512302c242e2c34d34d,19,Placed Object 3 on machine,7
+67005512302c242e2c34d34d,20,Placed Object 2 on machine,7
+67005512302c242e2c34d34d,21,Test Result: Nexiom machine is OFF,7
+67005512302c242e2c34d34d,22,Removed Object 3 from machine,8
+67005512302c242e2c34d34d,23,Removed Object 2 from machine,8
+67005512302c242e2c34d34d,24,Placed Object 4 on machine,8
+67005512302c242e2c34d34d,25,Placed Object 3 on machine,8
+67005512302c242e2c34d34d,26,Test Result: Nexiom machine is OFF,8
+67005512302c242e2c34d34d,27,Removed Object 3 from machine,9
+67005512302c242e2c34d34d,28,Placed Object 2 on machine,9
+67005512302c242e2c34d34d,29,Test Result: Nexiom machine is OFF,9
+67005512302c242e2c34d34d,30,Removed Object 2 from machine,10
+67005512302c242e2c34d34d,31,Removed Object 4 from machine,10
+67005512302c242e2c34d34d,32,Placed Object 1 on machine,10
+67005512302c242e2c34d34d,33,Placed Object 2 on machine,10
+67005512302c242e2c34d34d,34,Placed Object 3 on machine,10
+67005512302c242e2c34d34d,35,Test Result: Nexiom machine is OFF,10
+67005512302c242e2c34d34d,36,Placed Object 4 on machine,11
+67005512302c242e2c34d34d,37,Test Result: Nexiom machine is ON,11
+67005512302c242e2c34d34d,38,Removed Object 1 from machine,12
+67005512302c242e2c34d34d,39,Removed Object 3 from machine,12
+67005512302c242e2c34d34d,40,Test Result: Nexiom machine is OFF,12
+67005512302c242e2c34d34d,41,Removed Object 2 from machine,13
+67005512302c242e2c34d34d,42,Placed Object 3 on machine,13
+67005512302c242e2c34d34d,43,Removed Object 4 from machine,13
+67005512302c242e2c34d34d,44,Placed Object 1 on machine,13
+67005512302c242e2c34d34d,45,Placed Object 4 on machine,13
+67005512302c242e2c34d34d,46,Test Result: Nexiom machine is ON,13
+67005512302c242e2c34d34d,47,Removed Object 3 from machine,14
+67005512302c242e2c34d34d,48,Removed Object 1 from machine,14
+67005512302c242e2c34d34d,49,Placed Object 2 on machine,14
+67005512302c242e2c34d34d,50,Placed Object 3 on machine,14
+67005512302c242e2c34d34d,51,Test Result: Nexiom machine is OFF,14
+67005512302c242e2c34d34d,52,Removed Object 2 from machine,15
+67005512302c242e2c34d34d,53,Removed Object 3 from machine,15
+67005512302c242e2c34d34d,54,Placed Object 2 on machine,15
+67005512302c242e2c34d34d,55,Placed Object 1 on machine,15
+67005512302c242e2c34d34d,56,Removed Object 4 from machine,15
+67005512302c242e2c34d34d,57,Placed Object 3 on machine,15
+67005512302c242e2c34d34d,58,Test Result: Nexiom machine is OFF,15
+67005512302c242e2c34d34d,59,Removed Object 1 from machine,16
+67005512302c242e2c34d34d,60,Placed Object 4 on machine,16
+67005512302c242e2c34d34d,61,Removed Object 3 from machine,16
+67005512302c242e2c34d34d,62,Placed Object 1 on machine,16
+67005512302c242e2c34d34d,63,Removed Object 2 from machine,16
+67005512302c242e2c34d34d,64,Placed Object 3 on machine,16
+67005512302c242e2c34d34d,65,Test Result: Nexiom machine is ON,16
+6722cf4c8679d8fe777e4364,1,Placed Object 1 on machine,1
+6722cf4c8679d8fe777e4364,2,Test Result: Nexiom machine is OFF,1
+6722cf4c8679d8fe777e4364,3,Removed Object 1 from machine,2
+6722cf4c8679d8fe777e4364,4,Placed Object 2 on machine,2
+6722cf4c8679d8fe777e4364,5,Test Result: Nexiom machine is OFF,2
+6722cf4c8679d8fe777e4364,6,Removed Object 2 from machine,3
+6722cf4c8679d8fe777e4364,7,Placed Object 3 on machine,3
+6722cf4c8679d8fe777e4364,8,Test Result: Nexiom machine is OFF,3
+6722cf4c8679d8fe777e4364,9,Removed Object 3 from machine,4
+6722cf4c8679d8fe777e4364,10,Placed Object 4 on machine,4
+6722cf4c8679d8fe777e4364,11,Test Result: Nexiom machine is OFF,4
+6722cf4c8679d8fe777e4364,12,Placed Object 2 on machine,5
+6722cf4c8679d8fe777e4364,13,Test Result: Nexiom machine is OFF,5
+6722cf4c8679d8fe777e4364,14,Placed Object 3 on machine,6
+6722cf4c8679d8fe777e4364,15,Test Result: Nexiom machine is OFF,6
+6722cf4c8679d8fe777e4364,16,Placed Object 1 on machine,7
+6722cf4c8679d8fe777e4364,17,Test Result: Nexiom machine is ON,7
+6722cf4c8679d8fe777e4364,18,Removed Object 4 from machine,8
+6722cf4c8679d8fe777e4364,19,Test Result: Nexiom machine is ON,8
+6722cf4c8679d8fe777e4364,20,Removed Object 2 from machine,9
+6722cf4c8679d8fe777e4364,21,Test Result: Nexiom machine is OFF,9
+6722cf4c8679d8fe777e4364,22,Placed Object 2 on machine,10
+6722cf4c8679d8fe777e4364,23,Removed Object 3 from machine,10
+6722cf4c8679d8fe777e4364,24,Test Result: Nexiom machine is ON,10
+6722cf4c8679d8fe777e4364,25,Removed Object 1 from machine,11
+6722cf4c8679d8fe777e4364,26,Test Result: Nexiom machine is OFF,11
+6722cf4c8679d8fe777e4364,27,Placed Object 1 on machine,12
+672cb8ccdb8232e7fee580ed,1,Placed Object 1 on machine,1
+672cb8ccdb8232e7fee580ed,2,Test Result: Nexiom machine is ON,1
+672cb8ccdb8232e7fee580ed,3,Removed Object 1 from machine,2
+672cb8ccdb8232e7fee580ed,4,Placed Object 2 on machine,2
+672cb8ccdb8232e7fee580ed,5,Test Result: Nexiom machine is OFF,2
+672cb8ccdb8232e7fee580ed,6,Removed Object 2 from machine,3
+672cb8ccdb8232e7fee580ed,7,Placed Object 3 on machine,3
+672cb8ccdb8232e7fee580ed,8,Test Result: Nexiom machine is ON,3
+672cb8ccdb8232e7fee580ed,9,Removed Object 3 from machine,4
+672cb8ccdb8232e7fee580ed,10,Placed Object 4 on machine,4
+672cb8ccdb8232e7fee580ed,11,Test Result: Nexiom machine is OFF,4
+672cb8ccdb8232e7fee580ed,12,Placed Object 1 on machine,5
+672cb8ccdb8232e7fee580ed,13,Placed Object 3 on machine,5
+672cb8ccdb8232e7fee580ed,14,Removed Object 4 from machine,5
+672cb8ccdb8232e7fee580ed,15,Removed Object 1 from machine,5
+672cb8ccdb8232e7fee580ed,16,Removed Object 3 from machine,5
+672cb8ccdb8232e7fee580ed,17,Placed Object 2 on machine,5
+672cb8ccdb8232e7fee580ed,18,Placed Object 4 on machine,5
+672cb8ccdb8232e7fee580ed,19,Test Result: Nexiom machine is OFF,5
+672cb8ccdb8232e7fee580ed,20,Removed Object 4 from machine,6
+672cb8ccdb8232e7fee580ed,21,Removed Object 2 from machine,6
+672edcfc36facd5b8d65d53d,1,Placed Object 1 on machine,1
+672edcfc36facd5b8d65d53d,2,Test Result: Nexiom machine is ON,1
+672edcfc36facd5b8d65d53d,3,Removed Object 1 from machine,2
+672edcfc36facd5b8d65d53d,4,Placed Object 2 on machine,2
+672edcfc36facd5b8d65d53d,5,Test Result: Nexiom machine is OFF,2
+672edcfc36facd5b8d65d53d,6,Removed Object 2 from machine,3
+672edcfc36facd5b8d65d53d,7,Placed Object 3 on machine,3
+672edcfc36facd5b8d65d53d,8,Test Result: Nexiom machine is OFF,3
+672edcfc36facd5b8d65d53d,9,Removed Object 3 from machine,4
+672edcfc36facd5b8d65d53d,10,Placed Object 4 on machine,4
+672edcfc36facd5b8d65d53d,11,Test Result: Nexiom machine is ON,4
+672edcfc36facd5b8d65d53d,12,Placed Object 1 on machine,5
+672edcfc36facd5b8d65d53d,13,Test Result: Nexiom machine is ON,5
+673bf98fb59b6d9e50a9080c,1,Placed Object 2 on machine,1
+673bf98fb59b6d9e50a9080c,2,Test Result: Nexiom machine is OFF,1
+673bf98fb59b6d9e50a9080c,3,Placed Object 4 on machine,2
+673bf98fb59b6d9e50a9080c,4,Test Result: Nexiom machine is OFF,2
+673bf98fb59b6d9e50a9080c,5,Placed Object 3 on machine,3
+673bf98fb59b6d9e50a9080c,6,Test Result: Nexiom machine is OFF,3
+673bf98fb59b6d9e50a9080c,7,Placed Object 1 on machine,4
+673bf98fb59b6d9e50a9080c,8,Test Result: Nexiom machine is ON,4
+67758b914f06b14a31669644,1,Placed Object 1 on machine,1
+67758b914f06b14a31669644,2,Placed Object 2 on machine,1
+67758b914f06b14a31669644,3,Test Result: Nexiom machine is ON,1
+67758b914f06b14a31669644,4,Removed Object 2 from machine,2
+67758b914f06b14a31669644,5,Test Result: Nexiom machine is OFF,2
+67758b914f06b14a31669644,6,Removed Object 1 from machine,3
+67758b914f06b14a31669644,7,Placed Object 4 on machine,3
+67758b914f06b14a31669644,8,Placed Object 3 on machine,3
+67758b914f06b14a31669644,9,Test Result: Nexiom machine is ON,3
+67758b914f06b14a31669644,10,Removed Object 3 from machine,4
+67758b914f06b14a31669644,11,Test Result: Nexiom machine is ON,4
+677816a3469477f7f02c31c8,1,Placed Object 1 on machine,1
+677816a3469477f7f02c31c8,2,Test Result: Nexiom machine is OFF,1
+677816a3469477f7f02c31c8,3,Removed Object 1 from machine,2
+677816a3469477f7f02c31c8,4,Placed Object 2 on machine,2
+677816a3469477f7f02c31c8,5,Test Result: Nexiom machine is OFF,2
+677816a3469477f7f02c31c8,6,Removed Object 2 from machine,3
+677816a3469477f7f02c31c8,7,Placed Object 3 on machine,3
+677816a3469477f7f02c31c8,8,Test Result: Nexiom machine is ON,3
+677816a3469477f7f02c31c8,9,Removed Object 3 from machine,4
+677816a3469477f7f02c31c8,10,Placed Object 4 on machine,4
+677816a3469477f7f02c31c8,11,Test Result: Nexiom machine is ON,4
+677816a3469477f7f02c31c8,12,Removed Object 4 from machine,5
+677816a3469477f7f02c31c8,13,Placed Object 1 on machine,5
+677816a3469477f7f02c31c8,14,Placed Object 2 on machine,5
+677816a3469477f7f02c31c8,15,Test Result: Nexiom machine is OFF,5
+677816a3469477f7f02c31c8,16,Removed Object 2 from machine,6
+677816a3469477f7f02c31c8,17,Placed Object 3 on machine,6
+677816a3469477f7f02c31c8,18,Test Result: Nexiom machine is ON,6
+677816a3469477f7f02c31c8,19,Removed Object 1 from machine,7
+677816a3469477f7f02c31c8,20,Placed Object 4 on machine,7
+677816a3469477f7f02c31c8,21,Test Result: Nexiom machine is ON,7
+677816a3469477f7f02c31c8,22,Removed Object 3 from machine,8
+677816a3469477f7f02c31c8,23,Removed Object 4 from machine,8
+677816a3469477f7f02c31c8,24,Placed Object 2 on machine,8
+677816a3469477f7f02c31c8,25,Placed Object 4 on machine,8
+677816a3469477f7f02c31c8,26,Test Result: Nexiom machine is ON,8
+677816a3469477f7f02c31c8,27,Removed Object 4 from machine,9
+677816a3469477f7f02c31c8,28,Removed Object 2 from machine,9
+677816a3469477f7f02c31c8,29,Placed Object 1 on machine,9
+677816a3469477f7f02c31c8,30,Placed Object 2 on machine,9
+677816a3469477f7f02c31c8,31,Placed Object 3 on machine,9
+677816a3469477f7f02c31c8,32,Test Result: Nexiom machine is ON,9
+677816a3469477f7f02c31c8,33,Placed Object 4 on machine,10
+677816a3469477f7f02c31c8,34,Test Result: Nexiom machine is ON,10
+677816a3469477f7f02c31c8,35,Removed Object 1 from machine,11
+677816a3469477f7f02c31c8,36,Test Result: Nexiom machine is ON,11
+677816a3469477f7f02c31c8,37,Removed Object 2 from machine,12
+677816a3469477f7f02c31c8,38,Placed Object 1 on machine,12
+677816a3469477f7f02c31c8,39,Test Result: Nexiom machine is ON,12
+677a9ad8c567199c95f2dc4c,1,Placed Object 2 on machine,1
+677a9ad8c567199c95f2dc4c,2,Test Result: Nexiom machine is OFF,1
+678557116f825dad357b623c,1,Placed Object 1 on machine,1
+678557116f825dad357b623c,2,Placed Object 2 on machine,1
+678557116f825dad357b623c,3,Placed Object 3 on machine,1
+678557116f825dad357b623c,4,Test Result: Nexiom machine is ON,1
+678557116f825dad357b623c,5,Removed Object 1 from machine,2
+678557116f825dad357b623c,6,Placed Object 4 on machine,2
+678557116f825dad357b623c,7,Test Result: Nexiom machine is ON,2
+678557116f825dad357b623c,8,Removed Object 2 from machine,3
+678557116f825dad357b623c,9,Placed Object 1 on machine,3
+678557116f825dad357b623c,10,Test Result: Nexiom machine is ON,3
+678557116f825dad357b623c,11,Placed Object 2 on machine,4
+678557116f825dad357b623c,12,Removed Object 3 from machine,4
+678557116f825dad357b623c,13,Test Result: Nexiom machine is ON,4
+678557116f825dad357b623c,14,Removed Object 4 from machine,5
+678557116f825dad357b623c,15,Test Result: Nexiom machine is ON,5
+678557116f825dad357b623c,16,Removed Object 1 from machine,6
+678557116f825dad357b623c,17,Removed Object 2 from machine,6
+678557116f825dad357b623c,18,Placed Object 1 on machine,6
+678557116f825dad357b623c,19,Test Result: Nexiom machine is ON,6
+678557116f825dad357b623c,20,Removed Object 1 from machine,7
+678557116f825dad357b623c,21,Placed Object 2 on machine,7
+678557116f825dad357b623c,22,Test Result: Nexiom machine is OFF,7
+678557116f825dad357b623c,23,Removed Object 2 from machine,8
+678557116f825dad357b623c,24,Placed Object 3 on machine,8
+678557116f825dad357b623c,25,Test Result: Nexiom machine is OFF,8
+678557116f825dad357b623c,26,Removed Object 3 from machine,9
+678557116f825dad357b623c,27,Placed Object 4 on machine,9
+678557116f825dad357b623c,28,Test Result: Nexiom machine is ON,9
+678557116f825dad357b623c,29,Placed Object 2 on machine,10
+678557116f825dad357b623c,30,Test Result: Nexiom machine is ON,10
+678557116f825dad357b623c,31,Removed Object 2 from machine,11
+678557116f825dad357b623c,32,Removed Object 4 from machine,11
+678557116f825dad357b623c,33,Placed Object 3 on machine,11
+678557116f825dad357b623c,34,Placed Object 1 on machine,11
+678557116f825dad357b623c,35,Test Result: Nexiom machine is ON,11
+678557116f825dad357b623c,36,Removed Object 1 from machine,12
+678557116f825dad357b623c,37,Test Result: Nexiom machine is OFF,12
+678557116f825dad357b623c,38,Test Result: Nexiom machine is OFF,13
+678557116f825dad357b623c,39,Test Result: Nexiom machine is OFF,14
+678557116f825dad357b623c,40,Test Result: Nexiom machine is OFF,15
+678557116f825dad357b623c,41,Test Result: Nexiom machine is OFF,16
+67ab642b1885c553052f7e8a,1,Placed Object 1 on machine,1
+67ab642b1885c553052f7e8a,2,Placed Object 3 on machine,1
+67ab642b1885c553052f7e8a,3,Test Result: Nexiom machine is OFF,1
+67ab642b1885c553052f7e8a,4,Removed Object 1 from machine,2
+67ab642b1885c553052f7e8a,5,Removed Object 3 from machine,2
+67ab642b1885c553052f7e8a,6,Placed Object 2 on machine,2
+67ab642b1885c553052f7e8a,7,Placed Object 4 on machine,2
+67c0af3cdbc67c93008f0616,1,Placed Object 1 on machine,1
+67c0af3cdbc67c93008f0616,2,Placed Object 2 on machine,1
+67c0af3cdbc67c93008f0616,3,Test Result: Nexiom machine is ON,1
+67c0af3cdbc67c93008f0616,4,Removed Object 1 from machine,2
+67c0af3cdbc67c93008f0616,5,Removed Object 2 from machine,2
+67c0af3cdbc67c93008f0616,6,Placed Object 3 on machine,2
+67c0af3cdbc67c93008f0616,7,Placed Object 4 on machine,2
+67c0af3cdbc67c93008f0616,8,Test Result: Nexiom machine is ON,2
+67c0af3cdbc67c93008f0616,9,Removed Object 3 from machine,3
+67c0af3cdbc67c93008f0616,10,Removed Object 4 from machine,3
+67c0af3cdbc67c93008f0616,11,Placed Object 1 on machine,3
+67c0af3cdbc67c93008f0616,12,Test Result: Nexiom machine is OFF,3
+67c0af3cdbc67c93008f0616,13,Removed Object 1 from machine,4
+67c0af3cdbc67c93008f0616,14,Placed Object 2 on machine,4
+67c0af3cdbc67c93008f0616,15,Test Result: Nexiom machine is ON,4
+67c0af3cdbc67c93008f0616,16,Removed Object 2 from machine,5
+67c0af3cdbc67c93008f0616,17,Placed Object 3 on machine,5
+67c0af3cdbc67c93008f0616,18,Test Result: Nexiom machine is OFF,5
+67c0af3cdbc67c93008f0616,19,Removed Object 3 from machine,6
+67c0af3cdbc67c93008f0616,20,Placed Object 4 on machine,6
+67c0af3cdbc67c93008f0616,21,Test Result: Nexiom machine is ON,6
+67c0af3cdbc67c93008f0616,22,Removed Object 4 from machine,7

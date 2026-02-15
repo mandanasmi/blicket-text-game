@@ -1,0 +1,4 @@
+- agent=naive_llm
+- num_trials=16
+- max_actions_per_trial=32
+- agent.model=gpt-4o-mini-2024-07-18

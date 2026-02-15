@@ -1,0 +1,35 @@
+[2025-03-10 15:22:35,151][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.10/152233/2
+[2025-03-10 15:22:35,151][__main__][INFO] - Running agent agent.oracle_agent.OracleAgent for 8 trials...
+[2025-03-10 15:22:35,151][__main__][INFO] - Starting trial 0...
+[2025-03-10 15:22:35,152][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f0ed0820ad0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 3]
+[2025-03-10 15:22:35,259][__main__][INFO] - Trial 0 completed in 8 steps. Questions correct: 6/6
+[2025-03-10 15:22:35,259][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 15:22:35,259][__main__][INFO] - Starting trial 1...
+[2025-03-10 15:22:35,260][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f0ed08204d0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 3]
+[2025-03-10 15:22:35,398][__main__][INFO] - Trial 1 completed in 10 steps. Questions correct: 6/6
+[2025-03-10 15:22:35,398][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 15:22:35,398][__main__][INFO] - Starting trial 2...
+[2025-03-10 15:22:35,399][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f0ed0822ed0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 3]
+[2025-03-10 15:22:35,611][__main__][INFO] - Trial 2 completed in 14 steps. Questions correct: 6/6
+[2025-03-10 15:22:35,611][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 15:22:35,611][__main__][INFO] - Starting trial 3...
+[2025-03-10 15:22:35,612][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f0ed0823f10>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 3]
+[2025-03-10 15:22:35,804][__main__][INFO] - Trial 3 completed in 13 steps. Questions correct: 6/6
+[2025-03-10 15:22:35,804][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 15:22:35,804][__main__][INFO] - Starting trial 4...
+[2025-03-10 15:22:35,805][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f0ed0825790>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 3]
+[2025-03-10 15:22:35,910][__main__][INFO] - Trial 4 completed in 8 steps. Questions correct: 6/6
+[2025-03-10 15:22:35,910][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 15:22:35,910][__main__][INFO] - Starting trial 5...
+[2025-03-10 15:22:35,910][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f0ed0825d50>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 3]
+[2025-03-10 15:22:35,959][__main__][INFO] - Trial 5 completed in 4 steps. Questions correct: 6/6
+[2025-03-10 15:22:35,959][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 15:22:35,959][__main__][INFO] - Starting trial 6...
+[2025-03-10 15:22:35,960][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f0ed08249d0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 3]
+[2025-03-10 15:22:36,065][__main__][INFO] - Trial 6 completed in 8 steps. Questions correct: 6/6
+[2025-03-10 15:22:36,065][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 15:22:36,065][__main__][INFO] - Starting trial 7...
+[2025-03-10 15:22:36,066][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f0ed08233d0>, with 6 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5']. Blicket indices: [1, 3]
+[2025-03-10 15:22:36,173][__main__][INFO] - Trial 7 completed in 8 steps. Questions correct: 6/6
+[2025-03-10 15:22:36,173][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 15:22:36,173][__main__][INFO] - Estimated total cost: 0

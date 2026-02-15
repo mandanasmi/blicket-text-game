@@ -1,0 +1,5 @@
+source,rule,n,tests_to_one_mean,tests_to_one_se,tests_to_one_n_reached,num_tests_mean,num_tests_se,action_history_length_mean,action_history_length_se
+human,conjunctive,51,1.0,0.0,3,9.588235294117647,0.6231963594423071,32.05882352941177,2.366665854411219
+human,disjunctive,51,1.0,0.0,33,6.392156862745098,0.4238742241977614,20.764705882352942,1.403242249932415
+llm,conjunctive,13,1.0,0.0,13,,,,
+llm,disjunctive,212,1.0,0.0,212,,,,

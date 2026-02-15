@@ -1,0 +1,17 @@
+- agent=hypo_code_lm
+- use_threadpool=True
+- tp_max_workers=32
+- num_trials=32
+- max_actions_per_trial=32
+- env_kwargs.rule=conjunctive
+- env_kwargs.num_objects=8
+- env_kwargs.num_blickets=2
+- env_kwargs.transition_noise=0.0
+- agent.model=gpt-4o-mini-2024-07-18
+- agent.prompt_type=default
+- agent.gen_n_hypothesis=32
+- agent.add_elim_hypothesis=True
+- agent.temperature=0.0
+- agent.system_msg_path=./agent/prompts/system_human_conj.txt
+- agent.hyp_gen_msg_path=./agent/prompts/hyp_gen_func.txt
+- seed=28

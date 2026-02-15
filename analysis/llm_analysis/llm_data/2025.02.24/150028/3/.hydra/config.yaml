@@ -1,0 +1,20 @@
+agent:
+  _target_: agent.item_attr_agent.RandActionItemAttrAgent
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+  filter_actions: false
+  react: true
+  model: gpt-4o-mini-2024-07-18
+  temperature: 0.3
+  do_indep_analysis: false
+num_trials: 16
+max_actions_per_trial: 32
+save_lm_log: true
+seed: 10
+env_kwargs:
+  num_objects: 4
+  num_blickets: 2
+  init_prob: 0.1
+  transition_noise: 0.0
+  rule: disjunctive
+  seed: ${seed}

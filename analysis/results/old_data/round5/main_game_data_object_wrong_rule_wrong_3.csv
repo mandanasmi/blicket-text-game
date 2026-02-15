@@ -1,0 +1,4 @@
+user_id,has_prior_experience,round_number,num_tests,time_per_test_seconds,total_test_time_seconds,total_round_time_seconds,user_object_identification,ground_truth_objects,object_identification_correct,rule_inference_text,rule_choice,ground_truth_rule,rule_choice_correct
+594a969df0ea1b0001558178,False,1,12,"[4.805, 6.03, 7.31, 13.811, 3.461, 4.184, 4.087, 4.853, 3.522, 3.826, 7.646, 4.227]",67.762,155.535,"[0, 1, 2, 3]","[1, 2]",False,Object 3 alone does not turn on the machine but 3 with any other object will turn it on.,disjunctive,conjunctive,False
+663a41265f6d1a3d681574c2,False,1,3,"[14.371, 23.295, 10.653]",48.319,101.25,[3],"[1, 3]",False,The Nexiom machine is turned on by Object 4 only,disjunctive,conjunctive,False
+67ab642b1885c553052f7e8a,False,1,1,[7.872],7.872,97.345,[3],"[1, 2]",False,"When the 4th object is placed on the machine, it powers on suggesting it is a Nexiom.",disjunctive,conjunctive,False

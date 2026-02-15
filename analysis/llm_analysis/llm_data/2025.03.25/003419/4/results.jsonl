@@ -1,0 +1,1 @@
+{"trial_idx": 9, "unique_state_visited": 7, "turn_machine_on": 1, "num_steps": 12, "total_reward": 0.0, "num_questions": 4, "num_correct": 4, "trial_duration": 6792.795299, "num_traj_api_errors": 0, "num_ans_api_errors": 0, "cost_estimate": 0.0785072}

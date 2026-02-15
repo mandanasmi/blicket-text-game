@@ -1,0 +1,2 @@
+{"trial_idx": 21, "unique_state_visited": 4, "turn_machine_on": 1, "num_steps": 4, "total_reward": 0.0, "num_questions": 4, "num_correct": 4, "trial_duration": 2954.802356, "num_traj_api_errors": 0, "num_ans_api_errors": 0, "cost_estimate": 0.03221912}
+{"trial_idx": 17, "unique_state_visited": 7, "turn_machine_on": 1, "num_steps": 13, "total_reward": 0.0, "num_questions": 4, "num_correct": 3, "trial_duration": 6104.825008, "num_traj_api_errors": 0, "num_ans_api_errors": 0, "cost_estimate": 0.07617463}

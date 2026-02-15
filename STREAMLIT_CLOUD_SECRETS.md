@@ -45,6 +45,28 @@ database_url = "https://nexiom-text-game-default-rtdb.firebaseio.com/"
 2. You should see "✅ Firebase connected - Data saving enabled" instead of "⚠️ Firebase not connected - Running in demo mode"
 3. Play a game and check your Firebase console: https://console.firebase.google.com/u/0/project/nexiom-text-game/database/nexiom-text-game-default-rtdb/data/~2F
 
+## Second app: Action-history only (new Streamlit link)
+
+To get a **separate public link** for the action-history app (txt file + Q&A, no object interaction):
+
+1. In the Streamlit Cloud dashboard, click **"New app"**.
+2. Select the same GitHub repository.
+3. Set **Main file path** to `passive_app/app_txt_history.py`.
+4. Deploy. You get a second URL (e.g. your repo’s second app URL).
+5. No Firebase or secrets are needed for this app; it saves responses as JSON only.
+
+## Survey app at the passive URL (e.g. blicket-text-game-passive.streamlit.app)
+
+To show the **passive app** (`passive_app/app.py`) at a URL like `https://blicket-text-game-passive.streamlit.app/`:
+
+1. In the [Streamlit Cloud dashboard](https://share.streamlit.io/), open the app that uses that URL (e.g. the "passive" app).
+2. Go to **Settings** (or the app name) then **General**.
+3. Set **Main file path** to `passive_app/app.py` (instead of `passive_app/app_txt_history.py`).
+4. In **Secrets**, add the same Firebase secrets as the main app (see Step 3 in "How to Add Firebase Secrets" above). The passive app needs Firebase to save consent, demographics, and survey responses.
+5. Save and let the app redeploy. The repo root `requirements.txt` is used (it already includes streamlit, firebase-admin, python-dotenv).
+
+After redeploy, that URL will serve the passive app (consent, intro, action history upload/paste, blicket questions, rule inference, end screen).
+
 ## Troubleshooting
 
 ### If you still see "Data saving disabled":

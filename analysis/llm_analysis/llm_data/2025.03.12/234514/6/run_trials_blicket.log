@@ -1,0 +1,664 @@
+[2025-03-12 23:51:59,420][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.12/234514/6
+[2025-03-12 23:51:59,421][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 8 trials...
+[2025-03-12 23:51:59,425][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7ff1fd225b50>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1, 2, 3]
+[2025-03-12 23:51:59,431][__main__][INFO] - Trial: 1. Environment: <env.blicket_text.BlicketTextEnv object at 0x7ff1fd227890>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1, 2, 3]
+[2025-03-12 23:51:59,435][__main__][INFO] - Trial: 2. Environment: <env.blicket_text.BlicketTextEnv object at 0x7ff1fd224850>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1, 2, 3]
+[2025-03-12 23:51:59,448][__main__][INFO] - Trial: 3. Environment: <env.blicket_text.BlicketTextEnv object at 0x7ff1fd3eb4d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1, 2, 3]
+[2025-03-12 23:51:59,456][__main__][INFO] - Trial: 5. Environment: <env.blicket_text.BlicketTextEnv object at 0x7ff1fd1a5cd0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1, 2, 3]
+[2025-03-12 23:51:59,458][__main__][INFO] - Trial: 6. Environment: <env.blicket_text.BlicketTextEnv object at 0x7ff1fd022fd0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1, 2, 3]
+[2025-03-12 23:51:59,467][__main__][INFO] - Trial: 4. Environment: <env.blicket_text.BlicketTextEnv object at 0x7ff1fd0260d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1, 2, 3]
+[2025-03-12 23:51:59,467][__main__][INFO] - Trial: 7. Environment: <env.blicket_text.BlicketTextEnv object at 0x7ff1fd026110>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1, 2, 3]
+[2025-03-12 23:52:01,135][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:01,144][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:01,204][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:01,376][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:01,882][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:02,014][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:02,056][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:02,090][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:02,577][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:02,836][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:03,037][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:03,459][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:03,763][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:03,802][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:03,840][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:04,104][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:04,638][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:05,168][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:05,253][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:05,402][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:05,418][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:05,982][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:06,001][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:06,315][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:06,476][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:06,900][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:06,961][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:07,236][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:07,524][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:07,770][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:07,975][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:08,653][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:08,779][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:08,839][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:09,510][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:09,676][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:09,683][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:10,041][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:10,367][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:10,644][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:10,724][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:11,413][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:11,560][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:12,067][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:12,181][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:12,744][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:12,848][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:13,406][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:13,517][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:13,918][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:14,002][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:14,096][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:14,809][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:15,031][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:15,034][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:15,275][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:16,129][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:16,295][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:16,398][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:17,356][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:17,464][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:17,708][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:17,778][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:18,138][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:18,482][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:18,649][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:19,228][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:19,462][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:19,987][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:20,134][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:21,154][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:21,338][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:21,358][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:21,682][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:22,152][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:22,494][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:22,745][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:23,458][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:23,761][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:23,984][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:24,114][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:24,508][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:24,833][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:24,887][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:25,602][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:26,175][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:26,448][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:26,560][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:26,666][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:26,958][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:27,187][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:27,746][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:28,573][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:28,592][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:28,743][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:28,974][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:29,016][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:29,455][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:29,590][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:30,127][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:30,959][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:31,087][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:31,103][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:31,736][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:31,849][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:32,233][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:32,947][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:33,621][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:34,235][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:34,338][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:34,629][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:35,029][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:35,205][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:35,945][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:36,310][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:36,531][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:36,820][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:37,788][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:37,934][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:38,120][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:38,222][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:38,293][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:38,380][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:39,506][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:39,741][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:40,368][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:40,857][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:42,074][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:42,132][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:42,185][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:42,530][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:42,920][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:43,204][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:43,917][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:44,417][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:44,922][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:45,043][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:45,417][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:45,593][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:45,852][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:46,135][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:46,544][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:47,027][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:47,787][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:48,333][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:48,435][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:48,568][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:49,075][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:49,526][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:49,751][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:50,643][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:51,069][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:51,597][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:51,726][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:51,752][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:51,998][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:52,317][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:52,464][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:52,899][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:53,484][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:53,860][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:54,023][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:54,419][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:54,536][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:54,959][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:55,089][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:55,355][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:56,344][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:56,603][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:56,833][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:57,083][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:57,358][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:57,489][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:57,734][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:58,161][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:58,290][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:58,659][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:59,066][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:59,517][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:59,561][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:52:59,979][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:00,461][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:00,780][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:00,831][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:01,103][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:01,516][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:01,850][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:02,003][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:02,278][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:02,586][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:03,125][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:03,345][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:03,542][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:03,543][openai._base_client][INFO] - Retrying request to /chat/completions in 0.430981 seconds
+[2025-03-12 23:53:04,000][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:04,097][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:04,097][openai._base_client][INFO] - Retrying request to /chat/completions in 0.404160 seconds
+[2025-03-12 23:53:04,121][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:04,121][openai._base_client][INFO] - Retrying request to /chat/completions in 0.843416 seconds
+[2025-03-12 23:53:04,163][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:04,259][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:04,259][openai._base_client][INFO] - Retrying request to /chat/completions in 0.382994 seconds
+[2025-03-12 23:53:04,604][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:04,604][openai._base_client][INFO] - Retrying request to /chat/completions in 0.924626 seconds
+[2025-03-12 23:53:04,706][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:04,751][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:04,751][openai._base_client][INFO] - Retrying request to /chat/completions in 0.877918 seconds
+[2025-03-12 23:53:04,831][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:04,832][openai._base_client][INFO] - Retrying request to /chat/completions in 0.490255 seconds
+[2025-03-12 23:53:04,844][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:04,845][openai._base_client][INFO] - Retrying request to /chat/completions in 0.380007 seconds
+[2025-03-12 23:53:05,060][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,060][backoff][INFO] - Backing off query_llm_api(...) for 0.3s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:05,071][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:05,188][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,188][openai._base_client][INFO] - Retrying request to /chat/completions in 0.485751 seconds
+[2025-03-12 23:53:05,338][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,339][openai._base_client][INFO] - Retrying request to /chat/completions in 0.975164 seconds
+[2025-03-12 23:53:05,416][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,417][openai._base_client][INFO] - Retrying request to /chat/completions in 0.752426 seconds
+[2025-03-12 23:53:05,427][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,427][openai._base_client][INFO] - Retrying request to /chat/completions in 0.446537 seconds
+[2025-03-12 23:53:05,505][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:05,635][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,635][backoff][INFO] - Backing off query_llm_api(...) for 0.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:05,650][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,650][openai._base_client][INFO] - Retrying request to /chat/completions in 0.483715 seconds
+[2025-03-12 23:53:05,719][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,720][backoff][INFO] - Backing off query_llm_api(...) for 0.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:05,784][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,785][openai._base_client][INFO] - Retrying request to /chat/completions in 0.837515 seconds
+[2025-03-12 23:53:05,845][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,845][openai._base_client][INFO] - Retrying request to /chat/completions in 0.419436 seconds
+[2025-03-12 23:53:05,984][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:05,984][openai._base_client][INFO] - Retrying request to /chat/completions in 0.835807 seconds
+[2025-03-12 23:53:05,987][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-12 23:53:06,101][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,101][openai._base_client][INFO] - Retrying request to /chat/completions in 0.430902 seconds
+[2025-03-12 23:53:06,242][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,242][openai._base_client][INFO] - Retrying request to /chat/completions in 0.836192 seconds
+[2025-03-12 23:53:06,286][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,286][backoff][INFO] - Backing off query_llm_api(...) for 0.8s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:06,374][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,374][openai._base_client][INFO] - Retrying request to /chat/completions in 0.856227 seconds
+[2025-03-12 23:53:06,419][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,420][backoff][INFO] - Backing off query_llm_api(...) for 0.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:06,644][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,645][openai._base_client][INFO] - Retrying request to /chat/completions in 0.997237 seconds
+[2025-03-12 23:53:06,669][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,669][openai._base_client][INFO] - Retrying request to /chat/completions in 0.388448 seconds
+[2025-03-12 23:53:06,713][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,713][backoff][INFO] - Backing off query_llm_api(...) for 0.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:06,931][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:06,932][backoff][INFO] - Backing off query_llm_api(...) for 1.6s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:07,173][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,174][openai._base_client][INFO] - Retrying request to /chat/completions in 0.891871 seconds
+[2025-03-12 23:53:07,190][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,190][backoff][INFO] - Backing off query_llm_api(...) for 0.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:07,202][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,202][openai._base_client][INFO] - Retrying request to /chat/completions in 0.385711 seconds
+[2025-03-12 23:53:07,348][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,349][backoff][INFO] - Backing off query_llm_api(...) for 1.6s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:07,435][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,435][openai._base_client][INFO] - Retrying request to /chat/completions in 0.449185 seconds
+[2025-03-12 23:53:07,681][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,681][openai._base_client][INFO] - Retrying request to /chat/completions in 0.882104 seconds
+[2025-03-12 23:53:07,691][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,691][openai._base_client][INFO] - Retrying request to /chat/completions in 0.480021 seconds
+[2025-03-12 23:53:07,692][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,692][openai._base_client][INFO] - Retrying request to /chat/completions in 0.390014 seconds
+[2025-03-12 23:53:07,740][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:07,740][backoff][INFO] - Backing off query_llm_api(...) for 0.7s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:08,008][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,008][openai._base_client][INFO] - Retrying request to /chat/completions in 0.804874 seconds
+[2025-03-12 23:53:08,175][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,175][backoff][INFO] - Backing off query_llm_api(...) for 1.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:08,210][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,210][openai._base_client][INFO] - Retrying request to /chat/completions in 0.843068 seconds
+[2025-03-12 23:53:08,264][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,264][openai._base_client][INFO] - Retrying request to /chat/completions in 0.968901 seconds
+[2025-03-12 23:53:08,599][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,600][openai._base_client][INFO] - Retrying request to /chat/completions in 0.492447 seconds
+[2025-03-12 23:53:08,654][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,655][backoff][INFO] - Backing off query_llm_api(...) for 0.2s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:08,661][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,661][openai._base_client][INFO] - Retrying request to /chat/completions in 0.442350 seconds
+[2025-03-12 23:53:08,923][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,924][backoff][INFO] - Backing off query_llm_api(...) for 1.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:08,976][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:08,976][openai._base_client][INFO] - Retrying request to /chat/completions in 0.433914 seconds
+[2025-03-12 23:53:09,014][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:09,015][openai._base_client][INFO] - Retrying request to /chat/completions in 0.480711 seconds
+[2025-03-12 23:53:09,169][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:09,170][backoff][INFO] - Backing off query_llm_api(...) for 0.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:09,195][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:09,196][openai._base_client][INFO] - Retrying request to /chat/completions in 0.831054 seconds
+[2025-03-12 23:53:09,212][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:09,213][openai._base_client][INFO] - Retrying request to /chat/completions in 0.923384 seconds
+[2025-03-12 23:53:09,352][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:09,352][backoff][INFO] - Backing off query_llm_api(...) for 1.7s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:09,520][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:09,521][openai._base_client][INFO] - Retrying request to /chat/completions in 0.825383 seconds
+[2025-03-12 23:53:09,604][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:09,604][openai._base_client][INFO] - Retrying request to /chat/completions in 0.981451 seconds
+[2025-03-12 23:53:09,652][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:09,652][openai._base_client][INFO] - Retrying request to /chat/completions in 0.470349 seconds
+[2025-03-12 23:53:10,140][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,141][backoff][INFO] - Backing off query_llm_api(...) for 1.2s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:10,214][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,215][openai._base_client][INFO] - Retrying request to /chat/completions in 0.492575 seconds
+[2025-03-12 23:53:10,218][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,218][openai._base_client][INFO] - Retrying request to /chat/completions in 0.778641 seconds
+[2025-03-12 23:53:10,248][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,248][backoff][INFO] - Backing off query_llm_api(...) for 1.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:10,470][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,470][backoff][INFO] - Backing off query_llm_api(...) for 0.3s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:10,570][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,570][openai._base_client][INFO] - Retrying request to /chat/completions in 0.382546 seconds
+[2025-03-12 23:53:10,712][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,712][backoff][INFO] - Backing off query_llm_api(...) for 3.2s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:10,815][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,815][openai._base_client][INFO] - Retrying request to /chat/completions in 0.774324 seconds
+[2025-03-12 23:53:10,852][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:10,852][openai._base_client][INFO] - Retrying request to /chat/completions in 0.459321 seconds
+[2025-03-12 23:53:11,072][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:11,073][openai._base_client][INFO] - Retrying request to /chat/completions in 0.925996 seconds
+[2025-03-12 23:53:11,110][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:11,110][backoff][INFO] - Backing off query_llm_api(...) for 3.6s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:11,129][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:11,129][openai._base_client][INFO] - Retrying request to /chat/completions in 0.439990 seconds
+[2025-03-12 23:53:11,430][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:11,431][openai._base_client][INFO] - Retrying request to /chat/completions in 0.956360 seconds
+[2025-03-12 23:53:11,500][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:11,500][openai._base_client][INFO] - Retrying request to /chat/completions in 0.409728 seconds
+[2025-03-12 23:53:11,687][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:11,687][openai._base_client][INFO] - Retrying request to /chat/completions in 0.853210 seconds
+[2025-03-12 23:53:11,713][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:11,713][backoff][INFO] - Backing off query_llm_api(...) for 2.8s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:12,020][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:12,020][openai._base_client][INFO] - Retrying request to /chat/completions in 0.780499 seconds
+[2025-03-12 23:53:12,105][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:12,106][backoff][INFO] - Backing off query_llm_api(...) for 1.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:12,285][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:12,286][openai._base_client][INFO] - Retrying request to /chat/completions in 0.429493 seconds
+[2025-03-12 23:53:12,508][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:12,508][backoff][INFO] - Backing off query_llm_api(...) for 2.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:12,660][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:12,661][backoff][INFO] - Backing off query_llm_api(...) for 1.8s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:12,838][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:12,838][openai._base_client][INFO] - Retrying request to /chat/completions in 0.797927 seconds
+[2025-03-12 23:53:12,911][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:12,912][backoff][INFO] - Backing off query_llm_api(...) for 3.6s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:13,736][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:13,737][openai._base_client][INFO] - Retrying request to /chat/completions in 0.483150 seconds
+[2025-03-12 23:53:13,743][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:13,743][backoff][INFO] - Backing off query_llm_api(...) for 2.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:14,037][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:14,038][openai._base_client][INFO] - Retrying request to /chat/completions in 0.421453 seconds
+[2025-03-12 23:53:14,332][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:14,332][openai._base_client][INFO] - Retrying request to /chat/completions in 0.789763 seconds
+[2025-03-12 23:53:14,537][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:14,538][openai._base_client][INFO] - Retrying request to /chat/completions in 0.454343 seconds
+[2025-03-12 23:53:14,565][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:14,566][openai._base_client][INFO] - Retrying request to /chat/completions in 0.836518 seconds
+[2025-03-12 23:53:14,612][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:14,613][openai._base_client][INFO] - Retrying request to /chat/completions in 0.396213 seconds
+[2025-03-12 23:53:14,828][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:14,828][openai._base_client][INFO] - Retrying request to /chat/completions in 0.408130 seconds
+[2025-03-12 23:53:15,029][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:15,029][openai._base_client][INFO] - Retrying request to /chat/completions in 0.455837 seconds
+[2025-03-12 23:53:15,099][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:15,099][openai._base_client][INFO] - Retrying request to /chat/completions in 0.848182 seconds
+[2025-03-12 23:53:15,126][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:15,127][openai._base_client][INFO] - Retrying request to /chat/completions in 0.783515 seconds
+[2025-03-12 23:53:15,232][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:15,232][backoff][INFO] - Backing off query_llm_api(...) for 4.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:15,344][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:15,345][openai._base_client][INFO] - Retrying request to /chat/completions in 0.769877 seconds
+[2025-03-12 23:53:15,516][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:15,517][backoff][INFO] - Backing off query_llm_api(...) for 1.8s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:15,595][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:15,595][openai._base_client][INFO] - Retrying request to /chat/completions in 0.808279 seconds
+[2025-03-12 23:53:16,019][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:16,019][backoff][INFO] - Backing off query_llm_api(...) for 5.7s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:16,066][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:16,066][backoff][INFO] - Backing off query_llm_api(...) for 2.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:16,229][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:16,229][backoff][INFO] - Backing off query_llm_api(...) for 0.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:16,566][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:16,567][backoff][INFO] - Backing off query_llm_api(...) for 15.1s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:16,650][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:16,650][openai._base_client][INFO] - Retrying request to /chat/completions in 0.426451 seconds
+[2025-03-12 23:53:16,764][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:16,764][openai._base_client][INFO] - Retrying request to /chat/completions in 0.480022 seconds
+[2025-03-12 23:53:16,793][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:16,793][openai._base_client][INFO] - Retrying request to /chat/completions in 0.402537 seconds
+[2025-03-12 23:53:17,198][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:17,198][openai._base_client][INFO] - Retrying request to /chat/completions in 0.860141 seconds
+[2025-03-12 23:53:17,315][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:17,315][openai._base_client][INFO] - Retrying request to /chat/completions in 0.766072 seconds
+[2025-03-12 23:53:17,360][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:17,360][openai._base_client][INFO] - Retrying request to /chat/completions in 0.985557 seconds
+[2025-03-12 23:53:17,372][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:17,372][openai._base_client][INFO] - Retrying request to /chat/completions in 0.483026 seconds
+[2025-03-12 23:53:17,969][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:17,969][openai._base_client][INFO] - Retrying request to /chat/completions in 0.824467 seconds
+[2025-03-12 23:53:18,153][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:18,153][openai._base_client][INFO] - Retrying request to /chat/completions in 0.416357 seconds
+[2025-03-12 23:53:18,163][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:18,164][backoff][INFO] - Backing off query_llm_api(...) for 1.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:18,172][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:18,173][backoff][INFO] - Backing off query_llm_api(...) for 12.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:18,454][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:18,454][backoff][INFO] - Backing off query_llm_api(...) for 5.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:18,681][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:18,681][openai._base_client][INFO] - Retrying request to /chat/completions in 0.896885 seconds
+[2025-03-12 23:53:18,905][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:18,907][backoff][INFO] - Backing off query_llm_api(...) for 13.3s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:19,691][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:19,691][backoff][INFO] - Backing off query_llm_api(...) for 12.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:19,761][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:19,761][openai._base_client][INFO] - Retrying request to /chat/completions in 0.499739 seconds
+[2025-03-12 23:53:19,826][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:19,827][openai._base_client][INFO] - Retrying request to /chat/completions in 0.377248 seconds
+[2025-03-12 23:53:20,316][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:20,316][openai._base_client][INFO] - Retrying request to /chat/completions in 0.907283 seconds
+[2025-03-12 23:53:20,371][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:20,372][openai._base_client][INFO] - Retrying request to /chat/completions in 0.777292 seconds
+[2025-03-12 23:53:21,263][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:21,263][backoff][INFO] - Backing off query_llm_api(...) for 2.1s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:21,340][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:21,340][backoff][INFO] - Backing off query_llm_api(...) for 27.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:21,881][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:21,881][openai._base_client][INFO] - Retrying request to /chat/completions in 0.426809 seconds
+[2025-03-12 23:53:22,422][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:22,422][openai._base_client][INFO] - Retrying request to /chat/completions in 0.932786 seconds
+[2025-03-12 23:53:23,431][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:23,431][openai._base_client][INFO] - Retrying request to /chat/completions in 0.459070 seconds
+[2025-03-12 23:53:23,468][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:23,469][backoff][INFO] - Backing off query_llm_api(...) for 9.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:23,999][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:23,999][openai._base_client][INFO] - Retrying request to /chat/completions in 0.853946 seconds
+[2025-03-12 23:53:24,050][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:24,050][openai._base_client][INFO] - Retrying request to /chat/completions in 0.461084 seconds
+[2025-03-12 23:53:24,622][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:24,622][openai._base_client][INFO] - Retrying request to /chat/completions in 0.995488 seconds
+[2025-03-12 23:53:24,966][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:24,967][backoff][INFO] - Backing off query_llm_api(...) for 23.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:25,728][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:25,728][backoff][INFO] - Backing off query_llm_api(...) for 0.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:26,729][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:26,729][openai._base_client][INFO] - Retrying request to /chat/completions in 0.414462 seconds
+[2025-03-12 23:53:27,262][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:27,263][openai._base_client][INFO] - Retrying request to /chat/completions in 0.910115 seconds
+[2025-03-12 23:53:28,289][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:28,289][backoff][INFO] - Backing off query_llm_api(...) for 30.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:30,312][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:30,312][openai._base_client][INFO] - Retrying request to /chat/completions in 0.397377 seconds
+[2025-03-12 23:53:30,821][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:30,821][openai._base_client][INFO] - Retrying request to /chat/completions in 0.980078 seconds
+[2025-03-12 23:53:31,807][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:31,808][openai._base_client][INFO] - Retrying request to /chat/completions in 0.456288 seconds
+[2025-03-12 23:53:31,924][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:31,924][backoff][INFO] - Backing off query_llm_api(...) for 23.1s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:32,318][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:32,318][openai._base_client][INFO] - Retrying request to /chat/completions in 0.489552 seconds
+[2025-03-12 23:53:32,352][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:32,352][openai._base_client][INFO] - Retrying request to /chat/completions in 0.404254 seconds
+[2025-03-12 23:53:32,386][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:32,386][openai._base_client][INFO] - Retrying request to /chat/completions in 0.754499 seconds
+[2025-03-12 23:53:32,628][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:32,628][openai._base_client][INFO] - Retrying request to /chat/completions in 0.458479 seconds
+[2025-03-12 23:53:32,878][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:32,878][openai._base_client][INFO] - Retrying request to /chat/completions in 0.988542 seconds
+[2025-03-12 23:53:32,928][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:32,928][openai._base_client][INFO] - Retrying request to /chat/completions in 0.764437 seconds
+[2025-03-12 23:53:33,215][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:33,216][openai._base_client][INFO] - Retrying request to /chat/completions in 0.965875 seconds
+[2025-03-12 23:53:33,241][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:33,241][backoff][INFO] - Backing off query_llm_api(...) for 12.7s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:33,806][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:33,806][backoff][INFO] - Backing off query_llm_api(...) for 15.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:33,994][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:33,994][backoff][INFO] - Backing off query_llm_api(...) for 29.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:34,289][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:34,290][backoff][INFO] - Backing off query_llm_api(...) for 11.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:46,043][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:46,043][openai._base_client][INFO] - Retrying request to /chat/completions in 0.458896 seconds
+[2025-03-12 23:53:46,367][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:46,367][openai._base_client][INFO] - Retrying request to /chat/completions in 0.476377 seconds
+[2025-03-12 23:53:46,590][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:46,590][openai._base_client][INFO] - Retrying request to /chat/completions in 0.984533 seconds
+[2025-03-12 23:53:46,935][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:46,935][openai._base_client][INFO] - Retrying request to /chat/completions in 0.897814 seconds
+[2025-03-12 23:53:47,661][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:47,662][backoff][INFO] - Backing off query_llm_api(...) for 9.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:47,929][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:47,930][backoff][INFO] - Backing off query_llm_api(...) for 8.1s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:48,410][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:48,410][openai._base_client][INFO] - Retrying request to /chat/completions in 0.492501 seconds
+[2025-03-12 23:53:48,519][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:48,519][openai._base_client][INFO] - Retrying request to /chat/completions in 0.486851 seconds
+[2025-03-12 23:53:48,990][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:48,990][openai._base_client][INFO] - Retrying request to /chat/completions in 0.853535 seconds
+[2025-03-12 23:53:49,097][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:49,097][openai._base_client][INFO] - Retrying request to /chat/completions in 0.793486 seconds
+[2025-03-12 23:53:49,413][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:49,414][openai._base_client][INFO] - Retrying request to /chat/completions in 0.387479 seconds
+[2025-03-12 23:53:49,903][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:49,904][openai._base_client][INFO] - Retrying request to /chat/completions in 0.969868 seconds
+[2025-03-12 23:53:49,952][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:49,952][backoff][INFO] - Backing off query_llm_api(...) for 54.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:49,993][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:49,993][backoff][INFO] - Backing off query_llm_api(...) for 18.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:50,972][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:50,972][backoff][INFO] - Backing off query_llm_api(...) for 35.2s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:55,133][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:55,134][openai._base_client][INFO] - Retrying request to /chat/completions in 0.401069 seconds
+[2025-03-12 23:53:55,634][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:55,635][openai._base_client][INFO] - Retrying request to /chat/completions in 0.912108 seconds
+[2025-03-12 23:53:56,160][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:56,160][openai._base_client][INFO] - Retrying request to /chat/completions in 0.429003 seconds
+[2025-03-12 23:53:56,635][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:56,636][backoff][INFO] - Backing off query_llm_api(...) for 25.2s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:56,717][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:56,717][openai._base_client][INFO] - Retrying request to /chat/completions in 0.798908 seconds
+[2025-03-12 23:53:56,781][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:56,781][openai._base_client][INFO] - Retrying request to /chat/completions in 0.489804 seconds
+[2025-03-12 23:53:57,373][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:57,373][openai._base_client][INFO] - Retrying request to /chat/completions in 0.835173 seconds
+[2025-03-12 23:53:57,621][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:57,622][backoff][INFO] - Backing off query_llm_api(...) for 108.6s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:58,332][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:58,333][backoff][INFO] - Backing off query_llm_api(...) for 126.7s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:53:58,399][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:58,399][openai._base_client][INFO] - Retrying request to /chat/completions in 0.472581 seconds
+[2025-03-12 23:53:58,958][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:58,958][openai._base_client][INFO] - Retrying request to /chat/completions in 0.787296 seconds
+[2025-03-12 23:53:59,832][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:53:59,833][backoff][INFO] - Backing off query_llm_api(...) for 28.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:03,525][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:03,525][openai._base_client][INFO] - Retrying request to /chat/completions in 0.397569 seconds
+[2025-03-12 23:54:04,010][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:04,011][openai._base_client][INFO] - Retrying request to /chat/completions in 0.893317 seconds
+[2025-03-12 23:54:04,996][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:04,997][backoff][INFO] - Backing off query_llm_api(...) for 38.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:08,468][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:08,468][openai._base_client][INFO] - Retrying request to /chat/completions in 0.438199 seconds
+[2025-03-12 23:54:08,999][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:08,999][openai._base_client][INFO] - Retrying request to /chat/completions in 0.787298 seconds
+[2025-03-12 23:54:09,875][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:09,876][backoff][INFO] - Backing off query_llm_api(...) for 56.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:21,985][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:21,985][openai._base_client][INFO] - Retrying request to /chat/completions in 0.476512 seconds
+[2025-03-12 23:54:22,570][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:22,570][openai._base_client][INFO] - Retrying request to /chat/completions in 0.818727 seconds
+[2025-03-12 23:54:23,487][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:23,487][backoff][INFO] - Backing off query_llm_api(...) for 13.3s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:26,291][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:26,291][openai._base_client][INFO] - Retrying request to /chat/completions in 0.408483 seconds
+[2025-03-12 23:54:26,794][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:26,794][openai._base_client][INFO] - Retrying request to /chat/completions in 0.889188 seconds
+[2025-03-12 23:54:27,781][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:27,781][backoff][INFO] - Backing off query_llm_api(...) for 102.3s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:28,817][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:28,817][openai._base_client][INFO] - Retrying request to /chat/completions in 0.499906 seconds
+[2025-03-12 23:54:29,416][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:29,417][openai._base_client][INFO] - Retrying request to /chat/completions in 0.973338 seconds
+[2025-03-12 23:54:30,482][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:30,483][backoff][INFO] - Backing off query_llm_api(...) for 108.9s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:36,953][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:36,953][openai._base_client][INFO] - Retrying request to /chat/completions in 0.380572 seconds
+[2025-03-12 23:54:37,435][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:37,435][openai._base_client][INFO] - Retrying request to /chat/completions in 0.845174 seconds
+[2025-03-12 23:54:38,382][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:38,383][backoff][INFO] - Backing off query_llm_api(...) for 12.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:43,136][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:43,137][openai._base_client][INFO] - Retrying request to /chat/completions in 0.480933 seconds
+[2025-03-12 23:54:43,717][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:43,717][openai._base_client][INFO] - Retrying request to /chat/completions in 0.955103 seconds
+[2025-03-12 23:54:44,496][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:44,496][openai._base_client][INFO] - Retrying request to /chat/completions in 0.377562 seconds
+[2025-03-12 23:54:44,766][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:44,767][backoff][INFO] - Backing off query_llm_api(...) for 46.5s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:44,963][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:44,964][openai._base_client][INFO] - Retrying request to /chat/completions in 0.786369 seconds
+[2025-03-12 23:54:45,848][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:45,848][backoff][INFO] - Backing off query_llm_api(...) for 107.3s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:54:51,023][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:51,023][openai._base_client][INFO] - Retrying request to /chat/completions in 0.459928 seconds
+[2025-03-12 23:54:51,578][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:51,578][openai._base_client][INFO] - Retrying request to /chat/completions in 0.887620 seconds
+[2025-03-12 23:54:52,554][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:54:52,554][backoff][INFO] - Backing off query_llm_api(...) for 359.6s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:55:06,755][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:06,755][openai._base_client][INFO] - Retrying request to /chat/completions in 0.494198 seconds
+[2025-03-12 23:55:07,370][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:07,370][openai._base_client][INFO] - Retrying request to /chat/completions in 0.955946 seconds
+[2025-03-12 23:55:09,493][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:09,493][backoff][INFO] - Backing off query_llm_api(...) for 6.8s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:55:16,405][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:16,406][openai._base_client][INFO] - Retrying request to /chat/completions in 0.404273 seconds
+[2025-03-12 23:55:16,906][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:16,906][openai._base_client][INFO] - Retrying request to /chat/completions in 0.905330 seconds
+[2025-03-12 23:55:17,907][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:17,908][backoff][INFO] - Backing off query_llm_api(...) for 506.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:55:31,363][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:31,363][openai._base_client][INFO] - Retrying request to /chat/completions in 0.455509 seconds
+[2025-03-12 23:55:31,926][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:31,926][openai._base_client][INFO] - Retrying request to /chat/completions in 0.871739 seconds
+[2025-03-12 23:55:32,890][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:32,890][backoff][INFO] - Backing off query_llm_api(...) for 131.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:55:46,316][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:46,316][openai._base_client][INFO] - Retrying request to /chat/completions in 0.412009 seconds
+[2025-03-12 23:55:46,822][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:46,823][openai._base_client][INFO] - Retrying request to /chat/completions in 0.928726 seconds
+[2025-03-12 23:55:47,847][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:55:47,847][backoff][INFO] - Backing off query_llm_api(...) for 182.8s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:56:05,171][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:05,172][openai._base_client][INFO] - Retrying request to /chat/completions in 0.384568 seconds
+[2025-03-12 23:56:05,656][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:05,657][openai._base_client][INFO] - Retrying request to /chat/completions in 0.815911 seconds
+[2025-03-12 23:56:06,582][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:06,582][backoff][INFO] - Backing off query_llm_api(...) for 191.0s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:56:10,223][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:10,223][openai._base_client][INFO] - Retrying request to /chat/completions in 0.407414 seconds
+[2025-03-12 23:56:10,788][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:10,789][openai._base_client][INFO] - Retrying request to /chat/completions in 0.937919 seconds
+[2025-03-12 23:56:11,825][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:11,825][backoff][INFO] - Backing off query_llm_api(...) for 245.8s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:56:19,578][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:19,578][openai._base_client][INFO] - Retrying request to /chat/completions in 0.397062 seconds
+[2025-03-12 23:56:20,070][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:20,071][openai._base_client][INFO] - Retrying request to /chat/completions in 0.782943 seconds
+[2025-03-12 23:56:20,951][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:20,952][backoff][INFO] - Backing off query_llm_api(...) for 165.3s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:56:33,277][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:33,278][openai._base_client][INFO] - Retrying request to /chat/completions in 0.477837 seconds
+[2025-03-12 23:56:33,861][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:33,861][openai._base_client][INFO] - Retrying request to /chat/completions in 0.912384 seconds
+[2025-03-12 23:56:34,882][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:56:34,882][backoff][INFO] - Backing off query_llm_api(...) for 28.6s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:57:03,561][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:57:03,561][openai._base_client][INFO] - Retrying request to /chat/completions in 0.399432 seconds
+[2025-03-12 23:57:04,057][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:57:04,057][openai._base_client][INFO] - Retrying request to /chat/completions in 0.842586 seconds
+[2025-03-12 23:57:05,043][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:57:05,043][backoff][INFO] - Backing off query_llm_api(...) for 332.8s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})
+[2025-03-12 23:57:43,997][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:57:43,998][openai._base_client][INFO] - Retrying request to /chat/completions in 0.493456 seconds
+[2025-03-12 23:57:44,627][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:57:44,627][openai._base_client][INFO] - Retrying request to /chat/completions in 0.974726 seconds
+[2025-03-12 23:57:45,718][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 429 Too Many Requests"
+[2025-03-12 23:57:45,718][backoff][INFO] - Backing off query_llm_api(...) for 356.4s (openai.RateLimitError: Error code: 429 - {'error': {'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors.', 'type': 'insufficient_quota', 'param': None, 'code': 'insufficient_quota'}})

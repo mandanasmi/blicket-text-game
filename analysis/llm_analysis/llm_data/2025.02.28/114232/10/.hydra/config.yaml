@@ -1,0 +1,17 @@
+agent:
+  _target_: agent.normative_agent.NormativeAgent
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+  explore_strategy: random
+  indep_test: chi2
+num_trials: 128
+max_actions_per_trial: 32
+save_lm_log: true
+seed: 12
+env_kwargs:
+  num_objects: 8
+  num_blickets: 2
+  init_prob: 0.1
+  transition_noise: 0.0
+  rule: disjunctive
+  seed: ${seed}

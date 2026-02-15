@@ -151,6 +151,17 @@ Or use the helper script: `./run_app.sh`
 
 The app will be available at `http://localhost:8501`
 
+### Action-history-only app (txt file + Q&A)
+
+A separate Streamlit app lets participants **view action history from a txt file** and then answer object identification and rule inference only (no object interaction). Participants update the action history in a txt file externally; the app displays it and collects answers. **No comprehension or practice phase** in this stage.
+
+- **Run locally:** `./run_app_txt_history.sh` or `streamlit run passive_app/app_txt_history.py --server.port 8503`
+- **Local link:** `http://localhost:8503` (runs alongside the main app on 8501)
+- **New Streamlit Cloud link:** In the [Streamlit Cloud dashboard](https://share.streamlit.io/), create a **new app** from the same repo, set **Main file path** to `passive_app/app_txt_history.py`, and deploy. You get a separate public URL (e.g. `https://your-repo-name-app-txt-history.streamlit.app` or similar). No Firebase or secrets are required for this app. The app uses its own minimal `requirements.txt` (only streamlit) in the `passive_app/` directory.
+- **No Firebase** required for this app.
+
+**Txt file format:** One step per line. Optional first line: `# num_objects=4`. Each line: `ACTION | Machine: ON` or `ACTION | Machine: OFF` (e.g. `place Object 1 on the machine | Machine: ON`). Action-only lines are allowed; machine state is shown as `?`. Responses are saved as JSON under `data_txt_history/`.
+
 ### Streamlit Cloud Deployment
 
 1. **Fork this repository** to your GitHub account
@@ -232,6 +243,10 @@ blicket-text-game/
 ├── app.py                        # Main Streamlit application and participant flow
 ├── textual_nexiom_game.py         # Game logic and interface
 ├── run_app.sh                    # Helper to run the Streamlit app
+├── run_app_txt_history.sh        # Run action-history-only app (port 8503)
+├── passive_app/                  # Passive data collection app (no pandas/numpy needed)
+│   ├── app_txt_history.py        # Action-history + Q&A only (no object interaction)
+│   └── requirements.txt          # Minimal requirements (streamlit only)
 ├── env/
 │   └── blicket_text.py           # Environment logic for blicket machine
 ├── images/                       # UI assets

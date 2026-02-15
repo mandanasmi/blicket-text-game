@@ -1,0 +1,12 @@
+participant_id,total_rounds,checkbox_correct,checkbox_total,checkbox_accuracy_percent,hypothesis_correct,hypothesis_total,hypothesis_accuracy_percent,round_by_round_summary,accuracy
+5c4b987538878c0001c7883b,3,3,3,100.0,,0,,R1:C→C:Y | R2:C→C:Y | R3:D→D:Y,100.0%
+5c8c22bafeeaeb0016207a00,3,3,3,100.0,,0,,R1:C→C:Y | R2:C→C:Y | R3:D→D:Y,100.0%
+5e96e85aa7f126177e00ea9f,3,3,3,100.0,,0,,R1:C→C:Y | R2:C→C:Y | R3:D→D:Y,100.0%
+6007421356226920359b5f3e,3,3,3,100.0,,0,,R1:C→C:Y | R2:D→D:Y | R3:D→D:Y,100.0%
+60cf0d251a90eb823bc9b740,3,3,3,100.0,,0,,R1:D→D:Y | R2:D→D:Y | R3:C→C:Y,100.0%
+64136981aa9af9154f69c8d7,3,3,3,100.0,,0,,R1:C→C:Y | R2:D→D:Y | R3:D→D:Y,100.0%
+6448e3fb68d60f161a38f5c9,3,3,3,100.0,,0,,R1:C→C:Y | R2:C→C:Y | R3:D→D:Y,100.0%
+669a80310e64395f4edd70b6,3,3,3,100.0,,0,,R1:D→D:Y | R2:D→D:Y | R3:C→C:Y,100.0%
+6722ea20fb84b196f0a649b6,3,3,3,100.0,,0,,R1:D→D:Y | R2:D→D:Y | R3:C→C:Y,100.0%
+6306710aa6766730321f1259,3,2,3,66.7,,0,,R1:D→D:Y | R2:C→C:Y | R3:D→C:N,66.7%
+67d43f5c7253c147df75e9e5,3,2,3,66.7,,0,,R1:D→D:Y | R2:D→D:Y | R3:C→D:N,66.7%

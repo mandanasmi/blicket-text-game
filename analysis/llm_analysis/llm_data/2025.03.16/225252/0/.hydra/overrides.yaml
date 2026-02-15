@@ -1,0 +1,8 @@
+- use_threadpool=True
+- tp_max_workers=16
+- system_msg_path=./agent/prompts/system_qa_human.txt
+- prompt_method=default
+- model=gpt-4o-mini-2024-07-18
+- read_path_parent=/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/
+- read_path_wc=2025.03.14/010645/*/action_log_trial-*.jsonl
+- seed=1

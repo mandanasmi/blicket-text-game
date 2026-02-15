@@ -1,0 +1,10 @@
+[2025-03-26 21:33:51,626][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.26/test_213351
+[2025-03-26 21:33:51,627][__main__][INFO] - Finding files matching patterns ['2025.03.17/130041/*/action_log_trial-*.jsonl']
+[2025-03-26 21:33:51,627][__main__][INFO] - Num total trajectory files found: 256
+[2025-03-26 21:33:51,825][__main__][INFO] - Applying filters: {'env_kwargs': {'num_objects': 8}}.
+[2025-03-26 21:33:51,825][__main__][INFO] - Num trajectory files after filtering: 64
+[2025-03-26 21:33:51,825][__main__][INFO] - Post-filtering directories (2): 
+	/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.17/130041/3
+	/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.17/130041/7
+[2025-03-26 21:33:51,845][__main__][INFO] - Started LM client: <openai.OpenAI object at 0x7ff868d2fa10>
+[2025-03-26 21:33:52,743][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

@@ -1,0 +1,11 @@
+metric,value
+total_participants,11.0
+average_tests,4.0
+median_tests,4.0
+min_tests,1.0
+max_tests,5.0
+std_tests,1.26
+tested_more_than_4_count,5.0
+tested_more_than_4_percentage,45.5
+tested_4_or_less_count,6.0
+tested_4_or_less_percentage,54.5

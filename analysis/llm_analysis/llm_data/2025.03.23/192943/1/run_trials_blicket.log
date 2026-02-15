@@ -1,0 +1,948 @@
+[2025-03-23 19:47:19,796][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.23/192943/1
+[2025-03-23 19:47:19,796][__main__][INFO] - Running agent agent.prompts_llm.PromptsAgent for 32 trials...
+[2025-03-23 19:47:20,009][__main__][INFO] - Trial: 0. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53babee410>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,197][__main__][INFO] - Trial: 2. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53bac37a10>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [2, 3]
+[2025-03-23 19:47:20,209][__main__][INFO] - Trial: 3. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53bac2cad0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-23 19:47:20,241][__main__][INFO] - Trial: 8. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b8250990>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-23 19:47:20,245][__main__][INFO] - Trial: 5. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53bac2fb10>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,252][__main__][INFO] - Trial: 12. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b8260b10>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,256][__main__][INFO] - Trial: 14. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b82698d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,261][__main__][INFO] - Trial: 1. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53bac36790>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 3]
+[2025-03-23 19:47:20,264][__main__][INFO] - Trial: 13. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53bad01090>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,269][__main__][INFO] - Trial: 4. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53baefee10>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,269][__main__][INFO] - Trial: 11. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b825b650>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,276][__main__][INFO] - Trial: 17. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53badeacd0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,276][__main__][INFO] - Trial: 25. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b82a1cd0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,277][__main__][INFO] - Trial: 7. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53bac47490>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 2]
+[2025-03-23 19:47:20,277][__main__][INFO] - Trial: 9. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b8251f90>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,284][__main__][INFO] - Trial: 16. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b8270f10>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,284][__main__][INFO] - Trial: 18. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b827ee10>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,285][__main__][INFO] - Trial: 10. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b8259610>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-23 19:47:20,290][__main__][INFO] - Trial: 26. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53bae2f690>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,290][__main__][INFO] - Trial: 20. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b828a810>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,295][__main__][INFO] - Trial: 6. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53badf0790>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [2, 3]
+[2025-03-23 19:47:20,296][__main__][INFO] - Trial: 15. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b826a950>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,297][__main__][INFO] - Trial: 19. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b8288390>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-23 19:47:20,297][__main__][INFO] - Trial: 22. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53baf674d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,303][__main__][INFO] - Trial: 23. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b829e4d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,303][__main__][INFO] - Trial: 21. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b8294c90>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,312][__main__][INFO] - Trial: 28. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53bac4f610>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 3]
+[2025-03-23 19:47:20,312][__main__][INFO] - Trial: 27. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53babcbed0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 2]
+[2025-03-23 19:47:20,313][__main__][INFO] - Trial: 24. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53b82a0550>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-03-23 19:47:20,313][__main__][INFO] - Trial: 31. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f54a83dee10>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,322][__main__][INFO] - Trial: 29. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53badb75d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 1]
+[2025-03-23 19:47:20,322][__main__][INFO] - Trial: 30. Environment: <env.blicket_text.BlicketTextEnv object at 0x7f53baba7950>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [1, 2]
+[2025-03-23 19:47:29,960][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:33,217][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:33,218][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:33,220][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:33,297][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:36,495][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:37,769][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:37,769][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:37,841][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:39,895][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:41,198][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:41,272][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:42,383][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:43,659][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:44,333][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:44,840][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:46,185][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:47,244][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:47,336][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:47,975][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:49,669][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:49,670][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:50,730][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:50,770][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:50,807][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:50,811][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:52,870][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:52,870][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,089][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,094][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,125][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,126][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,431][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,431][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,494][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,495][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,602][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,603][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,668][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,668][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,823][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,823][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,888][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:53,888][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,150][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,151][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,214][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,215][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,428][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,429][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,492][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,492][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,756][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,756][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,820][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:54,824][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:55,979][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:58,043][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:58,687][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:47:59,217][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:00,978][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:01,683][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:02,394][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:02,398][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:03,944][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:05,675][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:05,765][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:06,143][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:08,035][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:09,391][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:10,155][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:10,155][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:11,972][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:13,121][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:13,214][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:13,844][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:15,618][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:16,007][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:16,057][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:16,094][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:17,790][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:18,044][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:18,045][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:18,080][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:20,031][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:20,074][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:20,640][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:20,729][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:21,180][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:21,181][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:21,599][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:21,640][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:21,922][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:21,964][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:22,353][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:22,354][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:22,516][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:22,517][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:22,775][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:22,776][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:23,289][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:23,289][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:23,911][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:23,954][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:24,440][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:24,442][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:24,885][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:24,885][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:25,223][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:25,224][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:25,638][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:25,678][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:26,814][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:26,815][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:26,885][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:30,160][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:31,630][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:31,677][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:32,805][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:34,673][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:35,164][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:35,253][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:36,491][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:38,312][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:38,430][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:40,410][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:41,921][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:42,699][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:42,700][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:44,613][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:45,335][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:45,762][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:46,382][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:46,781][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:48,571][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:48,618][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:48,656][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:49,768][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:50,701][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:50,702][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:50,739][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:50,739][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:53,442][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:53,535][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:53,536][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:53,613][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:54,564][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:54,644][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:54,892][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:54,928][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:55,468][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:55,508][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:55,508][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:55,785][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:56,135][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:56,135][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:56,136][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:56,679][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:57,220][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:57,221][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:57,255][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:57,532][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:58,065][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:58,065][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:58,066][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:58,418][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:58,767][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:58,768][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:58,803][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:48:59,631][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:01,595][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:01,595][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:01,668][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:04,263][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:06,045][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:06,138][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:06,775][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:08,816][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:10,220][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:10,475][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:10,475][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:13,221][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:14,610][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:14,757][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:14,758][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:18,008][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:19,362][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:19,363][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:19,425][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:22,190][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:22,282][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:22,893][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:23,479][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:25,717][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:26,183][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:26,184][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:26,575][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:26,662][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:28,123][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:28,124][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:28,743][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:29,724][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:30,116][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:30,206][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:30,251][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:31,000][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:31,088][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:31,200][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:31,244][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:31,984][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:32,066][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:32,156][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:32,157][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:32,647][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:32,729][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:33,038][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:33,039][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:33,596][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:33,640][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:34,228][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:34,229][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:34,620][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:34,620][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:34,985][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:34,986][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:35,598][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:35,643][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:36,804][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:36,806][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:41,105][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:41,200][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:41,200][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:42,862][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,862][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,863][openai._base_client][INFO] - Retrying request to /chat/completions in 0.377989 seconds
+[2025-03-23 19:49:42,863][openai._base_client][INFO] - Retrying request to /chat/completions in 0.381393 seconds
+[2025-03-23 19:49:42,863][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,864][openai._base_client][INFO] - Retrying request to /chat/completions in 0.488369 seconds
+[2025-03-23 19:49:42,884][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,884][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,901][openai._base_client][INFO] - Retrying request to /chat/completions in 0.471580 seconds
+[2025-03-23 19:49:42,885][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,885][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,885][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,886][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,886][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,887][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,887][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,887][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,888][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,888][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,888][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,888][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,889][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,889][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,889][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,890][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,890][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,890][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,891][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,891][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,891][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,892][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,892][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,892][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,892][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,893][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,893][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,893][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,894][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,894][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,894][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,895][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,895][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,895][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,895][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,896][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,896][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,896][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,897][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,897][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,897][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,898][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,898][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,898][openai._base_client][INFO] - Retrying request to /chat/completions in 0.457619 seconds
+[2025-03-23 19:49:42,899][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,899][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,899][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,900][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,900][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,900][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,901][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,886][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:42,901][openai._base_client][INFO] - Retrying request to /chat/completions in 0.440488 seconds
+[2025-03-23 19:49:42,902][openai._base_client][INFO] - Retrying request to /chat/completions in 0.459729 seconds
+[2025-03-23 19:49:42,902][openai._base_client][INFO] - Retrying request to /chat/completions in 0.395171 seconds
+[2025-03-23 19:49:42,903][openai._base_client][INFO] - Retrying request to /chat/completions in 0.387454 seconds
+[2025-03-23 19:49:42,903][openai._base_client][INFO] - Retrying request to /chat/completions in 0.377703 seconds
+[2025-03-23 19:49:42,903][openai._base_client][INFO] - Retrying request to /chat/completions in 0.445268 seconds
+[2025-03-23 19:49:42,903][openai._base_client][INFO] - Retrying request to /chat/completions in 0.427645 seconds
+[2025-03-23 19:49:42,904][openai._base_client][INFO] - Retrying request to /chat/completions in 0.423261 seconds
+[2025-03-23 19:49:42,904][openai._base_client][INFO] - Retrying request to /chat/completions in 0.468357 seconds
+[2025-03-23 19:49:42,904][openai._base_client][INFO] - Retrying request to /chat/completions in 0.460207 seconds
+[2025-03-23 19:49:42,904][openai._base_client][INFO] - Retrying request to /chat/completions in 0.380290 seconds
+[2025-03-23 19:49:42,905][openai._base_client][INFO] - Retrying request to /chat/completions in 0.408956 seconds
+[2025-03-23 19:49:42,905][openai._base_client][INFO] - Retrying request to /chat/completions in 0.390487 seconds
+[2025-03-23 19:49:42,905][openai._base_client][INFO] - Retrying request to /chat/completions in 0.486605 seconds
+[2025-03-23 19:49:42,905][openai._base_client][INFO] - Retrying request to /chat/completions in 0.492310 seconds
+[2025-03-23 19:49:42,906][openai._base_client][INFO] - Retrying request to /chat/completions in 0.471990 seconds
+[2025-03-23 19:49:42,906][openai._base_client][INFO] - Retrying request to /chat/completions in 0.456710 seconds
+[2025-03-23 19:49:42,906][openai._base_client][INFO] - Retrying request to /chat/completions in 0.494163 seconds
+[2025-03-23 19:49:42,907][openai._base_client][INFO] - Retrying request to /chat/completions in 0.394991 seconds
+[2025-03-23 19:49:42,907][openai._base_client][INFO] - Retrying request to /chat/completions in 0.454840 seconds
+[2025-03-23 19:49:42,907][openai._base_client][INFO] - Retrying request to /chat/completions in 0.396813 seconds
+[2025-03-23 19:49:42,908][openai._base_client][INFO] - Retrying request to /chat/completions in 0.375271 seconds
+[2025-03-23 19:49:42,908][openai._base_client][INFO] - Retrying request to /chat/completions in 0.406954 seconds
+[2025-03-23 19:49:42,908][openai._base_client][INFO] - Retrying request to /chat/completions in 0.437483 seconds
+[2025-03-23 19:49:42,908][openai._base_client][INFO] - Retrying request to /chat/completions in 0.388217 seconds
+[2025-03-23 19:49:42,909][openai._base_client][INFO] - Retrying request to /chat/completions in 0.462501 seconds
+[2025-03-23 19:49:42,909][openai._base_client][INFO] - Retrying request to /chat/completions in 0.485851 seconds
+[2025-03-23 19:49:42,909][openai._base_client][INFO] - Retrying request to /chat/completions in 0.490047 seconds
+[2025-03-23 19:49:42,910][openai._base_client][INFO] - Retrying request to /chat/completions in 0.482252 seconds
+[2025-03-23 19:49:42,910][openai._base_client][INFO] - Retrying request to /chat/completions in 0.436387 seconds
+[2025-03-23 19:49:42,910][openai._base_client][INFO] - Retrying request to /chat/completions in 0.436706 seconds
+[2025-03-23 19:49:42,910][openai._base_client][INFO] - Retrying request to /chat/completions in 0.437108 seconds
+[2025-03-23 19:49:42,911][openai._base_client][INFO] - Retrying request to /chat/completions in 0.377434 seconds
+[2025-03-23 19:49:42,911][openai._base_client][INFO] - Retrying request to /chat/completions in 0.375471 seconds
+[2025-03-23 19:49:42,911][openai._base_client][INFO] - Retrying request to /chat/completions in 0.401379 seconds
+[2025-03-23 19:49:42,912][openai._base_client][INFO] - Retrying request to /chat/completions in 0.388132 seconds
+[2025-03-23 19:49:42,912][openai._base_client][INFO] - Retrying request to /chat/completions in 0.497632 seconds
+[2025-03-23 19:49:42,912][openai._base_client][INFO] - Retrying request to /chat/completions in 0.478339 seconds
+[2025-03-23 19:49:42,912][openai._base_client][INFO] - Retrying request to /chat/completions in 0.411733 seconds
+[2025-03-23 19:49:42,913][openai._base_client][INFO] - Retrying request to /chat/completions in 0.455987 seconds
+[2025-03-23 19:49:42,913][openai._base_client][INFO] - Retrying request to /chat/completions in 0.392792 seconds
+[2025-03-23 19:49:42,913][openai._base_client][INFO] - Retrying request to /chat/completions in 0.469317 seconds
+[2025-03-23 19:49:42,913][openai._base_client][INFO] - Retrying request to /chat/completions in 0.445936 seconds
+[2025-03-23 19:49:42,914][openai._base_client][INFO] - Retrying request to /chat/completions in 0.430411 seconds
+[2025-03-23 19:49:42,914][openai._base_client][INFO] - Retrying request to /chat/completions in 0.388093 seconds
+[2025-03-23 19:49:42,914][openai._base_client][INFO] - Retrying request to /chat/completions in 0.387333 seconds
+[2025-03-23 19:49:42,915][openai._base_client][INFO] - Retrying request to /chat/completions in 0.431266 seconds
+[2025-03-23 19:49:42,915][openai._base_client][INFO] - Retrying request to /chat/completions in 0.388972 seconds
+[2025-03-23 19:49:42,915][openai._base_client][INFO] - Retrying request to /chat/completions in 0.382691 seconds
+[2025-03-23 19:49:42,916][openai._base_client][INFO] - Retrying request to /chat/completions in 0.408326 seconds
+[2025-03-23 19:49:42,916][openai._base_client][INFO] - Retrying request to /chat/completions in 0.423806 seconds
+[2025-03-23 19:49:43,395][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:49:43,395][openai._base_client][INFO] - Retrying request to /chat/completions in 0.380653 seconds
+[2025-03-23 19:49:56,809][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:56,894][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:56,895][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:56,895][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:49:59,802][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:00,465][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:00,967][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:00,968][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:02,223][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:02,575][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:02,576][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:02,610][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:03,136][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:03,488][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:03,489][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:03,491][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:05,349][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:05,351][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:06,308][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:06,308][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:08,480][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:08,574][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:09,153][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:10,510][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:11,767][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:11,813][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:12,222][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:12,264][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:13,131][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:13,132][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:13,818][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:13,824][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:16,921][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:16,967][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:18,338][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:18,338][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:20,625][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:20,673][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:21,513][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:21,513][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:23,401][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:23,402][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:25,188][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:25,237][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:26,263][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:26,952][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:27,560][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:27,606][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:27,643][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:27,998][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:30,507][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:30,555][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:31,006][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:31,108][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:32,843][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:32,843][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:35,339][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:35,432][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:37,238][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:37,286][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:39,053][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:39,055][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:41,625][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:41,672][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:42,652][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:42,704][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:43,505][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:43,506][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:43,830][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:43,873][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:44,606][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:44,606][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:46,309][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:46,309][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:46,346][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:47,933][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:48,459][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:48,460][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:48,536][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:50,811][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:52,779][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:52,780][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:52,819][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:52,820][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:54,367][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:54,374][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:55,014][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:55,015][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:55,085][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:58,817][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:59,335][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:50:59,383][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:00,580][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:02,079][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:02,971][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:03,065][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:03,065][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:05,672][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:06,147][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:06,883][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:07,536][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:09,429][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:09,796][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:09,889][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:10,227][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:10,941][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:12,266][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:12,355][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:12,920][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:14,078][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:15,431][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:15,432][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:15,432][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:18,862][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:19,436][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:19,486][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:19,486][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:22,497][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:23,900][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:23,946][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:23,946][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:26,236][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:26,737][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:26,737][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:26,810][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:27,764][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:28,225][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:28,266][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:28,301][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:29,944][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:29,945][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:30,824][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:30,916][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:32,351][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:32,352][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:35,385][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:35,387][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:37,125][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:37,175][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:38,037][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:38,126][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:38,744][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:38,745][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:39,660][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:39,756][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:42,107][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:42,108][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:42,289][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 19:51:44,370][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,371][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,371][openai._base_client][INFO] - Retrying request to /chat/completions in 0.443241 seconds
+[2025-03-23 19:51:44,371][openai._base_client][INFO] - Retrying request to /chat/completions in 0.376136 seconds
+[2025-03-23 19:51:44,391][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,392][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,392][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,392][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,393][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,393][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,393][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,394][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,394][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,394][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,395][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,395][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,395][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,396][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,396][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,396][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,397][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,397][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,397][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,398][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,398][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,398][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,399][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,399][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,399][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,400][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,400][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,400][openai._base_client][INFO] - Retrying request to /chat/completions in 0.418633 seconds
+[2025-03-23 19:51:44,400][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,401][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,401][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,402][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,402][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,402][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,402][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,403][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,403][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,403][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,404][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,404][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,404][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,405][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,405][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,405][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,406][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,406][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,406][openai._base_client][INFO] - Retrying request to /chat/completions in 0.401296 seconds
+[2025-03-23 19:51:44,407][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,407][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,407][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,407][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,408][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,408][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,408][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,409][openai._base_client][INFO] - Retrying request to /chat/completions in 0.412385 seconds
+[2025-03-23 19:51:44,409][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,409][openai._base_client][INFO] - Retrying request to /chat/completions in 0.485761 seconds
+[2025-03-23 19:51:44,410][openai._base_client][INFO] - Retrying request to /chat/completions in 0.417200 seconds
+[2025-03-23 19:51:44,410][openai._base_client][INFO] - Retrying request to /chat/completions in 0.377627 seconds
+[2025-03-23 19:51:44,410][openai._base_client][INFO] - Retrying request to /chat/completions in 0.411777 seconds
+[2025-03-23 19:51:44,411][openai._base_client][INFO] - Retrying request to /chat/completions in 0.388786 seconds
+[2025-03-23 19:51:44,411][openai._base_client][INFO] - Retrying request to /chat/completions in 0.402798 seconds
+[2025-03-23 19:51:44,411][openai._base_client][INFO] - Retrying request to /chat/completions in 0.395633 seconds
+[2025-03-23 19:51:44,412][openai._base_client][INFO] - Retrying request to /chat/completions in 0.467070 seconds
+[2025-03-23 19:51:44,412][openai._base_client][INFO] - Retrying request to /chat/completions in 0.484848 seconds
+[2025-03-23 19:51:44,412][openai._base_client][INFO] - Retrying request to /chat/completions in 0.410001 seconds
+[2025-03-23 19:51:44,413][openai._base_client][INFO] - Retrying request to /chat/completions in 0.381694 seconds
+[2025-03-23 19:51:44,413][openai._base_client][INFO] - Retrying request to /chat/completions in 0.493671 seconds
+[2025-03-23 19:51:44,413][openai._base_client][INFO] - Retrying request to /chat/completions in 0.484599 seconds
+[2025-03-23 19:51:44,414][openai._base_client][INFO] - Retrying request to /chat/completions in 0.471725 seconds
+[2025-03-23 19:51:44,414][openai._base_client][INFO] - Retrying request to /chat/completions in 0.439353 seconds
+[2025-03-23 19:51:44,414][openai._base_client][INFO] - Retrying request to /chat/completions in 0.479631 seconds
+[2025-03-23 19:51:44,415][openai._base_client][INFO] - Retrying request to /chat/completions in 0.376269 seconds
+[2025-03-23 19:51:44,415][openai._base_client][INFO] - Retrying request to /chat/completions in 0.446962 seconds
+[2025-03-23 19:51:44,415][openai._base_client][INFO] - Retrying request to /chat/completions in 0.460624 seconds
+[2025-03-23 19:51:44,415][openai._base_client][INFO] - Retrying request to /chat/completions in 0.474840 seconds
+[2025-03-23 19:51:44,416][openai._base_client][INFO] - Retrying request to /chat/completions in 0.387790 seconds
+[2025-03-23 19:51:44,416][openai._base_client][INFO] - Retrying request to /chat/completions in 0.479078 seconds
+[2025-03-23 19:51:44,416][openai._base_client][INFO] - Retrying request to /chat/completions in 0.477383 seconds
+[2025-03-23 19:51:44,417][openai._base_client][INFO] - Retrying request to /chat/completions in 0.394957 seconds
+[2025-03-23 19:51:44,417][openai._base_client][INFO] - Retrying request to /chat/completions in 0.415334 seconds
+[2025-03-23 19:51:44,418][openai._base_client][INFO] - Retrying request to /chat/completions in 0.427257 seconds
+[2025-03-23 19:51:44,418][openai._base_client][INFO] - Retrying request to /chat/completions in 0.375935 seconds
+[2025-03-23 19:51:44,418][openai._base_client][INFO] - Retrying request to /chat/completions in 0.462229 seconds
+[2025-03-23 19:51:44,418][openai._base_client][INFO] - Retrying request to /chat/completions in 0.430065 seconds
+[2025-03-23 19:51:44,419][openai._base_client][INFO] - Retrying request to /chat/completions in 0.423770 seconds
+[2025-03-23 19:51:44,419][openai._base_client][INFO] - Retrying request to /chat/completions in 0.470641 seconds
+[2025-03-23 19:51:44,419][openai._base_client][INFO] - Retrying request to /chat/completions in 0.404532 seconds
+[2025-03-23 19:51:44,420][openai._base_client][INFO] - Retrying request to /chat/completions in 0.462919 seconds
+[2025-03-23 19:51:44,420][openai._base_client][INFO] - Retrying request to /chat/completions in 0.429744 seconds
+[2025-03-23 19:51:44,420][openai._base_client][INFO] - Retrying request to /chat/completions in 0.456180 seconds
+[2025-03-23 19:51:44,420][openai._base_client][INFO] - Retrying request to /chat/completions in 0.474568 seconds
+[2025-03-23 19:51:44,421][openai._base_client][INFO] - Retrying request to /chat/completions in 0.433872 seconds
+[2025-03-23 19:51:44,421][openai._base_client][INFO] - Retrying request to /chat/completions in 0.497420 seconds
+[2025-03-23 19:51:44,421][openai._base_client][INFO] - Retrying request to /chat/completions in 0.395227 seconds
+[2025-03-23 19:51:44,422][openai._base_client][INFO] - Retrying request to /chat/completions in 0.453177 seconds
+[2025-03-23 19:51:44,422][openai._base_client][INFO] - Retrying request to /chat/completions in 0.460433 seconds
+[2025-03-23 19:51:44,423][openai._base_client][INFO] - Retrying request to /chat/completions in 0.487342 seconds
+[2025-03-23 19:51:44,423][openai._base_client][INFO] - Retrying request to /chat/completions in 0.446538 seconds
+[2025-03-23 19:51:44,422][openai._base_client][INFO] - Retrying request to /chat/completions in 0.384150 seconds
+[2025-03-23 19:51:44,423][openai._base_client][INFO] - Retrying request to /chat/completions in 0.412619 seconds
+[2025-03-23 19:51:44,424][openai._base_client][INFO] - Retrying request to /chat/completions in 0.476279 seconds
+[2025-03-23 19:51:44,424][openai._base_client][INFO] - Retrying request to /chat/completions in 0.443215 seconds
+[2025-03-23 19:51:44,424][openai._base_client][INFO] - Retrying request to /chat/completions in 0.421824 seconds
+[2025-03-23 19:51:44,424][openai._base_client][INFO] - Retrying request to /chat/completions in 0.459862 seconds
+[2025-03-23 19:51:44,425][openai._base_client][INFO] - Retrying request to /chat/completions in 0.377876 seconds
+[2025-03-23 19:51:44,811][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 19:51:44,811][openai._base_client][INFO] - Retrying request to /chat/completions in 0.499619 seconds
+[2025-03-23 20:00:59,486][openai._base_client][INFO] - Retrying request to /chat/completions in 0.424788 seconds
+[2025-03-23 20:01:12,024][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:12,063][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:12,063][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:12,171][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:14,777][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:14,778][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:14,813][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:14,814][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:18,929][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:18,929][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:18,931][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:18,999][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:21,242][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:21,242][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:21,244][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:23,578][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:25,097][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:25,346][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:25,346][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:26,434][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:28,600][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:28,601][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:28,602][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:30,797][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,798][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,798][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,799][openai._base_client][INFO] - Retrying request to /chat/completions in 0.998743 seconds
+[2025-03-23 20:01:30,799][openai._base_client][INFO] - Retrying request to /chat/completions in 0.763442 seconds
+[2025-03-23 20:01:30,799][openai._base_client][INFO] - Retrying request to /chat/completions in 0.785118 seconds
+[2025-03-23 20:01:30,807][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,807][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,807][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,808][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,808][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,809][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,809][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,809][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,810][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,810][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,810][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,810][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,811][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,811][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,811][openai._base_client][INFO] - Retrying request to /chat/completions in 0.938115 seconds
+[2025-03-23 20:01:30,811][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,812][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,812][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,812][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,813][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,813][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,813][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,813][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,814][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,814][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,814][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,815][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,815][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,815][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,816][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,816][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,816][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,817][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,817][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,817][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,817][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,818][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,818][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,818][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,819][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,819][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,819][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,820][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,820][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,820][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,820][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,821][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,821][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,821][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,822][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,822][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,823][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,823][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,823][openai._base_client][INFO] - Retrying request to /chat/completions in 0.986909 seconds
+[2025-03-23 20:01:30,824][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,824][openai._base_client][INFO] - Retrying request to /chat/completions in 0.778003 seconds
+[2025-03-23 20:01:30,825][openai._base_client][INFO] - Retrying request to /chat/completions in 0.938970 seconds
+[2025-03-23 20:01:30,825][openai._base_client][INFO] - Retrying request to /chat/completions in 0.453385 seconds
+[2025-03-23 20:01:30,825][openai._base_client][INFO] - Retrying request to /chat/completions in 0.896707 seconds
+[2025-03-23 20:01:30,826][openai._base_client][INFO] - Retrying request to /chat/completions in 0.953269 seconds
+[2025-03-23 20:01:30,826][openai._base_client][INFO] - Retrying request to /chat/completions in 0.961420 seconds
+[2025-03-23 20:01:30,827][openai._base_client][INFO] - Retrying request to /chat/completions in 0.952329 seconds
+[2025-03-23 20:01:30,827][openai._base_client][INFO] - Retrying request to /chat/completions in 0.898198 seconds
+[2025-03-23 20:01:30,827][openai._base_client][INFO] - Retrying request to /chat/completions in 0.755416 seconds
+[2025-03-23 20:01:30,827][openai._base_client][INFO] - Retrying request to /chat/completions in 0.761449 seconds
+[2025-03-23 20:01:30,828][openai._base_client][INFO] - Retrying request to /chat/completions in 0.998369 seconds
+[2025-03-23 20:01:30,828][openai._base_client][INFO] - Retrying request to /chat/completions in 0.877012 seconds
+[2025-03-23 20:01:30,829][openai._base_client][INFO] - Retrying request to /chat/completions in 0.855637 seconds
+[2025-03-23 20:01:30,829][openai._base_client][INFO] - Retrying request to /chat/completions in 0.828095 seconds
+[2025-03-23 20:01:30,829][openai._base_client][INFO] - Retrying request to /chat/completions in 0.942628 seconds
+[2025-03-23 20:01:30,829][openai._base_client][INFO] - Retrying request to /chat/completions in 0.449117 seconds
+[2025-03-23 20:01:30,830][openai._base_client][INFO] - Retrying request to /chat/completions in 0.487115 seconds
+[2025-03-23 20:01:30,830][openai._base_client][INFO] - Retrying request to /chat/completions in 0.439596 seconds
+[2025-03-23 20:01:30,830][openai._base_client][INFO] - Retrying request to /chat/completions in 0.489814 seconds
+[2025-03-23 20:01:30,831][openai._base_client][INFO] - Retrying request to /chat/completions in 0.481018 seconds
+[2025-03-23 20:01:30,831][openai._base_client][INFO] - Retrying request to /chat/completions in 0.409057 seconds
+[2025-03-23 20:01:30,831][openai._base_client][INFO] - Retrying request to /chat/completions in 0.765285 seconds
+[2025-03-23 20:01:30,831][openai._base_client][INFO] - Retrying request to /chat/completions in 0.894057 seconds
+[2025-03-23 20:01:30,832][openai._base_client][INFO] - Retrying request to /chat/completions in 0.864255 seconds
+[2025-03-23 20:01:30,832][openai._base_client][INFO] - Retrying request to /chat/completions in 0.955950 seconds
+[2025-03-23 20:01:30,832][openai._base_client][INFO] - Retrying request to /chat/completions in 0.970992 seconds
+[2025-03-23 20:01:30,833][openai._base_client][INFO] - Retrying request to /chat/completions in 0.796115 seconds
+[2025-03-23 20:01:30,833][openai._base_client][INFO] - Retrying request to /chat/completions in 0.866021 seconds
+[2025-03-23 20:01:30,833][openai._base_client][INFO] - Retrying request to /chat/completions in 0.395515 seconds
+[2025-03-23 20:01:30,834][openai._base_client][INFO] - Retrying request to /chat/completions in 0.477253 seconds
+[2025-03-23 20:01:30,834][openai._base_client][INFO] - Retrying request to /chat/completions in 0.459470 seconds
+[2025-03-23 20:01:30,834][openai._base_client][INFO] - Retrying request to /chat/completions in 0.438496 seconds
+[2025-03-23 20:01:30,835][openai._base_client][INFO] - Retrying request to /chat/completions in 0.422568 seconds
+[2025-03-23 20:01:30,835][openai._base_client][INFO] - Retrying request to /chat/completions in 0.442754 seconds
+[2025-03-23 20:01:30,835][openai._base_client][INFO] - Retrying request to /chat/completions in 0.482492 seconds
+[2025-03-23 20:01:30,835][openai._base_client][INFO] - Retrying request to /chat/completions in 0.441146 seconds
+[2025-03-23 20:01:30,836][openai._base_client][INFO] - Retrying request to /chat/completions in 0.389166 seconds
+[2025-03-23 20:01:30,836][openai._base_client][INFO] - Retrying request to /chat/completions in 0.931832 seconds
+[2025-03-23 20:01:30,836][openai._base_client][INFO] - Retrying request to /chat/completions in 0.811683 seconds
+[2025-03-23 20:01:30,837][openai._base_client][INFO] - Retrying request to /chat/completions in 0.897649 seconds
+[2025-03-23 20:01:30,837][openai._base_client][INFO] - Retrying request to /chat/completions in 0.851330 seconds
+[2025-03-23 20:01:30,837][openai._base_client][INFO] - Retrying request to /chat/completions in 0.851949 seconds
+[2025-03-23 20:01:30,838][openai._base_client][INFO] - Retrying request to /chat/completions in 0.426903 seconds
+[2025-03-23 20:01:30,838][openai._base_client][INFO] - Retrying request to /chat/completions in 0.453605 seconds
+[2025-03-23 20:01:30,838][openai._base_client][INFO] - Retrying request to /chat/completions in 0.412970 seconds
+[2025-03-23 20:01:30,839][openai._base_client][INFO] - Retrying request to /chat/completions in 0.386966 seconds
+[2025-03-23 20:01:30,839][openai._base_client][INFO] - Retrying request to /chat/completions in 0.438191 seconds
+[2025-03-23 20:01:30,839][openai._base_client][INFO] - Retrying request to /chat/completions in 0.400908 seconds
+[2025-03-23 20:01:30,840][openai._base_client][INFO] - Retrying request to /chat/completions in 0.390664 seconds
+[2025-03-23 20:01:30,840][openai._base_client][INFO] - Retrying request to /chat/completions in 0.868544 seconds
+[2025-03-23 20:01:30,840][openai._base_client][INFO] - Retrying request to /chat/completions in 0.825364 seconds
+[2025-03-23 20:01:30,915][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:01:30,916][openai._base_client][INFO] - Retrying request to /chat/completions in 0.823444 seconds
+[2025-03-23 20:01:45,663][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:45,664][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:45,731][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:46,569][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:47,779][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:47,780][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:47,850][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:47,852][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:51,015][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:51,099][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:51,646][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:51,653][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:53,114][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:53,158][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:53,158][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:53,159][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:55,226][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:55,270][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:55,270][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:56,354][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:01:59,528][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:00,366][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:01,288][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:02,419][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:03,696][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:03,784][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:04,593][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:05,860][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:05,945][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:06,810][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:06,851][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:08,324][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:08,730][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:08,854][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:10,788][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:11,195][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:11,287][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:12,702][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:14,219][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:16,099][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:16,193][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:16,194][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:18,660][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:19,538][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:19,585][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:20,783][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:23,063][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:23,729][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:24,988][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:25,529][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:25,571][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:25,572][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:27,850][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:28,339][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:28,341][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:28,411][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:32,892][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:32,893][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-23 20:02:33,305][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,306][openai._base_client][INFO] - Retrying request to /chat/completions in 0.433157 seconds
+[2025-03-23 20:02:33,473][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,473][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,474][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,474][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,475][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,475][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,475][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,475][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,476][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,476][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,476][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,477][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,477][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,477][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,478][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,478][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,479][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,479][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,479][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,480][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,480][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,480][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,480][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,481][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,481][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,481][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,482][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,482][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,482][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,483][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,483][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,483][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,483][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,484][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,484][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,484][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,485][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,485][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,485][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,486][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,486][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,486][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,487][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,487][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,487][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,487][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,488][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,488][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,488][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,489][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,489][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,489][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,490][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,490][openai._base_client][INFO] - Retrying request to /chat/completions in 0.444874 seconds
+[2025-03-23 20:02:33,490][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,491][openai._base_client][INFO] - Retrying request to /chat/completions in 0.430886 seconds
+[2025-03-23 20:02:33,491][openai._base_client][INFO] - Retrying request to /chat/completions in 0.470439 seconds
+[2025-03-23 20:02:33,491][openai._base_client][INFO] - Retrying request to /chat/completions in 0.422082 seconds
+[2025-03-23 20:02:33,492][openai._base_client][INFO] - Retrying request to /chat/completions in 0.470351 seconds
+[2025-03-23 20:02:33,492][openai._base_client][INFO] - Retrying request to /chat/completions in 0.454487 seconds
+[2025-03-23 20:02:33,492][openai._base_client][INFO] - Retrying request to /chat/completions in 0.410640 seconds
+[2025-03-23 20:02:33,492][openai._base_client][INFO] - Retrying request to /chat/completions in 0.445904 seconds
+[2025-03-23 20:02:33,493][openai._base_client][INFO] - Retrying request to /chat/completions in 0.391124 seconds
+[2025-03-23 20:02:33,493][openai._base_client][INFO] - Retrying request to /chat/completions in 0.492627 seconds
+[2025-03-23 20:02:33,493][openai._base_client][INFO] - Retrying request to /chat/completions in 0.406296 seconds
+[2025-03-23 20:02:33,494][openai._base_client][INFO] - Retrying request to /chat/completions in 0.420452 seconds
+[2025-03-23 20:02:33,494][openai._base_client][INFO] - Retrying request to /chat/completions in 0.484917 seconds
+[2025-03-23 20:02:33,494][openai._base_client][INFO] - Retrying request to /chat/completions in 0.418349 seconds
+[2025-03-23 20:02:33,494][openai._base_client][INFO] - Retrying request to /chat/completions in 0.376110 seconds
+[2025-03-23 20:02:33,495][openai._base_client][INFO] - Retrying request to /chat/completions in 0.385475 seconds
+[2025-03-23 20:02:33,495][openai._base_client][INFO] - Retrying request to /chat/completions in 0.414786 seconds
+[2025-03-23 20:02:33,495][openai._base_client][INFO] - Retrying request to /chat/completions in 0.486264 seconds
+[2025-03-23 20:02:33,496][openai._base_client][INFO] - Retrying request to /chat/completions in 0.451425 seconds
+[2025-03-23 20:02:33,496][openai._base_client][INFO] - Retrying request to /chat/completions in 0.496316 seconds
+[2025-03-23 20:02:33,496][openai._base_client][INFO] - Retrying request to /chat/completions in 0.391587 seconds
+[2025-03-23 20:02:33,497][openai._base_client][INFO] - Retrying request to /chat/completions in 0.434820 seconds
+[2025-03-23 20:02:33,497][openai._base_client][INFO] - Retrying request to /chat/completions in 0.483957 seconds
+[2025-03-23 20:02:33,499][openai._base_client][INFO] - Retrying request to /chat/completions in 0.395104 seconds
+[2025-03-23 20:02:33,498][openai._base_client][INFO] - Retrying request to /chat/completions in 0.405962 seconds
+[2025-03-23 20:02:33,498][openai._base_client][INFO] - Retrying request to /chat/completions in 0.469100 seconds
+[2025-03-23 20:02:33,498][openai._base_client][INFO] - Retrying request to /chat/completions in 0.479835 seconds
+[2025-03-23 20:02:33,501][openai._base_client][INFO] - Retrying request to /chat/completions in 0.389391 seconds
+[2025-03-23 20:02:33,499][openai._base_client][INFO] - Retrying request to /chat/completions in 0.421089 seconds
+[2025-03-23 20:02:33,499][openai._base_client][INFO] - Retrying request to /chat/completions in 0.409108 seconds
+[2025-03-23 20:02:33,500][openai._base_client][INFO] - Retrying request to /chat/completions in 0.436802 seconds
+[2025-03-23 20:02:33,500][openai._base_client][INFO] - Retrying request to /chat/completions in 0.417165 seconds
+[2025-03-23 20:02:33,500][openai._base_client][INFO] - Retrying request to /chat/completions in 0.389358 seconds
+[2025-03-23 20:02:33,502][openai._base_client][INFO] - Retrying request to /chat/completions in 0.428490 seconds
+[2025-03-23 20:02:33,502][openai._base_client][INFO] - Retrying request to /chat/completions in 0.422760 seconds
+[2025-03-23 20:02:33,501][openai._base_client][INFO] - Retrying request to /chat/completions in 0.402782 seconds
+[2025-03-23 20:02:33,502][openai._base_client][INFO] - Retrying request to /chat/completions in 0.460376 seconds
+[2025-03-23 20:02:33,503][openai._base_client][INFO] - Retrying request to /chat/completions in 0.416967 seconds
+[2025-03-23 20:02:33,503][openai._base_client][INFO] - Retrying request to /chat/completions in 0.454543 seconds
+[2025-03-23 20:02:33,504][openai._base_client][INFO] - Retrying request to /chat/completions in 0.493408 seconds
+[2025-03-23 20:02:33,503][openai._base_client][INFO] - Retrying request to /chat/completions in 0.481439 seconds
+[2025-03-23 20:02:33,501][openai._base_client][INFO] - Retrying request to /chat/completions in 0.425940 seconds
+[2025-03-23 20:02:33,497][openai._base_client][INFO] - Retrying request to /chat/completions in 0.442921 seconds
+[2025-03-23 20:02:33,504][openai._base_client][INFO] - Retrying request to /chat/completions in 0.380186 seconds
+[2025-03-23 20:02:33,504][openai._base_client][INFO] - Retrying request to /chat/completions in 0.482343 seconds
+[2025-03-23 20:02:33,504][openai._base_client][INFO] - Retrying request to /chat/completions in 0.421077 seconds
+[2025-03-23 20:02:33,505][openai._base_client][INFO] - Retrying request to /chat/completions in 0.420409 seconds
+[2025-03-23 20:02:33,505][openai._base_client][INFO] - Retrying request to /chat/completions in 0.393647 seconds
+[2025-03-23 20:02:33,505][openai._base_client][INFO] - Retrying request to /chat/completions in 0.448934 seconds
+[2025-03-23 20:02:33,506][openai._base_client][INFO] - Retrying request to /chat/completions in 0.481496 seconds
+[2025-03-23 20:02:33,506][openai._base_client][INFO] - Retrying request to /chat/completions in 0.409219 seconds
+[2025-03-23 20:02:33,506][openai._base_client][INFO] - Retrying request to /chat/completions in 0.433228 seconds
+[2025-03-23 20:02:33,506][openai._base_client][INFO] - Retrying request to /chat/completions in 0.489073 seconds
+[2025-03-23 20:02:33,507][openai._base_client][INFO] - Retrying request to /chat/completions in 0.437875 seconds
+[2025-03-23 20:02:33,688][httpx][INFO] - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 500 Internal Server Error"
+[2025-03-23 20:02:33,688][openai._base_client][INFO] - Retrying request to /chat/completions in 0.410196 seconds

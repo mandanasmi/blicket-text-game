@@ -1,0 +1,14 @@
+- agent=prompts_llm
+- use_threadpool=True
+- tp_max_workers=1
+- num_trials=32
+- max_actions_per_trial=32
+- env_kwargs.rule=conjunctive
+- env_kwargs.num_objects=4
+- env_kwargs.num_blickets=2
+- env_kwargs.transition_noise=0.0
+- agent.model=ollama/gemma3\:27b
+- agent.temperature=0.0
+- agent.react=False
+- agent.system_msg_path=./agent/prompts/system_human.txt
+- seed=26

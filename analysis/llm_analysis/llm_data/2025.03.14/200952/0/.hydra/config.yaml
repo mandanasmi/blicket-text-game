@@ -1,0 +1,16 @@
+agent:
+  _target_: agent.oracle_agent.OracleAgent
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+num_trials: 36
+max_actions_per_trial: 32
+save_trial_log: true
+use_threadpool: true
+tp_max_workers: 16
+seed: 12
+env_kwargs:
+  num_objects: 6
+  num_blickets: 3
+  init_prob: 0.1
+  transition_noise: 0.0
+  rule: conjunctive

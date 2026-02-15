@@ -1,0 +1,15 @@
+agent:
+  _target_: agent.oracle_agent.OracleAgent
+  _recursive_: false
+  horizon: ${max_actions_per_trial}
+num_trials: 8
+max_actions_per_trial: 32
+save_lm_log: true
+seed: 12
+env_kwargs:
+  num_objects: 4
+  num_blickets: 2
+  init_prob: 0.1
+  transition_noise: 0.0
+  rule: conjunctive
+  seed: ${seed}

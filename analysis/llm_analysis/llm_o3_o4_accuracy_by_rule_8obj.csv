@@ -1,0 +1,5 @@
+model,reasoning_effort,rule,mean,std,count,se
+o3-mini,high,conjunctive,0.2916666666666667,0.46430562148753646,24,0.09477598811252412
+o3-mini,high,disjunctive,1.0,0.0,24,0.0
+o3-mini,medium,conjunctive,0.5416666666666666,0.5089773777040516,24,0.10389457216622949
+o3-mini,medium,disjunctive,1.0,0.0,24,0.0

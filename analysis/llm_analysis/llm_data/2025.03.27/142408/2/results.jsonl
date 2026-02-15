@@ -1,0 +1,1 @@
+{"config": {"condition": "baseline", "num_seeds": 1, "num_trials": 32, "model": "deepseek-chat", "temperature": 0.2, "save_trial_log": true, "two_training_trials": false}, "results": [{"seed": 1, "trial_details": 32, "proportion_true": 0.0, "proportion_false": 1.0}], "aggregated": {"mean_prop_true": 0.0, "std_prop_true": 0.0, "mean_prop_false": 1.0, "std_prop_false": 0.0}}

@@ -1,0 +1,2 @@
+{"trial_idx": 0, "unique_state_visited": 11, "turn_machine_on": 1, "num_steps": 32, "total_reward": 0.0, "num_questions": 4, "num_correct": 3, "trial_duration": 116.478719, "total_duration": 116.478723, "num_traj_api_errors": 0, "num_ans_api_errors": 0, "cost_esti_so_far": 0.0143634}
+{"trial_idx": 1, "unique_state_visited": 7, "turn_machine_on": 1, "num_steps": 32, "total_reward": 0.0, "num_questions": 4, "num_correct": 3, "trial_duration": 107.708245, "total_duration": 107.708248, "num_traj_api_errors": 0, "num_ans_api_errors": 0, "cost_esti_so_far": 0.028094999999999995}

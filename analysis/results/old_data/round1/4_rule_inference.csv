@@ -1,0 +1,34 @@
+participant_id,round,ground_truth_rule,user_written_hypothesis,user_checkbox_selection,checkbox_matches_truth
+5c4b987538878c0001c7883b,1,conjunctive,The Nexiom machine only detects Nexioms 1 and 4 if they are on the platform together.,conjunctive,True
+5c4b987538878c0001c7883b,2,conjunctive,Conjunctive - all Nexioms must be tested together to work.,conjunctive,True
+5c4b987538878c0001c7883b,3,disjunctive,Nexioms 2 and 3 act independently.,disjunctive,True
+5c8c22bafeeaeb0016207a00,1,conjunctive,If Objects 1 and 4 are on- the other two can be on or off,conjunctive,True
+5c8c22bafeeaeb0016207a00,2,conjunctive,If Objects 3 and 4 are on- the other two can be on or off,conjunctive,True
+5c8c22bafeeaeb0016207a00,3,disjunctive,"If at least either Object 1 or 2 are on, the others can be on or off",disjunctive,True
+5e96e85aa7f126177e00ea9f,1,conjunctive,"If both 3 and 4 are chosen, then the machine will switch on.",conjunctive,True
+5e96e85aa7f126177e00ea9f,2,conjunctive,"If both 2 and 4 are chosen, then the machine turns on.",conjunctive,True
+5e96e85aa7f126177e00ea9f,3,disjunctive,"If either 1 or 2 is chosen, then the machine will turn on.",disjunctive,True
+6007421356226920359b5f3e,1,conjunctive,Both object 2 and object 4 need to be on platform,conjunctive,True
+6007421356226920359b5f3e,2,disjunctive,"Either object 1, 4 or both need to be on platform",disjunctive,True
+6007421356226920359b5f3e,3,disjunctive,"Either object 3, object 4, or both objects 3 and 4 need to be on platform",disjunctive,True
+60cf0d251a90eb823bc9b740,1,disjunctive,Either 1 or 2 has to be on machine to turn on Nexiom machine,disjunctive,True
+60cf0d251a90eb823bc9b740,2,disjunctive,"If Object 4 OR Object 1 are on the machine, it will turn on",disjunctive,True
+60cf0d251a90eb823bc9b740,3,conjunctive,Machine will turn on only when objects 2 and 4 are on the machine at the same time,conjunctive,True
+6306710aa6766730321f1259,1,disjunctive,it switches on when at least one item is a nexiom,disjunctive,True
+6306710aa6766730321f1259,2,conjunctive,all nexioms have to be engaged for the machine to activate,conjunctive,True
+6306710aa6766730321f1259,3,disjunctive,at least one nexiom have to be activated for the machine to switch on,conjunctive,False
+64136981aa9af9154f69c8d7,1,conjunctive,"None of the objects are Nexioms, none of them turned on the machine",conjunctive,True
+64136981aa9af9154f69c8d7,2,disjunctive,The objects turn on the Nexiom machine when they are placed on it - either on their own or with another Nexiom,disjunctive,True
+64136981aa9af9154f69c8d7,3,disjunctive,The nexioms turn on the machine when they are placed on it individually or as a pair.,disjunctive,True
+6448e3fb68d60f161a38f5c9,1,conjunctive,The objects 1 and 3 are only nexioms in combination with each other.,conjunctive,True
+6448e3fb68d60f161a38f5c9,2,conjunctive,Objects 1 and 2 have to be used in combination.,conjunctive,True
+6448e3fb68d60f161a38f5c9,3,disjunctive,Objects 3 and 4 are both nexioms and only need to be present to activate the machine.,disjunctive,True
+669a80310e64395f4edd70b6,1,disjunctive,I texted each object and checked if it is Nexiom,disjunctive,True
+669a80310e64395f4edd70b6,2,disjunctive,"If the correct object (Nexiom) is placed on the machine, it turns on.",disjunctive,True
+669a80310e64395f4edd70b6,3,conjunctive,"Only when all objected on placed on the machine, the machine turns on",conjunctive,True
+6722ea20fb84b196f0a649b6,1,disjunctive,The machine turns on any time a nexiom is present,disjunctive,True
+6722ea20fb84b196f0a649b6,2,disjunctive,When any of the nexioms are present,disjunctive,True
+6722ea20fb84b196f0a649b6,3,conjunctive,When all nexioms are present,conjunctive,True
+67d43f5c7253c147df75e9e5,1,disjunctive,"When either of the objects is a nexiom, the Nexiom machine will turn ON. If all the objects are non nexiom, the machine will not turn on",disjunctive,True
+67d43f5c7253c147df75e9e5,2,disjunctive,Presence of ANY nexiom object turned the machine ON,disjunctive,True
+67d43f5c7253c147df75e9e5,3,conjunctive,Presence of Any one nexiom object turns the machine ON,disjunctive,False

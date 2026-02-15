@@ -1,0 +1,7 @@
+condition: disjunctive
+num_seeds: 1
+num_trials: 32
+model: deepseek-reasoner
+temperature: 0.2
+save_trial_log: true
+two_training_trials: false

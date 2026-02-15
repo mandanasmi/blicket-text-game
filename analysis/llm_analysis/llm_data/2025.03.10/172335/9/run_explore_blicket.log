@@ -1,0 +1,67 @@
+[2025-03-10 17:26:00,929][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.10/172335/9
+[2025-03-10 17:26:00,929][__main__][INFO] - Running agent agent.oracle_agent.OracleAgent for 16 trials...
+[2025-03-10 17:26:00,929][__main__][INFO] - Starting trial 0...
+[2025-03-10 17:26:00,930][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989ce5ed0>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [4, 9]
+[2025-03-10 17:26:05,344][__main__][INFO] - Trial 0 completed in 13 steps. Questions correct: 10/10
+[2025-03-10 17:26:05,344][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:05,344][__main__][INFO] - Starting trial 1...
+[2025-03-10 17:26:05,345][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989e269d0>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [0, 5]
+[2025-03-10 17:26:10,187][__main__][INFO] - Trial 1 completed in 14 steps. Questions correct: 10/10
+[2025-03-10 17:26:10,187][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:10,187][__main__][INFO] - Starting trial 2...
+[2025-03-10 17:26:10,187][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989e92dd0>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [6, 7]
+[2025-03-10 17:26:15,465][__main__][INFO] - Trial 2 completed in 15 steps. Questions correct: 10/10
+[2025-03-10 17:26:15,465][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:15,465][__main__][INFO] - Starting trial 3...
+[2025-03-10 17:26:15,466][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989e2f150>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [5, 6]
+[2025-03-10 17:26:18,705][__main__][INFO] - Trial 3 completed in 10 steps. Questions correct: 10/10
+[2025-03-10 17:26:18,705][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:18,705][__main__][INFO] - Starting trial 4...
+[2025-03-10 17:26:18,706][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989cee750>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [3, 4]
+[2025-03-10 17:26:24,429][__main__][INFO] - Trial 4 completed in 16 steps. Questions correct: 10/10
+[2025-03-10 17:26:24,429][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:24,429][__main__][INFO] - Starting trial 5...
+[2025-03-10 17:26:24,430][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989e94850>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [1, 7]
+[2025-03-10 17:26:31,095][__main__][INFO] - Trial 5 completed in 18 steps. Questions correct: 10/10
+[2025-03-10 17:26:31,095][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:31,095][__main__][INFO] - Starting trial 6...
+[2025-03-10 17:26:31,096][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989ea0890>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [5, 7]
+[2025-03-10 17:26:37,750][__main__][INFO] - Trial 6 completed in 18 steps. Questions correct: 10/10
+[2025-03-10 17:26:37,751][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:37,751][__main__][INFO] - Starting trial 7...
+[2025-03-10 17:26:37,752][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5a30d0b210>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [5, 6]
+[2025-03-10 17:26:41,758][__main__][INFO] - Trial 7 completed in 12 steps. Questions correct: 10/10
+[2025-03-10 17:26:41,758][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:41,758][__main__][INFO] - Starting trial 8...
+[2025-03-10 17:26:41,759][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989ddbed0>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [0, 5]
+[2025-03-10 17:26:48,438][__main__][INFO] - Trial 8 completed in 18 steps. Questions correct: 10/10
+[2025-03-10 17:26:48,438][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:48,438][__main__][INFO] - Starting trial 9...
+[2025-03-10 17:26:48,439][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989e91990>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [6, 9]
+[2025-03-10 17:26:53,712][__main__][INFO] - Trial 9 completed in 15 steps. Questions correct: 10/10
+[2025-03-10 17:26:53,712][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:53,712][__main__][INFO] - Starting trial 10...
+[2025-03-10 17:26:53,713][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f598a1330d0>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [0, 2]
+[2025-03-10 17:26:58,157][__main__][INFO] - Trial 10 completed in 13 steps. Questions correct: 10/10
+[2025-03-10 17:26:58,157][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:26:58,157][__main__][INFO] - Starting trial 11...
+[2025-03-10 17:26:58,158][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989cef510>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [2, 7]
+[2025-03-10 17:27:09,080][__main__][INFO] - Trial 11 completed in 26 steps. Questions correct: 10/10
+[2025-03-10 17:27:09,080][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:27:09,080][__main__][INFO] - Starting trial 12...
+[2025-03-10 17:27:09,081][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989e2c910>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [0, 6]
+[2025-03-10 17:27:13,506][__main__][INFO] - Trial 12 completed in 13 steps. Questions correct: 10/10
+[2025-03-10 17:27:13,506][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:27:13,507][__main__][INFO] - Starting trial 13...
+[2025-03-10 17:27:13,507][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f598a12b550>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [5, 6]
+[2025-03-10 17:27:19,747][__main__][INFO] - Trial 13 completed in 17 steps. Questions correct: 10/10
+[2025-03-10 17:27:19,747][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:27:19,747][__main__][INFO] - Starting trial 14...
+[2025-03-10 17:27:19,748][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f598a947410>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [5, 8]
+[2025-03-10 17:27:29,521][__main__][INFO] - Trial 14 completed in 24 steps. Questions correct: 10/10
+[2025-03-10 17:27:29,521][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:27:29,521][__main__][INFO] - Starting trial 15...
+[2025-03-10 17:27:29,522][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f5989ee7350>, with 10 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3', 'object 4', 'object 5', 'object 6', 'object 7', 'object 8', 'object 9']. Blicket indices: [4, 7]
+[2025-03-10 17:27:37,155][__main__][INFO] - Trial 15 completed in 20 steps. Questions correct: 10/10
+[2025-03-10 17:27:37,155][__main__][INFO] - Estimated cost so far: 0
+[2025-03-10 17:27:37,155][__main__][INFO] - Estimated total cost: 0

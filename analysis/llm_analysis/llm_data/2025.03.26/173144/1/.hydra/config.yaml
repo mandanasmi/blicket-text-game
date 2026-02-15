@@ -1,0 +1,14 @@
+read_path_parent: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/
+read_path_wc:
+- 2025.03.26/144924/*/action_log_trial-*.jsonl
+expl_filter:
+  env_kwargs:
+    num_objects: 8
+use_threadpool: true
+tp_max_workers: 32
+system_msg_path: ./agent/prompts/system_qa_human_conj.txt
+prompt_method: default
+model: deepseek-reasoner
+temperature: 0.0
+save_trial_log: true
+seed: 20

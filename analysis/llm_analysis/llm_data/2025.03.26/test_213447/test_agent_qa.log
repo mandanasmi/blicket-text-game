@@ -1,0 +1,17 @@
+[2025-03-26 21:34:47,280][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.26/test_213447
+[2025-03-26 21:34:47,280][__main__][INFO] - Finding files matching patterns ['2025.03.17/130041/*/action_log_trial-*.jsonl']
+[2025-03-26 21:34:47,280][__main__][INFO] - Num total trajectory files found: 256
+[2025-03-26 21:34:47,479][__main__][INFO] - Applying filters: {'env_kwargs': {'num_objects': 8}}.
+[2025-03-26 21:34:47,479][__main__][INFO] - Num trajectory files after filtering: 64
+[2025-03-26 21:34:47,479][__main__][INFO] - Post-filtering directories (2): 
+	/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.17/130041/3
+	/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.17/130041/7
+[2025-03-26 21:34:47,499][__main__][INFO] - Started LM client: <openai.OpenAI object at 0x7f68dea47ed0>
+[2025-03-26 21:34:47,900][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-26 21:34:48,351][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-26 21:34:48,736][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-26 21:34:49,077][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-26 21:34:49,625][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-26 21:34:49,970][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-26 21:34:50,691][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-03-26 21:34:51,049][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

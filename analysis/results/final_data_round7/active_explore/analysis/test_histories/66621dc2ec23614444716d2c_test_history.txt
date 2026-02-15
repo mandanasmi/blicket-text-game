@@ -1,4 +1,0 @@
-test1 -> object 4 -> machine off
-test2 -> object 3 -> machine off
-test3 -> object 2 -> machine off
-test4 -> object 1 -> machine off

@@ -1,0 +1,10 @@
+[2025-02-24 01:47:09,909][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.02.24/014709/0
+[2025-02-24 01:47:10,225][__main__][INFO] - Environment created: <env.blicket_text.BlicketTextEnv object at 0x7f4d78cae4d0>, with 4 objects. Object names: ['object 0', 'object 1', 'object 2', 'object 3']. Blicket indices: [0, 3]
+[2025-02-24 01:47:10,225][__main__][INFO] - Running agent <agent.agents.NaiveLLM object at 0x7f4d7a4304d0> for 4 trials...
+[2025-02-24 01:47:10,225][__main__][INFO] - Starting trial 0...
+[2025-02-24 01:47:21,692][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 01:47:29,655][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 01:47:43,745][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 01:47:54,337][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 01:47:59,081][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+[2025-02-24 01:48:12,722][httpx][INFO] - HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"

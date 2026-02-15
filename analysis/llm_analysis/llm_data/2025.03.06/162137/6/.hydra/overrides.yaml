@@ -1,0 +1,10 @@
+- agent=normative_agent
+- num_trials=128
+- max_actions_per_trial=2
+- env_kwargs.rule=disjunctive
+- env_kwargs.num_objects=4
+- env_kwargs.num_blickets=2
+- env_kwargs.transition_noise=0.0
+- agent.explore_strategy=random
+- agent.indep_test=mi
+- seed=12

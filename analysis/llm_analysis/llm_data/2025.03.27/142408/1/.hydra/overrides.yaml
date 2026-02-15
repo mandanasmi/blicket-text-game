@@ -1,0 +1,6 @@
+- num_trials=32
+- num_seeds=1
+- condition=disjunctive
+- model=deepseek-chat
+- two_training_trials=False
+- temperature=0.2

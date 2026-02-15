@@ -1,0 +1,10 @@
+[2025-05-31 16:08:57,297][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.05.31/test_160857
+[2025-05-31 16:08:57,298][__main__][INFO] - Finding files matching patterns ['2025.03.26/144924/*/action_log_trial-*.jsonl']
+[2025-05-31 16:08:57,298][__main__][INFO] - Num total trajectory files found: 512
+[2025-05-31 16:08:57,666][__main__][INFO] - Applying filters: {'env_kwargs': {'num_objects': 8}}.
+[2025-05-31 16:08:57,666][__main__][INFO] - Num trajectory files after filtering: 128
+[2025-05-31 16:08:57,666][__main__][INFO] - Post-filtering directories (2): 
+	/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.26/144924/3
+	/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.26/144924/7
+[2025-05-31 16:08:57,685][__main__][INFO] - Started LM client: <openai.OpenAI object at 0x7fa586a59fd0>
+[2025-05-31 16:08:58,007][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"

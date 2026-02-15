@@ -1,0 +1,14 @@
+[2025-05-31 16:11:54,645][__main__][INFO] - Current working directory: /home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.05.31/test_161154
+[2025-05-31 16:11:54,646][__main__][INFO] - Finding files matching patterns ['2025.03.26/144924/*/action_log_trial-*.jsonl']
+[2025-05-31 16:11:54,646][__main__][INFO] - Num total trajectory files found: 512
+[2025-05-31 16:11:55,018][__main__][INFO] - Applying filters: {'env_kwargs': {'num_objects': 8}}.
+[2025-05-31 16:11:55,018][__main__][INFO] - Num trajectory files after filtering: 128
+[2025-05-31 16:11:55,018][__main__][INFO] - Post-filtering directories (2): 
+	/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.26/144924/3
+	/home/anthony/Project/rl-scm-tests/blicket_text/exp_output/2025.03.26/144924/7
+[2025-05-31 16:11:55,036][__main__][INFO] - Started LM client: <openai.OpenAI object at 0x7fe788ac54d0>
+[2025-05-31 16:11:55,356][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-05-31 16:14:07,116][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-05-31 16:14:43,661][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+[2025-05-31 16:15:18,539][openai._base_client][INFO] - Retrying request to /chat/completions in 0.392347 seconds
+[2025-05-31 16:15:19,239][httpx][INFO] - HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
