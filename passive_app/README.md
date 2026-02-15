@@ -1,4 +1,4 @@
-# Survey app (no exploration)
+# Passive app (no exploration)
 
 Collect human data without a comprehension phase or object interaction.
 
