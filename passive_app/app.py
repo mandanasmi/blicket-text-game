@@ -203,6 +203,7 @@ def save_game_data(
     response_time_seconds=None,
     action_history_review_time_seconds=None,
     passive_exploration_time_seconds=None,
+    time_per_step_seconds=None,
     uploaded_filename=None,
     source_participant_id=None,
 ):
@@ -232,6 +233,8 @@ def save_game_data(
             payload["action_history_review_time_seconds"] = round(action_history_review_time_seconds, 2)
         if passive_exploration_time_seconds is not None:
             payload["passive_exploration_time"] = round(passive_exploration_time_seconds, 2)
+        if time_per_step_seconds is not None and len(time_per_step_seconds) > 0:
+            payload["time_per_step_seconds"] = time_per_step_seconds
         if uploaded_filename:
             payload["uploaded_filename"] = uploaded_filename
         if source_participant_id:
@@ -453,6 +456,10 @@ if "survey_passive_exploration_time_seconds" not in st.session_state:
     st.session_state.survey_passive_exploration_time_seconds = None
 if "survey_history_step_index" not in st.session_state:
     st.session_state.survey_history_step_index = 0
+if "survey_step_view_times" not in st.session_state:
+    st.session_state.survey_step_view_times = []  # seconds spent on each step before clicking Next
+if "survey_last_step_entered_at" not in st.session_state:
+    st.session_state.survey_last_step_entered_at = None
 
 # ————— Global CSS: center content like main app —————
 st.markdown("""
@@ -801,6 +808,8 @@ if st.session_state.phase == "action_history":
                 st.session_state["survey_num_objects"] = num_objects
                 st.session_state["survey_action_history_text"] = content
                 st.session_state["survey_history_step_index"] = -1
+                st.session_state["survey_step_view_times"] = []
+                st.session_state["survey_last_step_entered_at"] = None
                 st.session_state["survey_uploaded_filename"] = filename
                 if "_action_history" in filename:
                     st.session_state["survey_source_participant_id"] = filename.split("_action_history")[0].strip()
@@ -829,6 +838,8 @@ if st.session_state.phase == "action_history":
         step_index = st.session_state.get("survey_history_step_index", -1)
         if step_index < len(steps):
             # Begin screen (step_index == -1) or step-by-step view
+            if step_index >= 0 and st.session_state.survey_last_step_entered_at is None:
+                st.session_state.survey_last_step_entered_at = datetime.datetime.now().timestamp()
             render_test_history_sidebar(steps, step_index if step_index >= 0 else -1)
             st.header("Action history")
             if step_index < 0:
@@ -851,6 +862,10 @@ if st.session_state.phase == "action_history":
             )
             next_clicked = st.button("Next", type="primary", use_container_width=True)
             if next_clicked:
+                if step_index >= 0 and st.session_state.survey_last_step_entered_at is not None:
+                    duration = datetime.datetime.now().timestamp() - st.session_state.survey_last_step_entered_at
+                    st.session_state.survey_step_view_times.append(round(duration, 2))
+                st.session_state.survey_last_step_entered_at = None
                 if step_index < len(steps) - 1:
                     st.session_state.survey_history_step_index = step_index + 1
                 else:
@@ -985,6 +1000,7 @@ if st.session_state.phase == "rule_inference":
             response_time_seconds=response_time_seconds,
             action_history_review_time_seconds=action_history_review_time_seconds,
             passive_exploration_time_seconds=st.session_state.get("survey_passive_exploration_time_seconds"),
+            time_per_step_seconds=st.session_state.get("survey_step_view_times", []),
             uploaded_filename=st.session_state.get("survey_uploaded_filename"),
             source_participant_id=st.session_state.get("survey_source_participant_id"),
         )
