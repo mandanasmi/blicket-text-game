@@ -1,30 +1,12 @@
-# Passive app (no exploration)
+# Passive app
 
-Collect human data without a comprehension phase or object interaction.
+Participants see an action history and answer questions only; no comprehension phase and no object interaction.
 
-- **No comprehension phase** – consent then intro (participant ID, demographics) then straight to action history and questions.
-- **Action history as text only** – participants upload a `.txt` file or paste text (one step per line; optional format: `action | Machine: ON/OFF`). Only the raw text is uploaded to Firebase.
-- **Blicket questions and rule inference only** – no object interaction or exploration. Participants answer:
-  - For each object: Is it a Nexiom? (Yes/No)
-  - Rule description (free text)
-  - Rule type: Conjunctive / Disjunctive
+**Flow:** Consent → intro (Prolific ID, demographics) → action history (one file per session, from `active_explore/analysis/action_histories/`; shown one step at a time via Next) → object identification (Is each object a Nexiom?) → rule description and rule type (Conjunctive / Disjunctive). History stays in the left sidebar; the main area shows one step at a time until they proceed to questions.
 
-## Firebase
+**Firebase:** Admin SDK (service account + Realtime Database URL). Use Streamlit secrets or `FIREBASE_*` env vars. See FIREBASE.md in this folder for the nexiom-passive-participants project and Admin vs Web SDK.
 
-The app uses the **Firebase Admin SDK** (service account + Realtime Database URL). You can point it at the main app project or at a separate project (e.g. **nexiom-passive-participants**). Set credentials in Streamlit secrets or `FIREBASE_*` env vars. See **FIREBASE.md** in this folder for using the nexiom-passive-participants project and the difference between the Web SDK config and the Admin SDK credentials.
-
-Per participant, data is stored under `participant_id/`:
-
-- `consent` – consent given, timestamp, IRB protocol
-- `demographics` – prolific_id, age, gender
-- `survey` – survey response:
-  - `action_history_text` – raw action history string
-  - `num_objects`, `num_steps`
-  - `blicket_classifications` – e.g. `{"object_0": "Yes", "object_1": "No", ...}`
-  - `rule_hypothesis`, `rule_type`
-  - `saved_at`, `session_timestamp`, `phase`, `app_type`
-
-`app_type` is set to `"survey_no_exploration"` so you can filter this data from the main experiment.
+**Stored per participant:** `consent`, `demographics`, and under `game_data`: `action_history_text`, `num_objects`, `num_steps`, object answers, `rule_inference`, `rule_type`, `saved_at`, etc. `app_type` is `"survey_no_exploration"`.
 
 ## Run
 
@@ -34,27 +16,20 @@ From project root:
 ./run_passive_app.sh
 ```
 
-Or:
+or:
 
 ```bash
 streamlit run passive_app/app.py --server.port 8504
 ```
 
-Open http://localhost:8504.
+http://localhost:8504
 
-## Streamlit Cloud (e.g. blicket-text-game-passive.streamlit.app)
+## Streamlit Cloud
 
-To serve this passive app at a URL like `https://blicket-text-game-passive.streamlit.app/`:
-
-1. In [Streamlit Cloud](https://share.streamlit.io/), open the app that uses that URL.
-2. In **Settings** → **General**, set **Main file path** to `passive_app/app.py`.
-3. In **Secrets**, add the same Firebase TOML as the main app (see project root `STREAMLIT_CLOUD_SECRETS.md`).
-4. Save and redeploy. The passive app will run at that URL.
-
-Cloud uses the **entrypoint directory** for dependencies: with Main file path `passive_app/app.py`, it should use `passive_app/requirements.txt` (streamlit, firebase-admin, python-dotenv only). If the build still fails, ensure this `passive_app/requirements.txt` is committed and that the app’s Main file path is exactly `passive_app/app.py`.
+Create an app from this repo, set **Main file path** to `passive_app/app.py`, add Firebase secrets (same TOML as main app; see root STREAMLIT_CLOUD_SECRETS.md). Redeploy. Use `passive_app/requirements.txt` for that app.
 
 ## Config
 
-- `SURVEY_COMPLETION_CODE` – completion code for Prolific (default: same as main app).
-- `IRB_PROTOCOL_NUMBER` – optional.
-- Firebase: use `.streamlit/secrets.toml` (local) or Streamlit Cloud **Secrets** (TOML format). See **SECRETS_TOML.md** in this folder for a copy-paste TOML template for the passive app (nexiom-passive-participants). You can also use `FIREBASE_*` env vars.
+- `SURVEY_COMPLETION_CODE` – Prolific completion code
+- `IRB_PROTOCOL_NUMBER` – optional
+- Firebase: `.streamlit/secrets.toml` or Streamlit Cloud Secrets; or `FIREBASE_*` env vars. SECRETS_TOML.md in this folder has a template.

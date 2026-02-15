@@ -1,5 +1,5 @@
 """
-Extract and analyze passive data from app_txt_history responses.
+Extract and analyze passive data from passive app responses.
 Passive data is stored in data_txt_history/ directory as JSON files.
 """
 
@@ -102,7 +102,7 @@ def save_to_csv(df: pd.DataFrame, output_path: Path):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Extract and analyze passive data from app_txt_history")
+    parser = argparse.ArgumentParser(description="Extract and analyze passive data from passive app")
     parser.add_argument(
         "--data-dir",
         default="data_txt_history",
