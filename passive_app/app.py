@@ -889,13 +889,17 @@ if st.session_state.phase == "action_history":
             if step_index < 0:
                 # Initial screen: no action shown yet
                 st.markdown(
-                    "You will see the action history one by one. Press **Next** to see each action. "
-                    "**Test results** and the **full action history** will be shown on the left panel."
+                    "**You are watching someone else test objects on the Nexiom machine.** You can access **their** action history "
+                    "**(i.e., the actions they made to test the machine)** one by one by pressing the **Next** button. "
+                    "Once you observe an action, it will appear in the action history bar on the left for future review if necessary. "
+                    "**The test outcomes of which object(s) turn on the Nexiom machine will be highlighted to you in grey boxes.**"
                 )
             else:
                 st.markdown(
-                    "You can access the action history one by one by pressing the **Next** button. "
-                    "**Test results** and the **full action history** will be shown on the left panel."
+                    "**You are watching someone else test objects on the Nexiom machine.** You can access **their** action history "
+                    "**(i.e., the actions they made to test the machine)** one by one by pressing the **Next** button. "
+                    "Once you observe an action, it will appear in the action history bar on the left for future review if necessary. "
+                    "**The test outcomes of which object(s) turn on the Nexiom machine will be highlighted to you in grey boxes.**"
                 )
                 st.markdown(f"**Step {step_index + 1} of {len(steps)}**")
                 render_single_step(steps[step_index], step_index + 1)
