@@ -899,7 +899,7 @@ if st.session_state.phase == "action_history":
                     "**You are watching someone else test objects on the Nexiom machine.** You can access **their** action history "
                     "**(i.e., the actions they made to test the machine)** one by one by pressing the **Next** button. "
                     "Once you observe an action, it will appear in the action history bar on the left for future review if necessary. "
-                    "The **current** action is shown in **blue** in the action history bar on the left. "
+                    "The **current** action is shown in **blue** in the action history bar. "
                     "**The test outcomes of which object(s) turn on the Nexiom machine will be highlighted to you in grey boxes.**"
                 )
                 st.markdown(f"**Step {step_index + 1} of {len(steps)}**")
