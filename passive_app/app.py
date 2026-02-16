@@ -892,6 +892,7 @@ if st.session_state.phase == "action_history":
                     "**You are watching someone else test objects on the Nexiom machine.** You can access **their** action history "
                     "**(i.e., the actions they made to test the machine)** one by one by pressing the **Next** button. "
                     "Once you observe an action, it will appear in the action history bar on the left for future review if necessary. "
+                    "The **current** action is shown in **blue** in the action history bar. "
                     "**The test outcomes of which object(s) turn on the Nexiom machine will be highlighted to you in grey boxes.**"
                 )
             else:
@@ -1062,10 +1063,11 @@ if st.session_state.phase == "rule_inference":
 if st.session_state.phase == "end":
     st.title("Survey complete")
     st.markdown(f"Thanks for participating, {st.session_state.current_participant_id}!")
-    st.markdown(f"""
+    st.markdown("""
     ### Experiment complete
 
-    Your completion code is **{COMPLETION_CODE}**.
-    [Click here to return to Prolific]({PROLIFIC_RETURN_URL}) to confirm completion.
+    Your completion code for Prolific is:
     """)
+    st.code(COMPLETION_CODE, language=None)
+    st.markdown(f"[Click here to return to Prolific]({PROLIFIC_RETURN_URL}) to confirm completion.")
     st.stop()
