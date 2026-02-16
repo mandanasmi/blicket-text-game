@@ -379,10 +379,10 @@ def _sidebar_step_html(step, step_num, is_current=False, max_chars=80, num_objec
     if machine is not None:
         if machine == "ON":
             machine_bit = " <span style='color: #388e3c; font-weight: bold;'>ON</span>"
-            machine_color = "#388e3c"
+            machine_color = "#79ff4d"
         else:
             machine_bit = " <span style='color: #000; font-weight: bold;'>OFF</span>"
-            machine_color = "#333333"
+            machine_color = "#000000"
         if objects_on_machine is not None:
             objects_set = set(objects_on_machine)
             objects_text = ""
@@ -764,8 +764,7 @@ if st.session_state.phase == "intro":
         st.markdown("""
         **Welcome!**
 
-        In this experiment, you'll see a series of actions that were used by an active explorer to test a "Nexiom" machine to see which object (or combination of objects) makes it turn **ON**. 
-        After reading the action history, you will be asked to answer questions related to the objects and the machine. 
+        In this experiment, you'll see a series of actions that were used by an active explorer to test a "Nexiom" machine to see which object (or combination of objects) makes it turn ON. **Only objects that are "Nexioms" will make the machine turn on.** **If the Nexiom machine switches on, it means that at least one of the objects you put on the machine is a Nexiom.** It could be just one of them, some of them, or all of them. After reading the action history, you will be asked to answer questions related to the objects and the machine.
 
         Click **"Continue"** to begin.
 
@@ -891,12 +890,12 @@ if st.session_state.phase == "action_history":
                 # Initial screen: no action shown yet
                 st.markdown(
                     "You will see the action history one by one. Press **Next** to see each action. "
-                    "Once you observe an action, it will appear in the action history bar on the left for future review if necessary."
+                    "**Test results** and the **full action history** will be shown on the left panel."
                 )
             else:
                 st.markdown(
                     "You can access the action history one by one by pressing the **Next** button. "
-                    "Once you observe an action, it will appear in the action history bar on the left for future review if necessary."
+                    "**Test results** and the **full action history** will be shown on the left panel."
                 )
                 st.markdown(f"**Step {step_index + 1} of {len(steps)}**")
                 render_single_step(steps[step_index], step_index + 1)
@@ -940,7 +939,7 @@ if st.session_state.phase == "action_history":
     render_test_history_sidebar(steps, current_index=None, num_objects=num_objects)
 
     st.header("3. Object identification")
-    st.markdown("Based on the action history in the left bar, indicate for each object whether you think it is a **Nexiom** (can make the machine turn on).")
+    st.markdown("Based on the test results and action history in the left panel, indicate for each object whether you think it is a **Nexiom** (can make the machine turn on).")
 
     blicket_answers = {}
     for i in range(num_objects):
