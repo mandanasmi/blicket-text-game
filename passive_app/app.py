@@ -16,7 +16,7 @@ from firebase_admin import credentials, db
 from dotenv import load_dotenv
 
 load_dotenv()
-st.set_page_config(page_title="Nexiom Survey", layout="wide")
+st.set_page_config(page_title="Nexiom Text Adventure", layout="wide")
 
 # Guard print against BrokenPipeError in Streamlit teardown
 import builtins as _builtins
@@ -250,10 +250,11 @@ def save_game_data(
 
 
 def parse_action_history(content: str):
-    """Parse txt content into list of steps. Each step: {'action': str, 'machine': 'ON'|'OFF'|None}.
+    """Parse txt content into list of steps. Each step: {'action': str, 'machine': 'ON'|'OFF'|None, 'objects_on_machine': [int]|None}.
     Supports:
     - 'action N: <description>,' with optional '-> Nexiom machine is ON/OFF'
     - Legacy: '# num_objects=4' and 'action | Machine: ON/OFF'
+    For Test steps, objects_on_machine lists which objects were on the machine at test time.
     """
     lines = [line.strip() for line in content.splitlines() if line.strip() and not line.strip().startswith("#")]
     num_objects = DEFAULT_NUM_OBJECTS
@@ -266,19 +267,30 @@ def parse_action_history(content: str):
             break
     steps = []
     max_object_seen = 0
+    current_objects = set()
     for line in lines:
         action_part = line
         machine = None
+        objects_on_machine = None
         # Format: "action N: ... -> Nexiom machine is ON/OFF," or "action N: ...,"
         m_action = re.match(r"action\s+\d+\s*:\s*(.+)", line, re.IGNORECASE)
         if m_action:
             action_part = m_action.group(1).rstrip(",").strip()
+            raw_action = action_part
             # Extract machine ON/OFF; remove from action text (we show "Action: Machine: ON/OFF" in render with bold color)
             # Match "-> Nexiom machine is ON/OFF" or "-> Machine: ON/OFF"
             machine_match = re.search(r"->\s*(?:Nexiom machine is|Machine:)\s*(ON|OFF)", action_part, re.IGNORECASE)
             if machine_match:
                 machine = "ON" if machine_match.group(1).upper() == "ON" else "OFF"
                 action_part = re.sub(r"->\s*(?:Nexiom machine is|Machine:)\s*(?:ON|OFF)\s*,?\s*", "", action_part, flags=re.IGNORECASE).strip()
+                objects_on_machine = sorted(current_objects)
+            # Update current_objects for Place/Remove
+            placed = re.search(r"Placed\s+Object\s+(\d+)\s+on\s+machine", raw_action, re.IGNORECASE)
+            removed = re.search(r"Removed\s+Object\s+(\d+)\s+from\s+machine", raw_action, re.IGNORECASE)
+            if placed:
+                current_objects.add(int(placed.group(1)))
+            elif removed:
+                current_objects.discard(int(removed.group(1)))
             # Infer object count from "Object N" in text
             for obj_m in re.finditer(r"Object\s+(\d+)", action_part, re.IGNORECASE):
                 max_object_seen = max(max_object_seen, int(obj_m.group(1)))
@@ -290,7 +302,8 @@ def parse_action_history(content: str):
                 rest = parts[1].strip()
                 if re.match(r"machine\s*:\s*(on|off)", rest, re.IGNORECASE):
                     machine = "ON" if rest.lower().split(":")[-1].strip().startswith("on") else "OFF"
-        steps.append({"action": action_part, "machine": machine})
+                    objects_on_machine = sorted(current_objects)
+        steps.append({"action": action_part, "machine": machine, "objects_on_machine": objects_on_machine})
     if max_object_seen > 0:
         num_objects = max(num_objects, max_object_seen, 1)
         num_objects = min(num_objects, 10)
@@ -350,25 +363,57 @@ def render_single_step(step, step_num):
     )
 
 
-def _sidebar_step_html(step, step_num, is_current=False, max_chars=80):
-    """One line for sidebar: 'Step N: action text' with machine ON in green or OFF. Current step in blue."""
+def _sidebar_step_html(step, step_num, is_current=False, max_chars=80, num_objects=4):
+    """One line for sidebar: 'Step N: action text' with machine ON in green or OFF. Current step in blue.
+    For Test steps: show a summary box matching active game style (object Yes/No + Machine result)."""
     action = (step.get("action") or "").strip()
     if len(action) > max_chars:
         action = action[: max_chars - 3].rstrip() + "..."
     action_escaped = html.escape(action)
     machine = step.get("machine")
+    objects_on_machine = step.get("objects_on_machine") or set()
+    if isinstance(objects_on_machine, list):
+        objects_on_machine = set(objects_on_machine)
     machine_bit = ""
+    test_summary = ""
     if machine is not None:
         if machine == "ON":
             machine_bit = " <span style='color: #388e3c; font-weight: bold;'>ON</span>"
+            machine_color = "#388e3c"
         else:
             machine_bit = " <span style='color: #000; font-weight: bold;'>OFF</span>"
+            machine_color = "#333333"
+        if objects_on_machine is not None:
+            objects_set = set(objects_on_machine)
+            objects_text = ""
+            for obj_id in range(1, num_objects + 1):
+                is_on_platform = obj_id in objects_set
+                yes_no = "Yes" if is_on_platform else "No"
+                bg_color = "#ffffff" if is_on_platform else "#d0d0d0"
+                border_style = "2px solid #999" if is_on_platform else "1px solid #ccc"
+                objects_text += (
+                    "<span style='display: inline-flex; align-items: center; justify-content: center; "
+                    f"background-color: {bg_color}; color: black; padding: 4px 6px; margin: 2px; border-radius: 5px; "
+                    f"font-size: 14px; font-weight: bold; border: {border_style}; min-width: 44px;'>"
+                    f"<span style='margin-right: 3px;'>{obj_id}</span>"
+                    f"<span>{yes_no}</span></span>"
+                )
+            test_summary = (
+                f"<div style='margin: 6px 0 8px 0; padding: 8px 10px; background-color: #a9a9a9; "
+                f"color: #1f1f1f; border: 1px solid #7f7f7f; border-radius: 8px; "
+                f"box-shadow: 0 2px 4px rgba(0,0,0,0.15); font-size: 12px;'>"
+                f"<div style='margin-bottom: 6px; display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;'>{objects_text}</div>"
+                f"<div style='font-weight: bold; font-size: 14px; color: {machine_color};'>Machine: {machine}</div>"
+                f"</div>"
+            )
     color_style = "color: #1976d2;" if is_current else ""
-    return f"<div style='margin-bottom: 12px; line-height: 1.4; font-size: 1.1rem; {color_style}'><strong>Step {step_num}:</strong> {action_escaped}{machine_bit}</div>"
+    return f"<div style='margin-bottom: 12px; line-height: 1.4; font-size: 1.1rem; {color_style}'><strong>Step {step_num}:</strong> {action_escaped}{machine_bit}{test_summary}</div>"
 
 
-def render_test_history_sidebar(steps, current_index=None):
+def render_test_history_sidebar(steps, current_index=None, num_objects=None):
     """Render Action History panel in sidebar. Title in a separate box; steps below (empty at start), scrollable."""
+    if num_objects is None:
+        num_objects = DEFAULT_NUM_OBJECTS
     with st.sidebar:
         st.markdown(
             "<div style='text-align: center; font-size: 1.125rem; font-weight: bold; margin-top: -10px; margin-bottom: 10px; padding: 10px 12px; background-color: #b0b0b0; border: 1px solid #999; border-radius: 6px; color: #1a1a1a;'>Action History</div>",
@@ -396,7 +441,7 @@ def render_test_history_sidebar(steps, current_index=None):
                 step = steps[i]
                 step_num = i + 1
                 is_current = current_index is not None and i == current_index
-                parts.append(_sidebar_step_html(step, step_num, is_current=is_current))
+                parts.append(_sidebar_step_html(step, step_num, is_current=is_current, num_objects=num_objects))
             inner = "\n".join(parts)
             st.markdown(
                 f"""
@@ -790,7 +835,7 @@ if st.session_state.phase == "action_history":
     }
     </style>
     """, unsafe_allow_html=True)
-    st.title("Nexiom Adventure Game")
+    st.title("🧙 Nexiom Text Adventure")
 
     # Assign one action history file per use (cycle through 102 files via Firebase counter)
     if st.session_state.survey_assigned_file_index is None:
@@ -840,7 +885,7 @@ if st.session_state.phase == "action_history":
             # Begin screen (step_index == -1) or step-by-step view
             if step_index >= 0 and st.session_state.survey_last_step_entered_at is None:
                 st.session_state.survey_last_step_entered_at = datetime.datetime.now().timestamp()
-            render_test_history_sidebar(steps, step_index if step_index >= 0 else -1)
+            render_test_history_sidebar(steps, step_index if step_index >= 0 else -1, num_objects=num_objects)
             st.header("Action history")
             if step_index < 0:
                 # Initial screen: no action shown yet
@@ -874,7 +919,7 @@ if st.session_state.phase == "action_history":
             st.stop()
         else:
             # After last step: no "Action history" in main area; message and button to identification
-            render_test_history_sidebar(steps, current_index=None)
+            render_test_history_sidebar(steps, current_index=None, num_objects=num_objects)
             st.markdown(
                 "You have seen all steps. There are no more actions to view. "
                 "Please proceed to answer the questions below."
@@ -892,7 +937,7 @@ if st.session_state.phase == "action_history":
             st.stop()
 
     # survey_sequence_viewed: left bar has history; main area is questions only
-    render_test_history_sidebar(steps, current_index=None)
+    render_test_history_sidebar(steps, current_index=None, num_objects=num_objects)
 
     st.header("3. Object identification")
     st.markdown("Based on the action history in the left bar, indicate for each object whether you think it is a **Nexiom** (can make the machine turn on).")
