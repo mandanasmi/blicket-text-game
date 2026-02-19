@@ -35,30 +35,30 @@ PROLIFIC_RETURN_URL = f"https://app.prolific.com/submissions/complete?cc={COMPLE
 
 DEFAULT_NUM_OBJECTS = 4
 
-# ————— Assigned action histories (one per use, cycle through 102 files) —————
+# ————— Assigned action histories —————
 # Path to active_explore/analysis/action_histories relative to this app file
 _ACTION_HISTORIES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "active_explore", "analysis", "action_histories")
-_ACTION_HISTORY_FILES = None  # Lazy-loaded sorted list of filenames
+# Only this action history file is assigned to all passive respondents
+_ASSIGNED_ACTION_HISTORY_FILENAME = "67c0af3cdbc67c93008f0616_action_history.txt"
+_ACTION_HISTORY_FILES = None  # Lazy-loaded list (single file)
 
 def get_action_history_file_list():
-    """Return sorted list of *_action_history.txt filenames (full path). Deterministic order."""
+    """Return list containing only the assigned action history file (full path)."""
     global _ACTION_HISTORY_FILES
     if _ACTION_HISTORY_FILES is None:
-        if not os.path.isdir(_ACTION_HISTORIES_DIR):
-            _ACTION_HISTORY_FILES = []
+        single_path = os.path.join(_ACTION_HISTORIES_DIR, _ASSIGNED_ACTION_HISTORY_FILENAME)
+        if os.path.isfile(single_path):
+            _ACTION_HISTORY_FILES = [single_path]
         else:
-            _ACTION_HISTORY_FILES = sorted(
-                f for f in os.listdir(_ACTION_HISTORIES_DIR)
-                if f.endswith("_action_history.txt")
-            )
-            _ACTION_HISTORY_FILES = [os.path.join(_ACTION_HISTORIES_DIR, f) for f in _ACTION_HISTORY_FILES]
+            _ACTION_HISTORY_FILES = []
     return _ACTION_HISTORY_FILES
 
 def get_next_action_history_index():
     """
     Return (index, filepath, filename) for the next action history to use.
-    Uses Firebase _config/action_history_next_index (transaction) to cycle 0..101.
-    If Firebase is not connected, returns (0, first_file_path, first_filename) and does not persist.
+    Only 67c0af3cdbc67c93008f0616_action_history.txt is assigned (all respondents get this file).
+    Uses Firebase _config/action_history_next_index (transaction) for consistency; index is always 0.
+    If Firebase is not connected, returns (0, file_path, filename) and does not persist.
     """
     files = get_action_history_file_list()
     n = len(files)
