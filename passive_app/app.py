@@ -39,7 +39,7 @@ DEFAULT_NUM_OBJECTS = 4
 # Path to active_explore/analysis/action_histories relative to this app file
 _ACTION_HISTORIES_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "active_explore", "analysis", "action_histories")
 # Only this action history file is assigned to all passive respondents
-_ASSIGNED_ACTION_HISTORY_FILENAME = "67c0af3cdbc67c93008f0616_action_history.txt"
+_ASSIGNED_ACTION_HISTORY_FILENAME = "677a9ad8c567199c95f2dc4c_action_history.txt"
 _ACTION_HISTORY_FILES = None  # Lazy-loaded list (single file)
 
 def get_action_history_file_list():
@@ -56,7 +56,7 @@ def get_action_history_file_list():
 def get_next_action_history_index():
     """
     Return (index, filepath, filename) for the next action history to use.
-    Only 67c0af3cdbc67c93008f0616_action_history.txt is assigned (all respondents get this file).
+    Only 677a9ad8c567199c95f2dc4c_action_history.txt is assigned (all respondents get this file).
     Uses Firebase _config/action_history_next_index (transaction) for consistency; index is always 0.
     If Firebase is not connected, returns (0, file_path, filename) and does not persist.
     """
