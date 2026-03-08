@@ -861,7 +861,7 @@ if st.session_state.phase == "intro":
         You’ll complete several rounds:
         1.  **A brief comprehension check** to make sure you understand the controls.
         2.  **A short practice round** with a simple rule.
-        3.  **Three main rounds**, each with a new machine and new objects.
+        3.  **one round**, with a new machine and new objects.
 
         Click **“Continue”** to begin.
 
