@@ -8,6 +8,20 @@ from firebase_admin import credentials, db
 
 load_dotenv()
 st.set_page_config(page_title="Nexiom Disjunctive Case", layout="centered")
+st.markdown("""
+<style>
+h1, h2, h3 {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: unset !important;
+    word-break: break-word !important;
+}
+[data-testid="block-container"],
+.block-container {
+    overflow: visible !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 COMPLETION_CODE = os.getenv("SURVEY_COMPLETION_CODE", "C1C28QBX")
@@ -184,10 +198,122 @@ for key, value in {
 
 
 if st.session_state.phase == "consent":
+    st.markdown("""
+    <style>
+    .stApp .stButton button[kind="primary"]:nth-of-type(1) {
+        background-color: #28a745 !important;
+        border-color: #28a745 !important;
+    }
+    .stApp .stButton button[kind="primary"]:nth-of-type(1):hover {
+        background-color: #218838 !important;
+        border-color: #218838 !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    body {
+        background: #ffffff !important;
+        font-size: 18px !important;
+        line-height: 1.6 !important;
+    }
+    [data-testid="stMarkdown"] p,
+    [data-testid="stMarkdown"] li,
+    [data-testid="stMarkdown"] span,
+    [data-testid="stMarkdown"] div,
+    [data-testid="stMarkdown"] h1,
+    [data-testid="stMarkdown"] h2,
+    [data-testid="stMarkdown"] h3,
+    [data-testid="stMarkdown"] h4,
+    [data-testid="stMarkdown"] h5,
+    [data-testid="stMarkdown"] h6 {
+        font-size: 1.125rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <style>
+    .stApp div[data-testid="stButton"] button[data-testid="stBaseButton-primary"],
+    .stApp div[data-testid="stButton"] button[data-testid="stBaseButton-secondary"] {
+        margin-bottom: 1.25rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
     st.title("Research Consent")
-    st.markdown("Please read and accept consent to continue.")
+    st.markdown("**Please read the consent information below carefully. Participation is voluntary.**")
+
+    with st.expander("Key Information", expanded=True):
+        st.markdown("""
+            - You are being invited to participate in a research study. Participation is completely voluntary.
+            - Purpose: to examine how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
+            - Sessions: 1-4 testing sessions (usually one), each <= 30 minutes. You will play interactive games; sometimes you may receive payment incentives based on your choices. You may view short clips, images, or music and answer related questions.
+            - Risks: primarily the risk of breach of confidentiality.
+            - Benefits: no direct benefits. Results may improve our understanding of causal reasoning and social cognition.
+        """)
+
+    st.markdown("### Purpose of the Study")
+    st.markdown("""
+        This study is conducted by Alison Gopnik (UC Berkeley) and research staff.
+        It investigates how adults infer and interpret cause and effect and how adults understand the thoughts and feelings of other people.
+        Participation is entirely voluntary.
+    """)
+
+    st.markdown("### Study Procedures")
+    st.markdown("""
+        Up to 4 testing sessions (usually one), each <= 30 minutes. Tasks may include causal learning, linguistic, imagination, categorization/association, and general cognitive tasks. You may be asked to make judgments, answer questions, observe events, and perform actions (e.g., grouping objects or activating machines). You can skip any question and withdraw at any time without penalty. Attention checks ensure data quality; failure may result in rejection and no compensation.
+    """)
+
+    st.markdown("### Benefits")
+    st.markdown("While there is no direct benefit, you may enjoy the interactive displays and contribute to science.")
+
+    st.markdown("### Risks/Discomforts")
+    st.markdown("We do not expect foreseeable risks beyond a minimal risk of confidentiality breach; safeguards are in place to minimize this risk.")
+
+    st.markdown("### Confidentiality")
+    st.markdown("""
+        Your identity will be separated from your data and a random code used for tracking. Data are kept indefinitely and stored securely (encrypted, restricted access). Identifiers may be removed for future research use without additional consent. Your personal information may be released if required by law. Authorized representatives (e.g., sponsors such as NSF, Mind Science Foundation, Princeton University, Defense Advanced Research) may review data for study oversight.
+    """)
+
+    st.markdown("### Costs of Study Participation")
+    st.markdown("There are no costs associated with study participation.")
+
+    st.markdown("### Compensation")
+    st.markdown("""
+        For your participation in our research, you will receive a maximum rate of 8 per hour. Payment ranges from 0.54 to 0.67 for a 5-minute task and from 3.25 to 4.00 for a 30-minute task, depending on the time it takes to complete the type of task you've been assigned. For studies on Prolific, you will receive a minimum rate of 6.50 per hour. For experiments with a differential bonus payment system you may have the opportunity to earn "points" that are worth up to 5 cents each, with a total bonus of no more than 30 cents paid on top of the flat fee paid for the task completion. Your online account will be credited directly.
+    """)
+
+    st.markdown("### Rights")
+    st.markdown("""
+        Participation is voluntary. You are free to withdraw your consent and discontinue participation at any time without penalty or loss of benefits to which you are otherwise entitled.
+    """)
+
+    st.markdown("### Questions")
+    st.markdown("""
+        If you have any questions, please contact the lab at gopniklab@berkeley.edu or the project lead, Eunice Yiu, at ey242@berkeley.edu.
+        If you have questions regarding your treatment or rights as a participant, contact the Committee for the Protection of Human Subjects at UC Berkeley at (510) 642-7461 or subjects@berkeley.edu.
+        If you have questions about the software, please contact Mandana Samiei, at mandana.samiei@mail.mcgill.ca.
+    """)
+
     if IRB_PROTOCOL_NUMBER:
         st.markdown(f"**IRB Protocol Number:** {IRB_PROTOCOL_NUMBER}")
+
+    st.markdown(
+        '> By selecting the "Accept" button below, I acknowledge that I am 18 or older, have read this consent form, and I agree to take part in the research. If you do NOT agree, click "Decline".'
+    )
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Accept", type="primary", use_container_width=True):
@@ -203,20 +329,59 @@ if st.session_state.phase == "consent":
 
 if st.session_state.phase == "declined":
     st.title("Thanks for your response")
-    st.markdown("You did not consent. The study will now close.")
+    st.markdown("## You did not consent. The study will now close.")
     st.stop()
 
 
 if st.session_state.phase == "intro":
+    st.markdown("""
+    <style>
+    [data-testid="block-container"],
+    .block-container {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        min-height: auto !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+    body {
+        background: #ffffff !important;
+        font-size: 18px !important;
+        line-height: 1.6 !important;
+    }
+    [data-testid="stMarkdown"] p,
+    [data-testid="stMarkdown"] li,
+    [data-testid="stMarkdown"] span,
+    [data-testid="stMarkdown"] div,
+    [data-testid="stMarkdown"] h1,
+    [data-testid="stMarkdown"] h2,
+    [data-testid="stMarkdown"] h3,
+    [data-testid="stMarkdown"] h4,
+    [data-testid="stMarkdown"] h5,
+    [data-testid="stMarkdown"] h6 {
+        font-size: 1.1rem !important;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     st.title("Welcome to the Experiment")
     if not firebase_initialized:
         st.warning("Firebase is not connected. Responses will not be saved.")
         if firebase_init_error:
             st.code(firebase_init_error, language=None)
-    st.markdown(
-        "You will read Training and Test statements one by one. "
-        "Click **Next** to proceed through each statement, then answer three questions."
-    )
+
+    st.markdown("""
+    **Welcome!**
+
+    In this experiment, you'll read a sequence of observations about objects tested on a "Nexiom" machine to see which object (or combination of objects) makes it turn ON. **Only objects that are "Nexioms" will make the machine turn on.** **If the Nexiom machine switches on, it means that the objects on the machine satisfied the activation rule.** If the machine stays off, it means the objects on the machine did not satisfy the activation rule. After reading the training and test observations, you will answer questions about whether specific objects are Nexioms.
+
+    **Your Task:**
+    You will read through a series of test results one by one. There is a training sequence and a test sequence. Please pay close attention to which objects (or combinations) were used and what the outcome was. Afterward, we will ask you to judge whether specific new objects are likely to be Nexioms.
+
+    Click **"Start"** to begin.
+    """)
 
     participant_id = st.text_input("Prolific ID", value=st.session_state.participant_id)
     col_a, col_b = st.columns(2)
