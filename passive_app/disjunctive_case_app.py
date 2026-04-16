@@ -73,24 +73,13 @@ def render_seen_sequence_sidebar():
             seen_test = TEST_STEPS[:]
 
     with st.sidebar:
-        st.markdown(
-            """
-            <div style='text-align: center; font-size: 1.05rem; font-weight: 700; margin-bottom: 10px;
-                        padding: 8px 10px; background-color: #efefef; border: 1px solid #d7d7d7;
-                        border-radius: 8px;'>
-                Seen sequence
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
+        st.markdown("**Seen sequence**")
 
         st.markdown("**Training**")
         if seen_training:
             for i, step in enumerate(seen_training, start=1):
-                is_current_training = phase == "training" and i == (training_idx + 1)
-                color = "#1976d2" if is_current_training else "#222222"
                 st.markdown(
-                    f"<div style='margin: 0 0 8px 0; color: {color};'><strong>{i}.</strong> {step}</div>",
+                    f"<div style='margin: 0 0 8px 0; color: #222222;'><strong>{i}.</strong> {step}</div>",
                     unsafe_allow_html=True,
                 )
         else:
@@ -101,10 +90,8 @@ def render_seen_sequence_sidebar():
             st.markdown("**Test**")
             if seen_test:
                 for i, step in enumerate(seen_test, start=1):
-                    is_current_test = phase == "test" and i == (test_idx + 1)
-                    color = "#1976d2" if is_current_test else "#222222"
                     st.markdown(
-                        f"<div style='margin: 0 0 8px 0; color: {color};'><strong>{i}.</strong> {step}</div>",
+                        f"<div style='margin: 0 0 8px 0; color: #222222;'><strong>{i}.</strong> {step}</div>",
                         unsafe_allow_html=True,
                     )
             else:
