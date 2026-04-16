@@ -8,7 +8,7 @@ from firebase_admin import credentials, db
 from firebase_admin import exceptions as firebase_exceptions
 
 load_dotenv()
-st.set_page_config(page_title="Nexiom Conjunctive Case", layout="centered")
+st.set_page_config(page_title="Nexiom Experiment", layout="centered")
 st.markdown("""
 <style>
 h1, h2, h3 {
