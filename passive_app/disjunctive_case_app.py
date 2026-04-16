@@ -74,12 +74,12 @@ def render_seen_sequence_sidebar():
 
     with st.sidebar:
         st.markdown(
-            "<div style='font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;'>Seen sequence</div>",
+            "<div style='font-size: 1.28rem; font-weight: 700; margin-bottom: 6px;'>Seen sequence</div>",
             unsafe_allow_html=True,
         )
 
         st.markdown(
-            "<div style='font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;'>Training</div>",
+            "<div style='font-size: 1.18rem; font-weight: 700; margin-bottom: 6px;'>Training</div>",
             unsafe_allow_html=True,
         )
         if seen_training:
