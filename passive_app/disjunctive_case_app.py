@@ -73,9 +73,15 @@ def render_seen_sequence_sidebar():
             seen_test = TEST_STEPS[:]
 
     with st.sidebar:
-        st.markdown("**Seen sequence**")
+        st.markdown(
+            "<div style='font-size: 1.2rem; font-weight: 700; margin-bottom: 6px;'>Seen sequence</div>",
+            unsafe_allow_html=True,
+        )
 
-        st.markdown("**Training**")
+        st.markdown(
+            "<div style='font-size: 1.1rem; font-weight: 700; margin-bottom: 6px;'>Training</div>",
+            unsafe_allow_html=True,
+        )
         if seen_training:
             for i, step in enumerate(seen_training, start=1):
                 st.markdown(
