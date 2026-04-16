@@ -72,20 +72,18 @@ def render_seen_sequence_sidebar():
 
     with st.sidebar:
         st.markdown("### Seen Sequences")
-        st.markdown("**Training sequence**")
+        st.markdown("**Training**")
         if seen_training:
             for i, step in enumerate(seen_training, start=1):
                 st.markdown(f"{i}. {step}")
         else:
             st.markdown("_No training steps shown yet._")
 
-        st.markdown("---")
-        st.markdown("**Test sequence**")
         if seen_test:
+            st.markdown("---")
+            st.markdown("**Test sequence**")
             for i, step in enumerate(seen_test, start=1):
                 st.markdown(f"{i}. {step}")
-        else:
-            st.markdown("_No test steps shown yet._")
 
 
 def _valid_database_url(url):
