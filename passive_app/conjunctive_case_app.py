@@ -47,6 +47,46 @@ TEST_STEPS = [
 ]
 
 
+def render_seen_sequence_sidebar():
+    phase = st.session_state.get("phase", "consent")
+    training_idx = st.session_state.get("training_index", 0)
+    test_idx = st.session_state.get("test_index", 0)
+
+    seen_training = []
+    seen_test = []
+
+    if phase in {"training", "test", "questions", "end"}:
+        if phase == "training":
+            end = min(training_idx + 1, len(TRAINING_STEPS))
+            seen_training = TRAINING_STEPS[:end]
+        else:
+            seen_training = TRAINING_STEPS[:]
+
+    if phase in {"test", "questions", "end"}:
+        if phase == "test":
+            end = min(test_idx + 1, len(TEST_STEPS))
+            seen_test = TEST_STEPS[:end]
+        else:
+            seen_test = TEST_STEPS[:]
+
+    with st.sidebar:
+        st.markdown("### Seen Sequences")
+        st.markdown("**Training sequence**")
+        if seen_training:
+            for i, step in enumerate(seen_training, start=1):
+                st.markdown(f"{i}. {step}")
+        else:
+            st.markdown("_No training steps shown yet._")
+
+        st.markdown("---")
+        st.markdown("**Test sequence**")
+        if seen_test:
+            for i, step in enumerate(seen_test, start=1):
+                st.markdown(f"{i}. {step}")
+        else:
+            st.markdown("_No test steps shown yet._")
+
+
 def _valid_database_url(url):
     if not url or not isinstance(url, str):
         return False
@@ -241,6 +281,8 @@ for key, value in {
 }.items():
     if key not in st.session_state:
         st.session_state[key] = value
+
+render_seen_sequence_sidebar()
 
 
 if st.session_state.phase == "consent":
