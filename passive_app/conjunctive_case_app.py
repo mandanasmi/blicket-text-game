@@ -49,6 +49,8 @@ TEST_STEPS = [
 
 def render_seen_sequence_sidebar():
     phase = st.session_state.get("phase", "consent")
+    if phase not in {"training", "test", "questions", "end"}:
+        return
     training_idx = st.session_state.get("training_index", 0)
     test_idx = st.session_state.get("test_index", 0)
 
