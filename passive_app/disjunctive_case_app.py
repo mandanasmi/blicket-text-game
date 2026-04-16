@@ -78,7 +78,7 @@ def render_seen_sequence_sidebar():
             <div style='text-align: center; font-size: 1.05rem; font-weight: 700; margin-bottom: 10px;
                         padding: 8px 10px; background-color: #efefef; border: 1px solid #d7d7d7;
                         border-radius: 8px;'>
-                Prior Tests
+                Seen sequence
             </div>
             """,
             unsafe_allow_html=True,
@@ -96,18 +96,19 @@ def render_seen_sequence_sidebar():
         else:
             st.markdown("_No training steps shown yet._")
 
-        st.markdown("---")
-        st.markdown("**Test**")
-        if seen_test:
-            for i, step in enumerate(seen_test, start=1):
-                is_current_test = phase == "test" and i == (test_idx + 1)
-                color = "#1976d2" if is_current_test else "#222222"
-                st.markdown(
-                    f"<div style='margin: 0 0 8px 0; color: {color};'><strong>{i}.</strong> {step}</div>",
-                    unsafe_allow_html=True,
-                )
-        else:
-            st.markdown("_No test steps shown yet._")
+        if phase in {"test", "questions", "end"}:
+            st.markdown("---")
+            st.markdown("**Test**")
+            if seen_test:
+                for i, step in enumerate(seen_test, start=1):
+                    is_current_test = phase == "test" and i == (test_idx + 1)
+                    color = "#1976d2" if is_current_test else "#222222"
+                    st.markdown(
+                        f"<div style='margin: 0 0 8px 0; color: {color};'><strong>{i}.</strong> {step}</div>",
+                        unsafe_allow_html=True,
+                    )
+            else:
+                st.markdown("_No test steps shown yet._")
 
 
 def _valid_database_url(url):
