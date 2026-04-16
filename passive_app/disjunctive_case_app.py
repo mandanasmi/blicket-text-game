@@ -75,7 +75,7 @@ def _firebase_unauthenticated_help():
 
 
 # Named app avoids clashing with a default app from another module/worker; read+write probes catch auth before user saves.
-_FIREBASE_APP_NAME = "disjunctive_passive_rtdb"
+_FIREBASE_APP_NAME = "nexiom_passive_lcsc_disj"
 
 
 def _delete_firebase_app_named(name):
