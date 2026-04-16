@@ -27,6 +27,7 @@ h1, h2, h3 {
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 COMPLETION_CODE = os.getenv("SURVEY_COMPLETION_CODE", "C1C28QBX")
 PROLIFIC_RETURN_URL = f"https://app.prolific.com/submissions/complete?cc={COMPLETION_CODE}"
+DISJUNCTIVE_DATABASE_URL = "https://nexiom-passive-lcsc-disj-default-rtdb.firebaseio.com"
 
 TRAINING_STEPS = [
     "Object 1 turned on the Nexiom Machine.",
@@ -135,6 +136,10 @@ try:
 
     if firebase_init_error is None and database_url:
         database_url = database_url.strip().strip('"').strip("'")
+
+    # Force the disjunctive app to use the dedicated disjunctive RTDB instance.
+    if firebase_init_error is None:
+        database_url = DISJUNCTIVE_DATABASE_URL
 
     if firebase_init_error is None and database_url and not _valid_database_url(database_url):
         firebase_init_error = "Invalid FIREBASE_DATABASE_URL: use Realtime Database URL, not Firebase Console URL."
