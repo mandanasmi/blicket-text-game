@@ -5,6 +5,7 @@ import firebase_admin
 import streamlit as st
 from dotenv import load_dotenv
 from firebase_admin import credentials, db
+from firebase_admin import exceptions as firebase_exceptions
 
 load_dotenv()
 st.set_page_config(page_title="Nexiom Conjunctive Case", layout="centered")
@@ -28,19 +29,19 @@ COMPLETION_CODE = os.getenv("SURVEY_COMPLETION_CODE", "C1C28QBX")
 PROLIFIC_RETURN_URL = f"https://app.prolific.com/submissions/complete?cc={COMPLETION_CODE}"
 
 TRAINING_STEPS = [
-    "Object 1 did not turn on the Nexiom Machine.",
-    "Object 2 did not turn on the Nexiom Machine.",
-    "Object 3 did not turn on the Nexiom Machine.",
-    "Objects 1 and 2 did not turn on the Nexiom Machine.",
+    "Object 1 did NOT turn on the Nexiom Machine.",
+    "Object 2 did NOT turn on the Nexiom Machine.",
+    "Object 3 did NOT turn on the Nexiom Machine.",
+    "Objects 1 and 2 did NOT turn on the Nexiom Machine.",
     "Objects 1 and 3 turned on the Nexiom Machine.",
-    "Objects 2 and 3 turned on the Nexiom Machine.",
+    "Objects 2 and 3 did NOT turn on the Nexiom Machine.",
 ]
 
 TEST_STEPS = [
-    "Object 4 did not turn on the Nexiom Machine.",
-    "Object 4 did not turn on the Nexiom Machine.",
-    "Object 4 did not turn on the Nexiom Machine.",
-    "Object 5 did not turn on the Nexiom Machine.",
+    "Object 4 did NOT turn on the Nexiom Machine.",
+    "Object 4 did NOT turn on the Nexiom Machine.",
+    "Object 4 did NOT turn on the Nexiom Machine.",
+    "Object 5 did NOT turn on the Nexiom Machine.",
     "Objects 4 and 6 turned on the Nexiom Machine.",
     "Objects 4 and 6 turned on the Nexiom Machine.",
 ]
@@ -52,6 +53,26 @@ def _valid_database_url(url):
     return "firebaseio.com" in url or "firebasedatabase.app" in url
 
 
+def _normalize_private_key(private_key):
+    """Streamlit secrets may use literal \\n, real newlines, or stray quotes; PEM must be parseable."""
+    if not private_key or not isinstance(private_key, str):
+        return private_key
+    pk = private_key.strip().strip('"').strip("'")
+    if "\\n" in pk:
+        pk = pk.replace("\\n", "\n")
+    return pk
+
+
+def _firebase_unauthenticated_help():
+    return (
+        "Firebase rejected the service account (Unauthenticated). Common fixes: (1) Generate a new private key "
+        "in Firebase Console → Project settings → Service accounts and update Streamlit Secrets. (2) Ensure "
+        "`database_url` is the Realtime Database URL for the **same** project as that service account. "
+        "(3) In Secrets, keep `private_key` as one line with \\n between PEM lines (not real line breaks). "
+        "(4) If the old key was revoked, replace it everywhere."
+    )
+
+
 firebase_initialized = False
 db_ref = None
 firebase_init_error = None
@@ -61,26 +82,27 @@ if not firebase_admin._apps:
         firebase_credentials = None
         database_url = None
         if hasattr(st, "secrets") and hasattr(st.secrets, "firebase") and "firebase" in st.secrets:
+            fb = st.secrets["firebase"]
             firebase_credentials = {
                 "type": "service_account",
-                "project_id": st.secrets["firebase"]["project_id"],
-                "private_key_id": st.secrets["firebase"]["private_key_id"],
-                "private_key": st.secrets["firebase"]["private_key"].replace("\\n", "\n"),
-                "client_email": st.secrets["firebase"]["client_email"],
-                "client_id": st.secrets["firebase"]["client_id"],
+                "project_id": fb["project_id"],
+                "private_key_id": fb["private_key_id"],
+                "private_key": _normalize_private_key(fb["private_key"]),
+                "client_email": fb["client_email"],
+                "client_id": fb["client_id"],
                 "auth_uri": "https://accounts.google.com/o/oauth2/auth",
                 "token_uri": "https://oauth2.googleapis.com/token",
                 "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-                "client_x509_cert_url": st.secrets["firebase"]["client_x509_cert_url"],
+                "client_x509_cert_url": fb["client_x509_cert_url"],
                 "universe_domain": "googleapis.com",
             }
-            database_url = st.secrets["firebase"].get("database_url") or st.secrets["firebase"].get("databaseURL")
+            database_url = fb.get("database_url") or fb.get("databaseURL")
         elif os.getenv("FIREBASE_PROJECT_ID"):
             firebase_credentials = {
                 "type": "service_account",
                 "project_id": os.getenv("FIREBASE_PROJECT_ID"),
                 "private_key_id": os.getenv("FIREBASE_PRIVATE_KEY_ID"),
-                "private_key": (os.getenv("FIREBASE_PRIVATE_KEY") or "").replace("\\n", "\n"),
+                "private_key": _normalize_private_key(os.getenv("FIREBASE_PRIVATE_KEY") or ""),
                 "client_email": os.getenv("FIREBASE_CLIENT_EMAIL"),
                 "client_id": os.getenv("FIREBASE_CLIENT_ID"),
                 "auth_uri": "https://accounts.google.com/o/oauth2/auth",
@@ -93,6 +115,9 @@ if not firebase_admin._apps:
         else:
             firebase_init_error = "No Firebase config found. App will run in demo mode."
 
+        if firebase_init_error is None and database_url:
+            database_url = database_url.strip().strip('"').strip("'")
+
         if firebase_init_error is None and database_url and not _valid_database_url(database_url):
             firebase_init_error = "Invalid FIREBASE_DATABASE_URL: use Realtime Database URL, not Firebase Console URL."
 
@@ -100,13 +125,34 @@ if not firebase_admin._apps:
             cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred, {"databaseURL": database_url})
             db_ref = db.reference()
-            firebase_initialized = True
+            try:
+                db.reference("/_streamlit_rtdb_probe").get()
+            except firebase_exceptions.UnauthenticatedError:
+                firebase_init_error = _firebase_unauthenticated_help()
+                db_ref = None
+                try:
+                    firebase_admin.delete_app(firebase_admin.get_app())
+                except Exception:
+                    pass
+            else:
+                firebase_initialized = True
+    except firebase_exceptions.UnauthenticatedError:
+        firebase_init_error = _firebase_unauthenticated_help()
+        try:
+            firebase_admin.delete_app(firebase_admin.get_app())
+        except Exception:
+            pass
     except Exception as e:
         firebase_init_error = str(e)
 else:
     try:
-        firebase_initialized = True
         db_ref = db.reference()
+        db.reference("/_streamlit_rtdb_probe").get()
+        firebase_initialized = True
+    except firebase_exceptions.UnauthenticatedError:
+        firebase_init_error = _firebase_unauthenticated_help()
+        firebase_initialized = False
+        db_ref = None
     except Exception as e:
         firebase_init_error = str(e)
 

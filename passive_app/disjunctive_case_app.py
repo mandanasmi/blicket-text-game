@@ -30,7 +30,7 @@ PROLIFIC_RETURN_URL = f"https://app.prolific.com/submissions/complete?cc={COMPLE
 
 TRAINING_STEPS = [
     "Object 1 turned on the Nexiom Machine.",
-    "Object 2 did not turn on the Nexiom Machine.",
+    "Object 2 did NOT turn on the Nexiom Machine.",
     "Object 3 turned on the Nexiom Machine.",
     "Objects 1 and 2 turned on the Nexiom Machine.",
     "Objects 1 and 3 turned on the Nexiom Machine.",
@@ -38,10 +38,10 @@ TRAINING_STEPS = [
 ]
 
 TEST_STEPS = [
-    "Object 4 did not turn on the Nexiom Machine.",
-    "Object 4 did not turn on the Nexiom Machine.",
-    "Object 4 did not turn on the Nexiom Machine.",
-    "Object 5 did not turn on the Nexiom Machine.",
+    "Object 4 did NOT turn on the Nexiom Machine.",
+    "Object 4 did NOT turn on the Nexiom Machine.",
+    "Object 4 did NOT turn on the Nexiom Machine.",
+    "Object 5 did NOT turn on the Nexiom Machine.",
     "Objects 4 and 6 turned on the Nexiom Machine.",
     "Objects 4 and 6 turned on the Nexiom Machine.",
 ]
