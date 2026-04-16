@@ -50,7 +50,7 @@ TEST_STEPS = [
 
 def render_seen_sequence_sidebar():
     phase = st.session_state.get("phase", "consent")
-    if phase not in {"training", "test", "questions", "end"}:
+    if phase not in {"training", "test", "questions"}:
         return
     training_idx = st.session_state.get("training_index", 0)
     test_idx = st.session_state.get("test_index", 0)
@@ -73,19 +73,41 @@ def render_seen_sequence_sidebar():
             seen_test = TEST_STEPS[:]
 
     with st.sidebar:
-        st.markdown("### Seen Sequences")
+        st.markdown(
+            """
+            <div style='text-align: center; font-size: 1.05rem; font-weight: 700; margin-bottom: 10px;
+                        padding: 8px 10px; background-color: #efefef; border: 1px solid #d7d7d7;
+                        border-radius: 8px;'>
+                Prior Tests
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
         st.markdown("**Training**")
         if seen_training:
             for i, step in enumerate(seen_training, start=1):
-                st.markdown(f"{i}. {step}")
+                is_current_training = phase == "training" and i == (training_idx + 1)
+                color = "#1976d2" if is_current_training else "#222222"
+                st.markdown(
+                    f"<div style='margin: 0 0 8px 0; color: {color};'><strong>{i}.</strong> {step}</div>",
+                    unsafe_allow_html=True,
+                )
         else:
             st.markdown("_No training steps shown yet._")
 
+        st.markdown("---")
+        st.markdown("**Test**")
         if seen_test:
-            st.markdown("---")
-            st.markdown("**Test sequence**")
             for i, step in enumerate(seen_test, start=1):
-                st.markdown(f"{i}. {step}")
+                is_current_test = phase == "test" and i == (test_idx + 1)
+                color = "#1976d2" if is_current_test else "#222222"
+                st.markdown(
+                    f"<div style='margin: 0 0 8px 0; color: {color};'><strong>{i}.</strong> {step}</div>",
+                    unsafe_allow_html=True,
+                )
+        else:
+            st.markdown("_No test steps shown yet._")
 
 
 def _valid_database_url(url):
