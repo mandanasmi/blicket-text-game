@@ -725,7 +725,21 @@ Click **"Continue"** to begin.
     if st.button("Continue", type="primary", disabled=not participant_id):
         assignment = get_next_assignment()
         if not assignment.get("sequence"):
+            files = get_action_history_file_list()
             st.error("No active test histories available for assignment.")
+            st.code(
+                "DEBUG\n"
+                f"_ACTION_HISTORIES_DIR = {_ACTION_HISTORIES_DIR}\n"
+                f"dir exists = {os.path.isdir(_ACTION_HISTORIES_DIR)}\n"
+                f"files found = {len(files)}\n"
+                f"first files = {[os.path.basename(p) for p in files[:5]]}\n"
+                f"assignment.active_id = {assignment.get('active_id')}\n"
+                f"firebase_initialized = {firebase_initialized}\n"
+                f"firebase_init_error = {firebase_init_error}\n"
+                f"cwd = {os.getcwd()}\n"
+                f"__file__ dir = {_THIS_DIR}",
+                language=None,
+            )
             return
         st.session_state.participant_id = participant_id
         st.session_state.matched_active_id = assignment["active_id"]
