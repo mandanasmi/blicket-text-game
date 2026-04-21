@@ -327,6 +327,7 @@ def ensure_session_state() -> None:
         "rule_hypothesis": "",
         "rule_hypothesis_submitted": False,
         "rule_type": "",
+        "instructions_step": 0,
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -406,7 +407,6 @@ def render_test_panel() -> None:
     tests_done = len(st.session_state.proposed_tests)
     tests_left = st.session_state.max_tests - tests_done
     st.markdown(
-        f"**Matched active participant:** `{st.session_state.matched_active_id}`  \n"
         f"**Tests proposed:** `{tests_done}/{st.session_state.max_tests}`"
     )
 
@@ -417,31 +417,29 @@ def render_test_panel() -> None:
         st.info("Current proposal: none selected")
 
     can_test = tests_left > 0 and len(current_sel) > 0
-    if st.button("Test Machine", type="primary", disabled=not can_test, use_container_width=True):
+    if st.button("Propose Test", type="primary", disabled=not can_test, use_container_width=True):
         append_test_and_outcome()
         st.rerun()
 
     if tests_left > 0:
         st.caption(f"You can propose {tests_left} more test(s).")
     else:
-        st.success("You completed all matched tests. Please answer the questions below.")
+        st.success("You completed all tests. Please answer the questions below.")
 
     if st.session_state.outcomes_seen and tests_left > 0:
         row = st.session_state.outcomes_seen[-1]
         idx = row["test_index"]
         outcome_color = "#0F9D58" if row["matched_active_outcome"] == "ON" else "#333333"
         proposed_text = st.session_state.proposed_tests[idx - 1]["proposed_objects_text"]
-        st.markdown(f"### Round {idx} — active explorer's actions")
+        advisee_text = row.get("matched_active_objects_text") or "—"
+        st.markdown(f"### Round {idx}")
+        st.markdown(f"Your proposal: `{proposed_text}`")
+        if proposed_text != advisee_text:
+            st.markdown("_Your advisee did not listen to you in this round._")
+        st.markdown(f"Your advisee's actual test: `{advisee_text}`")
         st.markdown(
-            f"Your proposal: `{proposed_text}`",
-            unsafe_allow_html=True,
-        )
-        chunk = row.get("matched_action_chunk") or []
-        if chunk:
-            lines = [f"{i}. {action}" for i, action in enumerate(chunk, start=1)]
-            st.markdown("\n".join(lines))
-        st.markdown(
-            f"Outcome: <span style='color:{outcome_color};font-weight:700'>"
+            f"Result of your advisee's test: "
+            f"<span style='color:{outcome_color};font-weight:700'>"
             f"Machine {row['matched_active_outcome']}</span>",
             unsafe_allow_html=True,
         )
@@ -485,10 +483,30 @@ def render_questionnaire() -> None:
         st.caption("Submit your hypothesis to continue.")   
         return
 
+    st.markdown("#### Rule type")
+    col1, col2 = st.columns(2)
+    with col1:
+        st.markdown("""
+        **Conjunctive rule**
+
+        The machine switches on when **ALL** of the Nexioms are present on the machine.
+
+        *Example: If Objects 1 and 3 are Nexioms, the machine only switches on when BOTH Object 1 AND Object 3 are on the machine.*
+        """)
+    with col2:
+        st.markdown("""
+        **Disjunctive rule**
+
+        The machine switches on when **ANY** of the Nexioms are present on the machine.
+
+        *Example: If Objects 1 and 3 are Nexioms, the machine switches on when EITHER Object 1 OR Object 3 (or both) are on the machine.*
+        """)
+
+    rule_options = ["Conjunctive", "Disjunctive", "Other / Unsure"]
     st.session_state.rule_type = st.radio(
         "Which rule type best matches your hypothesis?",
-        options=["Conjunctive", "Disjunctive", "Other / Unsure"],
-        index=None if not st.session_state.rule_type else ["Conjunctive", "Disjunctive", "Other / Unsure"].index(st.session_state.rule_type),
+        options=rule_options,
+        index=None if not st.session_state.rule_type else rule_options.index(st.session_state.rule_type),
         key="rule_type_radio",
         horizontal=True,
     ) or ""
@@ -722,23 +740,57 @@ def render_demographics_page() -> None:
     """, unsafe_allow_html=True)
     st.title("Welcome to the Experiment")
 
-    st.markdown("""
-**Welcome!**
+    instruction_sections = [
+        (
+            "Instructions",
+            """
+In this task, you will help figure out how a "Nexiom" machine works. Only objects that are "Nexioms" will make the machine turn on. If the Nexiom machine switches on, it means that at least one of the objects you put on the machine is a Nexiom. It is possible that not all objects are Nexioms. A test can include one object or multiple objects, and the machine will turn on if any of the objects in that test is a Nexiom.
+""",
+        ),
+        (
+            "Your Role",
+            """
+You will act as an advisor to another person who is trying to discover which objects are Nexioms.
 
-In this experiment, you'll see a series of actions that were used by an active explorer to test a "Nexiom" machine to see which object (or combination of objects) makes it turn ON. **Only objects that are "Nexioms" will make the machine turn on.** **If the Nexiom machine switches on, it means that at least one of the objects you put on the machine is a Nexiom.** It could be just one of them, some of them, or all of them.
-
-In this task, you will act as an advisor for someone who is trying to figure out which objects are Nexioms, which are objects that make the machine turn on.
-
-On each round, you will suggest a test by choosing which objects should be placed on the machine. Your goal is to propose tests that are most useful for figuring out which objects are Nexioms.
-
-After you submit your suggestion, you will see the test that your advisee actually carried out, along with the outcome (whether the machine turned on or off).
-
-The advisee may or may not follow your suggestion exactly. Even if they choose a different test than the one you proposed, you should continue to give the best possible advice based on everything you have observed so far.
+On each round:
+- You will suggest a test by choosing which objects should be placed on the machine.
+- Your goal is to suggest tests that are most informative for identifying which objects are Nexioms.
+""",
+        ),
+        (
+            "What Happens Next",
+            """
+After you submit your suggestion:
+- You will see the test your advisee actually performed.
+- You will also see the outcome (whether the machine turned ON or OFF).
+- The advisee may or may not follow your suggestion exactly.
+""",
+        ),
+        (
+            "Your Goal",
+            """
+Even if the advisee chooses a different test, you should continue to give the best possible advice based on everything you have observed so far.
 
 You will be evaluated based on how informative and helpful your suggested tests are for identifying the Nexioms.
+""",
+        ),
+    ]
 
-Click **"Continue"** to begin.
-    """)
+    current_step = st.session_state.instructions_step
+    visible_count = min(current_step + 1, len(instruction_sections))
+    for idx in range(visible_count):
+        heading, body = instruction_sections[idx]
+        st.markdown(f"### {heading}")
+        st.markdown(body)
+
+    if current_step < len(instruction_sections) - 1:
+        if st.button("Next", type="primary", key="instructions_next"):
+            st.session_state.instructions_step = current_step + 1
+            st.rerun()
+        return
+
+    st.markdown("---")
+    st.markdown("Please enter your information below to begin.")
 
     participant_id = st.text_input("Prolific ID:", value=st.session_state.participant_id).strip()
     col_a, col_b = st.columns(2)
@@ -796,11 +848,11 @@ def render_history_sidebar() -> None:
                 f"box-shadow:0 1px 2px rgba(0,0,0,0.05);"
                 f"'>"
                 f"<div style='font-weight:700;margin-bottom:0.35rem;'>Round {idx}</div>"
-                f"<div style='color:#7b2cbf;margin-bottom:0.2rem;'>You: "
+                f"<div style='color:#7b2cbf;margin-bottom:0.2rem;'>Your proposed test: "
                 f"<code style='color:#7b2cbf;background:transparent;'>{proposed_text}</code></div>"
-                f"<div style='margin-bottom:0.2rem;'>Active: "
+                f"<div style='margin-bottom:0.2rem;'>Your advisee proposed test: "
                 f"<code style='background:transparent;'>{active_text}</code></div>"
-                f"<div>Outcome: <span style='color:{color};font-weight:700'>"
+                f"<div>Your advisee's test outcome: <span style='color:{color};font-weight:700'>"
                 f"Machine {outcome}</span></div>"
                 f"</div>"
             )
@@ -825,8 +877,8 @@ def render_task_page() -> None:
     with st.expander("Instructions", expanded=False):
         st.markdown(
             """
-1. Select one or more objects and click **Test Machine** to submit your proposal.
-2. You will then see the sequence of actions the matched active explorer took for that round, along with the test they ran and its outcome.
+1. Select one or more objects and click **Propose Test** to submit your proposal.
+2. You will then see the test your advisee ran for that round, along with its outcome.
 3. Continue until you reach your test limit, then answer the final questions.
 """
         )
@@ -894,14 +946,14 @@ body {
 }
 
 [data-testid="stSidebar"] {
-    width: 340px !important;
-    min-width: 340px !important;
-    max-width: 340px !important;
+    width: 460px !important;
+    min-width: 460px !important;
+    max-width: 460px !important;
 }
 [data-testid="stSidebar"] > div:first-child {
-    width: 340px !important;
-    min-width: 340px !important;
-    max-width: 340px !important;
+    width: 460px !important;
+    min-width: 460px !important;
+    max-width: 460px !important;
 }
 
 [data-testid="block-container"],
