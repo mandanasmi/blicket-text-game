@@ -433,14 +433,22 @@ def render_test_panel() -> None:
         proposed_text = st.session_state.proposed_tests[idx - 1]["proposed_objects_text"]
         advisee_text = row.get("matched_active_objects_text") or "—"
         st.markdown(f"### Round {idx}")
-        st.markdown(f"Your proposal: `{proposed_text}`")
+        st.markdown(
+            f"<div style='color:#7b2cbf;'>Your proposed test: "
+            f"<code style='color:#7b2cbf;background:transparent;'>{proposed_text}</code></div>",
+            unsafe_allow_html=True,
+        )
         if proposed_text != advisee_text:
             st.markdown("_Your advisee did not listen to you in this round._")
-        st.markdown(f"Your advisee's actual test: `{advisee_text}`")
         st.markdown(
-            f"Result of your advisee's test: "
+            f"<div style='color:#0F9D58;'>Your advisee's actual test: "
+            f"<code style='color:#0F9D58;background:transparent;'>{advisee_text}</code></div>",
+            unsafe_allow_html=True,
+        )
+        st.markdown(
+            f"<div style='color:#0F9D58;'>Your advisee's test outcome: "
             f"<span style='color:{outcome_color};font-weight:700'>"
-            f"Machine {row['matched_active_outcome']}</span>",
+            f"Machine {row['matched_active_outcome']}</span></div>",
             unsafe_allow_html=True,
         )
         st.caption("Earlier rounds are kept in the History panel on the left.")
@@ -850,9 +858,9 @@ def render_history_sidebar() -> None:
                 f"<div style='font-weight:700;margin-bottom:0.35rem;'>Round {idx}</div>"
                 f"<div style='color:#7b2cbf;margin-bottom:0.2rem;'>Your proposed test: "
                 f"<code style='color:#7b2cbf;background:transparent;'>{proposed_text}</code></div>"
-                f"<div style='margin-bottom:0.2rem;'>Your advisee proposed test: "
-                f"<code style='background:transparent;'>{active_text}</code></div>"
-                f"<div>Your advisee's test outcome: <span style='color:{color};font-weight:700'>"
+                f"<div style='color:#0F9D58;margin-bottom:0.2rem;'>Your advisee's actual test: "
+                f"<code style='color:#0F9D58;background:transparent;'>{active_text}</code></div>"
+                f"<div style='color:#0F9D58;'>Your advisee's test outcome: <span style='color:{color};font-weight:700'>"
                 f"Machine {outcome}</span></div>"
                 f"</div>"
             )
