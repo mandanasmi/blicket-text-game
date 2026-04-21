@@ -7,7 +7,6 @@ Design goal:
   for that test index (not a simulation from proposed objects).
 - Participants can propose exactly as many tests as their matched active participant.
 """
-import csv
 import datetime
 import os
 import re
@@ -31,8 +30,10 @@ _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJECT_ROOT = os.path.dirname(_THIS_DIR)
 _ACTIVE_ANALYSIS_DIR = os.path.join(_PROJECT_ROOT, "active_explore", "analysis")
 _TEST_HISTORIES_DIR = os.path.join(_ACTIVE_ANALYSIS_DIR, "test_histories")
-_ACTION_HISTORIES_DIR = os.path.join(_ACTIVE_ANALYSIS_DIR, "all_actions")
-_IDS_CSV = os.path.join(_ACTION_HISTORIES_DIR, "ids.csv")
+_ACTION_HISTORIES_DIR = os.path.join(_ACTIVE_ANALYSIS_DIR, "action_histories")
+_ACTION_HISTORY_SUFFIX = "_action_history.txt"
+
+_ACTION_HISTORY_FILES: Optional[List[str]] = None
 
 firebase_initialized = False
 db_ref = None
@@ -100,17 +101,26 @@ else:
         firebase_init_error = str(e)
 
 
-def load_active_ids() -> List[str]:
-    if not os.path.isfile(_IDS_CSV):
-        return []
-    ids = []
-    with open(_IDS_CSV, "r", newline="") as f:
-        reader = csv.DictReader(f)
-        for row in reader:
-            pid = (row.get("id") or "").strip()
-            if pid:
-                ids.append(pid)
-    return ids
+def get_action_history_file_list() -> List[str]:
+    """Return sorted list of action_history.txt files in _ACTION_HISTORIES_DIR."""
+    global _ACTION_HISTORY_FILES
+    if _ACTION_HISTORY_FILES is None:
+        if os.path.isdir(_ACTION_HISTORIES_DIR):
+            _ACTION_HISTORY_FILES = sorted(
+                os.path.join(_ACTION_HISTORIES_DIR, name)
+                for name in os.listdir(_ACTION_HISTORIES_DIR)
+                if name.endswith(_ACTION_HISTORY_SUFFIX)
+            )
+        else:
+            _ACTION_HISTORY_FILES = []
+    return _ACTION_HISTORY_FILES
+
+
+def _participant_id_from_action_path(path: str) -> str:
+    name = os.path.basename(path)
+    if name.endswith(_ACTION_HISTORY_SUFFIX):
+        return name[: -len(_ACTION_HISTORY_SUFFIX)]
+    return os.path.splitext(name)[0]
 
 
 def parse_test_history_line(line: str) -> Optional[Dict]:
@@ -158,14 +168,13 @@ def _clean_action_line(raw: str) -> str:
     return text
 
 
-def load_action_chunks(active_id: str) -> List[List[str]]:
-    """Partition action_history into per-test chunks.
+def load_action_chunks_from_file(path: str) -> List[List[str]]:
+    """Partition an action_history file into per-test chunks.
 
     Each chunk is the list of cleaned action lines from just after the previous
     test up to and including the current test line. Trailing actions after the
     last test (if any) are discarded.
     """
-    path = os.path.join(_ACTION_HISTORIES_DIR, f"{active_id}_action_history.txt")
     if not os.path.isfile(path):
         return []
     chunks: List[List[str]] = []
@@ -182,21 +191,31 @@ def load_action_chunks(active_id: str) -> List[List[str]]:
     return chunks
 
 
+def _build_assignment(path: str, index: int) -> Dict:
+    """Build assignment payload for a given action_history path."""
+    aid = _participant_id_from_action_path(path)
+    seq = load_assigned_test_sequence(aid)
+    chunks = load_action_chunks_from_file(path)
+    usable = min(len(seq), len(chunks))
+    return {
+        "active_id": aid,
+        "action_history_path": path,
+        "action_history_filename": os.path.basename(path),
+        "sequence": seq[:usable],
+        "action_chunks": chunks[:usable],
+        "assigned_index": index,
+    }
+
+
 def get_next_assignment() -> Dict:
-    active_ids = load_active_ids()
-    valid_pairs = []
-    for aid in active_ids:
-        seq = load_assigned_test_sequence(aid)
-        chunks = load_action_chunks(aid)
-        if len(seq) > 0 and len(chunks) >= len(seq):
-            valid_pairs.append((aid, seq, chunks[: len(seq)]))
-    if not valid_pairs:
+    """Firebase-round-robin file assignment, mirroring passive_app.get_next_action_history_index."""
+    files = get_action_history_file_list()
+    n = len(files)
+    if n == 0:
         return {"active_id": None, "sequence": [], "action_chunks": []}
 
-    n = len(valid_pairs)
     if not firebase_initialized or not db_ref:
-        aid, seq, chunks = valid_pairs[0]
-        return {"active_id": aid, "sequence": seq, "action_chunks": chunks, "assigned_index": 0}
+        return _build_assignment(files[0], 0)
 
     try:
         ref = db_ref.child("_config").child("passive_proposer_next_index")
@@ -208,11 +227,10 @@ def get_next_assignment() -> Dict:
 
         new_value = ref.transaction(updater)
         idx = (new_value - 1) % n
-        aid, seq, chunks = valid_pairs[idx]
-        return {"active_id": aid, "sequence": seq, "action_chunks": chunks, "assigned_index": idx}
-    except Exception:
-        aid, seq, chunks = valid_pairs[0]
-        return {"active_id": aid, "sequence": seq, "action_chunks": chunks, "assigned_index": 0}
+        return _build_assignment(files[idx], idx)
+    except Exception as e:
+        print(f"get_next_assignment failed: {e}")
+        return _build_assignment(files[0], 0)
 
 
 def save_demographics(participant_id: str, age: int, gender: str) -> None:

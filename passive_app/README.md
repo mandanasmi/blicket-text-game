@@ -24,6 +24,31 @@ streamlit run passive_app/app.py --server.port 8504
 
 http://localhost:8504
 
+## Conjunctive case app
+
+There is also a dedicated conjunctive-case collection app with a new UI:
+
+- Training and Test are shown as fixed statements, one at a time, with `Next` buttons.
+- Then participants answer:
+  - `Is Object 4 a Nexiom?`
+  - `Is Object 5 a Nexiom?`
+  - `Is Object 6 a Nexiom?`
+
+Run from project root:
+
+```bash
+./run_conjunctive_case_app.sh
+```
+
+or:
+
+```bash
+streamlit run passive_app/conjunctive_case_app.py --server.port 8505
+```
+
+http://localhost:8505
+
+
 ## Streamlit Cloud
 
 Create an app from this repo, set **Main file path** to `passive_app/app.py`, add Firebase secrets (same TOML as main app; see root STREAMLIT_CLOUD_SECRETS.md). Redeploy. Use `passive_app/requirements.txt` for that app.

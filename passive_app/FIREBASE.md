@@ -21,6 +21,71 @@ const firebaseConfig = {
 
 Do **not** put this in the Python app. The passive app needs the Admin SDK credentials below.
 
+## Conjunctive case app — project **nexiom-passive-lcsc**
+
+`passive_app/conjunctive_case_app.py` saves consent, demographics, and `conjunctive_case_data` under each participant id in the **Realtime Database** for this project when secrets point here.
+
+### Web SDK config (reference only — not used by Streamlit)
+
+```js
+const firebaseConfig = {
+  apiKey: "AIzaSyDmFlucsLyrD3tlehz7KmrVIB2pxlm7tjM",
+  authDomain: "nexiom-passive-lcsc.firebaseapp.com",
+  projectId: "nexiom-passive-lcsc",
+  storageBucket: "nexiom-passive-lcsc.firebasestorage.app",
+  messagingSenderId: "102386483345",
+  appId: "1:102386483345:web:384de1fe379ae8be093f30",
+  measurementId: "G-MRLGXKGQYT"
+};
+```
+
+If your Realtime Database is enabled, add `databaseURL` to the client config from the console (Build → Realtime Database). The Python Admin SDK still needs the **service account** block below; `apiKey` / `appId` are not used by `firebase_admin`.
+
+### Streamlit secrets (Admin SDK) — template
+
+1. In Firebase Console, select project **nexiom-passive-lcsc**.
+2. Enable **Realtime Database** and copy its URL (must look like `https://nexiom-passive-lcsc-default-rtdb.firebaseio.com` or `…firebasedatabase.app`).
+3. Project settings → **Service accounts** → **Generate new private key** → use every field that matches the JSON in the `[firebase]` table below.
+
+Use the same structure as other apps; see `passive_app/conjunctive_case_secrets_nexiom-passive-lcsc.toml.example` for a fill-in template.
+
+```toml
+[firebase]
+project_id = "nexiom-passive-lcsc"
+private_key_id = "from downloaded service account JSON"
+private_key = "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+client_email = "firebase-adminsdk-xxxxx@nexiom-passive-lcsc.iam.gserviceaccount.com"
+client_id = "from JSON"
+client_x509_cert_url = "from JSON"
+database_url = "https://nexiom-passive-lcsc-default-rtdb.firebaseio.com"
+```
+
+Grant the service account access if needed: Realtime Database rules must allow writes from the Admin SDK for your deployment model.
+
+**If a private key is exposed** (chat, screenshot, public repo): delete that key in Google Cloud → IAM → Service Accounts → `firebase-adminsdk-fbsvc@…` → Keys, then generate a new JSON and update Streamlit secrets only—never commit `.streamlit/secrets.toml` (it is gitignored).
+
+## Disjunctive case app — same project **nexiom-passive-lcsc**, disjunctive **database instance**
+
+`passive_app/disjunctive_case_app.py` writes consent, demographics, and `disjunctive_case_data` under each participant id. Use the **disjunctive** Realtime Database URL (often a second database in the same project, e.g. name ending in `-disj`).
+
+- **`project_id`** must be **`nexiom-passive-lcsc`** (match the service account JSON). A typo like **`nexiom-passive-lcsd`** will break authentication.
+- You still need **`private_key_id`** and **`private_key`** from **Generate new private key** in the same project; they are not optional.
+
+Example `database_url` for the disjunctive RTDB (confirm in Firebase Console → Build → Realtime Database):
+
+```toml
+[firebase]
+project_id = "nexiom-passive-lcsc"
+private_key_id = "from service account JSON"
+private_key = "-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----\n"
+client_email = "firebase-adminsdk-fbsvc@nexiom-passive-lcsc.iam.gserviceaccount.com"
+client_id = "from JSON"
+client_x509_cert_url = "from JSON"
+database_url = "https://nexiom-passive-lcsc-disj-default-rtdb.firebaseio.com"
+```
+
+See `passive_app/disjunctive_case_secrets_nexiom-passive-lcsc.toml.example` for a full template.
+
 ## What the passive app needs (Admin SDK)
 
 1. **Realtime Database** – In [Firebase Console](https://console.firebase.google.com/) for **nexiom-passive-participants**, enable **Realtime Database** and copy the database URL (e.g. `https://nexiom-passive-participants-default-rtdb.firebaseio.com`).
