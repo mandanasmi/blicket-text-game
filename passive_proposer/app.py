@@ -30,7 +30,7 @@ _THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 _PROJECT_ROOT = os.path.dirname(_THIS_DIR)
 _ACTIVE_ANALYSIS_DIR = os.path.join(_PROJECT_ROOT, "active_explore", "analysis")
 _TEST_HISTORIES_DIR = os.path.join(_ACTIVE_ANALYSIS_DIR, "test_histories")
-_ACTION_HISTORIES_DIR = os.path.join(_ACTIVE_ANALYSIS_DIR, "action_histories")
+_ACTION_HISTORIES_DIR = os.path.join(_ACTIVE_ANALYSIS_DIR, "all_actions")
 _ACTION_HISTORY_SUFFIX = "_action_history.txt"
 
 _ACTION_HISTORY_FILES: Optional[List[str]] = None
@@ -168,41 +168,70 @@ def _clean_action_line(raw: str) -> str:
     return text
 
 
-def load_action_chunks_from_file(path: str) -> List[List[str]]:
-    """Partition an action_history file into per-test chunks.
+_PLACE_RE = re.compile(r"Placed Object (\d+) on machine", flags=re.IGNORECASE)
+_REMOVE_RE = re.compile(r"Removed Object (\d+) from machine", flags=re.IGNORECASE)
+_TEST_RE = re.compile(
+    r"Test the machine\s*->\s*Nexiom machine is (ON|OFF)", flags=re.IGNORECASE
+)
 
-    Each chunk is the list of cleaned action lines from just after the previous
-    test up to and including the current test line. Trailing actions after the
-    last test (if any) are discarded.
+
+def parse_action_history(path: str):
+    """Return (chunks, sequence) derived from an action_history file.
+
+    Simulates Place/Remove actions across tests so each test's active objects
+    reflect the persistent machine state at test time. Trailing actions after
+    the last test are discarded.
     """
     if not os.path.isfile(path):
-        return []
+        return [], []
     chunks: List[List[str]] = []
+    sequence: List[Dict] = []
     current: List[str] = []
+    on_machine: set = set()
     with open(path, "r") as f:
         for line in f:
             cleaned = _clean_action_line(line)
             if not cleaned:
                 continue
             current.append(cleaned)
-            if re.search(r"Test the machine", cleaned, flags=re.IGNORECASE):
+            m_place = _PLACE_RE.search(cleaned)
+            if m_place:
+                on_machine.add(int(m_place.group(1)))
+                continue
+            m_remove = _REMOVE_RE.search(cleaned)
+            if m_remove:
+                on_machine.discard(int(m_remove.group(1)))
+                continue
+            m_test = _TEST_RE.search(cleaned)
+            if m_test:
+                outcome = m_test.group(1).upper()
+                objs = sorted(on_machine)
+                active_objects_text = ", ".join(f"Object {x}" for x in objs)
+                test_index = len(sequence) + 1
+                sequence.append(
+                    {
+                        "test_index": test_index,
+                        "active_objects_text": active_objects_text,
+                        "machine_outcome": outcome,
+                        "raw_line": f"test {test_index} -> {active_objects_text} -> machine {outcome.lower()}",
+                    }
+                )
                 chunks.append(current)
                 current = []
-    return chunks
+    return chunks, sequence
 
 
 def _build_assignment(path: str, index: int) -> Dict:
     """Build assignment payload for a given action_history path."""
     aid = _participant_id_from_action_path(path)
-    seq = load_assigned_test_sequence(aid)
-    chunks = load_action_chunks_from_file(path)
-    usable = min(len(seq), len(chunks))
+    chunks, sequence = parse_action_history(path)
+    n = min(len(sequence), len(chunks))
     return {
         "active_id": aid,
         "action_history_path": path,
         "action_history_filename": os.path.basename(path),
-        "sequence": seq[:usable],
-        "action_chunks": chunks[:usable],
+        "sequence": sequence[:n],
+        "action_chunks": chunks[:n],
         "assigned_index": index,
     }
 
@@ -725,21 +754,7 @@ Click **"Continue"** to begin.
     if st.button("Continue", type="primary", disabled=not participant_id):
         assignment = get_next_assignment()
         if not assignment.get("sequence"):
-            files = get_action_history_file_list()
             st.error("No active test histories available for assignment.")
-            st.code(
-                "DEBUG\n"
-                f"_ACTION_HISTORIES_DIR = {_ACTION_HISTORIES_DIR}\n"
-                f"dir exists = {os.path.isdir(_ACTION_HISTORIES_DIR)}\n"
-                f"files found = {len(files)}\n"
-                f"first files = {[os.path.basename(p) for p in files[:5]]}\n"
-                f"assignment.active_id = {assignment.get('active_id')}\n"
-                f"firebase_initialized = {firebase_initialized}\n"
-                f"firebase_init_error = {firebase_init_error}\n"
-                f"cwd = {os.getcwd()}\n"
-                f"__file__ dir = {_THIS_DIR}",
-                language=None,
-            )
             return
         st.session_state.participant_id = participant_id
         st.session_state.matched_active_id = assignment["active_id"]
