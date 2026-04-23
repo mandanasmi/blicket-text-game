@@ -7,10 +7,11 @@ Design goal:
   for that test index (not a simulation from proposed objects).
 - Participants can propose exactly as many tests as their matched active participant.
 """
+import csv
 import datetime
 import os
 import re
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Set
 
 import firebase_admin
 import streamlit as st
@@ -34,6 +35,12 @@ _ACTION_HISTORIES_DIR = os.path.join(_ACTIVE_ANALYSIS_DIR, "all_actions")
 _ACTION_HISTORY_SUFFIX = "_action_history.txt"
 
 _ACTION_HISTORY_FILES: Optional[List[str]] = None
+
+# When set, only active IDs listed here are eligible for assignment.
+# Each ID stays eligible until a Firebase entry exists with status == "completed"
+# and passive_proposer_data.source_active_participant_id == that ID.
+_TARGET_IDS_CSV = os.path.join(_THIS_DIR, "missing1.csv")
+_TARGET_IDS: Optional[List[str]] = None
 
 firebase_initialized = False
 db_ref = None
@@ -114,6 +121,50 @@ def get_action_history_file_list() -> List[str]:
         else:
             _ACTION_HISTORY_FILES = []
     return _ACTION_HISTORY_FILES
+
+
+def get_target_ids() -> List[str]:
+    """Active IDs we still need passive-proposer data for."""
+    global _TARGET_IDS
+    if _TARGET_IDS is None:
+        ids: List[str] = []
+        if os.path.isfile(_TARGET_IDS_CSV):
+            with open(_TARGET_IDS_CSV, newline="") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    aid = (row.get("active_participant_id") or "").strip()
+                    if aid:
+                        ids.append(aid)
+        _TARGET_IDS = ids
+    return _TARGET_IDS
+
+
+def get_completed_target_ids() -> Set[str]:
+    """Source active IDs that already have a completed passive_proposer entry in Firebase."""
+    if not firebase_initialized or not db_ref:
+        return set()
+    try:
+        all_entries = db_ref.get() or {}
+    except Exception as e:
+        print(f"get_completed_target_ids failed: {e}")
+        return set()
+    done: Set[str] = set()
+    if not isinstance(all_entries, dict):
+        return done
+    for pid, pv in all_entries.items():
+        if not isinstance(pv, dict):
+            continue
+        if pv.get("status") != "completed":
+            continue
+        ppd = pv.get("passive_proposer_data") or {}
+        src = ppd.get("source_active_participant_id")
+        if src:
+            done.add(src)
+    return done
+
+
+def _action_history_path_for(active_id: str) -> str:
+    return os.path.join(_ACTION_HISTORIES_DIR, f"{active_id}{_ACTION_HISTORY_SUFFIX}")
 
 
 def _participant_id_from_action_path(path: str) -> str:
@@ -237,7 +288,48 @@ def _build_assignment(path: str, index: int) -> Dict:
 
 
 def get_next_assignment() -> Dict:
-    """Firebase-round-robin file assignment, mirroring passive_app.get_next_action_history_index."""
+    """Assign an active source ID to the next participant.
+
+    If a target-ID allowlist is configured (missing1.csv), pick only from IDs
+    that don't yet have a completed passive_proposer entry in Firebase. The
+    same source ID keeps being handed out until its data is successfully
+    saved (status == "completed"). Without an allowlist, fall back to
+    round-robin over all action_history files.
+    """
+    targets = get_target_ids()
+
+    if targets:
+        completed = get_completed_target_ids()
+        remaining = [aid for aid in targets if aid not in completed]
+        if not remaining:
+            return {"active_id": None, "sequence": [], "action_chunks": []}
+
+        # Filter to targets that actually have an action_history file on disk.
+        remaining = [aid for aid in remaining if os.path.isfile(_action_history_path_for(aid))]
+        if not remaining:
+            return {"active_id": None, "sequence": [], "action_chunks": []}
+
+        if not firebase_initialized or not db_ref:
+            aid = remaining[0]
+            return _build_assignment(_action_history_path_for(aid), 0)
+
+        try:
+            ref = db_ref.child("_config").child("passive_proposer_next_index")
+
+            def updater(current):
+                if current is None:
+                    current = 0
+                return int(current) + 1
+
+            new_value = ref.transaction(updater)
+            idx = (new_value - 1) % len(remaining)
+            aid = remaining[idx]
+            return _build_assignment(_action_history_path_for(aid), idx)
+        except Exception as e:
+            print(f"get_next_assignment (targeted) failed: {e}")
+            aid = remaining[0]
+            return _build_assignment(_action_history_path_for(aid), 0)
+
     files = get_action_history_file_list()
     n = len(files)
     if n == 0:
