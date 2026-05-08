@@ -1,9 +1,15 @@
-from cgi import print_arguments, print_environ
 import os
+import sys
 import json
 import random
 import datetime
 import time
+
+# Ensure repo root is on sys.path so env.blicket_text resolves when this
+# script is launched from active_app/ rather than from the repo root.
+_REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _REPO_ROOT not in sys.path:
+    sys.path.insert(0, _REPO_ROOT)
 
 import numpy as np
 import streamlit as st
@@ -1201,21 +1207,9 @@ elif st.session_state.phase == "practice_complete":
             
             num_rounds = 1
             round_configs = []
-            # Rule: secret query param (?e=nex1) or env (NEXIOM_MAIN_RULE); else disjunctive.
-            # Conjunctive-only link uses ?e=nex1 (no "conjunctive" in URL).
-            _SECRET_CONJ = "nex1"
-            try:
-                _qp = st.query_params.get("e")
-            except Exception:
-                _qp = (st.experimental_get_query_params().get("e") or [None])[0]
-            if isinstance(_qp, list):
-                _qp = _qp[0] if _qp else ""
-            _qp = (_qp or "").strip().lower()
-            _env = (os.getenv("NEXIOM_MAIN_RULE") or "").strip().lower()
-            if _qp == _SECRET_CONJ or _env == "conjunctive":
-                current_rule = "conjunctive"
-            else:
-                current_rule = "disjunctive"
+            # Rule: randomly assigned per participant (deterministic from participant ID),
+            # so conjunctive and disjunctive alternate across runs without separate launchers.
+            current_rule = random.choice(["conjunctive", "disjunctive"])
             
             blicket_combinations = [
                 [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
