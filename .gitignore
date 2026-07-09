@@ -14,3 +14,7 @@ data_txt_history/
 *.md
 !README.md
 !**/README.md
+# Streamlit config & secrets (contain Firebase credentials)
+.streamlit/
+STREAMLIT_CLOUD_SECRETS.md
+STREAMLIT_CLOUD_SECRETS_READY.toml
