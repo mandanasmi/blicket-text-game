@@ -1207,9 +1207,15 @@ elif st.session_state.phase == "practice_complete":
             
             num_rounds = 1
             round_configs = []
-            # Rule: randomly assigned per participant (deterministic from participant ID),
-            # so conjunctive and disjunctive alternate across runs without separate launchers.
-            current_rule = random.choice(["conjunctive", "disjunctive"])
+            # Rule: pinned via NEXIOM_MAIN_RULE when set (extension experiments use
+            # dedicated conjunctive / disjunctive links, each with its own Firebase),
+            # otherwise randomly assigned per participant so a single launcher can
+            # alternate conjunctive and disjunctive without separate deployments.
+            _pinned_rule = os.getenv("NEXIOM_MAIN_RULE", "").strip().lower()
+            if _pinned_rule in ("conjunctive", "disjunctive"):
+                current_rule = _pinned_rule
+            else:
+                current_rule = random.choice(["conjunctive", "disjunctive"])
             
             blicket_combinations = [
                 [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
@@ -1251,6 +1257,8 @@ elif st.session_state.phase == "practice_complete":
                 'comprehension': comprehension_config,  # Add comprehension phase config
                 'rounds': round_configs,  # Main game rounds config
                 'interface_type': 'text',
+                # Tag the deployment/condition so each extension Firebase is self-describing.
+                'condition': os.getenv("NEXIOM_CONDITION", ""),
             }
             save_participant_config(st.session_state.current_participant_id, config)
             

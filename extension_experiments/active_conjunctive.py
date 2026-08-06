@@ -10,6 +10,7 @@ import runpy
 
 os.environ["NEXIOM_MAIN_RULE"] = "conjunctive"
 os.environ["NEXIOM_CONDITION"] = "active_conjunctive"
+os.environ["NEXIOM_EXTENSION_QUESTIONS"] = "1"
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)

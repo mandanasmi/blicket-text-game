@@ -1,6 +1,7 @@
 import os
 import json
 import random
+import itertools
 import datetime
 import streamlit as st
 import numpy as np
@@ -129,23 +130,23 @@ def save_game_data(participant_id, game_data):
         # For main game, save directly (overwrite if exists)
         # For comprehension, use a specific key
         if phase == 'comprehension':
-            print(f"💾 Saving comprehension data to Nexiom database")
-            print(f"💾 Saving comprehension data to path: {participant_id}/comprehension")
+            print(f"Saving comprehension data to Nexiom database")
+            print(f"Saving comprehension data to path: {participant_id}/comprehension")
             print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
             if 'test_timings' in enhanced_game_data:
-                print(f"   💾 test_timings: {len(enhanced_game_data['test_timings'])} entries")
+                print(f"test_timings: {len(enhanced_game_data['test_timings'])} entries")
             games_ref.set(enhanced_game_data)
-            print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
+            print(f"Successfully saved {phase} data to Nexiom database for {participant_id}")
         else:
-            print(f"💾 Saving main game data to Nexiom database")
-            print(f"💾 Saving main game data to path: {participant_id}/main_game")
+            print(f"Saving main game data to Nexiom database")
+            print(f"Saving main game data to path: {participant_id}/main_game")
             print(f"   Data keys: {list(enhanced_game_data.keys())[:10]}...")
             if 'test_timings' in enhanced_game_data:
-                print(f"   💾 test_timings: {len(enhanced_game_data['test_timings'])} entries")
+                print(f"test_timings: {len(enhanced_game_data['test_timings'])} entries")
             games_ref.set(enhanced_game_data)
-            print(f"✅ Successfully saved {phase} data to Nexiom database for {participant_id}")
+            print(f" Successfully saved {phase} data to Nexiom database for {participant_id}")
     except Exception as e:
-        print(f"❌ Failed to save game data for {participant_id}: {e}")
+        print(f"Failed to save game data for {participant_id}: {e}")
         import traceback
         print(f"Full traceback: {traceback.format_exc()}")
         print("Game data (not saved):", game_data)
@@ -258,14 +259,14 @@ def save_intermediate_progress(participant_id, round_config, current_round, tota
     try:
         # Only save intermediate progress for comprehension phase, NOT for main experiment
         if not is_practice:
-            print(f"⚠️ Skipping intermediate progress save for main_experiment")
+            print(f" Skipping intermediate progress save for main_experiment")
             return
         
         phase = "comprehension"
         
         # Check if Firebase is initialized
         if not firebase_admin._apps:
-            print(f"⚠️ Firebase not initialized - skipping {phase} progress save")
+            print(f" Firebase not initialized - skipping {phase} progress save")
             return
         
         # Get database reference (uses Nexiom database initialized in app.py)
@@ -385,6 +386,119 @@ def save_practice_question_answer(participant_id, answer_text):
         import traceback
         print(f"Failed to save practice question answer for {participant_id}: {e}")
         print(f"Full traceback: {traceback.format_exc()}")
+
+
+def extension_questions_enabled():
+    """True when this deployment should show the extra combination / turn-off questions.
+
+    Enabled via the NEXIOM_EXTENSION_QUESTIONS env var (set by the extension_experiments
+    wrappers), or via a `NEXIOM_EXTENSION_QUESTIONS` key in that deployment's Streamlit
+    Cloud secrets (same mechanism already used for Firebase credentials) - this lets a
+    single active_app/app.py deployment (e.g. act-noc, act-sid) opt in from its own
+    dashboard without a code change or affecting other deployments. Unset/false leaves
+    the original flow unchanged.
+    """
+    if os.getenv("NEXIOM_EXTENSION_QUESTIONS", "").strip().lower() in ("1", "true", "yes"):
+        return True
+    try:
+        if hasattr(st, "secrets") and "NEXIOM_EXTENSION_QUESTIONS" in st.secrets:
+            return str(st.secrets["NEXIOM_EXTENSION_QUESTIONS"]).strip().lower() in ("1", "true", "yes")
+    except Exception:
+        pass
+    return False
+
+
+def build_main_round_data(round_config, current_round, is_practice):
+    """Build the final main-experiment round_data dict from session state.
+
+    Extracted from the FINISH TASK handler so the plain flow and the extension-questions
+    flow produce an identical base record (the extension flow merges extra fields on top).
+    """
+    blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
+    rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
+    rule_type = st.session_state.get("rule_type", "")
+
+    # Extract user's chosen blickets (objects marked as "Yes")
+    user_chosen_blickets = []
+    for i in range(round_config['num_objects']):
+        if blicket_classifications.get(f"object_{i}", "No") == "Yes":
+            user_chosen_blickets.append(i)  # 0-based index
+
+    current_game_state = st.session_state.get("game_state")
+
+    end_time = datetime.datetime.now()
+    total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
+
+    now = datetime.datetime.now()
+    session_id = f"session_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
+
+    label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
+    object_labels_mapping = {}
+    for obj_idx in range(round_config['num_objects']):
+        object_labels_mapping[obj_idx] = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)
+
+    user_chosen_blickets_with_labels = {}
+    for blicket_idx in user_chosen_blickets:
+        label = label_prefix[blicket_idx] if is_practice else str(blicket_idx + 1)
+        user_chosen_blickets_with_labels[label] = blicket_idx
+
+    blicket_classifications_with_labels = {}
+    for obj_idx in range(round_config['num_objects']):
+        label = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)
+        classification = blicket_classifications.get(f"object_{obj_idx}", "No")
+        blicket_classifications_with_labels[label] = {
+            "index": obj_idx,
+            "classification": classification,
+        }
+
+    round_data = {
+        "session_id": session_id,
+        "start_time": st.session_state.game_start_time.isoformat(),
+        "end_time": end_time.isoformat(),
+        "total_time_seconds": total_time_seconds,
+        "config": round_config,
+        "user_test_actions": st.session_state.get("user_test_actions", []),
+        "action_history": st.session_state.get("action_history", []),
+        "state_history": st.session_state.get("state_history", []),
+        "test_timings": st.session_state.get("test_timings", []),
+        "total_actions": len(st.session_state.get("user_test_actions", [])),
+        "action_history_length": len(st.session_state.get("action_history", [])),
+        "total_steps_taken": st.session_state.get("steps_taken", 0),
+        "object_labels_mapping": object_labels_mapping,
+        "blicket_classifications": blicket_classifications,
+        "blicket_classifications_with_labels": blicket_classifications_with_labels,
+        "user_chosen_blickets": sorted(user_chosen_blickets),
+        "user_chosen_blickets_with_labels": user_chosen_blickets_with_labels,
+        "rule_hypothesis": rule_hypothesis,
+        "rule_type": rule_type if rule_type else "",
+        "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))) if current_game_state else convert_numpy_types(round_config.get('blicket_indices', [])),
+        "true_rule": round_config['rule'],
+        "final_machine_state": bool(current_game_state.get('true_state', [False])[-1]) if current_game_state else False,
+        "final_objects_on_machine": list(st.session_state.get("selected_objects", set())),
+        "rule": round_config['rule'],
+        "phase": "main_experiment",
+        "interface_type": "text",
+    }
+    return round_data
+
+
+def finalize_main_round(participant_id, round_config, current_round, is_practice, save_data_func, extra_fields=None):
+    """Assemble, save, and tear down the final main-experiment round."""
+    round_data = build_main_round_data(round_config, current_round, is_practice)
+    if extra_fields:
+        round_data.update(extra_fields)
+
+    round_data = convert_numpy_types(round_data)
+
+    if save_data_func:
+        save_data_func(participant_id, round_data)
+    else:
+        save_game_data(participant_id, round_data)
+
+    reset_game_session_state()
+
+    st.session_state.phase = "practice_complete" if is_practice else "end"
+
 
 def textual_blicket_game_page(participant_id, round_config, current_round, total_rounds, save_data_func=None, use_visual_mode=None, is_practice=False):
     """Main blicket game page - text-only interface"""
@@ -1585,125 +1699,132 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Check if rule type is provided
             rule_type = st.session_state.get("rule_type", "")
             
-            if st.button("FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
-                    # Get blicket classifications directly from saved tracked key
-                    blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
-                    print(f"🔍 DEBUG (FINAL): Using saved_blicket_classifications directly: {blicket_classifications}")
-                
-                    # Get rule hypothesis and rule type from session state
-                    # Use saved_rule_hypothesis which was saved when leaving the text_area screen
-                    rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
-                    rule_type = st.session_state.get("rule_type", "")
-                    
-                    # Debug: Print rule hypothesis
-                    print(f"🔍 Round {current_round + 1} (FINAL): rule_hypothesis = {rule_hypothesis[:100] if rule_hypothesis else 'EMPTY'}...")
-                    print(f"🔍 Round {current_round + 1} (FINAL): rule_type = {rule_type}")
-                    
-                    # Extract user's chosen blickets (objects marked as "Yes")
-                    user_chosen_blickets = []
-                    for i in range(round_config['num_objects']):
-                        classification = blicket_classifications.get(f"object_{i}", "No")
-                        print(f"🔍 Checking object_{i} (FINAL): classification = '{classification}'")
-                        if classification == "Yes":
-                            user_chosen_blickets.append(i)  # 0-based index
-                            print(f"   ✅ Added {i} to user_chosen_blickets")
-                    
-                    print(f"🔍 Final user_chosen_blickets: {user_chosen_blickets}")
-                    
-                    # Get current game state from session state (ensure we have the latest)
-                    current_game_state = st.session_state.get("game_state", game_state)
-                    
-                    # Calculate total time spent on this round
-                    end_time = datetime.datetime.now()
-                    total_time_seconds = (end_time - st.session_state.game_start_time).total_seconds()
-                    
-                    # Generate unique session ID for main phase
-                    now = datetime.datetime.now()
-                    session_id = f"session_{now.strftime('%Y%m%d_%H%M%S_%f')[:-3]}"
-                    
-                    # Create object labels mapping for this round
-                    label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
-                    object_labels_mapping = {}
-                    for obj_idx in range(round_config['num_objects']):
-                        label = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)  # A/B/C or 1/2/3/4
-                        object_labels_mapping[obj_idx] = label  # Map 0-based index to label
-                    
-                    # Map user_chosen_blickets to labels
-                    user_chosen_blickets_with_labels = {}
-                    for blicket_idx in user_chosen_blickets:
-                        label = label_prefix[blicket_idx] if is_practice else str(blicket_idx + 1)
-                        user_chosen_blickets_with_labels[label] = blicket_idx
-                    
-                    # Map blicket_classifications to labels
-                    blicket_classifications_with_labels = {}
-                    for obj_idx in range(round_config['num_objects']):
-                        label = label_prefix[obj_idx] if is_practice else str(obj_idx + 1)
-                        classification = blicket_classifications.get(f"object_{obj_idx}", "No")
-                        blicket_classifications_with_labels[label] = {
-                            "index": obj_idx,
-                            "classification": classification
-                        }
-                    
-                    # Save final round data with detailed action tracking
-                    round_data = {
-                        "session_id": session_id,  # Unique identifier for this session
-                        "start_time": st.session_state.game_start_time.isoformat(),
-                        "end_time": end_time.isoformat(),
-                        "total_time_seconds": total_time_seconds,
-                        "config": round_config,
-                        "user_test_actions": st.session_state.get("user_test_actions", []),  # All place/remove/test actions with labels
-                        "action_history": st.session_state.get("action_history", []),  # Detailed action history
-                        "state_history": st.session_state.get("state_history", []),  # State changes with object labels
-                        "test_timings": st.session_state.get("test_timings", []),  # Time for each test button press
-                        "total_actions": len(st.session_state.get("user_test_actions", [])),
-                        "action_history_length": len(st.session_state.get("action_history", [])),
-                        "total_steps_taken": st.session_state.get("steps_taken", 0),
-                        "object_labels_mapping": object_labels_mapping,  # New: Mapping of indices to labels
-                        "blicket_classifications": blicket_classifications,  # Objects picked as blickets (object_0, object_1, etc. with Yes/No answers)
-                        "blicket_classifications_with_labels": blicket_classifications_with_labels,  # New: Classifications with labels
-                        "user_chosen_blickets": sorted(user_chosen_blickets),  # User's chosen blicket indices [0, 2] (0-based)
-                        "user_chosen_blickets_with_labels": user_chosen_blickets_with_labels,  # New: Chosen blickets with labels
-                        "rule_hypothesis": rule_hypothesis,  # Rule inference input from user
-                        "rule_type": rule_type if rule_type else "",  # Rule classification (conjunctive vs disjunctive)
-                        "true_blicket_indices": convert_numpy_types(current_game_state.get('blicket_indices', round_config.get('blicket_indices', []))),  # Ground truth blicket indices (0-based)
-                        "true_rule": round_config['rule'],  # Ground truth rule for this round
-                        "final_machine_state": bool(current_game_state.get('true_state', [False])[-1]) if current_game_state else False,
-                        "final_objects_on_machine": list(st.session_state.get("selected_objects", set())),
-                        "rule": round_config['rule'],  # Keep for compatibility
-                        "phase": "main_experiment",
-                        "interface_type": "text"
-                    }
-                    
-                    # Debug: Print what will be saved to Firebase
-                    print(f"💾 Saving to Firebase - Round {current_round + 1} (FINAL):")
-                    print(f"   - rule_type in dict: '{round_data.get('rule_type', 'MISSING')}'")
-                    print(f"   - rule_hypothesis in dict: '{round_data.get('rule_hypothesis', 'MISSING')[:50] if round_data.get('rule_hypothesis') else 'EMPTY'}...'")
-                    print(f"   - user_chosen_blickets in dict: {round_data.get('user_chosen_blickets', 'MISSING')}")
-                    print(f"   - blicket_classifications in dict: {round_data.get('blicket_classifications', 'MISSING')}")
-                    
-                    # Convert numpy types to ensure Firebase compatibility
-                    round_data = convert_numpy_types(round_data)
-                    print(f"💾 After convert_numpy_types (FINAL) - rule_type: '{round_data.get('rule_type', 'MISSING')}'")
-                    
-                    # Use the provided save function or default Firebase function
-                    if save_data_func:
-                        save_data_func(participant_id, round_data)
+            # In extension deployments, the "FINISH TASK" button becomes "NEXT" and routes
+            # to the extra combination / turn-off questions before saving.
+            finish_label = "NEXT" if (extension_questions_enabled() and not is_practice) else "FINISH TASK"
+            if st.button(finish_label, type="primary", disabled=not rule_type, use_container_width=True):
+                    if extension_questions_enabled() and not is_practice:
+                        # Defer save: collect the extra questions first.
+                        st.session_state.visual_game_state = "extension_questions"
+                        st.rerun()
                     else:
-                        save_game_data(participant_id, round_data)
-                    
-                    # Clear session state completely for phase transition
-                    reset_game_session_state()
-                    
-                    # Return to main app for completion
-                    if is_practice:
-                        st.session_state.phase = "practice_complete"
-                    else:
-                        st.session_state.phase = "end"
-                    st.rerun()
-            
+                        print(f"🔍 Round {current_round + 1} (FINAL): rule_type = {rule_type}")
+                        finalize_main_round(
+                            participant_id, round_config, current_round, is_practice, save_data_func
+                        )
+                        st.rerun()
+
             # Show message if button is disabled
             if not rule_type:
                 st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type (Conjunctive or Disjunctive)</p>", unsafe_allow_html=True)
+
+    elif st.session_state.visual_game_state == "extension_questions" and not is_practice:
+        # ---- Extra questions asked only in the extension deployments ----
+        num_objects = round_config['num_objects']
+        blicket_classifications = st.session_state.get("saved_blicket_classifications", {})
+        # 0-based indices the participant marked as Nexioms.
+        chosen = sorted(
+            i for i in range(num_objects)
+            if blicket_classifications.get(f"object_{i}") == "Yes"
+        )
+
+        def _label(idx):
+            return str(idx + 1)
+
+        def _combo_text(combo):
+            labels = [f"Object {_label(i)}" for i in combo]
+            if len(labels) == 1:
+                return f"{labels[0]} only"
+            return " & ".join(labels)
+
+        st.markdown("""
+        <div style="padding: 20px; border-radius: 15px; background-color: #e8f5e9; border: 2px solid #43a047; margin: 20px 0;">
+            <h3 style="margin: 0; text-align: center; color: #1b5e20;">🔎 A Few More Questions</h3>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #2e7d32;">Based on what you concluded, predict what the Nexiom machine does in each situation below.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 1) Combination predictions over the objects the participant called Nexioms.
+        combos = []
+        for r in range(1, len(chosen) + 1):
+            combos.extend(itertools.combinations(chosen, r))
+
+        combo_answers = {}
+        if combos:
+            st.markdown("### If only these object(s) are on the machine, is it ON or OFF?")
+            for combo in combos:
+                key = f"ext_combo_{'_'.join(str(i) for i in combo)}"
+                combo_answers[combo] = st.radio(
+                    _combo_text(combo),
+                    ["ON", "OFF"],
+                    key=key,
+                    index=None,
+                    horizontal=True,
+                )
+        elif len(chosen) == 0:
+            st.markdown(
+                "*You did not mark any object as a Nexiom, so there are no combinations to ask about.*"
+            )
+
+        # 2) Turn-off question: all objects present, which would you remove to switch it OFF?
+        st.markdown("---")
+        all_labels = ", ".join(f"Object {_label(i)}" for i in range(num_objects))
+        st.markdown(f"### Turning the machine OFF")
+        st.markdown(
+            f"Suppose **{all_labels}** are all on the machine and it is currently **ON**. "
+            f"Which object(s) would you remove to make it go **OFF**? (Select all that apply.)"
+        )
+        remove_selected = []
+        for i in range(num_objects):
+            if st.checkbox(f"Remove Object {_label(i)}", key=f"ext_remove_{i}"):
+                remove_selected.append(i)
+
+        # Validation: every combination answered, and at least one object chosen to remove.
+        all_combos_answered = all(combo_answers.get(c) is not None for c in combos)
+        removal_made = len(remove_selected) > 0
+
+        missing = []
+        if not all_combos_answered:
+            missing.append("Please answer every ON/OFF question above.")
+        if not removal_made:
+            missing.append("Please select at least one object to remove.")
+
+        st.markdown("---")
+        submit_clicked = st.button(
+            "FINISH TASK",
+            type="primary",
+            use_container_width=True,
+            disabled=bool(missing),
+        )
+        for msg in missing:
+            st.markdown(f"<p style='color: #dc3545; font-size: 14px;'>{msg}</p>", unsafe_allow_html=True)
+
+        if submit_clicked and not missing:
+            combination_predictions = [
+                {
+                    "objects": [i + 1 for i in combo],        # 1-based labels
+                    "object_indices": list(combo),            # 0-based indices
+                    "prediction": combo_answers[combo],       # "ON" or "OFF"
+                }
+                for combo in combos
+            ]
+            extra_fields = {
+                "extension_questions": {
+                    "chosen_nexioms": [i + 1 for i in chosen],
+                    "chosen_nexiom_indices": chosen,
+                    "combination_predictions": combination_predictions,
+                    "turn_off_question": {
+                        "prompt_objects": [i + 1 for i in range(num_objects)],
+                        "objects_to_remove": [i + 1 for i in remove_selected],
+                        "object_indices_to_remove": remove_selected,
+                    },
+                }
+            }
+            finalize_main_round(
+                participant_id, round_config, current_round, is_practice, save_data_func,
+                extra_fields=extra_fields,
+            )
+            st.rerun()
 
 if __name__ == "__main__":
     # Test the textual game
