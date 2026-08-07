@@ -408,6 +408,27 @@ def extension_questions_enabled():
     return False
 
 
+def hide_history_in_qa_enabled():
+    """True when this deployment should hide the Test/Action History panel once the
+    participant leaves exploration (i.e. from the Nexiom classification question onward
+    through the rest of Q&A), so they answer from memory - matching the classic Gopnik
+    blicket-detector paradigm.
+
+    Enabled via the NEXIOM_HIDE_HISTORY_IN_QA env var, or a matching key in that
+    deployment's Streamlit Cloud secrets (same opt-in mechanism as
+    extension_questions_enabled()), so this is a separate condition run on its own
+    deployment link rather than a change to existing "with history" links/data.
+    """
+    if os.getenv("NEXIOM_HIDE_HISTORY_IN_QA", "").strip().lower() in ("1", "true", "yes"):
+        return True
+    try:
+        if hasattr(st, "secrets") and "NEXIOM_HIDE_HISTORY_IN_QA" in st.secrets:
+            return str(st.secrets["NEXIOM_HIDE_HISTORY_IN_QA"]).strip().lower() in ("1", "true", "yes")
+    except Exception:
+        pass
+    return False
+
+
 def grade_extension_answers(rule, true_blicket_indices, combination_predictions, objects_to_remove_indices, num_objects):
     """Auto-grade the intervention (combination + turn-off) answers against ground truth.
 
@@ -628,7 +649,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         print(f"   - Nexioms: {round_config['num_blickets']}")
         print(f"   - Rule: {round_config['rule']}")
         print(f"   - Nexiom indices: {round_config.get('blicket_indices', 'None')}")
-        
+
         # Initialize fixed shape images for this round (ensure different images)
         if not use_text_version:
             st.session_state.shape_images = []
@@ -642,7 +663,16 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                         break
                 shape_path = f"images/shape{shape_num}.png"
                 st.session_state.shape_images.append(get_image_base64(shape_path))
-    
+
+    # In the "hide history in Q&A" condition, the Test/Action History panels disappear
+    # once the participant leaves exploration (starting with the Nexiom classification
+    # question), so they answer from memory rather than by re-reading their test log.
+    qa_history_hidden = (
+        hide_history_in_qa_enabled()
+        and not is_practice
+        and st.session_state.visual_game_state != "exploration"
+    )
+
     # Get environment state
     env = st.session_state.env
     game_state = st.session_state.game_state
@@ -688,10 +718,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             Test History
         </div>
         """, unsafe_allow_html=True)
-        
+
         history_container = st.container()
         with history_container:
-            if st.session_state.state_history:
+            if qa_history_hidden:
+                st.markdown(
+                    "<div style='padding: 20px; text-align: center; background-color: #f0f0f0; "
+                    "border-radius: 5px; color: #666; font-size: 16px;'>"
+                    "Please answer from what you remember.</div>",
+                    unsafe_allow_html=True,
+                )
+            elif st.session_state.state_history:
                 total_tests = len(st.session_state.state_history)
                 max_tests = 5 if is_practice else 16
                 st.markdown(
@@ -849,7 +886,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     label_prefix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" if is_practice else "1234567890"
     
     # Text-only version: Display action history
-    if use_text_version:
+    if use_text_version and not qa_history_hidden:
         st.markdown("<div style='font-size: 30px !important; font-weight: 700; margin-bottom: 0.5rem;'>Action History</div>", unsafe_allow_html=True)
         if st.session_state.action_history:
             # Limit visible entries to roughly eight before scrolling
