@@ -1582,21 +1582,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             *Example: If Objects 1 and 3 are Nexioms, the machine switches on when EITHER Object 1 OR Object 3 (or both) are on the machine.*
             """)
         
-        # In the extension deployments, rule description/inference is asked here at the
-        # end, after the intervention questions, instead of back on the Nexiom classification
-        # screen.
-        ask_hypothesis_here = extension_questions_enabled() and not is_practice
-        if ask_hypothesis_here:
-            st.markdown("### Rule Inference")
-            st.markdown("Based on your observations, describe how the objects turn on this Nexiom machine.")
-            st.text_area(
-                "What do you think is the rule?",
-                placeholder="Describe your hypothesis about how the Nexiom machine determines when to switch on...",
-                height=100,
-                key="rule_hypothesis"
-            )
-            st.markdown("---")
-
         rule_type = st.radio(
             "What type of rule do you think applies?",
             ["Conjunctive (ALL Nexioms must be present)", "Disjunctive (ANY Nexiom can activate)"],
@@ -1616,8 +1601,6 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
         print(f"🔍 Retrieved rule_type: '{rule_type}'")
 
-        hypothesis_missing_here = ask_hypothesis_here and not rule_hypothesis.strip()
-        
         # Show Next Round button for all rounds except the last one
         # With num_rounds = 1, this will always be False, so FINISH TASK will show
         if current_round + 1 < total_rounds:
@@ -1775,13 +1758,10 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             rule_type = st.session_state.get("rule_type", "")
 
             # By this point the extension deployments have already collected the
-            # intervention (combination / turn-off) questions, so this screen always
-            # finishes the task.
-            submit_disabled = (not rule_type) or hypothesis_missing_here
-            if st.button("FINISH TASK", type="primary", disabled=submit_disabled, use_container_width=True):
+            # intervention (combination / turn-off) questions and the rule hypothesis,
+            # so this screen always finishes the task.
+            if st.button("FINISH TASK", type="primary", disabled=not rule_type, use_container_width=True):
                     print(f"🔍 Round {current_round + 1} (FINAL): rule_type = {rule_type}")
-                    if ask_hypothesis_here:
-                        st.session_state["saved_rule_hypothesis"] = rule_hypothesis.strip()
                     extra_fields = st.session_state.pop("saved_extension_fields", None)
                     finalize_main_round(
                         participant_id, round_config, current_round, is_practice, save_data_func,
@@ -1789,11 +1769,42 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     )
                     st.rerun()
 
-            # Show message(s) if button is disabled
+            # Show message if button is disabled
             if not rule_type:
                 st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type (Conjunctive or Disjunctive)</p>", unsafe_allow_html=True)
-            if hypothesis_missing_here:
-                st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please enter a rule hypothesis.</p>", unsafe_allow_html=True)
+
+    elif st.session_state.visual_game_state == "rule_inference" and not is_practice:
+        # ---- Rule description/inference, asked after the intervention questions and
+        # before the final rule-type (conjunctive/disjunctive) selection. ----
+        st.markdown("""
+        <div style="padding: 20px; border-radius: 15px; background-color: #e3f2fd; border: 2px solid #2196f3; margin: 20px 0;">
+            <h3 style="margin: 0; text-align: center; color: #1565c0;">🧠 Rule Inference</h3>
+            <p style="margin: 10px 0 0 0; text-align: center; color: #1976d2;">Based on your observations, describe how the objects turn on this Nexiom machine.</p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        rule_input_value = st.text_area(
+            "What do you think is the rule?",
+            placeholder="Describe your hypothesis about how the Nexiom machine determines when to switch on...",
+            height=100,
+            key="rule_hypothesis"
+        )
+        current_hypothesis = rule_input_value.strip()
+
+        st.markdown("---")
+        next_button_clicked = st.button(
+            "NEXT: Rule Type Classification",
+            type="primary",
+            use_container_width=True,
+            disabled=not current_hypothesis,
+        )
+        if not current_hypothesis:
+            st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please enter a rule hypothesis.</p>", unsafe_allow_html=True)
+
+        if next_button_clicked and current_hypothesis:
+            st.session_state["saved_rule_hypothesis"] = current_hypothesis
+            st.session_state.visual_game_state = "rule_type_classification"
+            st.rerun()
 
     elif st.session_state.visual_game_state == "extension_questions" and not is_practice:
         # ---- Extra questions asked only in the extension deployments ----
@@ -1918,7 +1929,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     },
                 }
             }
-            st.session_state.visual_game_state = "rule_type_classification"
+            st.session_state.visual_game_state = "rule_inference"
             st.rerun()
 
 if __name__ == "__main__":
