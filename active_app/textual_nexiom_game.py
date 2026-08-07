@@ -408,6 +408,55 @@ def extension_questions_enabled():
     return False
 
 
+def grade_extension_answers(rule, true_blicket_indices, combination_predictions, objects_to_remove_indices, num_objects):
+    """Auto-grade the intervention (combination + turn-off) answers against ground truth.
+
+    `rule` is "conjunctive" or "disjunctive"; `true_blicket_indices` are the ground-truth
+    blicket indices (0-based). Baseline for the turn-off question is every object present
+    (which is always ON, since that set contains every true blicket regardless of rule).
+    """
+    true_blickets = set(true_blicket_indices)
+
+    def is_on(present_indices):
+        present = set(present_indices)
+        if not true_blickets:
+            return False
+        if rule == "conjunctive":
+            return true_blickets.issubset(present)
+        return len(true_blickets & present) > 0  # disjunctive
+
+    graded_predictions = []
+    for entry in combination_predictions:
+        correct_answer = "ON" if is_on(entry["object_indices"]) else "OFF"
+        graded_predictions.append({
+            **entry,
+            "correct_answer": correct_answer,
+            "is_correct": entry.get("prediction") == correct_answer,
+        })
+
+    remove_set = set(objects_to_remove_indices)
+    remaining = set(range(num_objects)) - remove_set
+    actually_turns_off = not is_on(remaining)
+
+    if rule == "conjunctive":
+        # Any single true blicket is sufficient to remove.
+        minimal_required_count = 1 if true_blickets else 0
+        is_minimal_correct = len(remove_set) == 1 and remove_set.issubset(true_blickets)
+    else:
+        # Disjunctive: every true blicket must be removed.
+        minimal_required_count = len(true_blickets)
+        is_minimal_correct = remove_set == true_blickets
+
+    turn_off_grading = {
+        "actually_turns_off": actually_turns_off,
+        "is_minimal_correct": is_minimal_correct,
+        "num_removed": len(remove_set),
+        "minimal_required_count": minimal_required_count,
+    }
+
+    return graded_predictions, turn_off_grading
+
+
 def build_main_round_data(round_config, current_round, is_practice):
     """Build the final main-experiment round_data dict from session state.
 
@@ -1394,55 +1443,63 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 
                 st.markdown("</div></div>", unsafe_allow_html=True)
         
-        # Add rule question
-        st.markdown("---")
-        st.markdown("### Rule Inference")
-        st.markdown("Based on your observations, describe how the objects turn on this Nexiom machine.")
-        rule_input_value = st.text_area(
-            "What do you think is the rule?",
-            placeholder="Describe your hypothesis about how the Nexiom machine determines when to switch on...",
-            height=100,
-            key="rule_hypothesis"
-        )
-        
+        # In the extension deployments, rule description/inference is asked at the very
+        # end (after the intervention questions), so skip it here and go straight to the
+        # intervention questions once Nexiom classification is done.
+        skip_hypothesis_here = extension_questions_enabled() and not is_practice
+
+        current_hypothesis = ""
+        if not skip_hypothesis_here:
+            # Add rule question
+            st.markdown("---")
+            st.markdown("### Rule Inference")
+            st.markdown("Based on your observations, describe how the objects turn on this Nexiom machine.")
+            rule_input_value = st.text_area(
+                "What do you think is the rule?",
+                placeholder="Describe your hypothesis about how the Nexiom machine determines when to switch on...",
+                height=100,
+                key="rule_hypothesis"
+            )
+            current_hypothesis = rule_input_value.strip()
+
         # Navigation buttons - allow users to save and continue or finish
         st.markdown("---")
-        st.markdown("### Continue to Rule Type Classification")
-        
+        next_state = "extension_questions" if skip_hypothesis_here else "rule_type_classification"
+        next_button_label = "NEXT" if skip_hypothesis_here else "NEXT: Rule Type Classification"
+        if not skip_hypothesis_here:
+            st.markdown("### Continue to Rule Type Classification")
+
         # Check if all blicket questions are answered
         all_blicket_answered = True
         for i in range(round_config['num_objects']):
             if st.session_state.get(f"blicket_q_{i}", None) is None:
                 all_blicket_answered = False
                 break
-        
-                # Check if rule hypothesis is provided
-        current_hypothesis = rule_input_value.strip()
-        
+
         # Determine what is still missing and show inline guidance
         missing_messages = []
         if not all_blicket_answered:
             missing_messages.append("Please answer all Nexiom questions.")
-        if not current_hypothesis:
+        if not skip_hypothesis_here and not current_hypothesis:
             missing_messages.append("Please enter a rule hypothesis.")
-        
+
         button_disabled = bool(missing_messages)
         next_button_clicked = st.button(
-            "NEXT: Rule Type Classification",
+            next_button_label,
             type="primary",
             use_container_width=True,
             disabled=button_disabled
         )
-        
+
         for msg in missing_messages:
             st.markdown(f"<p style='color: #dc3545; font-size: 14px;'>{msg}</p>", unsafe_allow_html=True)
-        
+
         if next_button_clicked and not button_disabled:
             # All validations passed
             print(f"🔍 DEBUG: Raw rule_hypothesis from widget: '{st.session_state.get('rule_hypothesis', 'NOT FOUND')}'")
             print(f"🔍 DEBUG: Trimmed current_hypothesis: '{current_hypothesis}'")
-                
-            # Save Nexiom classifications before moving to rule type
+
+            # Save Nexiom classifications before moving on
             blicket_classifications = {}
             print(f"🔍 DEBUG: About to collect Nexiom answers, num_objects = {round_config['num_objects']}")
             for i in range(round_config['num_objects']):
@@ -1454,44 +1511,45 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                     print(f"🔍 Saving intermediate - blicket_q_{i} = {raw_answer}")
                 else:
                     print(f"⚠️  WARNING: blicket_q_{i} is None - user didn't select an answer!")
-                    
+
             # Get objects that were on the machine before Q&A
             objects_on_machine_before_qa = list(st.session_state.get("selected_objects", set()))
-                    
+
             # Note: We don't save intermediate progress for main_game rounds anymore
             # All data including hypothesis and rule_type will be saved in the final round data
             # Only save for comprehension phase if needed
             if is_practice:
                 save_intermediate_progress(
-                    participant_id, 
-                    round_config, 
-                    current_round, 
-                    total_rounds, 
+                    participant_id,
+                    round_config,
+                    current_round,
+                    total_rounds,
                     is_practice,
                     blicket_classifications=blicket_classifications,
                     rule_hypothesis=current_hypothesis,
                     objects_on_machine=objects_on_machine_before_qa
                 )
                 print("✅ Saved intermediate progress for comprehension phase")
-                    
+
             print(f"📝 Preparing to save hypothesis for round {current_round + 1}")
             print(f"   - Objects on machine: {objects_on_machine_before_qa}")
             print(f"   - Nexiom classifications: {blicket_classifications}")
             print(f"   - Hypothesis: {current_hypothesis[:50]}...")
-                    
+
             # Debug: Check session state before transition
-            print("🔍 DEBUG: Before transitioning to rule_type, checking session state:")
+            print(f"🔍 DEBUG: Before transitioning to {next_state}, checking session state:")
             print(f"   - rule_hypothesis: {st.session_state.get('rule_hypothesis', 'NOT FOUND')}")
             for i in range(round_config['num_objects']):
                 key = f"blicket_q_{i}"
                 if key in st.session_state:
                     print(f"   - {key}: {st.session_state.get(key, 'NOT FOUND')}")
-                    
-            # Persist data needed for rule-type classification stage
+
+            # Persist data needed for the next stage(s)
             st.session_state["saved_blicket_classifications"] = blicket_classifications
-            st.session_state["saved_rule_hypothesis"] = current_hypothesis
-                    
-            st.session_state.visual_game_state = "rule_type_classification"
+            if not skip_hypothesis_here:
+                st.session_state["saved_rule_hypothesis"] = current_hypothesis
+
+            st.session_state.visual_game_state = next_state
             st.rerun()
 
 
@@ -1524,24 +1582,41 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             *Example: If Objects 1 and 3 are Nexioms, the machine switches on when EITHER Object 1 OR Object 3 (or both) are on the machine.*
             """)
         
+        # In the extension deployments, rule description/inference is asked here at the
+        # end, after the intervention questions, instead of back on the Nexiom classification
+        # screen.
+        ask_hypothesis_here = extension_questions_enabled() and not is_practice
+        if ask_hypothesis_here:
+            st.markdown("### Rule Inference")
+            st.markdown("Based on your observations, describe how the objects turn on this Nexiom machine.")
+            st.text_area(
+                "What do you think is the rule?",
+                placeholder="Describe your hypothesis about how the Nexiom machine determines when to switch on...",
+                height=100,
+                key="rule_hypothesis"
+            )
+            st.markdown("---")
+
         rule_type = st.radio(
             "What type of rule do you think applies?",
             ["Conjunctive (ALL Nexioms must be present)", "Disjunctive (ANY Nexiom can activate)"],
             key="rule_type",
             index=None
         )
-        
+
         # Navigation buttons
         st.markdown("---")
         st.markdown("### Submit Your Answers")
-        
+
         # Check if rule type is provided
         rule_type = st.session_state.get("rule_type", "")
-            
+
         # Get rule_hypothesis from saved_rule_hypothesis (saved when leaving text_area screen) or original widget key
         rule_hypothesis = st.session_state.get("saved_rule_hypothesis", "") or st.session_state.get("rule_hypothesis", "")
         print(f"🔍 Retrieved rule_hypothesis: '{rule_hypothesis[:50] if rule_hypothesis else 'EMPTY'}...'")
         print(f"🔍 Retrieved rule_type: '{rule_type}'")
+
+        hypothesis_missing_here = ask_hypothesis_here and not rule_hypothesis.strip()
         
         # Show Next Round button for all rounds except the last one
         # With num_rounds = 1, this will always be False, so FINISH TASK will show
@@ -1698,25 +1773,27 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             # Show Finish Task button only on the last round
             # Check if rule type is provided
             rule_type = st.session_state.get("rule_type", "")
-            
-            # In extension deployments, the "FINISH TASK" button becomes "NEXT" and routes
-            # to the extra combination / turn-off questions before saving.
-            finish_label = "NEXT" if (extension_questions_enabled() and not is_practice) else "FINISH TASK"
-            if st.button(finish_label, type="primary", disabled=not rule_type, use_container_width=True):
-                    if extension_questions_enabled() and not is_practice:
-                        # Defer save: collect the extra questions first.
-                        st.session_state.visual_game_state = "extension_questions"
-                        st.rerun()
-                    else:
-                        print(f"🔍 Round {current_round + 1} (FINAL): rule_type = {rule_type}")
-                        finalize_main_round(
-                            participant_id, round_config, current_round, is_practice, save_data_func
-                        )
-                        st.rerun()
 
-            # Show message if button is disabled
+            # By this point the extension deployments have already collected the
+            # intervention (combination / turn-off) questions, so this screen always
+            # finishes the task.
+            submit_disabled = (not rule_type) or hypothesis_missing_here
+            if st.button("FINISH TASK", type="primary", disabled=submit_disabled, use_container_width=True):
+                    print(f"🔍 Round {current_round + 1} (FINAL): rule_type = {rule_type}")
+                    if ask_hypothesis_here:
+                        st.session_state["saved_rule_hypothesis"] = rule_hypothesis.strip()
+                    extra_fields = st.session_state.pop("saved_extension_fields", None)
+                    finalize_main_round(
+                        participant_id, round_config, current_round, is_practice, save_data_func,
+                        extra_fields=extra_fields,
+                    )
+                    st.rerun()
+
+            # Show message(s) if button is disabled
             if not rule_type:
                 st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type (Conjunctive or Disjunctive)</p>", unsafe_allow_html=True)
+            if hypothesis_missing_here:
+                st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please enter a rule hypothesis.</p>", unsafe_allow_html=True)
 
     elif st.session_state.visual_game_state == "extension_questions" and not is_practice:
         # ---- Extra questions asked only in the extension deployments ----
@@ -1772,26 +1849,34 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         st.markdown(f"### Turning the machine OFF")
         st.markdown(
             f"Suppose **{all_labels}** are all on the machine and it is currently **ON**. "
-            f"Which object(s) would you remove to make it go **OFF**? (Select all that apply.)"
+            f"Which object(s) would you remove to make it go **OFF**? "
+            f"**Remove as few objects as possible** — only select the object(s) you think are "
+            f"actually necessary to switch it off, not every object on the machine."
         )
         remove_selected = []
         for i in range(num_objects):
             if st.checkbox(f"Remove Object {_label(i)}", key=f"ext_remove_{i}"):
                 remove_selected.append(i)
 
-        # Validation: every combination answered, and at least one object chosen to remove.
+        # Validation: every combination answered, at least one object chosen to remove,
+        # and not every object selected (that's never the "as few as possible" answer).
         all_combos_answered = all(combo_answers.get(c) is not None for c in combos)
         removal_made = len(remove_selected) > 0
+        removed_all_objects = len(remove_selected) == num_objects
 
         missing = []
         if not all_combos_answered:
             missing.append("Please answer every ON/OFF question above.")
         if not removal_made:
             missing.append("Please select at least one object to remove.")
+        elif removed_all_objects:
+            missing.append(
+                "Please select as few objects as possible — you can't remove every object."
+            )
 
         st.markdown("---")
         submit_clicked = st.button(
-            "FINISH TASK",
+            "NEXT",
             type="primary",
             use_container_width=True,
             disabled=bool(missing),
@@ -1808,22 +1893,32 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 }
                 for combo in combos
             ]
-            extra_fields = {
+
+            true_blicket_indices = list(game_state.get('blicket_indices', round_config.get('blicket_indices', [])))
+            graded_predictions, turn_off_grading = grade_extension_answers(
+                rule=round_config['rule'],
+                true_blicket_indices=true_blicket_indices,
+                combination_predictions=combination_predictions,
+                objects_to_remove_indices=remove_selected,
+                num_objects=num_objects,
+            )
+
+            # Stash the (graded) intervention answers; they get merged into the final
+            # round_data once rule description/inference and rule type are collected.
+            st.session_state["saved_extension_fields"] = {
                 "extension_questions": {
                     "chosen_nexioms": [i + 1 for i in chosen],
                     "chosen_nexiom_indices": chosen,
-                    "combination_predictions": combination_predictions,
+                    "combination_predictions": graded_predictions,
                     "turn_off_question": {
                         "prompt_objects": [i + 1 for i in range(num_objects)],
                         "objects_to_remove": [i + 1 for i in remove_selected],
                         "object_indices_to_remove": remove_selected,
+                        **turn_off_grading,
                     },
                 }
             }
-            finalize_main_round(
-                participant_id, round_config, current_round, is_practice, save_data_func,
-                extra_fields=extra_fields,
-            )
+            st.session_state.visual_game_state = "rule_type_classification"
             st.rerun()
 
 if __name__ == "__main__":
