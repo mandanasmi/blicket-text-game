@@ -11,6 +11,7 @@ import runpy
 os.environ["NEXIOM_MAIN_RULE"] = "disjunctive"
 os.environ["NEXIOM_CONDITION"] = "active_disjunctive"
 os.environ["NEXIOM_EXTENSION_QUESTIONS"] = "1"
+os.environ["NEXIOM_HIDE_HISTORY_IN_QA"] = "1"
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)
