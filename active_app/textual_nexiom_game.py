@@ -1870,9 +1870,17 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         """, unsafe_allow_html=True)
 
         # 1) Combination predictions over the objects the participant called Nexioms.
+        # Up to 4 chosen Nexioms: every combination (at most 15). Beyond that the full
+        # power set explodes (255 for 8), so ask each single object, each set with one
+        # object left out, and the full set: enough to separate the two rule types.
         combos = []
-        for r in range(1, len(chosen) + 1):
-            combos.extend(itertools.combinations(chosen, r))
+        if len(chosen) <= 4:
+            for r in range(1, len(chosen) + 1):
+                combos.extend(itertools.combinations(chosen, r))
+        else:
+            combos.extend((i,) for i in chosen)
+            combos.extend(itertools.combinations(chosen, len(chosen) - 1))
+            combos.append(tuple(chosen))
 
         combo_answers = {}
         if combos:
@@ -1907,10 +1915,15 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 remove_selected.append(i)
 
         # Validation: every combination answered, at least one object chosen to remove,
-        # and not every object selected (that's never the "as few as possible" answer).
+        # and not every object selected unless every object was called a Nexiom.
         all_combos_answered = all(combo_answers.get(c) is not None for c in combos)
         removal_made = len(remove_selected) > 0
-        removed_all_objects = len(remove_selected) == num_objects
+        # Removing every object is only allowed if the participant called every object a
+        # Nexiom (e.g. 4/4 or 8/8 disjunctive, where it is the correct answer). Keyed on
+        # their own answers so the guardrail never leaks the true Nexiom count.
+        removed_all_objects = (
+            len(remove_selected) == num_objects and len(chosen) < num_objects
+        )
 
         missing = []
         if not all_combos_answered:
@@ -1919,7 +1932,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             missing.append("Please select at least one object to remove.")
         elif removed_all_objects:
             missing.append(
-                "Please select as few objects as possible — you can't remove every object."
+                "Please select as few objects as possible — you can only remove every object "
+                "if you think every object is a Nexiom."
             )
 
         st.markdown("---")

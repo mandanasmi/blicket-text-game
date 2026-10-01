@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import random
+import itertools
 import datetime
 import time
 
@@ -140,6 +141,57 @@ def create_new_game(seed=42, num_objects=4, num_blickets=2, rule="conjunctive", 
     )
     game_state = env.reset()
     return env, game_state["feedback"]
+
+
+# Extension deployments (act-noc / act-sid): (num_objects, num_nexioms) setups, rotated
+# round-robin. Sizes alternate so dropouts don't skew the 4- vs 8-object split.
+VARIED_NEXIOM_SETUPS = [(4, 1), (8, 2), (4, 3), (8, 4), (4, 4), (8, 8)]
+# Tests allowed per object-set size (2^4 = 16 covers every combination of 4).
+VARIED_NEXIOM_HORIZONS = {4: 16, 8: 32}
+
+
+def varied_nexioms_enabled():
+    return os.getenv("NEXIOM_VARIED_NEXIOMS", "").strip().lower() in ("1", "true", "yes")
+
+
+def active_varied_nexiom_setups():
+    """VARIED_NEXIOM_SETUPS, limited to the object counts in NEXIOM_VARIED_OBJECT_COUNTS
+    (comma-separated, e.g. "8") when set; all setups otherwise."""
+    raw = os.getenv("NEXIOM_VARIED_OBJECT_COUNTS", "").strip()
+    if not raw:
+        return VARIED_NEXIOM_SETUPS
+    sizes = {int(x) for x in raw.split(",") if x.strip()}
+    return [setup for setup in VARIED_NEXIOM_SETUPS if setup[0] in sizes] or VARIED_NEXIOM_SETUPS
+
+
+def get_next_varied_nexiom_assignment():
+    """Return (assignment_index, num_objects, blicket_indices) for the next participant.
+
+    A Firebase transaction on _config/varied_nexiom_next_index hands out 0, 1, 2, ...
+    so concurrent participants are spread evenly. Index n gets setup n % len(setups); within a
+    setup, its k-of-N Nexiom sets are cycled in a fixed shuffled order, so every set
+    is covered once that setup has been played len(sets) times (70 for 4-of-8).
+    Without Firebase (local testing) the index is random and nothing is persisted.
+    """
+    index = None
+    if firebase_initialized and db_ref:
+        try:
+            ref = db_ref.child("_config").child("varied_nexiom_next_index")
+            new_value = ref.transaction(lambda current: (current or 0) + 1)
+            index = new_value - 1
+        except Exception as e:
+            print(f"get_next_varied_nexiom_assignment failed: {e}")
+    if index is None:
+        index = random.randrange(10**6)
+
+    setups = active_varied_nexiom_setups()
+    num_objects, num_nexioms = setups[index % len(setups)]
+    nexiom_sets = list(itertools.combinations(range(num_objects), num_nexioms))
+    # String seed -> deterministic order across restarts (not affected by PYTHONHASHSEED).
+    random.Random(f"{num_objects}-{num_nexioms}").shuffle(nexiom_sets)
+    cycle = index // len(setups)
+    blicket_indices = list(nexiom_sets[cycle % len(nexiom_sets)])
+    return index, num_objects, blicket_indices
 
 
 def save_participant_config(participant_id, config):
@@ -1221,11 +1273,22 @@ elif st.session_state.phase == "practice_complete":
                 [0, 1], [1, 2], [0, 2], [2, 3], [0, 3], [1, 3],
             ]
             random.shuffle(blicket_combinations)
+
+            # Extension deployments (act-noc / act-sid) opt in to varied Nexiom counts,
+            # assigned round-robin across VARIED_NEXIOM_SETUPS.
+            _varied_nexioms = varied_nexioms_enabled()
+            varied_assignment_index = None
             
             for i in range(num_rounds):
-                num_objects = 4
-                blicket_indices = blicket_combinations[i % len(blicket_combinations)]
-                num_blickets = len(blicket_indices)
+                if _varied_nexioms:
+                    varied_assignment_index, num_objects, blicket_indices = get_next_varied_nexiom_assignment()
+                    num_blickets = len(blicket_indices)
+                    horizon = VARIED_NEXIOM_HORIZONS[num_objects]
+                else:
+                    num_objects = 4
+                    blicket_indices = blicket_combinations[i % len(blicket_combinations)]
+                    num_blickets = len(blicket_indices)
+                    horizon = 16
                 
                 rule = current_rule
 
@@ -1239,7 +1302,7 @@ elif st.session_state.phase == "practice_complete":
                     'rule': rule,
                     'init_prob': init_prob,
                     'transition_noise': transition_noise,
-                    'horizon': 16
+                    'horizon': horizon
                 })
 
             # Get comprehension phase config
@@ -1253,13 +1316,15 @@ elif st.session_state.phase == "practice_complete":
             
             config = {
                 'num_rounds': num_rounds,
-                'user_selected_objects': 4,
+                'user_selected_objects': round_configs[0]['num_objects'],
                 'comprehension': comprehension_config,  # Add comprehension phase config
                 'rounds': round_configs,  # Main game rounds config
                 'interface_type': 'text',
                 # Tag the deployment/condition so each extension Firebase is self-describing.
                 'condition': os.getenv("NEXIOM_CONDITION", ""),
             }
+            if varied_assignment_index is not None:
+                config['varied_assignment_index'] = varied_assignment_index
             save_participant_config(st.session_state.current_participant_id, config)
             
             st.session_state.current_round = 0
