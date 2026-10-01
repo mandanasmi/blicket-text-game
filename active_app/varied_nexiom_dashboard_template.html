@@ -1,0 +1,288 @@
+<title>Nexiom Assignment Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600&display=swap">
+<style>
+/* Layout: one column of app panels (conjunctive, disjunctive); each panel = summary strip, evolution chart, object grid. */
+:root {
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --ink: #14171c;
+  --ink-2: #4b525d;
+  --ink-3: #7b828d;
+  --line: #e1e4e9;
+  --grid: #eceef2;
+  --cell-off: #eef0f3;
+  --accent: #2a5bd7;
+  --c1: #2a78d6;  /* 2 Nexioms */
+  --c2: #eb6834;  /* 4 Nexioms */
+  --c3: #1baf7a;  /* 8 Nexioms */
+  --ok: #1d7f45;
+  --ok-bg: #e3f3e8;
+  --warn: #9a5b00;
+  --warn-bg: #fdf0d8;
+  --font-display: "IBM Plex Sans Condensed", "Arial Narrow", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-data: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111318; --panel: #191c22; --ink: #eef0f4; --ink-2: #b5bbc6; --ink-3: #8a919d;
+    --line: #2b3039; --grid: #242830; --cell-off: #252a32; --accent: #7aa2ff;
+    --c1: #3987e5; --c2: #d95926; --c3: #199e70;
+    --ok: #6fd39a; --ok-bg: #173a26; --warn: #f2b54b; --warn-bg: #3a2c10;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #111318; --panel: #191c22; --ink: #eef0f4; --ink-2: #b5bbc6; --ink-3: #8a919d;
+  --line: #2b3039; --grid: #242830; --cell-off: #252a32; --accent: #7aa2ff;
+  --c1: #3987e5; --c2: #d95926; --c3: #199e70;
+  --ok: #6fd39a; --ok-bg: #173a26; --warn: #f2b54b; --warn-bg: #3a2c10;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1080px; margin: 0 auto; padding-inline: 16px; padding-block: 28px 48px; display: grid; gap: 28px; }
+header { display: grid; gap: 6px; }
+h1 { font-family: var(--font-display); font-size: 28px; line-height: 1.15; margin: 0; letter-spacing: 0.01em; text-wrap: balance; }
+.lede { color: var(--ink-2); margin: 0; max-width: 68ch; }
+.meta { color: var(--ink-3); font-family: var(--font-data); font-size: 12px; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; font-size: 13px; color: var(--ink-2); }
+.key { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+section.app { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 20px; display: grid; gap: 22px; min-width: 0; }
+.app-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px 16px; }
+h2 { font-family: var(--font-display); font-size: 21px; margin: 0; }
+h2 small { font-family: var(--font-data); font-weight: 400; font-size: 12px; color: var(--ink-3); margin-left: 8px; }
+h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-3); margin: 0 0 8px; font-weight: 600; }
+.pill { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.pill.ok { color: var(--ok); background: var(--ok-bg); }
+.pill.warn { color: var(--warn); background: var(--warn-bg); }
+.pill.idle { color: var(--ink-3); background: var(--cell-off); }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px; }
+.stat { display: grid; gap: 2px; }
+.stat b { font-family: var(--font-data); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--ink-3); font-size: 12px; }
+
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr); gap: 24px; }
+@media (max-width: 760px) { .split { grid-template-columns: minmax(0, 1fr); } }
+
+table.cond { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+table.cond th, table.cond td { text-align: right; padding: 7px 8px; border-bottom: 1px solid var(--line); }
+table.cond th:first-child, table.cond td:first-child { text-align: left; }
+table.cond th { font-size: 12px; color: var(--ink-3); font-weight: 500; }
+table.cond td { font-family: var(--font-data); font-size: 13px; }
+.bar { display: inline-block; height: 6px; border-radius: 0 3px 3px 0; vertical-align: middle; margin-left: 6px; }
+
+.chart-box { position: relative; }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-bottom: 8px; }
+.seg button { font: inherit; font-size: 12px; padding: 4px 10px; border: 0; background: transparent; color: var(--ink-2); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--cell-off); color: var(--ink); font-weight: 600; }
+.seg button:focus-visible, .grid-scroll:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+svg text { font-family: var(--font-data); font-size: 11px; fill: var(--ink-3); }
+.tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 6px 9px; font-size: 12px; box-shadow: 0 4px 14px rgba(0,0,0,.12); white-space: nowrap; }
+.tip div { display: flex; align-items: center; gap: 6px; font-variant-numeric: tabular-nums; }
+.empty { color: var(--ink-3); font-size: 13px; padding: 24px 0; }
+
+.grid-scroll { max-height: 440px; overflow: auto; border: 1px solid var(--line); border-radius: 8px; }
+table.objs { border-collapse: separate; border-spacing: 0; width: 100%; font-variant-numeric: tabular-nums; }
+table.objs th, table.objs td { padding: 3px 4px; text-align: center; }
+table.objs thead th { position: sticky; top: 0; background: var(--panel); font-size: 11px; color: var(--ink-3); font-weight: 500; border-bottom: 1px solid var(--line); z-index: 1; }
+table.objs tfoot th, table.objs tfoot td { position: sticky; background: var(--panel); font-size: 11px; color: var(--ink-2); font-family: var(--font-data); }
+table.objs tfoot tr:first-child td, table.objs tfoot tr:first-child th { border-top: 1px solid var(--line); }
+table.objs tfoot tr:nth-child(1) > * { bottom: 22px; }
+table.objs tfoot tr:nth-child(2) > * { bottom: 0; }
+table.objs td.pid { text-align: left; font-family: var(--font-data); font-size: 12px; color: var(--ink-2); white-space: nowrap; }
+table.objs td.cond-cell { text-align: left; font-size: 12px; white-space: nowrap; }
+table.objs td.state { text-align: left; font-size: 11px; color: var(--ink-3); white-space: nowrap; }
+.cell { display: block; width: 100%; min-width: 18px; height: 16px; border-radius: 3px; background: var(--cell-off); }
+tr.dropped .cell.on { opacity: 0.35; }
+tr.dropped td.pid, tr.dropped td.cond-cell { color: var(--ink-3); }
+.note { color: var(--ink-3); font-size: 12px; margin: 6px 0 0; }
+.warnline { color: var(--warn); font-size: 13px; margin: 0; }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Nexiom Assignment Tracker</h1>
+    <p class="lede">Round-robin assignment on the active extension links. Each link has a fixed rule and cycles new participants through 2, 4 and 8 Nexioms out of 8 objects. Which objects are Nexioms rotates within each condition.</p>
+    <div class="meta" id="generated"></div>
+    <div class="legend" id="legend"></div>
+  </header>
+  <div id="apps" style="display:grid;gap:28px"></div>
+</div>
+
+<script>
+const DATA = /*__DATA__*/null;
+
+const COLORS = { 2: "var(--c1)", 4: "var(--c2)", 8: "var(--c3)", 1: "var(--c1)", 3: "var(--c2)" };
+const colorFor = (setup) => COLORS[setup[1]] || "var(--ink-3)";
+const setupKey = (s) => `${s[1]}/${s[0]}`;
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function render() {
+  const apps = document.getElementById("apps");
+  if (!DATA) { apps.innerHTML = '<p class="empty">No data embedded. Run check_varied_nexiom_assignment.py with --html.</p>'; return; }
+  document.getElementById("generated").textContent = `Snapshot ${DATA.generated_at} · Firebase`;
+  const allSetups = DATA.setups;
+  document.getElementById("legend").innerHTML = allSetups.map((s) =>
+    `<span class="key"><span class="sw" style="background:${colorFor(s)}"></span>${setupKey(s)} Nexioms</span>`).join("");
+  apps.innerHTML = "";
+  DATA.apps.forEach((app, i) => apps.appendChild(renderApp(app, i, allSetups)));
+}
+
+function renderApp(app, idx, setups) {
+  const el = document.createElement("section");
+  el.className = "app";
+  const ps = app.participants;
+  const done = ps.filter((p) => p.completed);
+  const by = (list) => Object.fromEntries(setups.map((s) => [setupKey(s), list.filter((p) => setupKey(p.setup) === setupKey(s)).length]));
+  const assigned = by(ps), completed = by(done);
+  const counts = Object.values(completed);
+  const spread = ps.length ? Math.max(...counts) - Math.min(...counts) : 0;
+  const pill = !ps.length ? '<span class="pill idle">No participants yet</span>'
+    : spread <= 2 ? `<span class="pill ok">Balanced · spread ${spread}</span>`
+    : `<span class="pill warn">Uneven · spread ${spread}</span>`;
+  const maxA = Math.max(1, ...Object.values(assigned));
+
+  el.innerHTML = `
+    <div class="app-head">
+      <h2>${esc(app.label)}<small>${esc(app.project_id)}</small></h2>
+      ${pill}
+    </div>
+    <div class="stats">
+      <div class="stat"><b>${app.counter ?? "—"}</b><span>Counter value</span></div>
+      <div class="stat"><b>${ps.length}</b><span>Started main game</span></div>
+      <div class="stat"><b>${done.length}</b><span>Completed</span></div>
+      <div class="stat"><b>${ps.length ? Math.round(100 * done.length / ps.length) + "%" : "—"}</b><span>Completion rate</span></div>
+    </div>
+    ${app.warnings.map((w) => `<p class="warnline">${esc(w)}</p>`).join("")}
+    <div class="split">
+      <div>
+        <h3>By condition</h3>
+        <table class="cond">
+          <thead><tr><th>Nexioms</th><th>Started</th><th>Completed</th><th>Rate</th></tr></thead>
+          <tbody>${setups.map((s) => {
+            const k = setupKey(s), a = assigned[k], c = completed[k];
+            return `<tr><td><span class="sw" style="background:${colorFor(s)};margin-right:8px;vertical-align:-1px"></span>${k}</td>
+              <td>${a}</td>
+              <td>${c}<span class="bar" style="width:${Math.round(48 * c / maxA)}px;background:${colorFor(s)}"></span></td>
+              <td>${a ? Math.round(100 * c / a) + "%" : "—"}</td></tr>`;
+          }).join("")}</tbody>
+        </table>
+        <p class="note">Spread = most minus fewest completions across conditions. A few is normal from dropouts.</p>
+      </div>
+      <div>
+        <h3>Evolution</h3>
+        <div class="seg" role="group" aria-label="Count">
+          <button type="button" id="mode-c-${idx}" aria-pressed="true">Completed</button>
+          <button type="button" id="mode-a-${idx}" aria-pressed="false">Started</button>
+        </div>
+        <div class="chart-box" id="chart-${idx}"></div>
+      </div>
+    </div>
+    <div>
+      <h3>Nexiom objects per participant</h3>
+      ${ps.length ? `<div class="grid-scroll" tabindex="0">${objectTable(ps, setups)}</div>
+      <p class="note">Newest first. Filled cells are Nexioms. Faded rows started but did not finish. Footer counts include completed participants only.</p>`
+      : '<p class="empty">Rows appear here as participants start the main game.</p>'}
+    </div>`;
+
+  const chartEl = el.querySelector(`#chart-${idx}`);
+  const btnC = el.querySelector(`#mode-c-${idx}`), btnA = el.querySelector(`#mode-a-${idx}`);
+  const draw = (mode) => {
+    btnC.setAttribute("aria-pressed", mode === "completed");
+    btnA.setAttribute("aria-pressed", mode === "started");
+    drawChart(chartEl, ps, setups, mode);
+  };
+  btnC.onclick = () => draw("completed");
+  btnA.onclick = () => draw("started");
+  // Draw after the panel is in the DOM so the chart can measure its width.
+  requestAnimationFrame(() => draw("completed"));
+  return el;
+}
+
+function objectTable(ps, setups) {
+  const n = Math.max(...ps.map((p) => p.setup[0]));
+  const objs = Array.from({ length: n }, (_, i) => i + 1);
+  const rows = [...ps].reverse().map((p) => {
+    const on = new Set(p.nexioms);
+    return `<tr class="${p.completed ? "" : "dropped"}">
+      <td class="pid">#${p.n}</td>
+      <td class="cond-cell">${setupKey(p.setup)}</td>
+      ${objs.map((o) => `<td><span class="cell ${on.has(o) ? "on" : ""}" style="${on.has(o) ? `background:${colorFor(p.setup)}` : ""}" title="Object ${o}${on.has(o) ? " · Nexiom" : ""}"></span></td>`).join("")}
+      <td class="state">${p.completed ? "done" : "left"}</td></tr>`;
+  }).join("");
+  const varied = setups.filter((s) => s[1] < s[0]).slice(-2);
+  const foot = varied.map((s) => {
+    const k = setupKey(s);
+    const c = Object.fromEntries(objs.map((o) => [o, 0]));
+    ps.filter((p) => p.completed && setupKey(p.setup) === k).forEach((p) => p.nexioms.forEach((o) => c[o]++));
+    return `<tr><td class="pid" colspan="2" style="color:var(--ink-2)">${k} count</td>${objs.map((o) => `<td>${c[o]}</td>`).join("")}<td></td></tr>`;
+  }).join("");
+  return `<table class="objs">
+    <thead><tr><th style="text-align:left">#</th><th style="text-align:left">Cond.</th>${objs.map((o) => `<th>${o}</th>`).join("")}<th></th></tr></thead>
+    <tbody>${rows}</tbody><tfoot>${foot}</tfoot></table>`;
+}
+
+function drawChart(box, ps, setups, mode) {
+  box.innerHTML = "";
+  if (!ps.length) { box.innerHTML = '<p class="empty">The cumulative count per condition is drawn here once participants arrive.</p>'; return; }
+  const W = Math.max(280, box.clientWidth), H = 220, m = { t: 12, r: 44, b: 30, l: 34 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  // Cumulative series: x = participant number (order they started), y = running count per condition.
+  const series = setups.map((s) => ({ s, k: setupKey(s), pts: [[0, 0]] }));
+  const run = Object.fromEntries(series.map((d) => [d.k, 0]));
+  ps.forEach((p) => {
+    if (mode === "completed" && !p.completed) { series.forEach((d) => d.pts.push([p.n, run[d.k]])); return; }
+    run[setupKey(p.setup)]++;
+    series.forEach((d) => d.pts.push([p.n, run[d.k]]));
+  });
+  const N = ps.length, yMax = Math.max(1, ...Object.values(run));
+  const niceMax = yMax <= 5 ? yMax : Math.ceil(yMax / 5) * 5;
+  const x = (v) => m.l + (iw * v) / Math.max(1, N), y = (v) => m.t + ih - (ih * v) / niceMax;
+  const yt = []; const step = niceMax <= 5 ? 1 : niceMax / 5; for (let v = 0; v <= niceMax; v += step) yt.push(v);
+  const xt = []; const xs = N <= 10 ? 1 : Math.ceil(N / 6 / 5) * 5; for (let v = 0; v <= N; v += xs) xt.push(v);
+  const path = (pts) => pts.map(([a, b], i) => i ? `H${x(a).toFixed(1)}V${y(b).toFixed(1)}` : `M${x(a).toFixed(1)},${y(b).toFixed(1)}`).join("");
+  const ns = "http://www.w3.org/2000/svg";
+  const svg = document.createElementNS(ns, "svg");
+  svg.setAttribute("viewBox", `0 0 ${W} ${H}`); svg.setAttribute("width", "100%"); svg.setAttribute("role", "img");
+  svg.setAttribute("aria-label", `Cumulative ${mode} participants per condition`);
+  const last = series.map((d) => ({ ...d, v: d.pts[d.pts.length - 1][1] }));
+  // Nudge end labels apart so equal counts don't overlap.
+  const labels = [...last].sort((a, b) => b.v - a.v).map((d) => ({ d, yy: y(d.v) }));
+  for (let i = 1; i < labels.length; i++) if (labels[i].yy - labels[i - 1].yy < 13) labels[i].yy = labels[i - 1].yy + 13;
+  svg.innerHTML = `
+    ${yt.map((v) => `<line x1="${m.l}" x2="${m.l + iw}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)" stroke-width="1"/>
+      <text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`).join("")}
+    ${xt.map((v) => `<text x="${x(v)}" y="${H - 10}" text-anchor="middle">${v}</text>`).join("")}
+    ${series.map((d) => `<path d="${path(d.pts)}" fill="none" stroke="${colorFor(d.s)}" stroke-width="2" stroke-linejoin="round"/>`).join("")}
+    ${last.map((d) => `<circle cx="${x(N)}" cy="${y(d.v)}" r="4" fill="${colorFor(d.s)}" stroke="var(--panel)" stroke-width="2"/>`).join("")}
+    ${labels.map(({ d, yy }) => `<text x="${x(N) + 8}" y="${yy + 4}" style="fill:var(--ink-2)">${d.k} · ${d.v}</text>`).join("")}
+    <line id="xh" y1="${m.t}" y2="${m.t + ih}" stroke="var(--ink-3)" stroke-width="1" stroke-dasharray="3 3" visibility="hidden"/>
+    <rect x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/>`;
+  box.appendChild(svg);
+  const cap = document.createElement("div"); cap.className = "note"; cap.style.marginTop = "0";
+  cap.textContent = "x: participants in the order they started · y: running count";
+  box.appendChild(cap);
+  const tip = document.createElement("div"); tip.className = "tip"; tip.hidden = true; box.appendChild(tip);
+  const xh = svg.querySelector("#xh");
+  svg.addEventListener("pointermove", (e) => {
+    const r = svg.getBoundingClientRect(); const px = ((e.clientX - r.left) / r.width) * W;
+    const n = Math.min(N, Math.max(1, Math.round(((px - m.l) / iw) * N)));
+    xh.setAttribute("x1", x(n)); xh.setAttribute("x2", x(n)); xh.setAttribute("visibility", "visible");
+    const p = ps[n - 1];
+    tip.innerHTML = `<div><b>Participant #${n}</b>&nbsp;${setupKey(p.setup)} · ${p.completed ? "done" : "left"}</div>` +
+      series.map((d) => `<div><span class="sw" style="background:${colorFor(d.s)}"></span>${d.k}: ${d.pts[n][1]}</div>`).join("");
+    tip.hidden = false;
+    const left = (x(n) / W) * r.width; tip.style.left = Math.min(left + 12, r.width - tip.offsetWidth) + "px"; tip.style.top = "8px";
+  });
+  svg.addEventListener("pointerleave", () => { tip.hidden = true; xh.setAttribute("visibility", "hidden"); });
+}
+
+render();
+let rt; addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(render, 150); });
+</script>

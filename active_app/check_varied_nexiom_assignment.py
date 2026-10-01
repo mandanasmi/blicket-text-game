@@ -8,10 +8,16 @@ had their config saved).
 
     python active_app/check_varied_nexiom_assignment.py .streamlit/secrets.act_noc.toml .streamlit/secrets.act_sid.toml
 
+Add `--html PATH` to also write a dashboard (evolution per condition + which objects
+were Nexioms for each participant) built from varied_nexiom_dashboard_template.html.
+
 "Assigned" = config saved when they clicked Start Main Experiment; "completed" = their
 main_game record exists (written only when they finish the game and questions).
 Participants without a varied_assignment_index (from before the rotation) are skipped.
 """
+import datetime
+import json
+import os
 import sys
 from collections import Counter
 
@@ -29,6 +35,10 @@ except ImportError:
 
     def _load_toml(path):
         return toml.load(path)
+
+
+# Each extension link pins one rule (see extension_experiments/active_*.py).
+LINK_RULES = {"act-noc": "conjunctive", "act-sid": "disjunctive"}
 
 
 def _connect(secrets_path):
@@ -60,6 +70,7 @@ def check(secrets_path):
     assigned, completed = Counter(), Counter()
     nexiom_counts = {}  # setup -> Counter of 1-based object labels (completed only)
     indices, rules, skipped = [], Counter(), 0
+    participants = []  # for the dashboard; no participant IDs
     for key, node in data.items():
         if key.startswith("_") or not isinstance(node, dict):
             continue
@@ -75,9 +86,32 @@ def check(secrets_path):
         indices.append(index)
         rules[round_config.get("rule")] += 1
         assigned[setup] += 1
-        if node.get("main_game"):
+        is_done = bool(node.get("main_game"))
+        participants.append({
+            "index": index,
+            "started_at": node.get("created_at") or "",
+            "setup": list(setup),
+            "nexioms": sorted(i + 1 for i in nexioms),
+            "completed": is_done,
+        })
+        if is_done:
             completed[setup] += 1
             nexiom_counts.setdefault(setup, Counter()).update(i + 1 for i in nexioms)
+
+    # Order participants by when they started (assignment index breaks ties).
+    participants.sort(key=lambda p: (p["started_at"], p["index"]))
+    for n, p in enumerate(participants, 1):
+        p["n"] = n
+    link = project_id.replace("nexiom-text-game-", "")
+    rule = rules.most_common(1)[0][0] if rules else LINK_RULES.get(link, "")
+    summary = {
+        "project_id": project_id,
+        "label": f"{link} · {rule}" if rule else link,
+        "counter": counter,
+        "skipped": skipped,
+        "participants": participants,
+        "warnings": [],
+    }
 
     print(f"\n=== {project_id} ===")
     print(f"Counter (_config/varied_nexiom_next_index): {counter}")
@@ -85,7 +119,7 @@ def check(secrets_path):
     if skipped:
         print(f"Skipped {skipped} participant(s) without a varied assignment (pre-rotation or not started).")
     if not indices:
-        return
+        return summary
 
     print(f"\n{'Setup':<10}{'Assigned':>10}{'Completed':>11}{'Completion':>12}")
     for setup in sorted(assigned):
@@ -103,20 +137,50 @@ def check(secrets_path):
 
     duplicates = [i for i, n in Counter(indices).items() if n > 1]
     if duplicates:
-        print(f"WARNING duplicate assignment indices: {sorted(duplicates)}")
+        msg = f"Duplicate assignment indices (e.g. from before a counter reset): {sorted(duplicates)}"
+        print(f"WARNING {msg}")
+        summary["warnings"].append(msg)
     if counter is not None:
         # Indices handed out by the counter but never saved to a participant config.
         missing = sorted(set(range(counter)) - set(indices))
         if missing:
-            print(f"Indices handed out but never saved ({len(missing)}): {missing[:20]}{' ...' if len(missing) > 20 else ''}")
+            msg = f"Indices handed out but never saved ({len(missing)}): {missing[:20]}{' ...' if len(missing) > 20 else ''}"
+            print(msg)
+            summary["warnings"].append(msg)
+    return summary
+
+
+def write_html(summaries, out_path):
+    template_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "varied_nexiom_dashboard_template.html")
+    with open(template_path) as f:
+        template = f.read()
+    # Current 8-object setups plus any others that show up in the data.
+    setups = {(8, 2), (8, 4), (8, 8)}
+    for summary in summaries:
+        setups.update(tuple(p["setup"]) for p in summary["participants"])
+    data = {
+        "generated_at": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "setups": [list(s) for s in sorted(setups)],
+        "apps": summaries,
+    }
+    with open(out_path, "w") as f:
+        f.write(template.replace("/*__DATA__*/null", json.dumps(data)))
+    print(f"\nWrote dashboard to {out_path}")
 
 
 def main():
-    if len(sys.argv) < 2:
+    args = sys.argv[1:]
+    html_path = None
+    if "--html" in args:
+        i = args.index("--html")
+        html_path = args[i + 1]
+        args = args[:i] + args[i + 2:]
+    if not args:
         print(__doc__)
         return 1
-    for path in sys.argv[1:]:
-        check(path)
+    summaries = [check(path) for path in args]
+    if html_path:
+        write_html(summaries, html_path)
     return 0
 
 
