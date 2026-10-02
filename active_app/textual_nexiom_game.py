@@ -408,10 +408,7 @@ def extension_questions_enabled():
     return False
 
 
-GUARANTEE_HINT_TEXT = (
-    "At least one object is a Nexiom, so some combination of objects will always turn the "
-    "machine on. If it hasn't turned on yet, keep testing different combinations."
-)
+GUARANTEE_HINT_TEXT = "There is always a way to turn the machine on."
 
 
 def guarantee_hint_enabled():
