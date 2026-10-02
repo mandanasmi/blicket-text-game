@@ -24,8 +24,15 @@ _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)
 _ACTIVE = os.path.join(_ROOT, "active_app")
 
-for p in (_ACTIVE, _ROOT):
+for p in (_ACTIVE, _ROOT, _HERE):
     if p not in sys.path:
         sys.path.insert(0, p)
 
-runpy.run_path(os.path.join(_ACTIVE, "app.py"), run_name="__main__")
+from _fresh_modules import drop_changed_modules, stamp_modules
+
+# Reload active_app/ and env/ modules that changed in a redeploy (Streamlit won't).
+drop_changed_modules(_ROOT)
+try:
+    runpy.run_path(os.path.join(_ACTIVE, "app.py"), run_name="__main__")
+finally:
+    stamp_modules(_ROOT)
