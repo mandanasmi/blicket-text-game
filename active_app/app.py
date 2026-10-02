@@ -154,14 +154,22 @@ def varied_nexioms_enabled():
     return os.getenv("NEXIOM_VARIED_NEXIOMS", "").strip().lower() in ("1", "true", "yes")
 
 
+def _env_int_set(name):
+    raw = os.getenv(name, "").strip()
+    return {int(x) for x in raw.split(",") if x.strip()} if raw else None
+
+
 def active_varied_nexiom_setups():
     """VARIED_NEXIOM_SETUPS, limited to the object counts in NEXIOM_VARIED_OBJECT_COUNTS
-    (comma-separated, e.g. "8") when set; all setups otherwise."""
-    raw = os.getenv("NEXIOM_VARIED_OBJECT_COUNTS", "").strip()
-    if not raw:
-        return VARIED_NEXIOM_SETUPS
-    sizes = {int(x) for x in raw.split(",") if x.strip()}
-    return [setup for setup in VARIED_NEXIOM_SETUPS if setup[0] in sizes] or VARIED_NEXIOM_SETUPS
+    and the Nexiom counts in NEXIOM_VARIED_NEXIOM_COUNTS (comma-separated, e.g. "8")
+    when set; all setups otherwise."""
+    sizes = _env_int_set("NEXIOM_VARIED_OBJECT_COUNTS")
+    counts = _env_int_set("NEXIOM_VARIED_NEXIOM_COUNTS")
+    setups = [
+        setup for setup in VARIED_NEXIOM_SETUPS
+        if (sizes is None or setup[0] in sizes) and (counts is None or setup[1] in counts)
+    ]
+    return setups or VARIED_NEXIOM_SETUPS
 
 
 def get_next_varied_nexiom_assignment():

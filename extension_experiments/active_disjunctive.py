@@ -13,8 +13,10 @@ os.environ["NEXIOM_CONDITION"] = "active_disjunctive"
 os.environ["NEXIOM_EXTENSION_QUESTIONS"] = "1"
 os.environ["NEXIOM_HIDE_HISTORY_IN_QA"] = "1"
 os.environ["NEXIOM_VARIED_NEXIOMS"] = "1"
-# For now only the 8-object setups (2/8, 4/8, 8/8); use "4,8" to add 1/4, 3/4, 4/4 back.
+# For now only 8 objects with all 8 as Nexioms. Use NEXIOM_VARIED_NEXIOM_COUNTS = "2,4,8"
+# for 2/8, 4/8, 8/8, and NEXIOM_VARIED_OBJECT_COUNTS = "4,8" to add 1/4, 3/4, 4/4 back.
 os.environ["NEXIOM_VARIED_OBJECT_COUNTS"] = "8"
+os.environ["NEXIOM_VARIED_NEXIOM_COUNTS"] = "8"
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)
