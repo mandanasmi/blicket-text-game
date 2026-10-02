@@ -35,7 +35,7 @@ def _safe_print(*args, **kwargs):
 print = _safe_print
 
 import env.blicket_text as blicket_text
-from textual_nexiom_game import textual_blicket_game_page
+from textual_nexiom_game import textual_blicket_game_page, guarantee_hint_enabled, GUARANTEE_HINT_TEXT
 
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 
@@ -1184,7 +1184,16 @@ elif st.session_state.phase == "practice_complete":
         label_map = ["A", "B", "C"]
         display_label = label_map[practice_blicket] if practice_blicket < len(label_map) else str(practice_blicket + 1)
         st.markdown(f"The true Nexiom in the practice round was **Object {display_label}**. This is because only Object { 'ABC'[practice_blicket] if practice_blicket < 3 else practice_blicket + 1 } can turn on the Nexiom machine.")
-        st.markdown("You will now move on to the Main Experiment, where you will see 4 new objects and a different Nexiom machine. Please note that the rules may be <strong><span style='font-size: 1.05em;'>completely different</span></strong> from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well! You must complete this one game to finish the experiment.", unsafe_allow_html=True)
+        # The main-game setup is only drawn when they click Start, so name the object
+        # count only when every setup this deployment can assign has the same one.
+        if varied_nexioms_enabled():
+            _sizes = {num_objects for num_objects, _ in active_varied_nexiom_setups()}
+            _objects_text = f"{_sizes.pop()} new objects" if len(_sizes) == 1 else "a new set of objects"
+        else:
+            _objects_text = "4 new objects"
+        st.markdown(f"You will now move on to the Main Experiment, where you will see {_objects_text} and a different Nexiom machine. Please note that the rules may be <strong><span style='font-size: 1.05em;'>completely different</span></strong> from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well! You must complete this one game to finish the experiment.", unsafe_allow_html=True)
+        if guarantee_hint_enabled():
+            st.markdown(f"**{GUARANTEE_HINT_TEXT}**")
 
     st.markdown("---")
     st.markdown("### Question")
@@ -1333,6 +1342,8 @@ elif st.session_state.phase == "practice_complete":
             }
             if varied_assignment_index is not None:
                 config['varied_assignment_index'] = varied_assignment_index
+            # Record whether this participant was told the machine can always be turned on.
+            config['guarantee_hint_shown'] = guarantee_hint_enabled()
             save_participant_config(st.session_state.current_participant_id, config)
             
             st.session_state.current_round = 0

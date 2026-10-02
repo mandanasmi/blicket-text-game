@@ -408,6 +408,19 @@ def extension_questions_enabled():
     return False
 
 
+GUARANTEE_HINT_TEXT = (
+    "At least one object is a Nexiom, so some combination of objects will always turn the "
+    "machine on. If it hasn't turned on yet, keep testing different combinations."
+)
+
+
+def guarantee_hint_enabled():
+    """True when the main game should tell participants the machine can always be turned
+    on (NEXIOM_GUARANTEE_HINT, set by the active extension wrappers). Keeps people
+    searching in setups where ON is rare, e.g. 8/8 conjunctive."""
+    return os.getenv("NEXIOM_GUARANTEE_HINT", "").strip().lower() in ("1", "true", "yes")
+
+
 def hide_history_in_qa_enabled():
     """True when this deployment should hide the Test/Action History panel once the
     participant leaves exploration (i.e. from the Nexiom classification question onward
@@ -849,6 +862,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     # Progress bar removed since there's only one game
     
     # Collapsible instruction section
+    show_guarantee_hint = guarantee_hint_enabled() and not is_practice
+    guarantee_hint_md = f"**{GUARANTEE_HINT_TEXT}**" if show_guarantee_hint else ""
     with st.expander("Click to read game instructions", expanded=False):
         horizon = round_config.get('horizon', 32)  # Default to 32 tests
         st.markdown(f"""
@@ -856,6 +871,8 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         **Your goals are:**
         - Identify which objects will turn on the machine. **It could be one or multiple objects.**
         - Infer the underlying rule for how the machine turns on. 
+
+        {guarantee_hint_md}
 
         **Tips:**
         - All objects can be either on the machine or on the floor.
@@ -951,6 +968,9 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     practice_locked = is_practice and st.session_state.get("show_practice_test", False)
     qna_locked = (st.session_state.visual_game_state != "exploration") or practice_locked
     
+    if show_guarantee_hint and st.session_state.visual_game_state == "exploration":
+        st.info(GUARANTEE_HINT_TEXT)
+
     if use_text_version:
         header = "Available Objects (A, B, C)" if is_practice else "Available Objects"
         st.markdown(f"<div style='font-size: 30px !important; font-weight: 700; margin-bottom: 0.5rem;'>{header}</div>", unsafe_allow_html=True)
