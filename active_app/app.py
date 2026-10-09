@@ -41,7 +41,7 @@ IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 
 load_dotenv()
 
-COMPLETION_CODE = "C1C28QBX"
+COMPLETION_CODE = os.getenv("SURVEY_COMPLETION_CODE", "C1C28QBX")
 PROLIFIC_RETURN_URL = f"https://app.prolific.com/submissions/complete?cc={COMPLETION_CODE}"
 
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––

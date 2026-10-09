@@ -19,6 +19,8 @@ os.environ["NEXIOM_GUARANTEE_HINT"] = "1"
 # for 2/8, 4/8, 8/8, and NEXIOM_VARIED_OBJECT_COUNTS = "4,8" to add 1/4, 3/4, 4/4 back.
 os.environ["NEXIOM_VARIED_OBJECT_COUNTS"] = "8"
 os.environ["NEXIOM_VARIED_NEXIOM_COUNTS"] = "8"
+# Prolific completion code for this study (8/8 Nexioms).
+os.environ["SURVEY_COMPLETION_CODE"] = "C1IK38P3"
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _ROOT = os.path.dirname(_HERE)
