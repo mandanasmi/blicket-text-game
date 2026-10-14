@@ -29,6 +29,9 @@ def render_integrity_page():
     """Instructions page shown right after consent. Returns True once accepted."""
     st.title("Before you begin")
     st.markdown(
+        # Shrink the app's full-height grey card to fit this short page.
+        "<style>.block-container { min-height: auto !important; }"
+        ".block-container h1 { margin-top: 0 !important; padding-top: 0 !important; }</style>"
         '<ol style="font-size:1.15rem; line-height:1.7;">'
         "<li>Please stay in <b>full screen</b> and do not switch to other tabs throughout the "
         "experiment, otherwise <u>you risk losing your compensation</u>.</li>"

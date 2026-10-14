@@ -713,6 +713,11 @@ button, .stButton > button {
 }
 img { max-width: 100% !important; height: auto !important; }
 
+/* The proctoring component is an invisible helper iframe; take it out of the layout. */
+[data-testid="stElementContainer"]:has(iframe[title*="nexiom_proctor"]) {
+    display: none !important;
+}
+
 button[data-testid="stBaseButton-primary"],
 button[data-testid="stBaseButton-secondary"] {
     border-radius: 999px !important;
