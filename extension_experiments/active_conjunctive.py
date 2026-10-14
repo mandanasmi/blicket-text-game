@@ -11,7 +11,11 @@ import runpy
 os.environ["NEXIOM_MAIN_RULE"] = "conjunctive"
 os.environ["NEXIOM_CONDITION"] = "active_conjunctive"
 os.environ["NEXIOM_EXTENSION_QUESTIONS"] = "1"
-os.environ["NEXIOM_HIDE_HISTORY_IN_QA"] = "1"
+# Test history stays visible during Q&A; instead the study is proctored: full-screen
+# gate, focus/tab-switch logging, copy/paste blocking, plus the bonus instructions page.
+os.environ["NEXIOM_PROCTORED"] = "1"
+# Set explicitly (not just removed): Cloud redeploys keep the old process env.
+os.environ["NEXIOM_HIDE_HISTORY_IN_QA"] = "0"
 os.environ["NEXIOM_VARIED_NEXIOMS"] = "1"
 # Tell participants some combination always turns the machine on (keeps them searching).
 os.environ["NEXIOM_GUARANTEE_HINT"] = "1"

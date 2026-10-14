@@ -35,7 +35,8 @@ def _safe_print(*args, **kwargs):
 print = _safe_print
 
 import env.blicket_text as blicket_text
-from textual_nexiom_game import textual_blicket_game_page, guarantee_hint_enabled, GUARANTEE_HINT_TEXT
+from textual_nexiom_game import textual_blicket_game_page, guarantee_hint_enabled, hide_history_in_qa_enabled, GUARANTEE_HINT_TEXT
+from proctoring import proctoring_enabled, render_integrity_page, render_proctor
 
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 
@@ -733,6 +734,12 @@ button[data-testid="stBaseButton-secondary"]:hover {
 </style>
 """, unsafe_allow_html=True)
 
+# Full-screen gate + focus tracking (no-op unless NEXIOM_PROCTORED is set).
+_proctor_phase = st.session_state.phase
+if _proctor_phase == "game":
+    _proctor_phase = f"game:{st.session_state.get('visual_game_state', '')}"
+render_proctor(_proctor_phase, st.session_state.current_participant_id, db_ref if firebase_initialized else None)
+
 # —––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 
 # 0) CONSENT SCREEN
@@ -859,7 +866,8 @@ if st.session_state.phase == "consent":
         if st.button("Accept", type="primary"):
             st.session_state.consent = True
             st.session_state.consent_timestamp = datetime.datetime.now().isoformat()
-            st.session_state.phase = "intro"
+            # Proctored deployments show the full-screen / bonus instructions first.
+            st.session_state.phase = "integrity" if proctoring_enabled() else "intro"
             st.rerun()
     with col2:
         if st.button("Decline", type="secondary"):
@@ -873,6 +881,13 @@ if st.session_state.phase == "consent":
 elif st.session_state.phase == "no_consent":
     st.title("Thanks for your response")
     st.markdown("## You did not consent. The study will now close.")
+    st.stop()
+
+# 0b) FULL-SCREEN / BONUS INSTRUCTIONS (proctored deployments only)
+elif st.session_state.phase == "integrity":
+    if render_integrity_page():
+        st.session_state.phase = "intro"
+        st.rerun()
     st.stop()
 
 # 1) PARTICIPANT ID ENTRY SCREEN
@@ -1344,6 +1359,9 @@ elif st.session_state.phase == "practice_complete":
                 config['varied_assignment_index'] = varied_assignment_index
             # Record whether this participant was told the machine can always be turned on.
             config['guarantee_hint_shown'] = guarantee_hint_enabled()
+            # Record the proctoring / history condition so mixed deployments stay separable.
+            config['proctored'] = proctoring_enabled()
+            config['history_shown_in_qa'] = not hide_history_in_qa_enabled()
             save_participant_config(st.session_state.current_participant_id, config)
             
             st.session_state.current_round = 0

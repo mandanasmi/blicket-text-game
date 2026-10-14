@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"></head>
+<body style="margin:0">
+<script>
+// Proctoring component for the Nexiom game (see active_app/proctoring.py).
+//
+// This iframe is a zero-height Streamlit component. It injects proctorMain() into the
+// Streamlit page itself (window.parent) so the full-screen gate, focus tracking and
+// copy/paste blocking keep working while Streamlit re-renders. The iframe then polls the
+// page-level stats and sends them back to Python whenever something new was recorded.
+
+function proctorMain() {
+  if (window.__nexiomProctor) return;
+  var doc = document;
+  var MAX_EVENTS = 400;
+  var fsSupported = !!(doc.fullscreenEnabled || doc.webkitFullscreenEnabled);
+  var S = {
+    version: 0,
+    fullscreen_supported: fsSupported,
+    user_agent: navigator.userAgent,
+    screen: screen.width + "x" + screen.height,
+    counts: {
+      fullscreen_exit: 0, tab_hidden: 0, window_blur: 0, copy_blocked: 0,
+      cut_blocked: 0, paste_blocked: 0, context_menu_blocked: 0, printscreen: 0, print_blocked: 0
+    },
+    away_seconds: 0,
+    by_phase: {},
+    events: []
+  };
+  var active = false, phase = "", started = false, needsAck = false, awaySince = null, awayPhase = "";
+
+  function isFs() { return !!(doc.fullscreenElement || doc.webkitFullscreenElement); }
+  function isAway() { return doc.hidden || !doc.hasFocus() || (fsSupported && started && !isFs()); }
+  function phaseStats(p) {
+    var key = (p || "unknown").replace(/[.#$\[\]\/]/g, "_");  // Firebase-safe key
+    if (!S.by_phase[key]) S.by_phase[key] = { away_seconds: 0 };
+    return S.by_phase[key];
+  }
+  function log(type, extra) {
+    if (!active) return;
+    if (type in S.counts) S.counts[type] += 1;
+    var ps = phaseStats(phase);
+    ps[type] = (ps[type] || 0) + 1;
+    var ev = { t: new Date().toISOString(), type: type, phase: phase };
+    if (extra) for (var k in extra) ev[k] = extra[k];
+    if (S.events.length < MAX_EVENTS) S.events.push(ev);
+    S.version += 1;
+  }
+  function trackAway() {
+    var away = active && isAway();
+    if (away && awaySince === null) {
+      awaySince = Date.now(); awayPhase = phase;
+    } else if (!away && awaySince !== null) {
+      var secs = Math.round((Date.now() - awaySince) / 100) / 10;
+      awaySince = null;
+      S.away_seconds = Math.round((S.away_seconds + secs) * 10) / 10;
+      var ps = phaseStats(awayPhase);
+      ps.away_seconds = Math.round((ps.away_seconds + secs) * 10) / 10;
+      if (S.events.length < MAX_EVENTS) S.events.push({ t: new Date().toISOString(), type: "returned", phase: awayPhase, away_seconds: secs });
+      S.version += 1;
+    }
+  }
+
+  // ---- overlay ----
+  var style = doc.createElement("style");
+  style.textContent =
+    "html.nexiom-proctored body * { -webkit-user-select: none !important; user-select: none !important; }" +
+    "html.nexiom-proctored textarea, html.nexiom-proctored input { -webkit-user-select: text !important; user-select: text !important; }" +
+    "#nexiom-proctor-overlay { position: fixed; inset: 0; z-index: 2147483647; display: none; align-items: center; justify-content: center;" +
+    "  background: #0f172a; color: #fff; font-family: 'Source Sans Pro', sans-serif; text-align: center; padding: 24px; }" +
+    "#nexiom-proctor-overlay .box { max-width: 620px; }" +
+    "#nexiom-proctor-overlay h2 { font-size: 28px; margin: 0 0 16px; color: #fff; }" +
+    "#nexiom-proctor-overlay p { font-size: 19px; line-height: 1.5; margin: 0 0 14px; }" +
+    "#nexiom-proctor-overlay button { margin-top: 12px; font-size: 20px; font-weight: 600; padding: 12px 32px; border-radius: 999px; border: 0;" +
+    "  background: linear-gradient(135deg, #1e88e5 0%, #0d47a1 100%); color: #fff; cursor: pointer; }";
+  doc.head.appendChild(style);
+  var overlay = doc.createElement("div");
+  overlay.id = "nexiom-proctor-overlay";
+  overlay.innerHTML = '<div class="box"><h2></h2><div class="msg"></div><button type="button"></button></div>';
+  doc.body.appendChild(overlay);
+  var oTitle = overlay.querySelector("h2"), oMsg = overlay.querySelector(".msg"), oBtn = overlay.querySelector("button");
+  var oAction = null, blackoutUntil = 0;
+  oBtn.addEventListener("click", function () { if (oAction) oAction(); });
+
+  function showOverlay(title, msgHtml, btnText, action) {
+    oTitle.textContent = title; oMsg.innerHTML = msgHtml;
+    oBtn.style.display = btnText ? "" : "none"; oBtn.textContent = btnText || ""; oAction = action;
+    overlay.style.display = "flex";
+  }
+  function requestFs() {
+    var el = doc.documentElement;
+    var req = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (!req) return;
+    try { var p = req.call(el); if (p && p.catch) p.catch(function () {}); } catch (e) {}
+  }
+  var RISK = "<p><u>If you do not stay in full screen, you risk losing your compensation.</u></p>";
+  function update() {
+    trackAway();
+    if (!active) { overlay.style.display = "none"; return; }
+    if (Date.now() < blackoutUntil) {
+      showOverlay("Screenshots are not allowed", "<p>Taking screenshots during this study is not permitted. This has been recorded.</p>" + RISK, null, null);
+      return;
+    }
+    if (fsSupported && !isFs()) {
+      if (!started) {
+        showOverlay("This study runs in full screen",
+          "<p>Click the button below to switch to full screen and begin.</p><p>Stay in full screen and in this window until you finish.</p>" + RISK,
+          "Enter full screen", requestFs);
+      } else {
+        showOverlay("You left full screen",
+          "<p>This has been recorded. Please return to full screen to continue the study.</p>" + RISK,
+          "Return to full screen", function () { needsAck = false; requestFs(); });
+      }
+      return;
+    }
+    if (needsAck) {
+      showOverlay("You left the study window",
+        "<p>Switching to another tab, window or app during the study has been recorded.</p>" + RISK,
+        "Return to the study", function () { needsAck = false; update(); });
+      return;
+    }
+    overlay.style.display = "none";
+  }
+
+  // ---- listeners ----
+  function onFsChange() {
+    if (isFs()) { started = true; }
+    else if (active && started) { log("fullscreen_exit"); }
+    update();
+  }
+  doc.addEventListener("fullscreenchange", onFsChange);
+  doc.addEventListener("webkitfullscreenchange", onFsChange);
+  doc.addEventListener("visibilitychange", function () {
+    if (doc.hidden && active) { log("tab_hidden"); needsAck = true; }
+    update();
+  });
+  window.addEventListener("blur", function () {
+    // Clicking into an embedded iframe (e.g. a Streamlit component) also blurs the
+    // page, but then document.hasFocus() stays true, so it is not counted. A blur only
+    // counts once focus has stayed away for 1.5 s, so a stray Tab into the browser UI
+    // that is immediately clicked back does not trigger the warning.
+    update();
+    setTimeout(function () {
+      if (active && !doc.hasFocus()) { log("window_blur"); needsAck = true; }
+      update();
+    }, 1500);
+  });
+  window.addEventListener("focus", function () { update(); });
+
+  function block(type) {
+    return function (e) { if (!active) return; e.preventDefault(); e.stopPropagation(); log(type); };
+  }
+  doc.addEventListener("copy", block("copy_blocked"), true);
+  doc.addEventListener("cut", block("cut_blocked"), true);
+  doc.addEventListener("paste", block("paste_blocked"), true);
+  doc.addEventListener("contextmenu", block("context_menu_blocked"), true);
+  doc.addEventListener("dragstart", function (e) { if (active) e.preventDefault(); }, true);
+
+  function onKey(e) {
+    if (!active) return;
+    var k = (e.key || "").toLowerCase();
+    var macShot = e.metaKey && e.shiftKey && (k === "3" || k === "4" || k === "5" || k === "s");
+    if (k === "printscreen" || macShot) {
+      // Windows often only delivers PrintScreen on keyup; count each press once.
+      if (e.type === (k === "printscreen" ? "keyup" : "keydown")) log("printscreen");
+      e.preventDefault();
+      try { navigator.clipboard.writeText("Screenshots are not allowed during this study."); } catch (err) {}
+      blackoutUntil = Date.now() + 2000;
+      update();
+      setTimeout(update, 2050);
+      return;
+    }
+    if ((e.ctrlKey || e.metaKey) && (k === "p" || k === "s") && e.type === "keydown") {
+      e.preventDefault();
+      log("print_blocked");
+    }
+  }
+  doc.addEventListener("keydown", onKey, true);
+  doc.addEventListener("keyup", onKey, true);
+
+  window.__nexiomProctor = {
+    setState: function (a, p) {
+      if (a !== active || p !== phase) {
+        trackAway();  // close any away interval under the old phase
+        active = a; phase = p;
+        doc.documentElement.classList.toggle("nexiom-proctored", active);
+        if (!active && isFs() && doc.exitFullscreen) { try { doc.exitFullscreen(); } catch (e) {} }
+      }
+      update();
+    },
+    version: function () { return S.version; },
+    snapshot: function () { return JSON.parse(JSON.stringify(S)); }
+  };
+}
+
+function send(type, data) {
+  var msg = { isStreamlitMessage: true, type: type };
+  for (var k in data) msg[k] = data[k];
+  window.parent.postMessage(msg, "*");
+}
+function proctor() {
+  try { return window.parent.__nexiomProctor || null; } catch (e) { return null; }
+}
+function inject() {
+  try {
+    if (window.parent.__nexiomProctor) return;
+    var pd = window.parent.document;
+    var s = pd.createElement("script");
+    s.textContent = "(" + proctorMain.toString() + ")();";
+    pd.head.appendChild(s);
+  } catch (e) {}
+}
+
+var known = 0;
+window.addEventListener("message", function (ev) {
+  var d = ev.data;
+  if (!d || d.type !== "streamlit:render") return;
+  var a = d.args || {};
+  known = Math.max(known, a.known_version || 0);
+  inject();
+  var p = proctor();
+  if (p) p.setState(!!a.active, a.phase || "");
+  send("streamlit:setFrameHeight", { height: 0 });
+});
+send("streamlit:componentReady", { apiVersion: 1 });
+
+setInterval(function () {
+  var p = proctor();
+  if (!p) return;
+  var v = p.version();
+  if (v > known) {
+    known = v;
+    send("streamlit:setComponentValue", { value: p.snapshot(), dataType: "json" });
+  }
+}, 1000);
+</script>
+</body>
+</html>

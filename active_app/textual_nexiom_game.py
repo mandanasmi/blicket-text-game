@@ -26,6 +26,7 @@ def _safe_print(*args, **kwargs):
 print = _safe_print
 
 import env.blicket_text as blicket_text
+from proctoring import grade_bonus, integrity_summary
 
 # Global variable to control visual vs text-only version
 USE_TEXT_VERSION = True
@@ -559,6 +560,12 @@ def build_main_round_data(round_config, current_round, is_practice):
         "phase": "main_experiment",
         "interface_type": "text",
     }
+    if not is_practice:
+        round_data.update(grade_bonus(
+            round_data["true_blicket_indices"], round_data["user_chosen_blickets"],
+            round_config['rule'], round_data["rule_type"],
+        ))
+        round_data.update(integrity_summary())
     return round_data
 
 

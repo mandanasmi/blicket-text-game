@@ -64,3 +64,20 @@ action-history `.txt` files go — same format as
 `active_explore/analysis/action_histories/*_action_history.txt`. Rotation is
 round-robin across every `.txt` in the configured folder, coordinated by a Firebase
 counter so concurrent respondents are distributed evenly.
+
+## Proctoring (active links)
+
+The two active wrappers set `NEXIOM_PROCTORED=1` (see `active_app/proctoring.py`). After
+consent, participants see a "Before you begin" page (stay in full screen or risk losing
+compensation; bonus for identifying all Nexioms **and** the correct rule type), then must
+enter full screen. The test history stays visible during Q&A (`NEXIOM_HIDE_HISTORY_IN_QA=0`).
+
+- A browser cannot block screenshots or a second device, so this is a deterrent plus
+  logging: leaving full screen or switching tab/window shows a blocking overlay; copy,
+  cut, paste, right-click and Ctrl/Cmd+P are blocked; PrintScreen presses are logged.
+- Everything is saved to Firebase under `<pid>/integrity` (counts, `away_seconds`,
+  per-phase breakdown, event log), and a summary is copied into the main-round record
+  next to `bonus_eligible`, `bonus_nexioms_correct`, `bonus_rule_type_correct`.
+- `config.proctored` / `config.history_shown_in_qa` mark which participants ran this way.
+- If full screen is unavailable (e.g. the Cloud wrapper iframe blocks it),
+  `fullscreen_supported` is `false` and only focus tracking runs.
