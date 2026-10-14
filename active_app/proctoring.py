@@ -35,9 +35,9 @@ def render_integrity_page():
         "body { background: #ffffff !important; }"
         ".block-container h1 { margin-top: 0 !important; padding-top: 0 !important; }</style>"
         '<ol style="font-size:1.15rem; line-height:1.7;">'
-        "<li>Please stay in <b>full screen</b> and do not switch to other tabs throughout the "
-        "experiment, otherwise <u>you risk losing your compensation</u>.</li>"
-        "<li>You will receive a <b>bonus payment</b> if you correctly identify how the machine works.</li>"
+        "<li>Please stay in <b style='color:#c62828;'>full screen</b> and do not switch to other tabs throughout the "
+        "experiment, otherwise <u style='color:#c62828;'>you risk losing your compensation</u>.</li>"
+        "<li>You will receive a <b style='color:#2e7d32;'>bonus payment</b> if you correctly identify how the machine works.</li>"
         "</ol>",
         unsafe_allow_html=True,
     )
