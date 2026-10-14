@@ -28,29 +28,15 @@ def proctoring_enabled():
 def render_integrity_page():
     """Instructions page shown right after consent. Returns True once accepted."""
     st.title("Before you begin")
-    st.markdown("### Stay in full screen")
     st.markdown(
-        "- This study must be completed on a **desktop or laptop computer** in **full screen**. "
-        "After you continue, you will be asked to switch your browser to full screen.\n"
-        "- Stay in this window until you finish. **Do not** switch to other tabs, windows or apps, "
-        "take screenshots, or copy text from the study.\n"
-        "- **Do not** use AI tools (such as ChatGPT), search engines, notes, or help from other people. "
-        "We want to know what *you* figure out.\n"
-        "- We automatically record when you leave full screen or switch away from the study."
-    )
-    st.markdown(
-        '<p style="font-size:1.15rem; font-weight:700; color:#b71c1c;">'
-        "<u>If you do not stay in full screen, you risk losing your compensation.</u></p>",
+        '<ol style="font-size:1.15rem; line-height:1.7;">'
+        "<li>Please stay in <b>full screen</b> and do not switch to other tabs throughout the "
+        "experiment, otherwise <u>you risk losing your compensation</u>.</li>"
+        "<li>You will receive a <b>bonus payment</b> if you correctly identify how the machine works.</li>"
+        "</ol>",
         unsafe_allow_html=True,
     )
-    st.markdown("### Bonus payment")
-    st.markdown(
-        "At the end of the main round you will be asked **which objects are Nexioms** and "
-        "**what rule the machine follows**. If you identify **all** of the Nexioms correctly "
-        "**and** choose the correct rule, you will receive a **bonus payment** on top of "
-        "your base payment. So take your time and try to work out how the machine really works!"
-    )
-    agreed = st.checkbox("I understand these rules and will stay in full screen until the study ends.")
+    agreed = st.checkbox("I understand.")
     if st.button("Continue", type="primary", disabled=not agreed):
         st.session_state.integrity_accepted_at = datetime.datetime.now().isoformat()
         return True
