@@ -6,7 +6,6 @@ from this deployment's own secrets ([firebase] block), so it writes to its own D
 """
 import os
 import sys
-import runpy
 
 os.environ["NEXIOM_MAIN_RULE"] = "disjunctive"
 os.environ["NEXIOM_CONDITION"] = "active_disjunctive"
@@ -34,11 +33,15 @@ for p in (_ACTIVE, _ROOT, _HERE):
     if p not in sys.path:
         sys.path.insert(0, p)
 
-from _fresh_modules import drop_changed_modules, stamp_modules
+# Streamlit doesn't reload this helper when a redeploy changes it, so evict a stale copy.
+_fm = sys.modules.get("_fresh_modules")
+if _fm is not None and os.path.getmtime(_fm.__file__) > getattr(_fm, "LOADED_MTIME", 0):
+    del sys.modules["_fresh_modules"]
+from _fresh_modules import drop_changed_modules, run_app, stamp_modules
 
 # Reload active_app/ and env/ modules that changed in a redeploy (Streamlit won't).
 drop_changed_modules(_ROOT)
 try:
-    runpy.run_path(os.path.join(_ACTIVE, "app.py"), run_name="__main__")
+    run_app(os.path.join(_ACTIVE, "app.py"))
 finally:
     stamp_modules(_ROOT)
