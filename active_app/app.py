@@ -952,6 +952,9 @@ if st.session_state.phase == "intro":
         Click **“Continue”** to begin.
 
         """)
+        # Prefill from Prolific's URL parameter (?PROLIFIC_PID=...) when the study link passes it.
+        if "participant_id" not in st.session_state:
+            st.session_state.participant_id = st.query_params.get("PROLIFIC_PID", "")
         participant_id = st.text_input("Prolific ID:", key="participant_id")
         col_a, col_b = st.columns(2)
         with col_a:

@@ -153,7 +153,10 @@ function proctorMain() {
   }
   doc.addEventListener("copy", block("copy_blocked"), true);
   doc.addEventListener("cut", block("cut_blocked"), true);
-  doc.addEventListener("paste", block("paste_blocked"), true);
+  // Pasting is allowed on the ID screen ("intro") so participants can paste their
+  // Prolific ID without leaving full screen to type it.
+  var blockPaste = block("paste_blocked");
+  doc.addEventListener("paste", function (e) { if (phase !== "intro") blockPaste(e); }, true);
   doc.addEventListener("contextmenu", block("context_menu_blocked"), true);
   doc.addEventListener("dragstart", function (e) { if (active) e.preventDefault(); }, true);
 
