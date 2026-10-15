@@ -17,8 +17,10 @@ _component = components.declare_component(
     path=os.path.join(os.path.dirname(os.path.abspath(__file__)), "proctor_component"),
 )
 
-# Phases where the full-screen gate and tracking are switched off.
-_INACTIVE_PHASES = {"consent", "no_consent", "integrity", "end"}
+# Phases where the full-screen gate and tracking are switched off. "intro" is the
+# Prolific ID screen: participants often switch windows to copy their ID, so the gate
+# starts only once they continue past it.
+_INACTIVE_PHASES = {"consent", "no_consent", "integrity", "intro", "end"}
 
 
 def proctoring_enabled():
