@@ -443,7 +443,7 @@ def hide_history_in_qa_enabled():
 def grade_extension_answers(rule, true_blicket_indices, combination_predictions, objects_to_remove_indices, num_objects):
     """Auto-grade the intervention (combination + turn-off) answers against ground truth.
 
-    `rule` is "conjunctive" or "disjunctive"; `true_blicket_indices` are the ground-truth
+    `rule` names a pure or mixed rule; `true_blicket_indices` are the ground-truth
     blicket indices (0-based). Baseline for the turn-off question is every object present
     (which is always ON, since that set contains every true blicket regardless of rule).
     """
@@ -453,6 +453,9 @@ def grade_extension_answers(rule, true_blicket_indices, combination_predictions,
         present = set(present_indices)
         if not true_blickets:
             return False
+        if rule in ("mixed_and_or", "mixed_or_and"):
+            state = np.array([i in present for i in range(num_objects)], dtype=bool)
+            return blicket_text.BlicketFunctionSet.get_function(rule)(state, true_blicket_indices)
         if rule == "conjunctive":
             return true_blickets.issubset(present)
         return len(true_blickets & present) > 0  # disjunctive
@@ -470,7 +473,10 @@ def grade_extension_answers(rule, true_blicket_indices, combination_predictions,
     remaining = set(range(num_objects)) - remove_set
     actually_turns_off = not is_on(remaining)
 
-    if rule == "conjunctive":
+    if rule in ("mixed_and_or", "mixed_or_and"):
+        minimal_required_count = 2 if rule == "mixed_and_or" else 1
+        is_minimal_correct = actually_turns_off and len(remove_set) == minimal_required_count
+    elif rule == "conjunctive":
         # Any single true blicket is sufficient to remove.
         minimal_required_count = 1 if true_blickets else 0
         is_minimal_correct = len(remove_set) == 1 and remove_set.issubset(true_blickets)
@@ -1623,32 +1629,44 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
         </div>
         """, unsafe_allow_html=True)
         
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            st.markdown("""
-            **Conjunctive Rule**
-            
-            The machine switches on when **ALL** of the Nexioms are present on the machine.
-            
-            *Example: If Objects 1 and 3 are Nexioms, the machine only switches on when BOTH Object 1 AND Object 3 are on the machine.*
-            """)
-        
-        with col2:
-            st.markdown("""
-            **Disjunctive Rule**
-            
-            The machine switches on when **ANY** of the Nexioms are present on the machine.
-            
-            *Example: If Objects 1 and 3 are Nexioms, the machine switches on when EITHER Object 1 OR Object 3 (or both) are on the machine.*
-            """)
-        
-        rule_type = st.radio(
-            "What type of rule do you think applies?",
-            ["Conjunctive (ALL Nexioms must be present)", "Disjunctive (ANY Nexiom can activate)"],
-            key="rule_type",
-            index=None
-        )
+        if round_config["rule"] in ("mixed_and_or", "mixed_or_and"):
+            rule_type = st.radio(
+                "What type of rule do you think applies?",
+                [
+                    "Conjunctive: ALL Nexioms must be present together.",
+                    "Disjunctive: ANY Nexiom can switch on the machine by itself.",
+                    "Mixed: Certain objects or combinations can switch on the machine, but not all Nexioms are required together, and not every Nexiom works alone.",
+                ],
+                key="rule_type",
+                index=None,
+            )
+        else:
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.markdown("""
+                **Conjunctive Rule**
+
+                The machine switches on when **ALL** of the Nexioms are present on the machine.
+
+                *Example: If Objects 1 and 3 are Nexioms, the machine only switches on when BOTH Object 1 AND Object 3 are on the machine.*
+                """)
+
+            with col2:
+                st.markdown("""
+                **Disjunctive Rule**
+
+                The machine switches on when **ANY** of the Nexioms are present on the machine.
+
+                *Example: If Objects 1 and 3 are Nexioms, the machine switches on when EITHER Object 1 OR Object 3 (or both) are on the machine.*
+                """)
+
+            rule_type = st.radio(
+                "What type of rule do you think applies?",
+                ["Conjunctive (ALL Nexioms must be present)", "Disjunctive (ANY Nexiom can activate)"],
+                key="rule_type",
+                index=None
+            )
 
         # Navigation buttons
         st.markdown("---")
@@ -1812,7 +1830,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
             
             # Show message if button is disabled
             if not rule_type:
-                st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type (Conjunctive or Disjunctive)</p>", unsafe_allow_html=True)
+                st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type</p>", unsafe_allow_html=True)
         else:
             # Show Finish Task button only on the last round
             # Check if rule type is provided
@@ -1832,7 +1850,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
 
             # Show message if button is disabled
             if not rule_type:
-                st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type (Conjunctive or Disjunctive)</p>", unsafe_allow_html=True)
+                st.markdown("<p style='color: #dc3545; font-size: 14px;'>Please select a rule type</p>", unsafe_allow_html=True)
 
     elif st.session_state.visual_game_state == "rule_inference" and not is_practice:
         # ---- Rule description/inference, asked after the intervention questions and

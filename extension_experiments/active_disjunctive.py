@@ -1,14 +1,14 @@
-"""Streamlit Cloud entry point: ACTIVE experiment, DISJUNCTIVE rule only.
+"""Streamlit Cloud entry point: ACTIVE mixed-rule experiment (mixed_or_and).
 
 Extension experiment link `nexiom-text-game-active-disjunctive`.
-Reuses active_app/app.py, pinning the main-game rule to disjunctive. Firebase comes
+Reuses active_app/app.py, pinning the main-game rule to mixed_or_and. Firebase comes
 from this deployment's own secrets ([firebase] block), so it writes to its own DB.
 """
 import os
 import sys
 
-os.environ["NEXIOM_MAIN_RULE"] = "disjunctive"
-os.environ["NEXIOM_CONDITION"] = "active_disjunctive"
+os.environ["NEXIOM_MAIN_RULE"] = "mixed_or_and"
+os.environ["NEXIOM_CONDITION"] = "active_mixed_or_and"
 os.environ["NEXIOM_EXTENSION_QUESTIONS"] = "1"
 # Test history stays visible during Q&A; instead the study is proctored: full-screen
 # gate, focus/tab-switch logging, copy/paste blocking, plus the bonus instructions page.
@@ -18,10 +18,9 @@ os.environ["NEXIOM_HIDE_HISTORY_IN_QA"] = "0"
 os.environ["NEXIOM_VARIED_NEXIOMS"] = "1"
 # Tell participants some combination always turns the machine on (keeps them searching).
 os.environ["NEXIOM_GUARANTEE_HINT"] = "1"
-# For now only 8 objects with all 8 as Nexioms. Use NEXIOM_VARIED_NEXIOM_COUNTS = "2,4,8"
-# for 2/8, 4/8, 8/8, and NEXIOM_VARIED_OBJECT_COUNTS = "4,8" to add 1/4, 3/4, 4/4 back.
+# Mixed-rule study: 8 objects, 3 Nexioms, 32 tests.
 os.environ["NEXIOM_VARIED_OBJECT_COUNTS"] = "8"
-os.environ["NEXIOM_VARIED_NEXIOM_COUNTS"] = "8"
+os.environ["NEXIOM_VARIED_NEXIOM_COUNTS"] = "3"
 # Prolific completion code for this study.
 os.environ["SURVEY_COMPLETION_CODE"] = "C1IK38P3"
 

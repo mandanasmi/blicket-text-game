@@ -51,9 +51,10 @@ def render_integrity_page():
 
 
 def grade_bonus(true_blicket_indices, user_chosen_blickets, true_rule, rule_type_answer):
-    """Bonus = every Nexiom classified correctly AND the right conjunctive/disjunctive rule."""
+    """Bonus = every Nexiom classified correctly AND the right rule type."""
     nexioms_correct = sorted(int(i) for i in true_blicket_indices) == sorted(int(i) for i in user_chosen_blickets)
-    rule_correct = bool(rule_type_answer) and rule_type_answer.strip().lower().startswith(str(true_rule).lower())
+    expected_type = "mixed" if true_rule in ("mixed_and_or", "mixed_or_and") else str(true_rule).lower()
+    rule_correct = bool(rule_type_answer) and rule_type_answer.strip().lower().startswith(expected_type)
     return {
         "bonus_nexioms_correct": nexioms_correct,
         "bonus_rule_type_correct": rule_correct,

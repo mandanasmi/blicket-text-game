@@ -1,5 +1,22 @@
 # Extension experiments
 
+## Active mixed-rule study
+
+The existing active conjunctive link now uses `(A AND B) OR C` (`mixed_and_or`);
+the active disjunctive link uses `(A OR B) AND C` (`mixed_or_and`). Both have
+8 objects, 3 Nexioms and 32 tests. Nexiom identities rotate; A/B/C roles are
+shuffled per participant and preserved in the ordered `blicket_indices` config
+(first two are A/B, third is C; config uses zero-based indices).
+Saved conditions are `active_mixed_and_or` and `active_mixed_or_and` so new
+responses can be distinguished from previous pure-rule data in the same databases.
+The rule question offers Conjunctive, Disjunctive and Mixed without examples;
+Mixed is the correct rule-type answer for both links. Intervention and bonus
+grading use the corresponding mixed rule. Passive links retain their pure rules.
+Deploy the updated code to activate these changes; existing participant sessions
+retain their saved round configuration.
+
+## Deployment setup
+
 Four **separate** Streamlit Cloud deployments so the OG active and passive samples can
 be expanded to ~400 each (conjunctive + disjunctive), all running concurrently. Each
 link is pinned to one condition and writes to **its own Firebase** (set in that app's
@@ -7,13 +24,13 @@ own Streamlit Cloud secrets).
 
 | Suggested Streamlit app name          | Main file path                                  | Condition             |
 |---------------------------------------|-------------------------------------------------|-----------------------|
-| `nexiom-text-game-active-conjunctive`  | `extension_experiments/active_conjunctive.py`   | Active, conjunctive   |
-| `nexiom-text-game-active-disjunctive`  | `extension_experiments/active_disjunctive.py`   | Active, disjunctive   |
+| `nexiom-text-game-active-conjunctive`  | `extension_experiments/active_conjunctive.py`   | Active, mixed AND/OR |
+| `nexiom-text-game-active-disjunctive`  | `extension_experiments/active_disjunctive.py`   | Active, mixed OR/AND |
 | `nexiom-text-game-passive-conjunctive` | `extension_experiments/passive_conjunctive.py`  | Passive, conjunctive  |
 | `nexiom-text-game-passive-disjunctive` | `extension_experiments/passive_disjunctive.py`  | Passive, disjunctive  |
 
 These wrappers reuse the existing `active_app/` and `passive_app/` code (no duplication);
-they only pin the condition via env vars. The OG deployments are unchanged.
+they pin the condition via env vars. The OG deployments are unchanged.
 
 - **Active** links pin the main-game rule (`NEXIOM_MAIN_RULE`) instead of randomizing it.
 - **Passive** links rotate respondents round-robin across the recorded action histories

@@ -24,6 +24,18 @@ class BlicketFunctionSet:
         return np.any(blicket_states)
 
     @staticmethod
+    def mixed_and_or(item_states, blicket_indices):
+        """(A AND B) OR C; the ordered indices record A, B, C."""
+        a, b, c = blicket_indices
+        return bool((item_states[a] and item_states[b]) or item_states[c])
+
+    @staticmethod
+    def mixed_or_and(item_states, blicket_indices):
+        """(A OR B) AND C; the ordered indices record A, B, C."""
+        a, b, c = blicket_indices
+        return bool((item_states[a] or item_states[b]) and item_states[c])
+
+    @staticmethod
     def get_function(name: str):
         return getattr(BlicketFunctionSet, name)
     
@@ -58,6 +70,12 @@ class BlicketTextEnv:
         else:
             # Randomly sample blicket indices (already 0-based)
             self.blicket_indices = sorted(self._rng.choice(self.num_objects, self.num_blickets, replace=False))
+
+        if self.rule in ("mixed_and_or", "mixed_or_and"):
+            if blicket_indices is not None:
+                self.blicket_indices = list(blicket_indices)
+            if len(self.blicket_indices) != 3 or len(set(self.blicket_indices)) != 3:
+                raise ValueError("Mixed rules require exactly three distinct Nexioms")
 
         # _state: first num_objects booleans for objects, last element for machine state.
         self._state = np.empty((self.num_objects + 1,), dtype=bool)

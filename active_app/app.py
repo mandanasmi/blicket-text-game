@@ -164,6 +164,8 @@ def active_varied_nexiom_setups():
     """VARIED_NEXIOM_SETUPS, limited to the object counts in NEXIOM_VARIED_OBJECT_COUNTS
     and the Nexiom counts in NEXIOM_VARIED_NEXIOM_COUNTS (comma-separated, e.g. "8")
     when set; all setups otherwise."""
+    if os.getenv("NEXIOM_MAIN_RULE", "").strip().lower() in ("mixed_and_or", "mixed_or_and"):
+        return [(8, 3)]
     sizes = _env_int_set("NEXIOM_VARIED_OBJECT_COUNTS")
     counts = _env_int_set("NEXIOM_VARIED_NEXIOM_COUNTS")
     setups = [
@@ -1304,7 +1306,7 @@ elif st.session_state.phase == "practice_complete":
             # otherwise randomly assigned per participant so a single launcher can
             # alternate conjunctive and disjunctive without separate deployments.
             _pinned_rule = os.getenv("NEXIOM_MAIN_RULE", "").strip().lower()
-            if _pinned_rule in ("conjunctive", "disjunctive"):
+            if _pinned_rule in ("conjunctive", "disjunctive", "mixed_and_or", "mixed_or_and"):
                 current_rule = _pinned_rule
             else:
                 current_rule = random.choice(["conjunctive", "disjunctive"])
@@ -1331,6 +1333,10 @@ elif st.session_state.phase == "practice_complete":
                     horizon = 16
                 
                 rule = current_rule
+                if rule in ("mixed_and_or", "mixed_or_and"):
+                    # Preserve these roles in config: indices[0:2] are A/B, indices[2] is C.
+                    blicket_indices = list(blicket_indices)
+                    random.shuffle(blicket_indices)
 
                 init_prob = random.uniform(0.1, 0.3)
                 transition_noise = 0.0
