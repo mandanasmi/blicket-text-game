@@ -757,7 +757,7 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
                 )
             elif st.session_state.state_history:
                 total_tests = len(st.session_state.state_history)
-                max_tests = 5 if is_practice else 16
+                max_tests = round_config.get('horizon', 5 if is_practice else 16)
                 st.markdown(
                     f"<div style='text-align: center; font-size: 16px; font-weight: bold; margin-bottom: 12px; padding: 10px; background-color: #555555; color: #ffffff; border-radius: 6px; border: 1px solid #3a3a3a;'>Total Test: {total_tests} out of {max_tests}</div>",
                     unsafe_allow_html=True,
