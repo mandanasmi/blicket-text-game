@@ -37,6 +37,7 @@ print = _safe_print
 import env.blicket_text as blicket_text
 from textual_nexiom_game import textual_blicket_game_page, guarantee_hint_enabled, hide_history_in_qa_enabled, GUARANTEE_HINT_TEXT
 from proctoring import proctoring_enabled, render_integrity_page, render_proctor
+from ai_feedback import ai_feedback_enabled
 
 IRB_PROTOCOL_NUMBER = os.getenv("IRB_PROTOCOL_NUMBER", "")
 
@@ -1376,6 +1377,7 @@ elif st.session_state.phase == "practice_complete":
             # Record the proctoring / history condition so mixed deployments stay separable.
             config['proctored'] = proctoring_enabled()
             config['history_shown_in_qa'] = not hide_history_in_qa_enabled()
+            config['ai_feedback'] = ai_feedback_enabled()
             save_participant_config(st.session_state.current_participant_id, config)
             
             st.session_state.current_round = 0

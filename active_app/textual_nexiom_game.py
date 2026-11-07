@@ -27,6 +27,8 @@ print = _safe_print
 
 import env.blicket_text as blicket_text
 from proctoring import grade_bonus, integrity_summary
+from ai_feedback import (ai_feedback_enabled, ai_feedback_round_fields,
+                         render_ai_feedback_panel, reset_ai_feedback_state)
 
 # Global variable to control visual vs text-only version
 USE_TEXT_VERSION = True
@@ -248,6 +250,7 @@ def reset_game_session_state():
     
     for var in game_state_vars:
         st.session_state.pop(var, None)
+    reset_ai_feedback_state()
     
     # Clear blicket question answers
     for i in range(10):  # Clear up to 10 possible blicket questions
@@ -572,6 +575,7 @@ def build_main_round_data(round_config, current_round, is_practice):
             round_config['rule'], round_data["rule_type"],
         ))
         round_data.update(integrity_summary())
+        round_data.update(ai_feedback_round_fields())
     return round_data
 
 
@@ -1336,6 +1340,11 @@ def textual_blicket_game_page(participant_id, round_config, current_round, total
     
 
     
+    # Optional AI feedback panel (main game exploration only; NEXIOM_AI_FEEDBACK).
+    if (st.session_state.visual_game_state == "exploration" and not is_practice
+            and ai_feedback_enabled()):
+        render_ai_feedback_panel(participant_id, round_config, current_round)
+
     # Phase transition buttons
     
     if st.session_state.visual_game_state == "exploration":

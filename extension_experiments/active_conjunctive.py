@@ -18,6 +18,8 @@ os.environ["NEXIOM_HIDE_HISTORY_IN_QA"] = "0"
 os.environ["NEXIOM_VARIED_NEXIOMS"] = "1"
 # Tell participants some combination always turns the machine on (keeps them searching).
 os.environ["NEXIOM_GUARANTEE_HINT"] = "1"
+# No AI feedback panel on this link (set explicitly: Cloud redeploys keep the old env).
+os.environ["NEXIOM_AI_FEEDBACK"] = "0"
 # Mixed-rule study: 8 objects, 3 Nexioms, 32 tests.
 os.environ["NEXIOM_VARIED_OBJECT_COUNTS"] = "8"
 os.environ["NEXIOM_VARIED_NEXIOM_COUNTS"] = "3"

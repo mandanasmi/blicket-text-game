@@ -18,6 +18,9 @@ os.environ["NEXIOM_HIDE_HISTORY_IN_QA"] = "0"
 os.environ["NEXIOM_VARIED_NEXIOMS"] = "1"
 # Tell participants some combination always turns the machine on (keeps them searching).
 os.environ["NEXIOM_GUARANTEE_HINT"] = "1"
+# Participants can ask an AI (OpenAI) for feedback during exploration. Needs an
+# [openai] api_key in this deployment's secrets (see README).
+os.environ["NEXIOM_AI_FEEDBACK"] = "1"
 # Mixed-rule study: 8 objects, 3 Nexioms, 32 tests.
 os.environ["NEXIOM_VARIED_OBJECT_COUNTS"] = "8"
 os.environ["NEXIOM_VARIED_NEXIOM_COUNTS"] = "3"

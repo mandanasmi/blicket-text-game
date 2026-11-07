@@ -64,6 +64,29 @@ For each of the four apps:
    history so a link never breaks.
 6. Deploy. Put the resulting URL into a Prolific study for that condition.
 
+## AI feedback (act-sid only)
+
+On the active disjunctive link (act-sid, `active_disjunctive.py`, mixed `(A OR B) AND C`)
+participants can ask an AI (OpenAI, default `gpt-5.5`) for feedback during main-game
+exploration, optionally typing a question. The act-noc link sets `NEXIOM_AI_FEEDBACK=0`
+and is unchanged.
+
+- The AI sees only the task description and the participant's test history. It is never
+  given the true Nexioms or rule. Prompt and logic: `active_app/ai_feedback.py`.
+- Each exchange (question, exact prompt sent, reply, model, latency, tests done when
+  asked) is saved right away under `<pid>/ai_feedback/<n>` and copied into the main-round
+  record as `ai_feedback_log` / `ai_feedback_requests`. `config.ai_feedback` is `true` for
+  participants who had the panel.
+- Add the API key to act-sid's Streamlit Cloud secrets:
+  ```toml
+  [openai]
+  api_key = "sk-proj-..."
+  ```
+  (or set `OPENAI_API_KEY`). Without a key the panel shows an error and the game still works.
+- Optional env/secrets: `NEXIOM_AI_FEEDBACK_MODEL` (default `gpt-5.5`),
+  `NEXIOM_AI_FEEDBACK_EFFORT` (reasoning effort, default `low`) and
+  `NEXIOM_AI_FEEDBACK_MAX` (answered requests per game, default 10; 0 = no limit).
+
 ## Test locally first
 
 ```bash
