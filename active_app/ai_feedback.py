@@ -195,7 +195,7 @@ def render_ai_feedback_panel(participant_id, round_config, current_round):
     st.markdown("---")
     st.markdown("<div style='font-size: 24px; font-weight: 700;'>Ask the AI for feedback</div>", unsafe_allow_html=True)
     st.caption(
-        "The AI sees only your test history. It does not know which objects are Nexioms or what the rule is."
+        "The AI sees the same test results you do. It is not told which objects are Nexioms or how the machine works."
         + ("" if left is None else f" Requests left: {left}.")
     )
 

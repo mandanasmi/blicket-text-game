@@ -1220,6 +1220,12 @@ elif st.session_state.phase == "practice_complete":
         st.markdown(f"You will now move on to the Main Experiment, where you will see {_objects_text} and a different Nexiom machine. Please note that the rules may be <strong><span style='font-size: 1.05em;'>completely different</span></strong> from the practice round: which object(s) count as Nexioms can change entirely, and the machine may behave differently as well! You must complete this one game to finish the experiment.", unsafe_allow_html=True)
         if guarantee_hint_enabled():
             st.markdown(f"**{GUARANTEE_HINT_TEXT}**")
+        if ai_feedback_enabled():
+            st.markdown(
+                "**You can ask an AI for feedback while testing** (optional), using the box below the "
+                "test buttons. The AI sees the same test results you do. It is not told which objects "
+                "are Nexioms or how the machine works."
+            )
 
     st.markdown("---")
     st.markdown("### Question")
